@@ -1,19 +1,31 @@
-[docopt][docopt.org] creates *beautiful* command-line interfaces
-================================================================
+Clymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Clymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces.
 
-**This is a port of [docopt][docopt.py] to [Nim][]. Visit [docopt.org][] for more information.**
+# Features
+Clymene starts as a clone of docopt.nim. Besides docopt functionalities, Clymene provides the following features:
 
-```nim
+- [x] CLI Preloader
+- [x] CLI Progress bar
+- [x] CLI `stdin` Confirmation
+- [x] CLI `stdin` Prompt
+- [x] CLI Dropdown List (https://forum.nim-lang.org/t/6919)
+- [x] Execute Shell Commands
+- [x] Short cmd description in Docstring block
+- [x] Long cmd description by appending `--help`
+
+# Docstring Example
+The option parser is generated based on the docstring below and passed to `clymene` function. `clymene` parses the usage pattern (`"Usage: ..."`) and option descriptions (lines starting with dash "`-`") and ensures that the program invocation matches the usage pattern; it parses options, arguments and commands based on that. The basic idea is that *a good help message has all necessary information in it to make a parser*.
+
+```
 let doc = """
 Naval Fate.
 
 Usage:
-  naval_fate ship new <name>...
-  naval_fate ship <name> move <x> <y> [--speed=<kn>]
-  naval_fate ship shoot <x> <y>
-  naval_fate mine (set|remove) <x> <y> [--moored | --drifting]
-  naval_fate (-h | --help)
-  naval_fate --version
+  cly new <name>...
+  cly <name> move <x> <y> [--speed=<kn>]
+  cly shoot <x> <y>
+  cly mine (set|remove) <x> <y> [--moored | --drifting]
+  cly (-h | --help)
+  cly --version
 
 Options:
   -h --help     Show this screen.
@@ -24,9 +36,9 @@ Options:
 """
 
 import strutils
-import docopt
+import clymene
 
-let args = docopt(doc, version = "Naval Fate 2.0")
+let args = clymene(doc, version = "Naval Fate 2.0")
 
 if args["move"]:
   echo "Moving ship $# to ($#, $#) at $# kn".format(
@@ -40,19 +52,17 @@ if args["new"]:
     echo "Creating ship $#" % name 
 ```
 
-The option parser is generated based on the docstring above that is passed to `docopt` function. `docopt` parses the usage pattern (`"Usage: ..."`) and option descriptions (lines starting with dash "`-`") and ensures that the program invocation matches the usage pattern; it parses options, arguments and commands based on that. The basic idea is that *a good help message has all necessary information in it to make a parser*.
-
 
 Documentation
 -------------
 
 ```nim
-proc docopt(doc: string, argv: seq[string] = nil,
+proc clymene(doc: string, argv: seq[string] = nil,
             help = true, version: string = nil,
             optionsFirst = false, quit = true): Table[string, Value]
 ```
 
-`docopt` takes 1 required and 5 optional arguments:
+`clymene` takes 1 required and 5 optional arguments:
 
 - `doc` is a string that contains a **help message** that will be parsed to create the option parser. The simple rules of how to write such a help message are described at [docopt.org][]. Here is a quick example of such a string:
 
@@ -64,18 +74,18 @@ proc docopt(doc: string, argv: seq[string] = nil,
         --quiet      print less text
         --verbose    print more text
 
-- `argv` is an optional argument vector; by default `docopt` uses the argument vector passed to your program (`commandLineParams()`). Alternatively you can supply a list of strings like `@["--verbose", "-o", "hai.txt"]`.
+- `argv` is an optional argument vector; by default `clymene` uses the argument vector passed to your program (`commandLineParams()`). Alternatively you can supply a list of strings like `@["--verbose", "-o", "hai.txt"]`.
 
 - `help`, by default `true`, specifies whether the parser should automatically print the help message (supplied as `doc`) and terminate, in case `-h` or `--help` option is encountered (options should exist in usage pattern). If you want to handle `-h` or `--help` options manually (as other options), set `help = false`.
 
 - `version`, by default `nil`, is an optional argument that specifies the version of your program. If supplied, then, (assuming `--version` option is mentioned in usage pattern) when parser encounters the `--version` option, it will print the supplied version and terminate. `version` can be any string, e.g. `"2.1.0rc1"`.
-  > Note, when `docopt` is set to automatically handle `-h`, `--help` and `--version` options, you still need to mention them in usage pattern for this to work. Also, for your users to know about them.
+  > Note, when `clyemene` is set to automatically handle `-h`, `--help` and `--version` options, you still need to mention them in usage pattern for this to work. Also, for your users to know about them.
 
 - `optionsFirst`, by default `false`. If set to `true` will disallow mixing options and positional arguments. I.e. after first positional argument, all arguments will be interpreted as positional even if the look like options. This can be used for strict compatibility with POSIX, or if you want to dispatch your arguments to other programs.
 
-- `quit`, by default `true`, specifies whether [`quit()`][quit] should be called after encountering invalid arguments or printing the help message (see `help`). Setting this to `false` will allow `docopt` to raise a `DocoptExit` exception (with the `usage` member set) instead.
+- `quit`, by default `true`, specifies whether [`quit()`][quit] should be called after encountering invalid arguments or printing the help message (see `help`). Setting this to `false` will allow `clymene` to raise a `ClymeneExit` exception (with the `usage` member set) instead.
 
-If the `doc` string is invalid, `DocoptLanguageError` will be raised.
+If the `doc` string is invalid, `ClymeneLanguageError` will be raised.
 
 The **return** value is a [`Table`][table] with options, arguments and commands as keys, spelled exactly like in your help message. Long versions of options are given priority. For example, if you invoke the top example as:
 
@@ -118,7 +128,7 @@ Note that this is not how the values are actually stored, because a `Table` can 
 
 Note that you can use any kind of value in a boolean context and convert any value to `string`.
 
-Look [in the source code](src/docopt/value.nim) to find out more about these conversions.
+Look [in the source code](src/clymene/value.nim) to find out more about these conversions.
 
 
 Examples
