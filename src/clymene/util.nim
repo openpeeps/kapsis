@@ -6,8 +6,7 @@
 # 
 # Copyright (C) 2015 Oleh Prypin <blaxpirit@gmail.com>
 # Licensed under terms of MIT license (see LICENSE)
-import strutils, unicode, macros
-import osproc, terminal
+import strutils, unicode, macros, osproc, terminal, sequtils, os
 
 template any_it*(lst: typed, pred: untyped): bool =
     # Does `pred` return true for any of the `it`s of `lst`?
@@ -33,32 +32,12 @@ proc count*[T](s: openarray[T], it: T): int =
             result += 1
 
 proc cmd*(inputCmd: string, inputArgs: array): any =
-    # CMD Execute shell commands via execProcess
+    # Short hand for executing shell commands via execProcess
     return osproc.execProcess(inputCmd, args=inputArgs, options={poStdErrToStdOut, poUsePath})
 
-proc prompt*(label: string): string =
-    # Stdin prompter with reading the input line
-    echo label
-    let answer = stdin.readLine()
-    return answer
-
-proc confirm*(label: string, icon: string="👉"): bool =
-    # Confirmation Prompter showing a question and reading the input line
-    case prompt(icon & " " & label):
-    of "true", "1", "yes", "True", "TRUE", "YES", "Yes", "y":
-        return true
-    of "false", "0", "no", "False", "FALSE", "NO", "No", "n":
-        return false
-    else:
-        confirm(label)
-
-proc printSuccess*(label: string, icon: string="✔"): string =
-    # Prompt an successfully info line prepended by an icon
-    echo icon & " " & label
-
-proc printError*(label: string, icon: string="✘"): string =
-    # Prompt an error info line prepended by an icon like ✕, ☓, ✖, ✗, ✘
-    echo icon & " " & label
+proc isEmptyDir*(dir: string): bool =
+    # detemrine if the specified directory is empty
+    toSeq(walkdir dir).len == 0
 
 proc partition*(s, sep: string): tuple[left, sep, right: string] =
     ## "a+b".partition("+") == ("a", "+", "b")
