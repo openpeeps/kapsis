@@ -11,12 +11,11 @@
 
 import regex, options, os, tables
 from sequtils import deduplicate, delete, filter_it
-import clymene/util
+import klymene/util
 
 export tables
 
-include clymene/value
-
+include klymene/value
 
 type
     DocoptLanguageError* = object of Exception
@@ -493,11 +492,6 @@ proc parse_atom(tokens: TokenStream, options: var seq[Option]): seq[Pattern] =
         parse_shorts(tokens, options)
     elif (token.starts_with "<") and (token.ends_with ">") or util.is_upper(token):
         @[Pattern(argument(tokens.move()))]
-    # Parsing inline doc comments
-    # elif (token.starts_with "{") and (token.ends_with "}"):
-    #     discard tokens.move()
-    #     var ret: Pattern
-    #     @[ret]
     else:
         @[Pattern(command(tokens.move()))]
 
@@ -522,7 +516,6 @@ proc parse_argv(tokens: TokenStream, options: var seq[Option], options_first = f
         else:
             result.add argument("", val(tokens.move()))
 
-
 proc parse_defaults(doc: string): seq[Option] =
     var split = doc.split_incl(re"\n\ *(<\S+?>|-\S+?)")
     result = @[]
@@ -544,9 +537,11 @@ proc printable_usage(doc: string): string =
     usage_split.delete(0)
     usage_split.join().split_incl(re"\n\s*\n")[0].strip()
 
-proc printable_filtered(doc: string): string =
+proc printable_filtered(doc:string, rmDocTag:bool=false): string =
+    if rmDocTag == true:
+        return doc.replace("#", "")
     return doc.replace(re"#(.*)#", "")
-    # return doc.replace(re"(\/*(.*)*\/)", "")
+    # return doc.replace(re"(#((.*\n?).*)#)", "")
 
 proc formal_usage(printable_usage: string): string =
     var pu = printable_usage.split_whitespace()
@@ -554,7 +549,6 @@ proc formal_usage(printable_usage: string): string =
     var pu0 = pu[0]
     pu.delete(0)
     "( " & pu.map_it(string, if it == pu0: ") | (" else: it).join(" ") & " )"
-
 
 proc extras(help: bool, version: string, options: seq[Pattern], doc: string) =
     if help and options.any_it((it.name in ["-h", "--help"]) and it.value):
@@ -565,15 +559,14 @@ proc extras(help: bool, version: string, options: seq[Pattern], doc: string) =
         echo(version)
         quit()
 
-
 proc docopt_exc(doc: string, argv: seq[string], help: bool, version: string, options_first = false):
     Table[string, Value] =
     var doc = doc.replace("\r\l", "\l")
     var docopt_exit = new_exception(DocoptExit, "")
-    docopt_exit.usage = printable_usage(doc)
-
+    docopt_exit.usage = printable_filtered(printable_usage(doc), rmDocTag=true)
+    var formal_usage = printable_filtered(printable_usage(doc))
     var options = parse_defaults(doc)
-    var pattern = parse_pattern(formal_usage(printable_filtered(docopt_exit.usage)), options)
+    var pattern = parse_pattern(formal_usage(formal_usage), options)
     var argvt = parse_argv(token_stream(argv, docopt_exit), options, options_first)
     var pattern_options = pattern.flat("Option").deduplicate()
 
@@ -582,7 +575,7 @@ proc docopt_exc(doc: string, argv: seq[string], help: bool, version: string, opt
         any_options.children = doc_options.filter_it(
             it notin pattern_options).map_it(Pattern, Pattern(it))
 
-    extras(help, version, argvt, doc)
+    extras(help, version, argvt, printable_filtered(doc, rmDocTag=true))
     pattern.fix()
     var (matched, left, collected) = pattern.match(argvt)
     if matched and left.len == 0: # better error message if left?

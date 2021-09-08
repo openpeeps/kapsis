@@ -1,19 +1,19 @@
-Clymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Clymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces.
+Klymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Klymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces.
 
 # Features
-Clymene starts as a clone of docopt.nim. Besides docopt functionalities, Clymene provides the following features:
+Klymene starts as a clone of docopt.nim. Besides docopt functionalities, Klymene provides the following features:
 
-- [x] CLI Preloader
-- [x] CLI Progress bar
+- [ ] CLI Preloader
+- [ ] CLI Progress bar
 - [x] CLI `stdin` Confirmation
 - [x] CLI `stdin` Prompt
 - [x] CLI Dropdown List (https://forum.nim-lang.org/t/6919)
 - [x] Execute Shell Commands
 - [x] Short cmd description in Docstring block
-- [x] Long cmd description by appending `--help`
+- [ ] Long cmd description by appending `--help`
 
 # Docstring Example
-The option parser is generated based on the docstring below and passed to `clymene` function. `clymene` parses the usage pattern (`"Usage: ..."`) and option descriptions (lines starting with dash "`-`") and ensures that the program invocation matches the usage pattern; it parses options, arguments and commands based on that. The basic idea is that *a good help message has all necessary information in it to make a parser*.
+The option parser is generated based on the docstring below and passed to `Klymene` function. `Klymene` parses the usage pattern (`"Usage: ..."`) and option descriptions (lines starting with dash "`-`") and ensures that the program invocation matches the usage pattern; it parses options, arguments and commands based on that. The basic idea is that *a good help message has all necessary information in it to make a parser*.
 
 ```
 let doc = """
@@ -36,9 +36,9 @@ Options:
 """
 
 import strutils
-import clymene
+import Klymene
 
-let args = clymene(doc, version = "Naval Fate 2.0")
+let args = Klymene(doc, version = "Naval Fate 2.0")
 
 if args["move"]:
   echo "Moving ship $# to ($#, $#) at $# kn".format(
@@ -57,12 +57,12 @@ Documentation
 -------------
 
 ```nim
-proc clymene(doc: string, argv: seq[string] = nil,
+proc Klymene(doc: string, argv: seq[string] = nil,
             help = true, version: string = nil,
             optionsFirst = false, quit = true): Table[string, Value]
 ```
 
-`clymene` takes 1 required and 5 optional arguments:
+`Klymene` takes 1 required and 5 optional arguments:
 
 - `doc` is a string that contains a **help message** that will be parsed to create the option parser. The simple rules of how to write such a help message are described at [docopt.org][]. Here is a quick example of such a string:
 
@@ -74,7 +74,7 @@ proc clymene(doc: string, argv: seq[string] = nil,
         --quiet      print less text
         --verbose    print more text
 
-- `argv` is an optional argument vector; by default `clymene` uses the argument vector passed to your program (`commandLineParams()`). Alternatively you can supply a list of strings like `@["--verbose", "-o", "hai.txt"]`.
+- `argv` is an optional argument vector; by default `Klymene` uses the argument vector passed to your program (`commandLineParams()`). Alternatively you can supply a list of strings like `@["--verbose", "-o", "hai.txt"]`.
 
 - `help`, by default `true`, specifies whether the parser should automatically print the help message (supplied as `doc`) and terminate, in case `-h` or `--help` option is encountered (options should exist in usage pattern). If you want to handle `-h` or `--help` options manually (as other options), set `help = false`.
 
@@ -83,9 +83,9 @@ proc clymene(doc: string, argv: seq[string] = nil,
 
 - `optionsFirst`, by default `false`. If set to `true` will disallow mixing options and positional arguments. I.e. after first positional argument, all arguments will be interpreted as positional even if the look like options. This can be used for strict compatibility with POSIX, or if you want to dispatch your arguments to other programs.
 
-- `quit`, by default `true`, specifies whether [`quit()`][quit] should be called after encountering invalid arguments or printing the help message (see `help`). Setting this to `false` will allow `clymene` to raise a `ClymeneExit` exception (with the `usage` member set) instead.
+- `quit`, by default `true`, specifies whether [`quit()`][quit] should be called after encountering invalid arguments or printing the help message (see `help`). Setting this to `false` will allow `Klymene` to raise a `KlymeneExit` exception (with the `usage` member set) instead.
 
-If the `doc` string is invalid, `ClymeneLanguageError` will be raised.
+If the `doc` string is invalid, `KlymeneLanguageError` will be raised.
 
 The **return** value is a [`Table`][table] with options, arguments and commands as keys, spelled exactly like in your help message. Long versions of options are given priority. For example, if you invoke the top example as:
 
@@ -128,7 +128,7 @@ Note that this is not how the values are actually stored, because a `Table` can 
 
 Note that you can use any kind of value in a boolean context and convert any value to `string`.
 
-Look [in the source code](src/clymene/value.nim) to find out more about these conversions.
+Look [in the source code](src/Klymene/value.nim) to find out more about these conversions.
 
 
 Examples
