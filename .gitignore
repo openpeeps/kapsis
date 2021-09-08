@@ -3,13 +3,13 @@
 !*.nim
 /*.nim
 !*.nimble
-!*.clymene
+!*.klymene
 !*.md
 !nim.cfg
 !README*
 !LICENSE
 !/src
-!/src/clymene
+!/src/klymene
 !/test
 !/examples
 !/.github/
