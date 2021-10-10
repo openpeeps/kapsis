@@ -403,8 +403,7 @@ proc parse_shorts(tokens: TokenStream, options: var seq[Option]): seq[Pattern] =
             if tokens.error of DocoptExit:
                 o = option(short, "", 0, val(true))
         else: # why copying is necessary here?
-            o = option(short, similar[0].long,
-                                 similar[0].argcount, similar[0].value)
+            o = option(short, similar[0].long, similar[0].argcount, similar[0].value)
             var value = val()
             if o.argcount != 0:
                 if left == "":
@@ -537,9 +536,17 @@ proc printable_usage(doc: string): string =
     usage_split.delete(0)
     usage_split.join().split_incl(re"\n\s*\n")[0].strip()
 
-proc printable_filtered(doc:string, rmDocTag:bool=false): string =
+proc printable_filtered(doc:string, binaryName:string, rmDocTag=false): string =
     if rmDocTag == true:
-        return doc.replace("#", "")
+        ## Removing `#` doc tag is mainly used for displaying
+        ## the available commands as index.
+        var filteredLines: seq[string]
+        for line in doc.split(re"\n"):
+            var commentLine = line.split(re"#")
+            if commentLine.len == 3:
+                commentLine[1] = "\e[90m" & commentLine[1].strip() & "\e[0m"
+            filteredLines.add(commentLine.join())
+        return filteredLines.join("\n")
     return doc.replace(re"#(.*)#", "")
     # return doc.replace(re"(#((.*\n?).*)#)", "")
 
@@ -559,12 +566,12 @@ proc extras(help: bool, version: string, options: seq[Pattern], doc: string) =
         echo(version)
         quit()
 
-proc docopt_exc(doc: string, argv: seq[string], help: bool, version: string, options_first = false):
-    Table[string, Value] =
+proc cliInit(doc: string, argv: seq[string], help: bool,
+    version: string, binaryName: string, options_first = false): Table[string, Value] =
     var doc = doc.replace("\r\l", "\l")
     var docopt_exit = new_exception(DocoptExit, "")
-    docopt_exit.usage = printable_filtered(printable_usage(doc), rmDocTag=true)
-    var formal_usage = printable_filtered(printable_usage(doc))
+    docopt_exit.usage = printable_filtered(printable_usage(doc), binaryName, true)
+    var formal_usage = printable_filtered(printable_usage(doc), binaryName)
     var options = parse_defaults(doc)
     var pattern = parse_pattern(formal_usage(formal_usage), options)
     var argvt = parse_argv(token_stream(argv, docopt_exit), options, options_first)
@@ -575,7 +582,7 @@ proc docopt_exc(doc: string, argv: seq[string], help: bool, version: string, opt
         any_options.children = doc_options.filter_it(
             it notin pattern_options).map_it(Pattern, Pattern(it))
 
-    extras(help, version, argvt, printable_filtered(doc, rmDocTag=true))
+    extras(help, version, argvt, printable_filtered(doc, binaryName, true))
     pattern.fix()
     var (matched, left, collected) = pattern.match(argvt)
     if matched and left.len == 0: # better error message if left?
@@ -645,13 +652,13 @@ proc docopt_exc(doc: string, argv: seq[string], help: bool, version: string, opt
 ## See also
 ## --------
 ## Full documentation: http://docopt.org/
-proc docopt*(doc: string, argv: seq[string] = command_line_params(), help = true,
-    version: string = "", options_first = false, quit = true): Table[string, Value] {.gcsafe.} =
+proc docopt*(doc: string, argv: seq[string] = command_line_params(), help=true, version="",
+    options_first = false, quit = true, binaryName: string): Table[string, Value] {.gcsafe.} =
 
     if not quit:
-        return docopt_exc(doc, argv, help, version, options_first)
+        return cliInit(doc, argv, help, version, binaryName, options_first)
     try:
-        return docopt_exc(doc, argv, help, version, options_first)
+        return cliInit(doc, argv, help, version, binaryName, options_first)
     except DocoptExit:
         stderr.write_line((ref DocoptExit)(get_current_exception()).usage)
         quit()

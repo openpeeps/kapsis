@@ -50,10 +50,10 @@ proc displayInfo*(label: string, icon: string="[!]") =
     ## Print an info line, lightblue, prepended by an icon
     display(icon & " " & label, "white")
 
-proc displaySuccess*(label: string, icon: string="✔"): string =
+proc displaySuccess*(label: string, icon: string="✔") =
     ## Print a success line in green, prepended by an icon
     display(icon & " " & label, "green")
 
-proc displayError*(label: string, icon: string="✘"): string =
+proc displayError*(label: string, icon: string="✘") =
     ## Print an error line in red, prepended by an icon like ✕, ☓, ✖, ✗, ✘
     display(icon & " " & label, "red")
