@@ -33,29 +33,21 @@ gen_class:
             children: seq[Pattern]
 
         ChildPattern = ref object of Pattern
-
         ParentPattern = ref object of Pattern
-
         Argument = ref object of ChildPattern
-
         Command = ref object of Argument
-
         Option = ref object of ChildPattern
             short: string
             long: string
             argcount: int
 
         Required = ref object of ParentPattern
-
         Optional = ref object of ParentPattern
-
         AnyOptions = ref object of Optional
             ## Marker/placeholder for [options] shortcut.
 
         OneOrMore = ref object of ParentPattern
-
         Either = ref object of ParentPattern
-
 
 proc argument(name: string, value = val()): Argument =
     Argument(m_name: name, value: value)
@@ -536,19 +528,24 @@ proc printable_usage(doc: string): string =
     usage_split.delete(0)
     usage_split.join().split_incl(re"\n\s*\n")[0].strip()
 
-proc printable_filtered(doc:string, binaryName:string, rmDocTag=false): string =
-    if rmDocTag == true:
-        ## Removing `#` doc tag is mainly used for displaying
-        ## the available commands as index.
+proc printable_filtered(doc:string, binaryName:string, shouldDisplayUsage=false): string =
+    if shouldDisplayUsage == true:
+        # Removing `#` doc tag for prompting usage commands
         var filteredLines: seq[string]
         for line in doc.split(re"\n"):
-            var commentLine = line.split(re"#")
-            if commentLine.len == 3:
-                commentLine[1] = "\e[90m" & commentLine[1].strip() & "\e[0m"
-            filteredLines.add(commentLine.join())
+            var inLine = line.split(re"#")
+            # remove the "___" and leave an empty separator between commands
+            if inLine[0].contains("___"):
+                inLine[0] = line.replace("___", "")
+            # remove the binary name from usage prompt
+            if inLine[0].contains(binaryName):
+                inLine[0] = inLine[0].replace(binaryName, "")
+            # find usage comments and wrap with cyan color: 90m
+            if inLine.len == 3:
+                inLine[1] = "\e[90m" & inLine[1].strip() & "\e[0m"
+            filteredLines.add(inLine.join())
         return filteredLines.join("\n")
-    return doc.replace(re"#(.*)#", "")
-    # return doc.replace(re"(#((.*\n?).*)#)", "")
+    return doc.replace(re"#(.*)#", "") # doc.replace(re"(#((.*\n?).*)#)", "")
 
 proc formal_usage(printable_usage: string): string =
     var pu = printable_usage.split_whitespace()
