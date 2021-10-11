@@ -1,6 +1,6 @@
 version = "0.6.8"
-author = "Oleh Prypin"
-description = "Command line option parser that will make you smile"
+author = "George Lemon"
+description = "A fancy nymph CLI framework written in Nim. Based on docopt package, Klymene provides additional features for creating beautiful command line interfaces."
 license = "MIT"
 srcDir = "src"
 
