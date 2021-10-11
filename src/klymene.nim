@@ -539,13 +539,16 @@ proc printable_filtered(doc:string, binaryName:string, shouldDisplayUsage=false)
                 inLine[0] = line.replace("___", "")
             # remove the binary name from usage prompt
             if inLine[0].contains(binaryName):
-                inLine[0] = inLine[0].replace(binaryName, "")
+                inLine[0] = "\e[32m" & inLine[0].replace(binaryName, "") & "\e[0m"
             # find usage comments and wrap with cyan color: 90m
             if inLine.len == 3:
                 inLine[1] = "\e[90m" & inLine[1].strip() & "\e[0m"
             filteredLines.add(inLine.join())
         return filteredLines.join("\n")
-    return doc.replace(re"#(.*)#", "") # doc.replace(re"(#((.*\n?).*)#)", "")
+    
+    # Return the usage index for parsing process without visual comments,
+    # separators or other things for visual purpose.
+    return doc.replace(re"#(.*)#", "").replace("___", "") # doc.replace(re"(#((.*\n?).*)#)", "")
 
 proc formal_usage(printable_usage: string): string =
     var pu = printable_usage.split_whitespace()
