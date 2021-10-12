@@ -16,16 +16,21 @@ proc display*(label: string, color: string = "white") =
     ## Stdin prompter with reading the input line
     cli_colors.white(label)
 
-proc prompt*(label: string, color: string = "white"): string =
+proc prompt*(label: string, color: string = "white", default=""): string =
     ## Prompt a question line and retrieve the input
     display(label)
-    let answer = stdin.readLine()
+    var answer = stdin.readLine()
+    if default.len != 0 and answer.len == 0:
+       return default
     return answer
 
-proc promptSecret*(label: string, color:string="white"): string =
+proc promptSecret*(label: string, color:string="white", required=true): string =
     ## Prompt a hidden field and read from secret input
     display(label)
-    terminal.readPasswordFromStdin()
+    let inputPassword = terminal.readPasswordFromStdin()
+    if inputPassword.len == 0 and required == true:
+        return promptSecret(label, required=true)
+    return inputPassword
 
 proc promptConfirm*(label: string, icon: string="👉"): bool =
     ## Prompt a confirmation field that allows only boolean-like values
