@@ -1,55 +1,54 @@
-Klymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Klymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces.
+<p align="center"><img src="/.github/klymene.png" width="140px" alt="Klymene - CLI Toolkit written in Nim language"><br><strong>Klymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Klymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces. (Work in progress)</strong></p>
 
 # Features
-Klymene starts as a clone of docopt.nim. Besides docopt functionalities, Klymene provides the following features:
 
 - [ ] CLI Preloader
 - [ ] CLI Progress bar
-- [x] CLI `stdin` Confirmation
-- [x] CLI `stdin` Prompt
-- [x] CLI Dropdown List (https://forum.nim-lang.org/t/6919)
+- [x] Confirmation Prompt
+- [x] Regular Prompt
+- [x] Dropdown Prompt
+- [x] Secret Prompt
 - [x] Execute Shell Commands
-- [x] Short cmd description in Docstring block
-- [ ] Long cmd description by appending `--help`
+- [x] Command description using `#` tag
+- [x] Command separators using `___` tag
 
-# Docstring Example
+# Example from Psy
 The option parser is generated based on the docstring below and passed to `Klymene` function. `Klymene` parses the usage pattern (`"Usage: ..."`) and option descriptions (lines starting with dash "`-`") and ensures that the program invocation matches the usage pattern; it parses options, arguments and commands based on that. The basic idea is that *a good help message has all necessary information in it to make a parser*.
 
-```
-let doc = """
-Naval Fate.
+The following Usage example is taken from Psy, a fast Package Manager for PHP environment.
+
+```bash
+🌀 Psy Package Manager (0.1.0) for PHP development & production environments.
+👉 For updates, check https://github.com/openpeep/psypac
 
 Usage:
-  cly new <name>...
-  cly <name> move <x> <y> [--speed=<kn>]
-  cly shoot <x> <y>
-  cly mine (set|remove) <x> <y> [--moored | --drifting]
-  cly (-h | --help)
-  cly --version
+   init                           Init a new PHP project to current location
+   create <project> <template>    Create a PHP project from templates available in global repository
+
+   search <package>               Search for a package in global repository
+   clone <package>...             Clone one or more packages from a remote source
+   add <package>...               Add one or more dependencies to your project
+   remove <package>...            Remove one or more dependencies from your project
+   delete <package>               Delete a package from disk stored in global repository
+
+   serve <port> <file>            Invoke built-in PHP server for development, testing or demos
+   stop <port>                    Stop a PHP server running on given PORT
+
+   set env (dev|prod)             Convert PHP class map rules to PSR-4/PSR-0 or opposite
+   set api (gh|gl|bb) <token>     Set your API Channel from GitHub, GitLab or BitBucket
+
+   get api                        Get current API channel
+   get env                        Get environment of the current project (dev or prod)
+   get stats                      Get statistics about installations, usage and other geek stuff
+
+   make cv                        Create a CV with your profile based on stats
+   make composable                Generate a composer.json from current psy.yml project
+
+   flush (zips|pkgs|templates)    Permanently delete files by category from global repository
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --speed=<kn>  Speed in knots [default: 10].
-  --moored      Moored (anchored) mine.
-  --drifting    Drifting mine.
-"""
-
-import strutils
-import Klymene
-
-let args = Klymene(doc, version = "Naval Fate 2.0")
-
-if args["move"]:
-  echo "Moving ship $# to ($#, $#) at $# kn".format(
-    args["<name>"], args["<x>"], args["<y>"], args["--speed"])
-  ships[$args["<name>"]].move(
-    parseFloat($args["<x>"]), parseFloat($args["<y>"]),
-    speed = parseFloat($args["--speed"]))
-
-if args["new"]: 
-  for name in @(args["<name>"]): 
-    echo "Creating ship $#" % name 
+  -h --help                       Show this screen.
+  -v --version                    Show version.
 ```
 
 
@@ -145,9 +144,6 @@ Installation
     nimble install docopt
 
 This library has no dependencies outside the standard library. An impure [`re`][re] library is used.
-
-
-
 
 
 [docopt.org]: http://docopt.org/

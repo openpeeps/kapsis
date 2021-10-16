@@ -12,6 +12,3 @@
 !/src/klymene
 !/test
 !/examples
-!/.github/
-!/.github/workflows/
-!/.github/workflows/*.yml
