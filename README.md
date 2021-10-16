@@ -1,4 +1,4 @@
-<p align="center"><img src="/.github/klymene.png" width="140px" alt="Klymene - CLI Toolkit written in Nim language"><br><strong>Klymene is a fancy nymph CLI framework written in Nim. Based on [docopt package](https://github.com/docopt/docopt.nim), Klymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces. (Work in progress)</strong></p>
+<p align="center"><img src="/.github/klymene.png" width="225px" alt="Klymene - CLI Toolkit written in Nim language"><br><strong>Klymene is a fancy nymph CLI framework written in Nim. Based on <a href="https://github.com/docopt/docopt.nim">docopt package</a>, Klymene provides additional features, tweaks and tricks for creating beautiful and fast command line interfaces. (Work in progress)</strong></p>
 
 # Features
 
