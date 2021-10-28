@@ -531,18 +531,20 @@ proc printable_usage(doc: string): string =
 proc printable_filtered(doc:string, binaryName:string, shouldDisplayUsage=false): string =
     if shouldDisplayUsage == true:
         # Removing `#` doc tag for prompting usage commands
+        var i = 0
         var filteredLines: seq[string]
         for line in doc.split(re"\n"):
             var inLine = line.split(re"#")
-            # remove the "___" and leave an empty separator between commands
             if inLine[0].contains("___"):
+                # remove the "___" and leave an empty separator between commands
                 inLine[0] = line.replace("___", "")
-            # remove the binary name from usage prompt
-            if inLine[0].contains(binaryName):
-                inLine[0] = "\e[32m" & inLine[0].replace(binaryName, "") & "\e[0m"
-            # find usage comments and wrap with cyan color: 90m
+            elif inLine[0].contains(binaryName):
+                # remove the binary name from usage prompt
+                inLine[0] = "\e[37m" & inLine[0].replace(binaryName, "") & "\e[0m"
             if inLine.len == 3:
+                # find inline-comments and wrap with cyan color: 90m
                 inLine[1] = "\e[90m" & inLine[1].strip() & "\e[0m"
+            inc(i)
             filteredLines.add(inLine.join())
         return filteredLines.join("\n")
     
@@ -565,6 +567,9 @@ proc extras(help: bool, version: string, options: seq[Pattern], doc: string) =
         options.any_it(it.name == "--version" and it.value):
         echo(version)
         quit()
+
+proc isCommand*(key: string, args: Table[string, Value]): bool =
+    args[key] == true
 
 proc cliInit(doc: string, argv: seq[string], help: bool,
     version: string, binaryName: string, options_first = false): Table[string, Value] =

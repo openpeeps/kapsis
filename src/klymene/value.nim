@@ -30,7 +30,6 @@ type
             of vkList:
                 list_v: seq[string]
 
-
 converter to_bool*(v: Value): bool =
     ## Convert a Value to bool, depending on its kind:
     ## - vkNone: false
@@ -75,13 +74,13 @@ iterator pairs*(v: Value): tuple[key: int, val: string] =
     for key, val in v.list_v:
         yield (key: key, val: val)
 
-proc str(s: string): string =
+proc str*(s: string): string =
     "\"" & s.replace("\"", "\\\"") & "\""
 
-proc str[T](s: seq[T]): string =
+proc str*[T](s: seq[T]): string =
     "[" & s.map_it(string, it.str).join(", ") & "]"
 
-proc str(v: Value): string =
+proc str*(v: Value): string =
     case v.kind
         of vkNone: "nil"
         of vkStr: v.str_v.str

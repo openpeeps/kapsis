@@ -35,9 +35,11 @@ proc cmd*(inputCmd: string, inputArgs: array): any {.discardable.} =
     ## Short hand for executing shell commands via execProcess
     return osproc.execProcess(inputCmd, args=inputArgs, options={poStdErrToStdOut, poUsePath})
 
-proc cmdExec*(inputCmd: string, inputArgs: array): any =
-    ## Short hand for executing shell commands without stdout (output)
-    cmd(inputCmd, inputArgs)
+proc cmdExec*(inputCmd: string): tuple[output: TaintedString, exitCode: int] =
+    return execCmdEx(inputCmd)
+
+proc cmdStartProc*() =
+    ## Start a new process
     discard
 
 proc isEmptyDir*(dir: string): bool =
