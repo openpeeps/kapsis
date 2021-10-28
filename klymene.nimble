@@ -6,6 +6,7 @@ srcDir = "src"
 
 requires "nim >= 0.15.0"
 requires "regex >= 0.11.1"
+requires "unicodedb"
 
 task test, "Test":
     exec "nimble c --verbosity:0 -r -y test/test"
