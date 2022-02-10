@@ -1,5 +1,6 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/openpeep/klymene/main/.github/klymene.png" width="225px" alt="Klymene - CLI Toolkit written in Nim language"><br><strong>🌊 Klymene is a fancy CLI toolkit written in Nim. Originally, based on <a href="https://github.com/docopt/docopt.nim">docopt library</a>, Klymene provides additional features, tweaks and tricks for creating powerful command line interfaces (Work in progress)</strong>
+    <img src="https://raw.githubusercontent.com/openpeep/klymene/main/.github/klymene.png" width="225px" alt="Klymene"><br>
+    <strong>Create beautiful command line interfaces in Nim. Based on docopt. (Work in progress)</strong>
 </p>
 
 # Features
@@ -53,6 +54,7 @@ Options:
 ```
 _todo_
 
+<<<<<<< HEAD
 ## Installation
 
 ## Contributions
@@ -67,3 +69,6 @@ Inspirational libraries
 
 
 ## License
+=======
+_todo_
+>>>>>>> 39667801aa6eb07f5d704b8ad6d5200f451b5fc5
