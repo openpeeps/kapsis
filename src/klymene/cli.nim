@@ -6,7 +6,7 @@ const BR = ""
 # Klymene is a fancy nymph CLI framework written in Nim,
 # and helps developers creating beautiful command line interfaces.
 # 
-# Copyright (C) 2021 George Lemon <georgelemon@protonmail.com>
+# Copyright (C) 2021 George Lemon <georgelemon@protonmail.com>  
 
 # CLI helper for creating various types of stdout/stdin like
 # - overall coloring                Foreground, background
@@ -15,14 +15,21 @@ const BR = ""
 # - simple print messages           Warning, info, sucess or error
 
 proc display*(label: string, color: string = "white", indent=0, br="") =
-    ## Stdin prompter with reading the input line
+    ## Display a single line in one color
     var text: string
     if indent == 0: text = label
     else: text = label.indent(indent)
 
     if br == "before" or br == "both": echo BR  # add a new line before label
+    # if color.len == 0:
+    # else:
     cli_colors.white(text)
     if br == "after" or br == "both": echo BR   # add a new line after label
+
+# proc display*(labels: seq[tuple[fg: string, bg: string, text: string]], indent=0, br="") =
+#     ## Display a single line in multiple foreground / background colors
+#     for label in labels:
+
 
 proc prompt*(label: string, color: string = "white", default=""): string =
     ## Prompt a question line and retrieve the input

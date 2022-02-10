@@ -657,7 +657,7 @@ proc cliInit(doc: string, argv: seq[string], help: bool,
 ## See also
 ## --------
 ## Full documentation: http://docopt.org/
-proc docopt*(doc: string, argv: seq[string] = command_line_params(), help=true, version="",
+proc newCommandLine*(doc: string, argv: seq[string] = command_line_params(), help=true, version="",
     options_first = false, quit = true, binaryName: string): Table[string, Value] {.gcsafe.} =
 
     if not quit:

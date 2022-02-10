@@ -31,16 +31,11 @@ proc count*[T](s: openarray[T], it: T): int =
         if x == it:
             result += 1
 
-proc cmd*(inputCmd: string, inputArgs: array): any {.discardable.} =
+proc cmd*(inputCmd: string, inputArgs: openarray[string]): any {.discardable.} =
     ## Short hand for executing shell commands via execProcess
     return osproc.execProcess(inputCmd, args=inputArgs, options={poStdErrToStdOut, poUsePath})
 
-proc cmdExec*(inputCmd: string): tuple[output: TaintedString, exitCode: int] =
-    return execCmdEx(inputCmd)
-
-proc cmdStartProc*() =
-    ## Start a new process
-    discard
+proc cmdExec*(inputCmd: string): tuple[output: TaintedString, exitCode: int] = execCmdEx(inputCmd)
 
 proc isEmptyDir*(dir: string): bool =
     ## Detemrine if the specified directory is empty
