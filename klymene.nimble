@@ -1,6 +1,6 @@
-version = "0.6.8"
+version = "0.1.0"
 author = "George Lemon"
-description = "CLI framework written in Nim. Based on docopt package, Klymene provides additional features for creating beautiful command line interfaces."
+description = "Create beautiful command line interfaces in Nim. Based on docopt."
 license = "MIT"
 srcDir = "src"
 
