@@ -52,23 +52,20 @@ Options:
   -h --help                       Show this screen.
   -v --version                    Show version.
 ```
+
+## Examples
 _todo_
 
-<<<<<<< HEAD
-## Installation
 
-## Contributions
+### ❤ Contributions
+If you like this project you can contribute to Klymene project by opening new issues, fixing bugs, contribute with code, ideas and you can even [donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C) 🥰
 
+### 👑 Discover Nim language
+<strong>What's Nim?</strong> Nim is a statically typed compiled systems programming language. It combines successful concepts from mature languages like Python, Ada and Modula. [Find out more about Nim language](https://nim-lang.org/)
 
-### Inspiration and Improvements
+<strong>Why Nim?</strong> Performance, fast compilation and C-like freedom. We want to keep code clean, readable, concise, and close to our intention. Also a very good language to learn in 2022.
 
-Inspirational libraries
-- https://github.com/charmbracelet/bubbletea
-- https://github.com/charmbracelet/bubbles
-- https://github.com/charmbracelet/harmonica
-
-
-## License
-=======
-_todo_
->>>>>>> 39667801aa6eb07f5d704b8ad6d5200f451b5fc5
+### 🎩 License
+Illustration of Tim Berners-Lee [made by Kagan McLeod](https://www.kaganmcleod.com).<br><br>
+This is an Open Source Software released under `MIT` license. [Developed by Humans from OpenPeep](https://github.com/openpeep).<br>
+Copyright &copy; 2022 OpenPeep & Contributors &mdash; All rights reserved.
