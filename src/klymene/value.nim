@@ -99,8 +99,12 @@ proc `$`*(v: Value): string =
     else: v.str
 
 proc `==`*(a, b: Value): bool {.gcsafe.} =
+    ## Determine if a equals to b
     a.kind == b.kind and a.str == b.str
 
+proc isNil*(a: Value): bool {.gcsafe.} =
+    ## Determine if a is nil ``vkNone``
+    result = a.kind == vkNone
 
 proc val(): Value = Value(kind: vkNone)
 proc val(v: bool): Value = Value(kind: vkBool, bool_v: v)
