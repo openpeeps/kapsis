@@ -1,61 +1,66 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/openpeep/klymene/main/.github/klymene.png" width="225px" alt="Klymene"><br>
-    <strong>Create beautiful command line interfaces in Nim. Based on docopt. (Work in progress)</strong>
+    Klymene &mdash; Build delightful Command Line Interfaces.
 </p>
 
-# Features
+<p align="center">
+    Originally started as a fork of Docopt package, now fully rewritten based on Nim's powerful Macros system.
+</p>
 
-- [ ] Interactive Preloaders
-- [ ] Tables and Alignments
-- [x] Confirmation Prompt
-- [x] Regular Prompt
-- [x] Dropdown Prompt
-- [x] Secret Prompt
-- [x] Execute Shell Commands
+## 😍 Key Features
+- [x] Generates Commands & Subcommands based on Nim's Macros
+- [ ] Auto-Generates Bash Completion scripts
+- [ ] Colors, many colors 🌈
+- [ ] ASCII & Gradientful Preloaders ⏳
+- [ ] Prompters as `Input`, `Dropdown`, `Secret`, `Checkbox`, `Radio` 
+- [ ] Fullscreen Sessions 🌌
+- [ ] Keyboard Events ⌥
+- [ ] Tables and Alignments 🗂
+- [ ] UX - Highlight command for invalid inputs 🧐
+- [ ] UX - Extra comments per command using `-h`
+- [ ] Open Source | `MIT` License
 
-The following Usage example is taken from [Psypac, a Fast Package Manager for PHP development and production environments](https://github.com/psypac/psypac)
-
+## Install
 ```bash
-🌀 Psy Package Manager (0.1.0) for PHP development & production environments.
-👉 For updates, check https://github.com/psypac/psy
-
-Usage:
-   init [--skip|--git]            Initialize a new project
-   make <p> <t> [--skip|--git]    Start new project from a template
-
-   search <pkg>                   Search for a package (local/remote)
-   clone <pkg>... [--add]         Clone one or more packages from source
-   add <pkg>...   [--remote]      Add one or more dependencies to your project
-   remove <pkg>...                Remove one or more dependencies from your project
-   delete <pkg>   [--all]         Delete a specific package from disk
-
-   run doc [md|json|html]         Generate a beautiful API Documentation website of your project
-   run inspector                  Check config and find what requirements, alerts or failures may occur
-   run <script>                   Execute PHP callbacks or any command-line executables
-
-   serve <port> <file>            Invoke the built-in PHP server for fast development, testing or demos
-   stop <pid>                     Stop a PHP server running on given PORT
-
-   set env (dev|prod)             Convert PHP class map rules to PSR-4/PSR-0 or opposite
-   set api <token>                Set your API Channel for GitHub, GitLab or BitBucket
-
-   get env                        Get environment of the current project (dev or prod)
-   get stats                      Get usage, projects and other geek stats
-
-   flush (zips|pkgs|temps)        Permanently delete files by category
-
-Options:
-     --add                        Clone a package and add to current project
-     --all                        Select all versions of a package for remove and delete command
-     --remote                     Add a package from remote to current project by invoking clone command
-     --skip                       Skip interactive mode
-  -h --help                       Show this screen.
-  -v --version                    Show version.
+nimble install klymene
 ```
 
-## Examples
-_todo_
+## 🎉 My Command Line Interface
+All magics happens under `commands` macro! Each command must be prefixed with `$` symbol.
 
+You may want to add separators between commands, which can be done using `---` token followed by a
+string `""` that, if filled can become a label, otherwise a simple space separator.
+
+```nim
+import klymene
+
+about:
+    "Klymene ✨ Build delightful Command Line Interfaces."
+    "Made by Humans from OpenPeep"
+
+commands:
+    --- "Generals"
+    $ "new"                                 "Create a project or package":
+        $ "project"                         "Create a new project at current location"
+        $ "package": ("git|license|ola")    "Create a new package at current location"
+    
+    --- "Server"
+    $ "build"                               "Generate Binary AST for all Enkava rules"
+    $ "serve" ["config", 'a', "--all"]      "Enkava as a REST API Microservice"
+    $ "save" ("data", "output")             "Save data to given path"
+    
+    --- "Database"
+    $ "database"                            "Manage your database"
+    $ "migration"                           "Run database migration"
+    $ "backup"  ("all", "table", "only")    "Create a database backup, either full, or for a specific table"
+    
+    --- "Maintenance"
+    $ "up"                                  "Brings the app back online"
+    $ "down"                                "Put app in maintenance mode"
+```
+
+## Klymene 💜 Bash/ZSH Completion Scripts
+Klymene is able to auto-generate completion scripts for all commands.
 
 ### ❤ Contributions
 If you like this project you can contribute to Klymene project by opening new issues, fixing bugs, contribute with code, ideas and you can even [donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C) 🥰
@@ -66,5 +71,5 @@ If you like this project you can contribute to Klymene project by opening new is
 <strong>Why Nim?</strong> Performance, fast compilation and C-like freedom. We want to keep code clean, readable, concise, and close to our intention. Also a very good language to learn in 2022.
 
 ### 🎩 License
-Klymene is an Open Source Software released under `MIT` license. [Developed by Humans from OpenPeep](https://github.com/openpeep).<br>
+Klymene is an Open Source Software released under `MIT` license. [Made by Humans from OpenPeep](https://github.com/openpeep).<br>
 Copyright &copy; 2022 OpenPeep & Contributors &mdash; All rights reserved.
