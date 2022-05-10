@@ -14,9 +14,6 @@ from std/sequtils import delete
 from std/strutils import `%`, indent, spaces, join, startsWith
 from std/os import commandLineParams, sleep
 
-# import suru
-# import klymene2/suggestion
-
 # dumpAstGen:
 #     import klymene2/[newCommand, a, b, c, d]
 
