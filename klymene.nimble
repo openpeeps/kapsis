@@ -1,14 +1,27 @@
-version = "0.1.0"
-author = "George Lemon"
-description = "Create beautiful command line interfaces in Nim. Based on docopt."
-license = "MIT"
-srcDir = "src"
+# Package
 
-requires "nim >= 0.15.0"
-requires "regex >= 0.11.1"
+version       = "0.1.0"
+author        = "George Lemon"
+description   = "A new awesome nimble package"
+license       = "MIT"
+srcDir        = "src"
+bin           = @["klymene2"]
+binDir        = "bin"
+
+
+# Dependencies
+
+requires "nim >= 1.7.1"
 requires "illwill"
+# requires "suru"
 
-task test, "Test":
-    exec "nimble c --verbosity:0 -r -y test/test"
-    for f in listFiles("examples"):
-        if f[^4..^1] == ".nim": exec "nim compile --verbosity:0 --hints:off " & f
+# after build:
+#     exec "clear"
+
+task dev, "Compile for development":
+    echo "\n✨ Compiling for dev" & "\n"
+    exec "nimble build --gc:arc --threads:on"
+
+task prod, "Compile for production":
+    echo "\n✨ Compiling for prod" & "\n"
+    exec "nimble build -d:release --gc:arc --threads:on --opt:size -d:danger"
