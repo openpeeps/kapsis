@@ -8,11 +8,12 @@
 
 {.warning[Spacing]: off.}
 
-import std/[tables, macros]
+import std/[tables, macros, terminal]
 
 from std/sequtils import delete
 from std/strutils import `%`, indent, spaces, join, startsWith
 from std/os import commandLineParams, sleep
+from std/algorithm import sorted, SortOrder
 
 # dumpAstGen:
 #     import klymene2/[newCommand, a, b, c, d]
@@ -37,11 +38,14 @@ type
     CommandType* = enum
         CommandLine, CommentLine
 
+    CommandFunction* = proc() {.nimcall.}
+
     Command* = object
         name: string
         case commandType: CommandType
         of CommandLine:
             description: string
+            callback: proc() {.nimcall.}
             args: OrderedTable[string, Parameter]
         else: discard
 
@@ -105,58 +109,70 @@ template printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras,
     if showVersion: 
         echo cli.showAppVersion
         return
-    var index: seq[string]
-    var hasDelimiter: bool
-    if cli.canPrintExtras and showExtras:
-        when declared(aboutDescription):
-            # if declared, adds a head comment above the commands containing
-            # info about the author, a description and copyright notes
-            index.add("\e[90m" & aboutDescription & "\e[0m")
-    # var count: int  # counting commands
+
+    # A sequence holding the total length of commands (with args and separators)
+    var commandsLen: seq[int]
+    var index: seq[tuple[command, description: string, delimiters, commandLen: int]]
+    # Parse registered commands and prepare for printing
     for id, cmd in pairs(cli.commands):
-        index.add("")
+        # index.add("")
         if cmd.commandType == CommentLine:
-            add index[^1], cmd.name & NewLine
+            # add index[^1], cmd.name & NewLine
             continue    # no need to parse command line separators
         var
             i = 0
             strCommand: string
             baseIndent = 2
-            descIndentSize: int
-            countDelimiters: int8
+            countDelimiters: int
         let paramsLen = cmd.args.len
-        add strCommand, indent(id, 2)
+        add strCommand, id
+        commandsLen.add(strCommand.len)
         for paramKey, parameter in pairs(cmd.args):
             case parameter.ptype:
             of Variant:     # ``Variant`` expose a group of params as a|b|c|d
                 add strCommand,
                     if i == 0: indent(paramKey, 1) else: paramKey
+                inc(commandsLen[^1], paramKey.len)
                 if (i + 1) != paramsLen: # add pipe separator for variant-based parameters
                     add strCommand, indent(token "|", 0)
-                    hasDelimiter = true
                     inc countDelimiters
             of Key:         # ``Key`` params can handle dynamic strings
                 add strCommand, indent("<" & "\e[0m" & paramKey & ">", 1)
+                inc(commandsLen[^1], paramKey.len + 3) # plus `<` and `>` and 1 space
             of ShortFlag:   # ``ShortFlag`` are optionals. Always prefixed with a single ``-``
                 add strCommand, indent("-" & paramKey, 1)
+                inc(commandsLen[^1], paramKey.len + 2) # plus `-` and 1 space
             of LongFlag:    # ``LongFlag`` are optionals. Always prefixed with double ``--``
                 add strCommand, indent("--" & paramKey, 1)
+                inc(commandsLen[^1], paramKey.len + 3) # plus `--` and 1 space
             inc i
-        # inc count
-        add index[^1], strCommand
-        # TODO calculate the overall description indent size
-        # needed based the longest command from current index
-        descIndentSize = 45 - (strCommand.len) 
         
-        if hasDelimiter:
-            descIndentSize = (9 * countDelimiters) + descIndentSize
-        # add command comment and align based on id and params len
-        let descIndentSizeFinal = if isSubCommand: (baseIndent - 2 - descIndentSize) else: descIndentSize
-        if id in highlightKeys:
-            index[^1] = "\e[97;92m" & index[^1] & "\e[0m"
-        add index[^1], indent("\e[90m" & cmd.description & "\e[0m", descIndentSize)
-        add index[^1], NewLine
-    echo index.join("")
+        inc(commandsLen[^1], countDelimiters)
+        index.add (strCommand, cmd.description, countDelimiters, commandsLen[^1])
+
+    # get highest len from commandsLen
+    let baseCmdIndent = sorted(commandsLen, system.cmp[int], order = SortOrder.Descending)[0]
+    var usageOutput: string
+
+    if cli.canPrintExtras and showExtras:
+        # Show extra information when pressing `-h` or `--help`
+        when declared(aboutDescription):
+            # if declared, adds a head comment above the commands containing
+            # info about the author, a description and copyright notes
+            add usageOutput, "\e[90m" & aboutDescription & "\e[0m"
+
+    for k, i in index.mpairs:
+        if i.command in highlightKeys:
+            i.command = "\e[97;92m" & i.command & "\e[0m"
+
+        let baseIndent = 10 + (baseCmdIndent - i.commandLen - i.delimiters)
+        
+        add usageOutput, indent(i.command, 0)
+        add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
+        add usageOutput, NewLine
+
+    # add usageOutput, index.join("")
+    echo usageOutput
 
 template quitApp[K: Klymene](cli: K, shouldQuit: bool,
     showUsage = true, highlightKeys: seq[string] = @[], showExtras, showVersion = false) =
@@ -186,13 +202,17 @@ proc printUsage*[K: Klymene](cli: var K) =
         else: cli.quitApp(true)               # quit and prompt index
     inputArgs.delete(0)                         # delete command name from current seq
 
+    var command: Command
     if cli.hasAnyParams(inputCmd):
-        let command: Command = cli.commands[inputCmd]
+        command = cli.commands[inputCmd]
         for inputArg in inputArgs:
             var p: string
-            if inputArg.startsWith("--"):   p = inputArg[2..^1] # long flag
-            elif inputArg[0] == '-':        p = inputArg[1..^1] # short flag
-            else:                           p = inputArg
+            if inputArg.startsWith("--"):
+                p = inputArg[2..^1] # long flag
+            elif inputArg[0] == '-':
+                p = inputArg[1..^1] # short flag
+            else: p = inputArg
+
             # Quit, prompt usage and highlight
             # the command when provided arguments are not valid
             cli.quitApp(command.args.hasKey(p) == false, highlightKeys = @[inputCmd])
@@ -209,8 +229,10 @@ proc printUsage*[K: Klymene](cli: var K) =
                 echo "long flag"
     else:
         cli.quitApp(inputArgs.len != 0) # quit when a command does not support extra args
-        let command: Command = cli.commands[inputCmd]
-        echo "running command: " & inputCmd
+        command = cli.commands[inputCmd]
+    
+    if likely(command.callback != nil):
+        command.callback()
 
 proc add*[K: Klymene](cli: var K, id: string, key: int) =
     ## Add a new command separator, with or without a label
@@ -218,14 +240,19 @@ proc add*[K: Klymene](cli: var K, id: string, key: int) =
     var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
     cli.commands[sepId] = Command(commandType: CommentLine, name: label)
 
-proc add*[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple], isSubCommand = false, isSeparator = false) =
+proc add*[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
+                        callable: CommandFunction, isSubCommand = false, isSeparator = false) =
     ## Private procedure for adding a new command
     ## to current Klymene instance. Commands are
     ## automatically registered via ``commands`` macro.
     if cli.commands.hasKey(id):
         raise newException(KlymeneError, "Duplicate command name for \"$1\"" % [id])
-
-    cli.commands[id] = Command(commandType: CommandLine, name: id, description: desc)
+    cli.commands[id] = Command(
+        commandType: CommandLine,
+        name: id,
+        description: desc,
+        callback: callable
+    )
     var baseIndent = if isSubCommand: 4 else: 2
     var descIndentSize: int
     # cli.printable[id] = indent(id, baseIndent) # add command name
@@ -253,6 +280,7 @@ proc add*[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple], isSub
             of LongFlag:
                 # ``LongFlag`` are optionals. Always prefixed with double ``--``
                 cli.commands[id].args[param.pid].long_flag_id = param.pid
+
     # else:
         # descIndentSize = if isSubCommand: id.len + (baseIndent - 2) else: id.len
         # add cli.printable[id], indent("\e[90m" & desc & "\e[0m", 30 - descIndentSize)
@@ -314,12 +342,14 @@ macro settings*(generateBashScripts, useSmartHighlight: bool) =
     ## Macro for changing your Klymene settings
     ## TODO
 
+# dumpAstGen:
+#     let test = newCommand.runCommand
+
 macro commands*(tks: untyped) =
     ## Macro for creating commands, subcommands
     tks.expectKind nnkStmtList
+    
     # Init Klymene
-    # var cli = Klymene()
-    # cli = genSym(nskVar, "cli")
     result = newNimNode nnkStmtList
     result.add(
         nnkVarSection.newTree(
@@ -383,10 +413,14 @@ macro commands*(tks: untyped) =
                                 param = param[2..^1]
                                 paramType = LongFlag
                             genParams.add (ptype: paramType, pid: param)
-        # Call `add` proc for registering the new command
-        # cli.add(commandId, commandDdescription, commandArguments)
+        
+        var callbackFunctionId = nnkDotExpr.newTree()
+        callbackFunctionId.add newIdentNode(genCmdId.strVal & "Command")
+        callbackFunctionId.add newIdentNode("runCommand")
+        
+        # Add the new command to cli
         result.add quote do:
-            cli.add(`genCmdId`, `genCmdDesc`, `genParams`)
+            cli.add(`genCmdId`, `genCmdDesc`, `genParams`, `callbackFunctionId`)
 
         var levels = 2
         while levels < tk.len:
