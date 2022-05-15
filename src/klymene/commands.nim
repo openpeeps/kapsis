@@ -234,17 +234,16 @@ proc printUsage*[K: Klymene](cli: var K) =
     if likely(command.callback != nil):
         command.callback()
 
-proc add*[K: Klymene](cli: var K, id: string, key: int) =
+proc add[K: Klymene](cli: var K, id: string, key: int) =
     ## Add a new command separator, with or without a label
     let sepId = id & "__" & $key
     var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
     cli.commands[sepId] = Command(commandType: CommentLine, name: label)
 
-proc add*[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
+proc add[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
                         callable: CommandFunction, isSubCommand = false, isSeparator = false) =
-    ## Private procedure for adding a new command
-    ## to current Klymene instance. Commands are
-    ## automatically registered via ``commands`` macro.
+    ## Add a new command to current Klymene instance. Commands are registered
+    ## automatically from ``commands`` macro.
     if cli.commands.hasKey(id):
         raise newException(KlymeneError, "Duplicate command name for \"$1\"" % [id])
     cli.commands[id] = Command(
@@ -255,8 +254,7 @@ proc add*[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
     )
     var baseIndent = if isSubCommand: 4 else: 2
     var descIndentSize: int
-    # cli.printable[id] = indent(id, baseIndent) # add command name
-    # add cli.printable, indent(id, 2)
+
     if args.len != 0:
         var
             strCounter = 0      # holds params length
