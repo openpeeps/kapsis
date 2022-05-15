@@ -10,6 +10,9 @@
 ## 😍 Key Features
 - [x] Generates Commands & Subcommands based on Nim's Macros
 - [ ] Auto-Generates Bash Completion scripts
+- [x] `Variants` using `tuple` syntax `(git|svn)`
+- [x] Short/Long Flags `-r`, `--run`
+- [x] Handle `stdin` using `arrows` simply like `<path>`
 - [ ] Colors, many colors 🌈
 - [ ] ASCII & Gradientful Preloaders ⏳
 - [ ] Prompters as `Input`, `Dropdown`, `Secret`, `Checkbox`, `Radio` 
@@ -25,11 +28,30 @@
 nimble install klymene
 ```
 
-## 🎉 My Command Line Interface
-All magics happens under `commands` macro! Each command must be prefixed with `$` symbol.
+Argument types
+- Dynamic argument `<pkg>`
+- One or more dynamic arguments `<pkg>...`
+- Variants `("git"|"svn")`
+- Short flags using char `'i'`
+- Long flags using strings prefixed with `--`, `"--all"`
 
-You may want to add separators between commands, which can be done using `---` token followed by a
-string `""` that, if filled can become a label, otherwise a simple space separator.
+Built-in flags: `-h`, `--help`, `-v` and `--version`
+
+## 🎉 My Command Line Interface
+All magics happens under `commands` macro!
+
+Create your commands one per line. Each command must be prefixed with `$` symbol.
+
+### Basic Example
+```nim
+import klymene
+
+commands:
+    $ "install" <pkg>...           "Installs one or more packages."
+```
+
+### Full example
+Use `about` macro to add extra information. This info is visible when user press `-h` or `--help`.
 
 ```nim
 import klymene
@@ -37,30 +59,13 @@ import klymene
 about:
     "Klymene ✨ Build delightful Command Line Interfaces."
     "Made by Humans from OpenPeep"
-
-commands:
-    --- "Generals"
-    $ "new"                                 "Create a project or package":
-        $ "project"                         "Create a new project at current location"
-        $ "package": ("git|license|ola")    "Create a new package at current location"
-    
-    --- "Server"
-    $ "build"                               "Generate Binary AST for all Enkava rules"
-    $ "serve" ["config", 'a', "--all"]      "Enkava as a REST API Microservice"
-    $ "save" ("data", "output")             "Save data to given path"
-    
-    --- "Database"
-    $ "database"                            "Manage your database"
-    $ "migration"                           "Run database migration"
-    $ "backup"  ("all", "table", "only")    "Create a database backup, either full, or for a specific table"
-    
-    --- "Maintenance"
-    $ "up"                                  "Brings the app back online"
-    $ "down"                                "Put app in maintenance mode"
+    version "1.4.1"
+# todo
 ```
 
 ## Klymene 💜 Bash/ZSH Completion Scripts
 Klymene is able to auto-generate completion scripts for all commands.
+TODO
 
 ### ❤ Contributions
 If you like this project you can contribute to Klymene project by opening new issues, fixing bugs, contribute with code, ideas and you can even [donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C) 🥰
@@ -73,3 +78,5 @@ If you like this project you can contribute to Klymene project by opening new is
 ### 🎩 License
 Klymene is an Open Source Software released under `MIT` license. [Made by Humans from OpenPeep](https://github.com/openpeep).<br>
 Copyright &copy; 2022 OpenPeep & Contributors &mdash; All rights reserved.
+
+<a href="https://hetzner.cloud/?ref=Hm0mYGM9NxZ4"><img src="https://openpeep.ro/banners/openpeep-footer.png" width="100%"></a>
