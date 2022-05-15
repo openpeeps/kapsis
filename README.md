@@ -40,8 +40,6 @@ Built-in flags: `-h`, `--help`, `-v` and `--version`
 ## 🎉 My Command Line Interface
 All magics happens under `commands` macro!
 
-List your commands one per line. Each command name must be unique and prefixed with `$` symbol.
-
 Klymene is a bit restrictive when it comes to callbacks and files. Consider it a good start to keep your project organized.
 
 So, **if you name your command `install` then you should create an `installCommand.nim` file and import** it before calling the `commands` macro.
@@ -54,6 +52,7 @@ import commands/installCommand
 
 commands:
     $ "install" <pkgs>...           "Installs one or more packages"
+    # commands must be prefixed with `$` symbol.
 ```
 
 This is your `installCommand.nim`
@@ -64,7 +63,6 @@ proc runCommand*(pkgs: seq[Value]) =
     ## Procedure for running ``install`` command
     echo pkgs
 ```
-
 
 ### Full example
 Use `about` macro to add extra information. This info is visible when user press `-h` or `--help`.
