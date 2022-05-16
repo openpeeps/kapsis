@@ -15,9 +15,6 @@ from std/strutils import `%`, indent, spaces, join, startsWith
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
 
-# dumpAstGen:
-#     import klymene2/[newCommand, a, b, c, d]
-
 type
     ParameterType* = enum
         Key, Variant, LongFlag, ShortFlag
@@ -27,14 +24,17 @@ type
     Parameter* = ref object
         case ptype: ParameterType
         of Key:
-            key_id: string
+            key: string
         of Variant:
-            keys_id: seq[string]
+            variant: seq[string]
         of LongFlag:
-            long_flag_id: string
+            flag: string
         of ShortFlag:
-            short_flag_id: string
-    
+            sflag: string
+
+    Value* = ref object
+        value: Parameter
+
     CommandType* = enum
         CommandLine, CommentLine
 
@@ -45,7 +45,7 @@ type
         case commandType: CommandType
         of CommandLine:
             description: string
-            callback: proc() {.nimcall.}
+            callback: CommandFunction
             args: OrderedTable[string, Parameter]
         else: discard
 
@@ -66,6 +66,8 @@ type
 
     KlymeneError = object of CatchableError
     SyntaxError = object of CatchableError
+
+
 
 const NewLine = "\n"
 let
@@ -101,10 +103,26 @@ proc hasFlags[C: Command](cmd: C): bool =
         if p.ptype in {ShortFlag, LongFlag}:
             return true
 
+template getValue*[V: Value](val: V): any =
+    ## A callable template to retrieve values from a ``runCommand`` proc
+    # proc getValueByType(ptype: ParameterType) =
+    #     result = case ptype: ParameterType
+    #     of Key:
+    #         key: string
+    #     of Variant:
+    #         variant: seq[string]
+    #     of LongFlag:
+    #         flag: string
+    #     of ShortFlag:
+    #         sflag: string
+
+    # getValueByType(val.value)
+    ## TODO
+
 proc token(tok: string): string {.inline.} =
     result = "\e[90m" & tok & "\e[0m"
 
-template printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, showVersion, isSubCommand = false) =
+proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, showVersion, isSubCommand = false) =
     ## Print index with available commands, flags and parameters
     if showVersion: 
         echo cli.showAppVersion
@@ -164,46 +182,42 @@ template printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras,
     for k, i in index.mpairs:
         if i.command in highlightKeys:
             i.command = "\e[97;92m" & i.command & "\e[0m"
-
         let baseIndent = 10 + (baseCmdIndent - i.commandLen - i.delimiters)
-        
         add usageOutput, indent(i.command, 0)
         add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
         add usageOutput, NewLine
-
-    # add usageOutput, index.join("")
     echo usageOutput
 
 template quitApp[K: Klymene](cli: K, shouldQuit: bool,
-    showUsage = true, highlightKeys: seq[string] = @[], showExtras, showVersion = false) =
+    showUsage = true, highlightKeys: seq[string] = @[], showExtras, showVersion = false): untyped =
     # Template to quit app and print the current commands.
     if shouldQuit:
         if showUsage:
             cli.printIndex(highlightKeys, showExtras, showVersion)
         quit()
 
-proc printUsage*[K: Klymene](cli: var K) =
+proc printUsage*[K: Klymene](cli: var K): string =
     ## Parse and print usage basde on given command line parameters
     var inputArgs: seq[string] = commandLineParams()
     
-    cli.quitApp(inputArgs.len == 0)           # quit & prompt usage when missing args
+    quitApp(cli, inputArgs.len == 0)           # quit & prompt usage when missing args
     let inputCmd = inputArgs[0]
-    if cli.hasCommand(inputCmd) == false:
+    if hasCommand(cli, inputCmd) == false:
         if inputArgs[0] in ["-h", "--help"]:
             # Quit and prompt usage with ``showExtras``
             # for displaying extra comments and options
-            cli.quitApp(true, showExtras = true)
+            quitApp(cli, true, showExtras = true)
         elif inputArgs[0] in ["-v", "--version"]:
-            cli.quitApp(true, showVersion = declared(appVersion))
+            quitApp(cli, true, showVersion = declared(appVersion))
 
-        let suggested = cli.cmdStartsWith(inputCmd)
+        let suggested = cmdStartsWith(cli, inputCmd)
         if suggested.status == true:          # quit and highlight possible matches
-            cli.quitApp(true, highlightKeys = suggested.commands)
-        else: cli.quitApp(true)               # quit and prompt index
+            quitApp(cli, true, highlightKeys = suggested.commands)
+        else: quitApp(cli, true)               # quit and prompt index
     inputArgs.delete(0)                         # delete command name from current seq
 
     var command: Command
-    if cli.hasAnyParams(inputCmd):
+    if hasAnyParams(cli, inputCmd):
         command = cli.commands[inputCmd]
         for inputArg in inputArgs:
             var p: string
@@ -215,24 +229,22 @@ proc printUsage*[K: Klymene](cli: var K) =
 
             # Quit, prompt usage and highlight
             # the command when provided arguments are not valid
-            cli.quitApp(command.args.hasKey(p) == false, highlightKeys = @[inputCmd])
+            quitApp(cli, command.args.hasKey(p) == false, highlightKeys = @[inputCmd])
 
             let parameter = command.args[p]
             case parameter.ptype:
             of Key:
-                echo parameter.key_id
+                echo parameter.key
             of Variant:
-                echo parameter.keys_id
+                echo parameter.variant
             of ShortFlag:
                 echo "short flag"
             of LongFlag:
                 echo "long flag"
     else:
-        cli.quitApp(inputArgs.len != 0) # quit when a command does not support extra args
+        quitApp(cli, inputArgs.len != 0) # quit when a command does not support extra args
         command = cli.commands[inputCmd]
-    
-    if likely(command.callback != nil):
-        command.callback()
+    result = command.name & "Command"
 
 proc add[K: Klymene](cli: var K, id: string, key: int) =
     ## Add a new command separator, with or without a label
@@ -240,8 +252,7 @@ proc add[K: Klymene](cli: var K, id: string, key: int) =
     var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
     cli.commands[sepId] = Command(commandType: CommentLine, name: label)
 
-proc add[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
-                        callable: CommandFunction, isSubCommand = false, isSeparator = false) =
+proc add[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple], isSubCommand = false, isSeparator = false) =
     ## Add a new command to current Klymene instance. Commands are registered
     ## automatically from ``commands`` macro.
     if cli.commands.hasKey(id):
@@ -249,11 +260,8 @@ proc add[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
     cli.commands[id] = Command(
         commandType: CommandLine,
         name: id,
-        description: desc,
-        callback: callable
+        description: desc
     )
-    var baseIndent = if isSubCommand: 4 else: 2
-    var descIndentSize: int
 
     if args.len != 0:
         var
@@ -268,21 +276,16 @@ proc add[K: Klymene](cli: var K, id, desc: string, args: seq[ParamTuple],
             case param.ptype:
             of Variant:
                 # ``Variant`` expose a group of params as a|b|c|d
-                cli.commands[id].args[param.pid].keys_id.add(param.pid)
+                cli.commands[id].args[param.pid].variant.add(param.pid)
             of Key:
                 # ``Key`` params can handle dynamic strings
-                cli.commands[id].args[param.pid].key_id = param.pid
+                cli.commands[id].args[param.pid].key = param.pid
             of ShortFlag:
                 # ``ShortFlag`` are optionals. Always prefixed with a single ``-``
-                cli.commands[id].args[param.pid].short_flag_id = param.pid
+                cli.commands[id].args[param.pid].sflag = param.pid
             of LongFlag:
                 # ``LongFlag`` are optionals. Always prefixed with double ``--``
-                cli.commands[id].args[param.pid].long_flag_id = param.pid
-
-    # else:
-        # descIndentSize = if isSubCommand: id.len + (baseIndent - 2) else: id.len
-        # add cli.printable[id], indent("\e[90m" & desc & "\e[0m", 30 - descIndentSize)
-    # add cli.printable[id], NewLine
+                cli.commands[id].args[param.pid].flag = param.pid
 
 proc getCommands[K: Klymene](cli: var K): seq[string] {.inline.} =
     for cmdId in keys(cli.commands):
@@ -298,16 +301,15 @@ macro about*(info: untyped) =
     result.add(
         nnkVarSection.newTree(
             nnkIdentDefs.newTree(
-                newIdentNode("aboutDescription"),
-                newIdentNode("string"),
+                newIdentNode("aboutDescription"), newIdentNode("string"),
                 newEmptyNode()
             )
         ),
+    )
+    result.add(
         nnkVarSection.newTree(
             nnkIdentDefs.newTree(
-                newIdentNode("appVersion"),
-                newIdentNode("string"),
-                newEmptyNode()
+                newIdentNode("appVersion"), newIdentNode("string"), newEmptyNode()
             )
         ),
     )
@@ -339,9 +341,6 @@ macro about*(info: untyped) =
 macro settings*(generateBashScripts, useSmartHighlight: bool) = 
     ## Macro for changing your Klymene settings
     ## TODO
-
-# dumpAstGen:
-#     let test = newCommand.runCommand
 
 macro commands*(tks: untyped) =
     ## Macro for creating commands, subcommands
@@ -412,13 +411,13 @@ macro commands*(tks: untyped) =
                                 paramType = LongFlag
                             genParams.add (ptype: paramType, pid: param)
         
-        var callbackFunctionId = nnkDotExpr.newTree()
-        callbackFunctionId.add newIdentNode(genCmdId.strVal & "Command")
-        callbackFunctionId.add newIdentNode("runCommand")
+        # var callbackFunctionId = nnkDotExpr.newTree()
+        # callbackFunctionId.add newIdentNode(genCmdId.strVal & "Command")
+        # callbackFunctionId.add newIdentNode("runCommand")
         
         # Add the new command to cli
         result.add quote do:
-            cli.add(`genCmdId`, `genCmdDesc`, `genParams`, `callbackFunctionId`)
+            cli.add(`genCmdId`, `genCmdDesc`, `genParams`)
 
         var levels = 2
         while levels < tk.len:
@@ -453,9 +452,16 @@ macro commands*(tks: untyped) =
             inc levels
 
     # printing commands usage
+    # TODO create a seq containing all commands
+    let callNewCommand = nnkCall.newTree()
+    callNewCommand.add newDotExpr(newIdentNode("newCommand"), newIdentNode("runCommand"))
+
     result.add quote do:
         when declared(aboutDescription):
             cli.canPrintExtras = true
         when declared(appVersion):
             cli.showAppVersion = appVersion
-        cli.printUsage()
+        let commandName = cli.printUsage()
+
+        if commandName == "newCommand":
+            `callNewCommand`
