@@ -38,14 +38,11 @@ type
     CommandType* = enum
         CommandLine, CommentLine
 
-    CommandFunction* = proc() {.nimcall.}
-
     Command* = object
         name: string
         case commandType: CommandType
         of CommandLine:
             description: string
-            callback: CommandFunction
             args: OrderedTable[string, Parameter]
         else: discard
 
@@ -303,17 +300,10 @@ macro about*(info: untyped) =
     result = newNimNode(nnkStmtList)
     result.add(
         nnkVarSection.newTree(
-            nnkIdentDefs.newTree(
-                newIdentNode("aboutDescription"), newIdentNode("string"),
-                newEmptyNode()
-            )
+            newIdentDefs(ident "aboutDescription", ident "string")
         ),
-    )
-    result.add(
         nnkVarSection.newTree(
-            nnkIdentDefs.newTree(
-                newIdentNode("appVersion"), newIdentNode("string"), newEmptyNode()
-            )
+            newIdentDefs(ident "appVersion", ident "string")
         ),
     )
 
@@ -334,7 +324,6 @@ macro about*(info: untyped) =
                     let currentAppVersion = i[1].strVal
                     result.add quote do:
                         appVersion = `currentAppVersion`
-
         # elif i.kind == nnkCall:
         #     i[0].expectKind nnkIdent
         #     echo i[1].kind
@@ -350,19 +339,12 @@ macro commands*(tks: untyped) =
     tks.expectKind nnkStmtList
     
     # Init Klymene
-    result = newNimNode nnkStmtList
-    result.add(
-        nnkVarSection.newTree(
-            nnkIdentDefs.newTree(
-                newIdentNode("cli"),
-                newEmptyNode(),
-                nnkCall.newTree(newIdentNode("Klymene"))
-            )
-        )
+    result = newStmtList(
+        newVarStmt(ident "cli", newCall(ident("Klymene")))
     )
 
     var showDefaultLabel: bool
-    var ifStatements = newNimNode(nnkIfStmt)
+    var commandsConditional = newNimNode(nnkIfStmt)
 
     for tkey, tk in pairs(tks):
         tk[0].expectKind nnkIdent
@@ -394,7 +376,7 @@ macro commands*(tks: untyped) =
         let callbackFunction = newStmtList()
         let callbackIdent = genCmdId.strVal & "Command"
         callbackFunction.add newDotExpr(newIdentNode(callbackIdent), newIdentNode("runCommand"))
-        ifStatements.add(
+        commandsConditional.add(
             nnkElifBranch.newTree(
                 nnkInfix.newTree(
                     ident("=="),
@@ -404,7 +386,6 @@ macro commands*(tks: untyped) =
                 newStmtList(newCall(callbackFunction))
             )
         )
-        # ifStatements.add (id: genCmdId.strVal, callbackNode: callbackFunction)
 
         if tk[1][1].kind == nnkStrLit:    # Parse command description
             genCmdDesc = tk[1][1]
@@ -433,10 +414,6 @@ macro commands*(tks: untyped) =
                                 param = param[2..^1]
                                 paramType = LongFlag
                             genParams.add (ptype: paramType, pid: param)
-        
-        # var callbackFunctionId = nnkDotExpr.newTree()
-        # callbackFunctionId.add newIdentNode(genCmdId.strVal & "Command")
-        # callbackFunctionId.add newIdentNode("runCommand")
         
         # Add the new command to cli
         result.add quote do:
@@ -501,5 +478,5 @@ macro commands*(tks: untyped) =
         newLetStmt(ident "commandName",
             newCall(newDotExpr(ident("cli"), ident("printUsage")))
         ),
-        ifStatements
+        commandsConditional
     )
