@@ -345,13 +345,6 @@ macro settings*(generateBashScripts, useSmartHighlight: bool) =
     ## Macro for changing your Klymene settings
     ## TODO
 
-dumpAstGen:
-    when declared(aboutDescription):
-        cli.canPrintExtras = true
-    when declared(appVersion):
-        cli.showAppVersion = appVersion
-    let commandName = cli.printUsage()
-
 macro commands*(tks: untyped) =
     ## Macro for creating commands, subcommands
     tks.expectKind nnkStmtList
@@ -481,19 +474,7 @@ macro commands*(tks: untyped) =
                                 subCommandComment.strVal = subCmd.strVal
             inc levels
 
-    # printing commands usage
-    # TODO create a seq containing all commands
-    # let callNewCommand = nnkCall.newTree()
-    # callNewCommand.add newDotExpr(newIdentNode("newCommand"), newIdentNode("runCommand"))
-    
-    # template initCommands(): untyped =
-    #     when declared(aboutDescription):
-    #         cli.canPrintExtras = true
-    #     when declared(appVersion):
-    #         cli.showAppVersion = appVersion
-    #     let commandName = cli.printUsage()
-
-    # result.add getAST(initCommands())
+    # TODO map command values
     result.add(
         nnkWhenStmt.newTree(
             nnkElifBranch.newTree(
