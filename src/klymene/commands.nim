@@ -8,7 +8,7 @@
 
 {.warning[Spacing]: off.}
 
-import std/[tables, macros, terminal]
+import std/[tables, macros, terminal, sets]
 
 from std/sequtils import delete
 from std/strutils import `%`, indent, spaces, join, startsWith
@@ -102,6 +102,9 @@ proc hasFlags[C: Command](cmd: C): bool =
     for k, p in pairs(cmd.args):
         if p.ptype in {ShortFlag, LongFlag}:
             return true
+
+proc commandExists*[K: Klymene](cli: K, key: string): bool =
+    result = cli.commands.hasKey(key)
 
 template getValue*[V: Value](val: V): any =
     ## A callable template to retrieve values from a ``runCommand`` proc
@@ -342,6 +345,13 @@ macro settings*(generateBashScripts, useSmartHighlight: bool) =
     ## Macro for changing your Klymene settings
     ## TODO
 
+dumpAstGen:
+    when declared(aboutDescription):
+        cli.canPrintExtras = true
+    when declared(appVersion):
+        cli.showAppVersion = appVersion
+    let commandName = cli.printUsage()
+
 macro commands*(tks: untyped) =
     ## Macro for creating commands, subcommands
     tks.expectKind nnkStmtList
@@ -359,6 +369,8 @@ macro commands*(tks: untyped) =
     )
 
     var showDefaultLabel: bool
+    var ifStatements = newNimNode(nnkIfStmt)
+
     for tkey, tk in pairs(tks):
         tk[0].expectKind nnkIdent
         if tk[0].strVal != "$":
@@ -383,6 +395,24 @@ macro commands*(tks: untyped) =
         var genCmdId = tk[1][0]
         var genCmdDesc = newNimNode(nnkStrLit)
         var genParams: seq[ParamTuple]
+
+        # let test = toOrderedSet(["as", "asdasd"])
+        # Store callback of current command in callbacks table
+        let callbackFunction = newStmtList()
+        let callbackIdent = genCmdId.strVal & "Command"
+        callbackFunction.add newDotExpr(newIdentNode(callbackIdent), newIdentNode("runCommand"))
+        ifStatements.add(
+            nnkElifBranch.newTree(
+                nnkInfix.newTree(
+                    ident("=="),
+                    ident("commandName"),
+                    newLit(callbackIdent)
+                ),
+                newStmtList(newCall(callbackFunction))
+            )
+        )
+        # ifStatements.add (id: genCmdId.strVal, callbackNode: callbackFunction)
+
         if tk[1][1].kind == nnkStrLit:    # Parse command description
             genCmdDesc = tk[1][1]
         elif tk[1][1].kind == nnkCommand:
@@ -453,15 +483,42 @@ macro commands*(tks: untyped) =
 
     # printing commands usage
     # TODO create a seq containing all commands
-    let callNewCommand = nnkCall.newTree()
-    callNewCommand.add newDotExpr(newIdentNode("newCommand"), newIdentNode("runCommand"))
+    # let callNewCommand = nnkCall.newTree()
+    # callNewCommand.add newDotExpr(newIdentNode("newCommand"), newIdentNode("runCommand"))
+    
+    # template initCommands(): untyped =
+    #     when declared(aboutDescription):
+    #         cli.canPrintExtras = true
+    #     when declared(appVersion):
+    #         cli.showAppVersion = appVersion
+    #     let commandName = cli.printUsage()
 
-    result.add quote do:
-        when declared(aboutDescription):
-            cli.canPrintExtras = true
-        when declared(appVersion):
-            cli.showAppVersion = appVersion
-        let commandName = cli.printUsage()
-
-        if commandName == "newCommand":
-            `callNewCommand`
+    # result.add getAST(initCommands())
+    result.add(
+        nnkWhenStmt.newTree(
+            nnkElifBranch.newTree(
+                newCall(ident "declared", ident "aboutDescription"),
+                newStmtList(
+                    newAssignment(
+                        newDotExpr(ident "cli", ident "canPrintExtras"),
+                        ident("true")
+                    )
+                )
+            )
+        ),
+        nnkWhenStmt.newTree(
+            nnkElifBranch.newTree(
+                newCall(ident "declared", ident "appVersion"),
+                newStmtList(
+                    newAssignment(
+                        newDotExpr(ident "cli", ident "showAppVersion"),
+                        ident "appVersion"
+                    )
+                )
+            )
+        ),
+        newLetStmt(ident "commandName",
+            newCall(newDotExpr(ident("cli"), ident("printUsage")))
+        ),
+        ifStatements
+    )
