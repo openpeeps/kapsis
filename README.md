@@ -42,8 +42,21 @@ All magics happens under `commands` macro!
 
 Klymene is a bit restrictive when it comes to callbacks and files. Consider it a good start to keep your project organized.
 
-So, **if you name your command `install` then you should create an `installCommand.nim` file and import** it before calling the `commands` macro.
+If you get a compile error like this it means you need to create and import the `installCommand.nim` file  before
+calling registering your `commands` with Klymene macro.
+```
+Error: undeclared identifier: 'installCommand'
+```
+Klymene requires a `.nim` file for each command. So, if you name your command `install` then Klymene is looking for `installCommand.nim`.
 Also, each command file must contain a public `proc` named `runCommand` (required).
+
+Okay, what about **ambiguous calls warnings**? No worry. `runCommand` callbacks are triggered with file name prefix like so
+
+```
+installCommand.runCommand()
+``` 
+
+
 
 ### Basic Example
 ```nim

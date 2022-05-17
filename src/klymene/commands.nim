@@ -211,9 +211,9 @@ proc printUsage*[K: Klymene](cli: var K): string =
             quitApp(cli, true, showVersion = declared(appVersion))
 
         let suggested = cmdStartsWith(cli, inputCmd)
-        if suggested.status == true:          # quit and highlight possible matches
+        if suggested.status == true:            # quit and highlight possible matches
             quitApp(cli, true, highlightKeys = suggested.commands)
-        else: quitApp(cli, true)               # quit and prompt index
+        else: quitApp(cli, true)                # quit and prompt index
     inputArgs.delete(0)                         # delete command name from current seq
 
     var command: Command
