@@ -143,22 +143,23 @@ proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, sho
 
     # A sequence holding the total length of commands (with args and separators)
     var commandsLen: seq[int]
-    var index: seq[tuple[command, description: string, delimiters, commandLen: int, isSubCommand: bool]]
+    var index: seq[tuple[command, description: string, delimiters, commandLen: int, commandType: CommandType]]
     # Parse registered commands and prepare for printing
     for id, cmd in pairs(cli.commands):
-        # index.add("")
         if cmd.commandType == CommentLine:
-            # add index[^1], cmd.name & NewLine
-            continue    # no need to parse command line separators
+            index.add (cmd.name, "", 0, 0, CommentLine)
+            continue
         var
             i = 0
             strCommand: string
             baseIndent = 2
             countDelimiters: int
         let paramsLen = cmd.args.len
+        # write the stringified command line, starting
         add strCommand, cmd.commandName
         commandsLen.add(strCommand.len)
         for paramKey, parameter in pairs(cmd.args):
+            # Parse command parameters in order to show in print usage
             case parameter.ptype:
             of Variant:     # `Variant` expose a group of params as a|b|c|d
                 add strCommand,
@@ -179,7 +180,7 @@ proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, sho
             inc i
         
         inc(commandsLen[^1], countDelimiters)
-        index.add (strCommand, cmd.description, countDelimiters, commandsLen[^1], cmd.commandType == SubCommandLine)
+        index.add (strCommand, cmd.description, countDelimiters, commandsLen[^1], cmd.commandType)
 
     # get highest len from commandsLen
     let baseCmdIndent = sorted(commandsLen, system.cmp[int], order = SortOrder.Descending)[0]
@@ -193,10 +194,16 @@ proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, sho
             add usageOutput, "\e[90m" & aboutDescription & "\e[0m"
 
     for k, i in index.mpairs:
+        if i.commandType == CommentLine:
+            if k != 0:
+                add usageOutput, NewLine
+            add usageOutput, i.command
+            add usageOutput, NewLine
+            continue
         if i.command in highlightKeys:
             i.command = "\e[97;92m" & i.command & "\e[0m"
         var baseIndent = 10 + (baseCmdIndent - i.commandLen - i.delimiters)
-        if i.isSubCommand:
+        if i.commandType == SubCommandLine:
             baseIndent = baseIndent - 2
             add usageOutput, indent(i.command, 2)
         else:
@@ -386,14 +393,13 @@ macro commands*(tks: untyped) =
         )
     )
 
-    var showDefaultLabel: bool
+    # var showDefaultLabel: bool
     var commandsConditional = newNimNode(nnkIfStmt)
     var registeredCommands: seq[string]
     for tkey, tk in pairs(tks):
         tk[0].expectKind nnkIdent
-        if tk[0].strVal != "$":
-            if tk[0].strVal != TokenSeparator:
-                raise newException(SyntaxError, "Command declaration missing $ prefix.")
+        if tk[0].strVal != "$" and tk[0].strVal != TokenSeparator:
+            raise newException(SyntaxError, "Command declaration missing $ prefix.")
         if tk[0].strVal == TokenSeparator:
             # Handle Commands Separators
             # Separators are declared using `---` token, followed by
