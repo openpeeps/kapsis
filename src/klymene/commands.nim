@@ -18,9 +18,9 @@ from std/strutils import `%`, indent, spaces, join, startsWith, contains, count,
 
 type
     KlymeneErrors = enum
-        MaximumDepthSubCommand = "Invalid subcommand \"$1\" Maximum depth of a subcommand is by 3 levels."
-        ParentCommandNotFound = "Could not find a parent command id \"$1\""
-        ConflictCommandName = "Command \"$1\" name already exists"
+        MaximumDepthSubCommand = "Maximum subcommand depth reached (3 levels)"
+        ParentCommandNotFound = "Could not find a command id \"$1\""
+        ConflictCommandName = "Command name \"$1\" already exists"
 
     ParameterType* = enum
         Key, Variant, LongFlag, ShortFlag
@@ -73,17 +73,20 @@ type
             ## above the usage commands
         showAppVersion: string
             ## Holds the application version
+        invalidArg: string
+            ## Holds an unrecognized argument 
 
     KlymeneDefect = object of CatchableError
     SyntaxError = object of CatchableError
-
-
 
 const NewLine = "\n"
 let
     TokenSeparator {.compileTime.} = "---"
     InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
     InvalidCommandDefinition {.compileTime.} = "Invalid command definition"
+
+include klymene/private/utils
+include klymene/private/compiletime
 
 proc init[K: typedesc[Klymene]](cli: K): Klymene =
     ## Initialize an instance of Klymene
@@ -193,6 +196,9 @@ proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, sho
             # info about the author, a description and copyright notes
             add usageOutput, "\e[90m" & aboutDescription & "\e[0m"
 
+    if cli.invalidArg.len != 0:
+        stdout.write("Invalid argument $1" % [cli.invalidArg])
+
     for k, i in index.mpairs:
         if i.commandType == CommentLine:
             if k != 0:
@@ -210,11 +216,10 @@ proc printIndex*[K: Klymene](cli: K, highlightKeys: seq[string], showExtras, sho
             add usageOutput, i.command
         add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
         add usageOutput, NewLine
-    echo usageOutput
+    stdout.write usageOutput
 
-template quitApp[K: Klymene](cli: K, shouldQuit: bool,
-    showUsage = true, highlightKeys: seq[string] = @[], showExtras, showVersion = false): untyped =
-    # Template to quit app and print the current commands.
+template quitApp[K: Klymene](cli: K, shouldQuit: bool, showUsage = true,
+    highlightKeys: seq[string] = @[], showExtras, showVersion = false): untyped =
     if shouldQuit:
         if showUsage:
             cli.printIndex(highlightKeys, showExtras, showVersion)
@@ -250,9 +255,14 @@ proc printUsage*[K: Klymene](cli: var K): string =
                 p = inputArg[1..^1] # short flag
             else: p = inputArg
 
-            # Quit, prompt usage and highlight
-            # the command when provided arguments are not valid
-            quitApp(cli, command.args.hasKey(p) == false, highlightKeys = @[inputCmd])
+            # Quit, prompt usage and highlight the command when
+            # provided arguments are not valid
+            var argExists: bool
+            if command.args.hasKey(p):
+                argExists = true
+            else:
+                cli.invalidArg = p
+            quitApp(cli, argExists, highlightKeys = @[inputCmd])
 
             let parameter = command.args[p]
             case parameter.ptype:
@@ -359,27 +369,6 @@ macro about*(info: untyped) =
 macro settings*(generateBashScripts, useSmartHighlight: bool) = 
     ## Macro for changing your Klymene settings
     ## TODO
-
-# template toCamelCase(input: string): string =
-#     for i in input:
-
-template getCallbackIdent(): untyped = 
-    var commandCallbackIdent: string
-    parentCommands.add(subCommandId)
-    if isSubCommand:
-        for k, pCommand in pairs(parentCommands):
-            var word: string
-            for kk, charCommand in pairs(pCommand):
-                if k == 0 and kk == 0:
-                    word &= charCommand
-                elif kk == 0:
-                    word &= toUpperAscii(charCommand)
-                else: word &= charCommand
-            commandCallbackIdent &= word
-        commandCallbackIdent &= "Command"
-    else:
-        commandCallbackIdent = newCommandId.strVal & "Command"
-    commandCallbackIdent
 
 macro commands*(tks: untyped) =
     ## Macro for creating commands, subcommands
