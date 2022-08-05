@@ -37,6 +37,10 @@ type
             flag: string
         of ShortFlag:
             sflag: string
+        extra: string
+            ## Optionally, you can add extra descriptions.
+            ## This info will be shown when appending
+            ## `-h` or `--help` to a command. For example `app new project -h`
 
     Value* = ref object
         value: Parameter
@@ -185,11 +189,6 @@ macro about*(info: untyped) =
         #     echo i[1].kind
     result.add quote do:
         add aboutDescription, NewLine
-
-macro settings*(generateBashScripts, useSmartHighlight: bool) = 
-    ## Macro for changing your Klymene settings
-    ## TODO
-
 
 template handleCommandSeparator() =
     # Handle Commands Separators
