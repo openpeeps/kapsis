@@ -1,3 +1,6 @@
+import ./colors
+import std/terminal
+
 from std/strutils import `%`, spaces, indent
 
 const BR = ""
@@ -11,7 +14,7 @@ proc display*(label: string, color: string = "white", indent=0, br="") =
     if br == "before" or br == "both": echo BR  # add a new line before label
     # if color.len == 0:
     # else:
-    cli_colors.white(text)
+    white(text)
     if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*() = 
@@ -29,18 +32,16 @@ proc displayError*() =
 proc prompt*(label: string, color: string = "white", default=""): string =
     ## Prompt a question line and retrieve the input
     display(label)
-    var answer = stdin.readLine()
-    if default.len != 0 and answer.len == 0:
+    result = stdin.readLine()
+    if default.len != 0 and result.len == 0:
        return default
-    return answer
 
 proc promptSecret*(label: string, color:string="white", required=true): string =
     ## Prompt a hidden field and read from secret input
     display(label)
-    let inputPassword = terminal.readPasswordFromStdin()
-    if inputPassword.len == 0 and required == true:
+    result = terminal.readPasswordFromStdin()
+    if result.len == 0 and required == true:
         return promptSecret(label, required=true)
-    return inputPassword
 
 proc promptConfirm*(label: string, icon: string="👉"): bool =
     ## Prompt a confirmation label that allows only boolean input values as follows:
@@ -52,4 +53,5 @@ proc promptConfirm*(label: string, icon: string="👉"): bool =
         result = true
     of "false", "0", "no", "False", "FALSE", "NO", "No", "n", "N":
         result =  false
-    else: promptConfirm(label)
+    else:
+        result = promptConfirm(label)
