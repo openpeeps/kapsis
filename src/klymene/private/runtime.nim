@@ -122,8 +122,7 @@ method printAppIndex(cli: Klymene, highlights: seq[string],
             cmd.commandType
         )
 
-    # Get the highest length from commands
-    # so we can setup the alignments
+    # Get the highest length from commands so we can setup the alignments
     let orderedCmds = sorted(commandsLen, system.cmp[int], order = SortOrder.Descending)
     let baseCmdIndent = orderedCmds[0]
     var usageOutput: string
@@ -135,9 +134,11 @@ method printAppIndex(cli: Klymene, highlights: seq[string],
             # infos about the author, app and copyright notes.
             add usageOutput, "\e[90m" & aboutDescription & "\e[0m"
     if cli.error.len != 0:
-        stdout.write(cli.error)
+        stdout.write(cli.error & "\n\n")
     elif cli.invalidArg.len != 0:
         stdout.write("Unknown argument \"$1\"\n\n" % [cli.invalidArg])
+    elif cli.extras.len != 0:
+        stdout.write(cli.extras & "\n\n")
 
     for k, i in index.mpairs:
         if i.commandType == CommentLine:
@@ -193,6 +194,9 @@ method printUsage*(cli: var Klymene): string =
     var command: Command = cli.getCommand(inputCmd)
     if command.expectParams():
         var hasOneVariant: bool             # prevent multiple variants at once
+        var mainInputArg: string
+        if inputArgs.len != 0:
+            mainInputArg = inputArgs[0]
         for inputArg in inputArgs:
             var p: string
             if inputArg.startsWith("--"):   # get long flags
@@ -204,16 +208,20 @@ method printUsage*(cli: var Klymene): string =
 
             let inputArgExists = command.args.hasKey(p)
             if not inputArgExists:
-                # Quit, prompt usage and highlight all possible commands
-                # that match with given input. if any
-                cli.invalidArg = p
-                quitApp(cli, true, highlights = @[inputCmd])
+                # Quit, prompt usage and highlight all possible
+                # commands that match with given input (if any)
+                if p in ["h", "help"] and command.args.hasKey(mainInputArg):
+                    cli.extras = command.args[mainInputArg].help
+                    quitApp(cli, true)
+                else:
+                    cli.invalidArg = p
+                    quitApp(cli, true, highlights = @[inputCmd])
 
             let parameter = command.args[p]
             case parameter.ptype:
             of Variant:
                 if hasOneVariant:
-                    cli.error = "Only one variant at once"
+                    cli.error = "Choose one of the options"
                     quitApp(cli, true, highlights = @[inputcmd])
                 hasOneVariant = true
             of Key:

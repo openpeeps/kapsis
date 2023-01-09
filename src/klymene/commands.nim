@@ -8,9 +8,7 @@
 
 {.warning[Spacing]: off.}
 
-import std/[tables, macros, terminal, sets]
-
-from std/sequtils import delete
+import std/[tables, macros, terminal, sets, sequtils]
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
 from std/strutils import `%`, indent, spaces, join, startsWith, contains, count, split,
@@ -25,7 +23,7 @@ type
     ParameterType* = enum
         Key, Variant, LongFlag, ShortFlag
 
-    ParamTuple = tuple[ptype: ParameterType, pid: string]
+    ParamTuple = tuple[ptype: ParameterType, pid, help: string]
 
     Parameter* = ref object
         case ptype: ParameterType
@@ -37,10 +35,7 @@ type
             flag: string
         of ShortFlag:
             sflag: string
-        extra: string
-            ## Optionally, you can add extra descriptions.
-            ## This info will be shown when appending
-            ## `-h` or `--help` to a command. For example `app new project -h`
+        help: string
 
     Value* = ref object
         value: Parameter
@@ -79,6 +74,10 @@ type
         appVersion: string
         invalidArg: string
         error: string
+        extras: string
+            # when suffixed with `-h` `--help`
+            # holds temporary extra info related to
+            # a command flags/params
 
     KlymeneDefect = object of CatchableError
     SyntaxError = object of CatchableError
@@ -92,31 +91,15 @@ let
 include ./private/utils
 include ./private/runtime
 
-template getValue*[V: Value](val: V): any =
-    ## A callable template to retrieve values from a `runCommand` proc
-    # proc getValueByType(ptype: ParameterType) =
-    #     result = case ptype: ParameterType
-    #     of Key:
-    #         key: string
-    #     of Variant:
-    #         variant: seq[string]
-    #     of LongFlag:
-    #         flag: string
-    #     of ShortFlag:
-    #         sflag: string
-
-    # getValueByType(val.value)
-    ## TODO
-
-proc add[K: Klymene](cli: var K, id: string, key: int) =
+proc add(cli: var Klymene, id: string, key: int) =
     ## Add a new command separator, with or without a label
     let sepId = id & "__" & $key
     var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
     cli.commands[sepId] = Command(commandType: CommentLine, name: label)
 
-proc add[K: Klymene](cli: var K, id, cmdId, desc: string, args: seq[ParamTuple], callbackIdent: string, isSubCommand, isSeparator = false) =
-    ## Add a new command to current Klymene instance. Commands are registered
-    ## automatically from `commands` macro.
+proc add(cli: var Klymene, id, cmdId, desc: string,
+        args: seq[ParamTuple], callbackIdent: string,
+        isSubCommand, isSeparator = false) =
     if cli.commands.hasKey(id):
         raise newException(KlymeneDefect, $ConflictCommandName % [id])
     if isSubCommand:    
@@ -151,6 +134,8 @@ proc add[K: Klymene](cli: var K, id, cmdId, desc: string, args: seq[ParamTuple],
             of LongFlag:
                 # `LongFlag` are optionals. Always prefixed with double `--`
                 cli.commands[id].args[param.pid].flag = param.pid
+            if param.help.len != 0:
+                cli.commands[id].args[param.pid].help = param.help
 
 macro about*(info: untyped) =
     ## Macro for adding info and other comments above usage commands.
@@ -190,20 +175,29 @@ macro about*(info: untyped) =
     result.add quote do:
         add aboutDescription, NewLine
 
-template handleCommandSeparator() =
-    # Handle Commands Separators
-    # Separators are declared using `---` token, followed by
-    # either a label or an empty string (for space only separators),
-    # for example:
-    #   --- ""
-    if tk.len == 2:
-        tk[1].expectKind nnkStrLit
-        var sepLit = newLit("")
-        if tk[1].strVal.len != 0: # add a label to current spearator
-            sepLit.strVal = tk[1].strVal
-        result.add quote do:
-            cli.add(`sepLit`, `tKey`)
-        continue
+template handleTupleConstr(x: untyped) =
+    for a in x:
+        if a.kind == nnkStrLit:
+            if a.strVal.startsWith("--"):
+                # Variant-type params cannot contain flags
+                error(InvalidVariantWithFlags)
+            cmdParams.add (ptype: Variant, pid: a.strVal, help: "")
+        else: error(InvalidVariantWithFlags)
+    var paramHelpers: seq[tuple[k, help: string]]
+
+template handleFlags(x: untyped) =
+    for a in x:
+        if a.kind == nnkCharLit:
+            # handle short flags based on chars
+            cmdParams.add (ptype: ShortFlag, pid: $(char(a.intVal)), help: "")
+        elif a.kind == nnkStrLit:
+            # handle long flags and parameters
+            var param = a.strVal
+            var paramType = Key
+            if a.strVal.startsWith("--"):
+                param = param[2..^1]
+                paramType = LongFlag
+            cmdParams.add (ptype: paramType, pid: param, help: "")
 
 macro commands*(tks: untyped) =
     ## Macro for creating new commands or sub-commands.
@@ -218,16 +212,25 @@ macro commands*(tks: untyped) =
     var commandsConditional = newNimNode(nnkIfStmt)
     var registeredCommands: seq[string]
     var isParentCommand: bool
-    for tkey, tk in pairs(tks):
+    for tkKey, tk in pairs(tks):
         tk[0].expectKind nnkIdent
-        
-        # if tk[0].strVal == "$$":
-        #     isParentCommand = true
         if tk[0].strVal != "$" and tk[0].strVal != TokenSeparator:
-            raise newException(SyntaxError, "Invalid command missing `$` prefix")
+            error("Invalid command missing `$` prefix")
+            # raise newException(SyntaxError, "Invalid command missing `$` prefix")
         elif tk[0].strVal == TokenSeparator:
-            handleCommandSeparator()
-        
+            # Handle Commands Separators
+            # Separators are declared using `---` token, followed by
+            # either a label or an empty string (for space only separators),
+            # for example:
+            #   --- ""
+            if tk.len == 2:
+                tk[1].expectKind nnkStrLit
+                var sepLit = newLit("")
+                if tk[1].strVal.len != 0: # add a label to current spearator
+                    sepLit.strVal = tk[1].strVal
+                result.add quote do:
+                    cli.add(`sepLit`, `tkKey`)
+                continue
         # command identifier
         tk[1][0].expectKind nnkStrLit
         var
@@ -237,7 +240,6 @@ macro commands*(tks: untyped) =
             isSubCommand: bool
             subCommandId: string
             parentCommands: seq[string]
-
         if newCommandId.strVal.contains("."):
             # Determine if this will be a command or a subcommand
             # by checking for dot annotations in `newCommandId` name
@@ -273,39 +275,45 @@ macro commands*(tks: untyped) =
                 newStmtList(newCall(callbackFunction))
             )
         )
-
-        if tk[1][1].kind == nnkStrLit:    # Parse command description
+        if tk[1][1].kind == nnkStrLit:
+            # Command description
             newCommandDesc = tk[1][1]
         elif tk[1][1].kind == nnkCommand:
-            # Handle commands with static parameters
+            # Handle cmds with static parameters
             for args in tk[1][1]:
+                var cmdParams: seq[ParamTuple]
                 if args.kind == nnkIdent: #
-                    newCommandParams.add (ptype: Key, pid: args.strVal)
+                    cmdParams.add (ptype: Key, pid: args.strVal, help: "")
                 elif args.kind == nnkStrLit:
                     newCommandDesc = args
                 elif args.kind == nnkTupleConstr:
-                    for a in args:
-                        if a.kind == nnkStrLit:
-                            if a.strVal.startsWith("--"): # Variant-type params cannot contain flags
-                                raise newException(SyntaxError, InvalidVariantWithFlags)
-                            newCommandParams.add (ptype: Variant, pid: a.strVal)
-                        else: raise newException(SyntaxError, InvalidVariantWithFlags)
+                    # A\B\C Variant commands using tuple
+                    # constructor ("start", "stop", "refresh")
+                    handleTupleConstr(args)
                 elif args.kind == nnkBracket:
+                    handleFlags(args)
+                elif args.kind == nnkCommand:
                     for a in args:
-                        if a.kind == nnkCharLit:    # handle short flags based on chars
-                            newCommandParams.add (ptype: ShortFlag, pid: $(char(a.intVal)))
-                        elif a.kind == nnkStrLit:  # handle long flags and parameters
-                            var param = a.strVal
-                            var paramType = Key
-                            if a.strVal.startsWith("--"):
-                                param = param[2..^1]
-                                paramType = LongFlag
-                            newCommandParams.add (ptype: paramType, pid: param)
+                        if a.kind == nnkTupleConstr:
+                            handleTupleConstr(a)
+                        # else:
+                            # echo args.repr
+                if tk[^1].kind == nnkStmtList:
+                    # check if param has extra info to show
+                    for cmdParam in mitems(cmdParams):
+                        for pHelp in tk[^1]:
+                            expectKind pHelp, nnkPrefix
+                            expectKind pHelp[0], nnkIdent # ?
+                            if pHelp[0].strVal != "?":
+                                error("Prefix your param helper by a question mark")
+                            expectKind pHelp[1], nnkCommand
+                            if cmdParam.pid == pHelp[1][0].strVal:
+                                cmdParam.help = pHelp[1][1].strVal
+                        newCommandParams.add cmdParam
 
         # memorize the command id
         registeredCommands.add(newCommandId.strVal)
-        
-        # Register the new command
+        # Register a new command
         result.add quote do:
             var cmdId = `newCommandId`
             var isSubCommand: bool
