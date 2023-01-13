@@ -9,10 +9,12 @@
 {.warning[Spacing]: off.}
 
 import std/[tables, macros, terminal, sets, sequtils]
+
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
-from std/strutils import `%`, indent, spaces, join, startsWith, contains, count, split,
-                toUpperAscii, toLowerAscii
+from std/strutils import `%`, indent, spaces, join,
+                startsWith, contains, count, split,
+                toUpperAscii, toLowerAscii, replace
 
 type
   KlymeneErrors = enum
@@ -85,8 +87,6 @@ let
   TokenSeparator {.compileTime.} = "---"
   InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
   InvalidCommandDefinition {.compileTime.} = "Invalid command definition"
-
-include ./private/utils
 
 proc add(cli: Klymene, id: string, key: int) =
   ## Add a new command separator, with or without a label
@@ -199,6 +199,25 @@ template handleFlags(x: untyped) =
         param = param[2..^1]
         paramType = LongFlag
       cmdParams.add (ptype: paramType, pid: param, help: "")
+
+template getCallbackIdent(): untyped =
+  # Retrieve a callback identifier name based on command id
+  var cbIdent: string
+  parentCommands.add(subCommandId)
+  if isSubCommand:
+    for k, pCommand in pairs(parentCommands):
+      var word: string
+      for kk, charCommand in pairs(pCommand):
+        if k == 0 and kk == 0:
+          word &= charCommand
+        elif kk == 0:
+          word &= toUpperAscii(charCommand)
+        else: word &= charCommand
+      cbIdent &= word
+    cbIdent &= "Command"
+  else:
+    cbIdent = replace(newCommandId.strVal, " ", "") & "Command"
+  cbIdent
 
 macro commands*(tks: untyped) =
   ## Macro for creating new commands or sub-commands.

@@ -1,4 +1,4 @@
-import ./colors
+import ./interactive/colors
 import std/terminal
 
 from std/strutils import `%`, spaces, indent
