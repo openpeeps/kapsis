@@ -9,12 +9,10 @@
 {.warning[Spacing]: off.}
 
 import std/[tables, macros, terminal, sets, sequtils]
+import std/strutils
 
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
-from std/strutils import `%`, indent, spaces, join,
-                startsWith, contains, count, split,
-                toUpperAscii, toLowerAscii, replace
 
 type
   KlymeneErrors = enum
@@ -58,6 +56,8 @@ type
         # Command description
       args: OrderedTable[string, Parameter]
         # An `OrderedTable` holding all command arguments
+      index: seq[ParamTuple]
+        # A seq that reflects the order of your parameters 
     else: discard # ignore comment lines
   
   InputError = ref object
@@ -88,7 +88,7 @@ let
   InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
   InvalidCommandDefinition {.compileTime.} = "Invalid command definition"
 
-proc add(cli: Klymene, id: string, key: int) =
+proc addSeparator*(cli: Klymene, id: string, key: int) =
   ## Add a new command separator, with or without a label
   let sepId = id & "__" & $key
   var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
@@ -97,9 +97,9 @@ proc add(cli: Klymene, id: string, key: int) =
 proc addDescription*(cli: Klymene, desc: string) =
   cli.description &= desc
 
-proc add(cli: Klymene, id, cmdId, desc: string,
-    args: seq[ParamTuple], callbackIdent: string,
-    isSubCommand, isSeparator = false) =
+proc addCommand*(cli: Klymene, id, cmdId, desc: string,
+                  args: seq[ParamTuple], callbackIdent: string,
+                  isSubCommand: bool, isSeparator = false) =
   if cli.commands.hasKey(id):
     raise newException(KlymeneDefect, $ConflictCommandName % [id])
   if isSubCommand:    
@@ -110,6 +110,7 @@ proc add(cli: Klymene, id, cmdId, desc: string,
   cli.commands[id].commandName = cmdId
   cli.commands[id].callbackName = callbackIdent
   cli.commands[id].description = desc
+  cli.commands[id].index = args
 
   if args.len != 0:
     var
@@ -200,6 +201,8 @@ template handleFlags(x: untyped) =
         paramType = LongFlag
       cmdParams.add (ptype: paramType, pid: param, help: "")
 
+let suffixCommand {.compileTime.} = "Command"
+
 template getCallbackIdent(): untyped =
   # Retrieve a callback identifier name based on command id
   var cbIdent: string
@@ -207,162 +210,161 @@ template getCallbackIdent(): untyped =
   if isSubCommand:
     for k, pCommand in pairs(parentCommands):
       var word: string
-      for kk, charCommand in pairs(pCommand):
+      for kk, ch in pairs(pCommand):
         if k == 0 and kk == 0:
-          word &= charCommand
+          word &= ch
         elif kk == 0:
-          word &= toUpperAscii(charCommand)
-        else: word &= charCommand
+          word &= toUpperAscii(ch)
+        else: word &= ch
       cbIdent &= word
-    cbIdent &= "Command"
+    cbIdent &= suffixCommand
   else:
-    cbIdent = replace(newCommandId.strVal, " ", "") & "Command"
+    var i: int
+    var strId: string
+    let id = newCommandId.strVal
+    let idlen = id.len
+    while i < idlen:
+      if isAlphaAscii(id[i]):
+        strId &= id[i]
+      elif id[i] in Whitespace + {'.'}:
+        inc i # skip and make next char uppercase 
+        strId &= toUpperAscii(id[i])
+      inc i
+    cbIdent = strId & suffixCommand
   cbIdent
 
-macro commands*(tks: untyped) =
-  ## Macro for creating new commands or sub-commands.
-  tks.expectKind nnkStmtList
+proc handleNamedArguments(tk: NimNode, cmdParams: var seq[ParamTuple]) {.compileTime.} =
+  # parse typed type arguments
+  for arg in tk:
+    expectKind arg, nnkIdent
+    cmdParams.add((ptype: Key, pid: arg.strVal, help: ""))
+
+proc `%`(i: string): NimNode =
+  result = ident(i)
+
+macro commands*(lines: untyped) =
+  expectKind lines, nnkStmtList
   result = newStmtList()
-  var commandsConditional = newNimNode(nnkIfStmt)
-  var registeredCommands: seq[string]
-  var isParentCommand: bool
-  for tkKey, tk in pairs(tks):
-    tk[0].expectKind nnkIdent
-    if tk[0].strVal != "$" and tk[0].strVal != TokenSeparator:
-      error("Invalid command missing `$` prefix")
-      # raise newException(SyntaxError, "Invalid command missing `$` prefix")
-    elif tk[0].strVal == TokenSeparator:
-      # Handle Commands Separators
+  var
+    commandsConditional = newNimNode(nnkIfStmt)
+    registeredCommands: seq[string]
+    isParentCommand: bool
+  for k, line in lines.pairs():
+    expectKind line, nnkPrefix
+    expectKind line[0], nnkIdent
+
+    if line[0].strVal == "---":
+      # Handle command separators
       # Separators are declared using `---` token, followed by
-      # either a label or an empty string (for space only separators),
-      # for example:
-      #   --- ""
-      if tk.len == 2:
-        tk[1].expectKind nnkStrLit
-        var sepLit = newLit("")
-        if tk[1].strVal.len != 0: # add a label to current spearator
-          sepLit.strVal = tk[1].strVal
-        result.add quote do:
-          cli.add(`sepLit`, `tkKey`)
-        continue
-    # command identifier
-    tk[1][0].expectKind nnkStrLit
-    var
-      newCommandId = tk[1][0]
-      newCommandDesc = newNimNode(nnkStrLit)
-      newCommandParams: seq[ParamTuple]
-      isSubCommand: bool
-      subCommandId: string
-      parentCommands: seq[string]
-    if newCommandId.strVal.contains("."):
-      # Determine if this will be a command or a subcommand
-      # by checking for dot annotations in `newCommandId` name
-      # The maximum depth of a subcommand is by 3 levels.
-      if count(newCommandId.strVal, '.') > 3:
-        raise newException(KlymeneDefect, $MaximumDepthSubCommand % [newCommandId.strVal])
-      elif newCommandId.strVal in registeredCommands:
-        raise newException(KlymeneDefect, $ConflictCommandName % [newCommandId.strVal])
-      parentCommands = split(newCommandId.strVal, '.')
-      subCommandId = parentCommands[^1]
-      parentCommands = parentCommands[0 .. ^2]
-      for parentCommand in parentCommands:
-        if parentCommand notin registeredCommands:
-          raise newException(KlymeneDefect, $ParentCommandNotFound % [parentCommand])
-      isSubCommand = true
-
-    # Store callback of current command in callbacks table
-    let callbackFunction = newStmtList()
-    let callbackIdent = getCallbackIdent()
-
-    callbackFunction.add newDotExpr(
-      ident callbackIdent,
-      ident "runCommand"
-    )
-
-    commandsConditional.add(
-      nnkElifBranch.newTree(
-        nnkInfix.newTree(
-          ident("=="),
-          ident("commandName"),
-          newLit(callbackIdent)
-        ),
-        newStmtList(newCall(callbackFunction))
-      )
-    )
-    if tk[1][1].kind == nnkStrLit:
-      # Command description
-      newCommandDesc = tk[1][1]
-    elif tk[1][1].kind == nnkCommand:
-      # Handle cmds with static parameters
-      for args in tk[1][1]:
-        var cmdParams: seq[ParamTuple]
-        if args.kind == nnkIdent: #
-          cmdParams.add (ptype: Key, pid: args.strVal, help: "")
-        elif args.kind == nnkStrLit:
-          newCommandDesc = args
-        elif args.kind == nnkTupleConstr:
-          # A\B\C Variant commands using tuple
-          # constructor ("start", "stop", "refresh")
-          handleTupleConstr(args)
-        elif args.kind == nnkBracket:
-          handleFlags(args)
-        elif args.kind == nnkCommand:
-          for a in args:
-            if a.kind == nnkTupleConstr:
-              handleTupleConstr(a)
-        if tk[^1].kind == nnkStmtList:
-          # check if param has extra info to show
-          for cmdParam in mitems(cmdParams):
-            for pHelp in tk[^1]:
-              expectKind pHelp, nnkPrefix
-              expectKind pHelp[0], nnkIdent # ?
-              if pHelp[0].strVal != "?":
-                error("Prefix your param helper by a question mark")
-              expectKind pHelp[1], nnkCommand
-              if cmdParam.pid == pHelp[1][0].strVal:
-                cmdParam.help = pHelp[1][1].strVal
-            newCommandParams.add cmdParam
-
-    # memorize the command id
-    registeredCommands.add(newCommandId.strVal)
-    # Register a new command
-    result.add quote do:
-      var cmdId = `newCommandId`
-      var isSubCommand: bool
-      if `isSubCommand` != 0:
-        cmdId = `subCommandId`
-        isSubCommand = true
-      cli.add(
-        `newCommandId`,
-        cmdId,
-        `newCommandDesc`,
-        `newCommandParams`,
-        `callbackIdent`,
-        isSubCommand = isSubCommand
-      )
-
-  # TODO map command values
-  result.add(
-    nnkWhenStmt.newTree(
-      nnkElifBranch.newTree(
-        newCall(ident "declared", ident "appVersion"),
-        newStmtList(
-          newAssignment(
-            newDotExpr(
-              ident "cli",
-              ident "appVersion"
-            ),
-            ident "appVersion"
-          )
+      # either a label or an empty string, for example:
+      #   --- "A label"
+      expectKind line[1], nnkStrLit
+      result.add(
+        newCall(
+          newDotExpr(%"cli", %"addSeparator"),
+          line[1],
+          newLit k
         )
       )
-    ),
+    elif line[0].strVal == "$":
+      var
+        newCommandId: NimNode
+        newCommandDesc = newNimNode nnkStrLit
+        newCommandParams: seq[ParamTuple]
+        isSubCommand: bool
+        subCommandId: string
+        parentCommands: seq[string]
+      # if newCommandId.strVal.contains("."):
+      #   subCommandId = true
+      if line[1].kind == nnkCommand:
+        newCommandId = line[1][0]
+      elif line[1].kind == nnkStrLit:
+        newCommandId = line[1]
+
+      # Store callback of current command in callbacks table
+      let
+        callbackFunction = newStmtList()
+        callbackIdent = getCallbackIdent()
+  
+      callbackFunction.add newDotExpr(
+        % callbackIdent,
+        % "runCommand"
+      )
+      commandsConditional.add(
+        nnkElifBranch.newTree(
+          nnkInfix.newTree(
+            % "==",
+            % "commandName",
+            newLit(callbackIdent)
+          ),
+          newStmtList(newCall(callbackFunction))
+        )
+      )
+
+      # Command Parser
+      # parse command arguments, flags and description
+      for token in line:
+        if token.kind == nnkIdent:
+          if token.eqIdent "$":
+            continue
+        var cmdParams: seq[ParamTuple]
+        if token.kind == nnkCommand:
+          for tk in token:
+            if tk.kind == nnkAccQuoted:
+              tk.handleNamedArguments(cmdParams)
+            elif tk.kind == nnkCommand:
+              for arg in tk:
+                if arg.kind == nnkAccQuoted:
+                  arg.handleNamedArguments(cmdParams)
+                elif arg.kind == nnkTupleConstr:
+                  # A\B\C Variant commands using tuple
+                  # constructor ("start", "stop", "refresh")
+                  handleTupleConstr(arg)
+            elif tk.kind == nnkTupleConstr:
+              # A\B\C Variant commands using tuple
+              # constructor ("start", "stop", "refresh")
+              handleTupleConstr(tk)
+          if cmdParams.len != 0:
+            newCommandParams.add cmdParams
+        elif token.kind == nnkStmtList:
+          for help in token:
+            if help[1].kind == nnkStrLit:
+              # set general command description
+              newCommandDesc = help[1]
+            elif help[1].kind == nnkCommand:
+              expectKind help[1][0], nnkIdent  # key ident
+              expectKind help[1][1], nnkStrLit # key description
+              for p in mitems(newCommandParams):
+                # find a better way to set helpers
+                if eqIdent(help[1][0], p.pid):
+                  p.help = help[1][1].strVal
+      
+      # memorize the command id
+      registeredCommands.add(newCommandId.strVal)
+
+      # register a new command
+      result.add quote do:
+        var cmdId = `newCommandId`
+        var isSubCommand: bool
+        if `isSubCommand` != 0:
+          cmdId = `subCommandId`
+          isSubCommand = true
+        cli.addCommand(
+          `newCommandId`,
+          cmdId,
+          `newCommandDesc`,
+          `newCommandParams`,
+          `callbackIdent`,
+          isSubCommand = isSubCommand
+        )
+
+  result.add(
     newLetStmt(
-      ident "commandName",
+      % "commandName",
       newCall(
         newDotExpr(
-          ident("cli"),
-          ident("printUsage")
+          % "cli",
+          % "printUsage"
         )
       )
     ),

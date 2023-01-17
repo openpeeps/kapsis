@@ -36,61 +36,42 @@ proc expectParams(command: Command): bool =
   ## Determine if a command expect any parameters
   result = command.args.len != 0
 
-# proc getVariants(command: Command) =
-#     var vars: seq[string]
-#     for k, param in pairs(command.args):
-#         if param.ptype == Variant:
-#             vars = param.variant
-
-# proc hasFlags(command: Command): bool =
-#     ## Determine if given `Command` has flags
-#     for k, p in pairs(command.args):
-#         if p.ptype in {ShortFlag, LongFlag}:
-#             return true
-
-
 #
 # Print usage
 #
-
 proc style(str: string): string {.inline.} =
   result = "\e[90m" & str & "\e[0m"
 
-proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersion: bool) =
+proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
   ## Print index with available commands, flags and parameters
   if showVersion: 
     echo cli.appVersion
     return
-  var commandsLen: seq[int]
-  # a seq holding the total length of each command,
-  # including arguments and separators. this is used
-  # for usage alignment before printing.
-
-  var index: seq[
-    tuple[
-      command, description: string,
-      commandLen: int,
-      commandType: CommandType
+  if not showUsage and cli.extras.len != 0:
+    stdout.write(cli.extras & "\n")
+    return
+  var
+    commandsLen: seq[int]
+    index: seq[
+      tuple[
+        command, description: string,
+        commandLen: int,
+        commandType: CommandType
+      ]
     ]
-  ]
 
-  # Parse registered commands and prepare for printing
   for id, cmd in pairs(cli.commands):
     if cmd.commandType == CommentLine:
       index.add (cmd.name, "", 0, CommentLine)
       continue
-    
     var
       i = 0
       strCommand: string
       baseIndent = 2
     let paramsLen = cmd.args.len
-    
-    # write the stringified command line, starting
     add strCommand, cmd.commandName
     commandsLen.add strCommand.len
     for paramKey, parameter in pairs(cmd.args):
-      # Parse command parameters in order to show in print usage
       case parameter.ptype:
       of Variant:     # `Variant` expose a group of params as a|b|c|d
         if i == 0:
@@ -120,7 +101,7 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
       cmd.commandType
     )
 
-  # Get the highest length from commands so we can setup the alignments
+  # Order commands by length 
   let
     orderedCmds = sorted(commandsLen, system.cmp[int], order = SortOrder.Descending)
     baseCmdIndent = orderedCmds[0]
@@ -129,6 +110,7 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
     # prepend extra information when pressing `-h` or `--help`
     # infos about the author, app and copyright notes.
     add usageOutput, "\e[90m" & cli.description & "\e[0m"
+
   if cli.error.len != 0:
     stdout.write(cli.error & "\n\n")
   elif cli.invalidArg.len != 0:
@@ -146,9 +128,7 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
 
     if i.command in highlights:
       i.command = "\e[97;92m" & i.command & "\e[0m"
-
     var baseIndent = 10 + (baseCmdIndent - i.commandLen)
-
     if i.commandType == SubCommandLine:
       # indent sub commands by 2 spaces
       baseIndent = baseIndent - 2
@@ -163,8 +143,7 @@ proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
       highlights: seq[string] = @[], showExtras, showVersion = false) =
   ## Quit from current state and print the application index
   if shouldQuit:
-    if showUsage:
-      cli.printAppIndex(highlights, showExtras, showVersion)
+    cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
     quit()
 
 proc printUsage*(cli: Klymene): string =
@@ -188,44 +167,47 @@ proc printUsage*(cli: Klymene): string =
 
   var command: Command = cli.getCommand(inputCmd)
   if command.expectParams():
-    var hasOneVariant: bool             # prevent multiple variants at once
+    var gotVariant: bool             # prevent multiple variants at once
     var mainInputArg: string
     if inputArgs.len != 0:
       mainInputArg = inputArgs[0]
-    for inputArg in inputArgs:
-      var p: string
-      if inputArg.startsWith("--"):   # get long flags
-        p = inputArg[2..^1]
-      elif inputArg[0] == '-':        # get short flags
-        p = inputArg[1..^1]
-      else:                           # get variant or custom param
-        p = inputArg
 
-      let inputArgExists = command.args.hasKey(p)
-      if not inputArgExists:
+    for i in 0 .. inputArgs.high:
+      var p: string
+      if inputArgs[i].startsWith("--"):   # get long flags
+        p = inputArgs[i][2..^1]
+      elif inputArgs[i][0] == '-':        # get short flags
+        p = inputArgs[i][1..^1]
+      else:                           # get variant or custom param
+        p = inputArgs[i]
+      # echo command.args
+
+      if command.args.hasKey(p):
+        case command.args[p].ptype:
+        of Variant:
+          if gotVariant:
+            cli.error = "Choose one of the options"
+            quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd])
+          gotVariant = true
+        of Key:
+          echo command.args[p].key
+        of ShortFlag:
+          echo "short flag"
+        of LongFlag:
+          echo "long flag"
+      elif command.index[0].ptype == Key:
+        echo command.args[command.index[0].pid].key
+      else:
         # Quit, prompt usage and highlight all possible
         # commands that match with given input (if any)
         if p in ["h", "help"] and command.args.hasKey(mainInputArg):
           cli.extras = command.args[mainInputArg].help
-          quitApp(cli, true)
+          quitApp(cli, shouldQuit = true, showUsage = false)
         else:
           cli.invalidArg = p
           quitApp(cli, true, highlights = @[inputCmd])
-
-      let parameter = command.args[p]
-      case parameter.ptype:
-      of Variant:
-        if hasOneVariant:
-          cli.error = "Choose one of the options"
-          quitApp(cli, true, highlights = @[inputcmd])
-        hasOneVariant = true
-      of Key:
-        echo parameter.key
-      of ShortFlag:
-        echo "short flag"
-      of LongFlag:
-        echo "long flag"
   else:
     quitApp(cli, inputArgs.len != 0) # quit when a command does not support extra args
     command = cli.commands[inputCmd]
+
   result = command.callbackName
