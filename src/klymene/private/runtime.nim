@@ -45,7 +45,7 @@ proc style(str: string): string {.inline.} =
 proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
   ## Print index with available commands, flags and parameters
   if showVersion: 
-    echo cli.appVersion
+    echo cli.version
     return
   if not showUsage and cli.extras.len != 0:
     stdout.write(cli.extras & "\n")
@@ -157,7 +157,7 @@ proc printUsage*(cli: Klymene): string =
       # for displaying extra comments and options
       quitApp(cli, true, showExtras = true)
     elif inputCmd in ["-v", "--version"]:
-      quitApp(cli, true, showVersion = cli.appVersion.len != 0)
+      quitApp(cli, true, showVersion = true)
 
     let suggested = cli.startsWith inputCmd
     if suggested.status == true:  # quit and highlight possible matches

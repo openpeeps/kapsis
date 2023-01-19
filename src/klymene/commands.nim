@@ -8,6 +8,7 @@
 
 {.warning[Spacing]: off.}
 
+import pkg/pkginfo
 import std/[tables, macros, terminal, sets, sequtils]
 import std/strutils
 
@@ -71,7 +72,7 @@ type
     commands: OrderedTable[string, Command]
       ## Holds a parsable table with `Command` instances
     description: string
-    appVersion: string
+    version: string
     invalidArg: string
     error: string
     extras: string
@@ -96,6 +97,9 @@ proc addSeparator*(cli: Klymene, id: string, key: int) =
 
 proc addDescription*(cli: Klymene, desc: string) =
   cli.description &= desc
+
+proc addVersion*(cli: Klymene, vers: string) =
+  cli.version = vers
 
 proc addCommand*(cli: Klymene, id, cmdId, desc: string,
                   args: seq[ParamTuple], callbackIdent: string,
@@ -149,11 +153,6 @@ macro about*(info) =
   ## when user press `app -h` or `app --help`
   info.expectKind nnkStmtList
   result = newStmtList()
-  result.add(
-    nnkVarSection.newTree(
-      newIdentDefs(ident "appVersion", ident "string")
-    ),
-  )
 
   for i in info:
     if i.kind == nnkStrLit:
@@ -166,12 +165,9 @@ macro about*(info) =
         let size = i[1]
         result.add quote do:
           cli.addDescription(indent(`commentLine`, `size`) & NewLine)
-      elif i[0].kind == nnkIdent:
-        if i[0].eqIdent "version":
-          i[1].expectKind nnkStrLit
-          let currentAppVersion = i[1].strVal
-          result.add quote do:
-            appVersion = `currentAppVersion`
+  let currentAppVersion = $pkg().getVersion
+  result.add quote do:
+    cli.addVersion `currentAppVersion`
   result.add quote do:
     cli.addDescription(NewLine)
 
