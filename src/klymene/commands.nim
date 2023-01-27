@@ -9,14 +9,16 @@
 {.warning[Spacing]: off.}
 
 import pkg/pkginfo
-import std/[tables, macros, terminal, sets, sequtils]
+import std/[macros, tables, terminal, sets, sequtils]
 import std/strutils
 
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
 
+export tables
+
 type
-  KlymeneErrors = enum
+  KlymeneErrors* = enum
     MaximumDepthSubCommand = "Maximum subcommand depth reached (3 levels)"
     ParentCommandNotFound = "Could not find a command id \"$1\""
     ConflictCommandName = "Command name \"$1\" already exists"
@@ -24,64 +26,64 @@ type
   ParameterType* = enum
     Key, Variant, LongFlag, ShortFlag
 
-  ParamTuple = tuple[ptype: ParameterType, pid, help: string]
+  ParamTuple* = tuple[ptype: ParameterType, pid, help: string]
 
   Parameter* = ref object
-    case ptype: ParameterType
+    case ptype*: ParameterType
     of Key:
       key: string
+      vStr*: string
     of Variant:
       variant: seq[string]
+      vTuple*: string
     of LongFlag:
       flag: string
+      vLong*: bool
     of ShortFlag:
       sflag: string
-    help: string
+      vShort*: bool
+    help*: string
 
-  Value* = ref object
-    value: Parameter
+  Values* = ptr OrderedTable[string, Parameter]
 
   CommandType* = enum
-    CommandLine, CommentLine, SubCommandLine
+    typeCommandLine
+    typeCommentLine
+    typeSubCommandLine
 
+  Callback* = proc(v: Values) {.nimcall.}
   Command* = object
-    name: string
+    name*: string
       # Holds the raw command name
     case commandType: CommandType
-    of CommandLine, SubCommandLine:
+    of typeCommandLine, typeSubCommandLine:
       commandName: string
-        # Holds only the command name
-      callbackName: string
-        # Holds the callback name
+      callbackName*: string
+      callback: Callback
       description: string
-        # Command description
       args: OrderedTable[string, Parameter]
-        # An `OrderedTable` holding all command arguments
       index: seq[ParamTuple]
         # A seq that reflects the order of your parameters 
     else: discard # ignore comment lines
-  
-  InputError = ref object
-    msg: string
 
   Klymene* = ref object
-    indent: int8
+    indent*: int8
       # Used to indent & align comments (default 25 spaces)
-    app_name: string
+    app_name*: string
       ## The application name
-    commands: OrderedTable[string, Command]
+    commands*: OrderedTableRef[string, Command]
       ## Holds a parsable table with `Command` instances
-    description: string
-    version: string
-    invalidArg: string
-    error: string
-    extras: string
+    description*: string
+    version*: string
+    invalidArg*: string
+    error*: string
+    extras*: string
       # when suffixed with `-h` `--help`
       # holds temporary extra info related to
       # a command flags/params
 
-  KlymeneDefect = object of CatchableError
-  SyntaxError = object of CatchableError
+  KlymeneDefect* = object of CatchableError
+  SyntaxError* = object of CatchableError
 
 const NewLine = "\n"
 let
@@ -89,11 +91,224 @@ let
   InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
   InvalidCommandDefinition {.compileTime.} = "Invalid command definition"
 
+#
+# Runtime API
+#
+
+proc init[K: typedesc[Klymene]](cli: K): Klymene =
+  ## Initialize an instance of Klymene
+  result = cli()
+
+proc hasCommand(cli: Klymene, id: string): bool = 
+  ## Determine if command exists by id
+  result = cli.commands.hasKey(id)
+
+proc getCommand(cli: Klymene, id: string): Command =
+  ## Return a Command instance based on given `id`
+  result = cli.commands[id]
+
+proc startsWith(cli: Klymene, prefix: string): tuple[status: bool, commands: seq[string]] =
+  ## Determine if there any commands that match given prefix.
+  if prefix.contains("."):
+    var prefixes = prefix.split(".")
+    for cmdId in keys(cli.commands):
+      if cmdId.startsWith(prefixes[0]):
+        # check if there are any commands to add in highlights
+        result.commands.add cmdId
+  else:      
+    for cmdId in keys(cli.commands):
+      if cmdId.startsWith(prefix):
+        result.commands.add(cmdId)
+  result.status = result.commands.len != 0
+
+#
+# Command API
+# 
+
+proc expectParams(command: Command): bool =
+  ## Determine if a command expect any parameters
+  result = command.args.len != 0
+
+#
+# Print usage
+#
+proc style(str: string): string {.inline.} =
+  result = "\e[90m" & str & "\e[0m"
+
+proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
+  ## Print index with available commands, flags and parameters
+  if showVersion: 
+    echo cli.version
+    return
+  if not showUsage and cli.extras.len != 0:
+    stdout.write(cli.extras & "\n")
+    return
+  var
+    commandsLen: seq[int]
+    index: seq[
+      tuple[
+        command, description: string,
+        commandLen: int,
+        commandType: CommandType
+      ]
+    ]
+
+  for id, cmd in pairs(cli.commands):
+    if cmd.commandType == typeCommentLine:
+      index.add (cmd.name, "", 0, typeCommentLine)
+      continue
+    var
+      i = 0
+      strCommand: string
+      baseIndent = 2
+    let paramsLen = cmd.args.len
+    add strCommand, cmd.commandName
+    commandsLen.add strCommand.len
+    for paramKey, parameter in pairs(cmd.args):
+      case parameter.ptype:
+      of Variant:     # `Variant` expose a group of params as a|b|c|d
+        if i == 0:
+          add strCommand, indent(paramKey, 1)
+        else:
+          add strCommand, paramKey
+        inc(commandsLen[^1], paramKey.len)
+        if (i + 1) != paramsLen:
+          # add pipe separator for variant-based parameters
+          add strCommand, indent(style "|", 0)
+        inc commandsLen[^1]
+      of Key:         # `Key` params can handle dynamic strings
+        add strCommand, indent("<" & "\e[0m" & paramKey & ">", 1)
+        inc(commandsLen[^1], paramKey.len + 3) # plus `<` and `>` and 1 space
+      of ShortFlag:   # `ShortFlag` are optionals. Always prefixed with a single `-`
+        add strCommand, indent("-" & paramKey, 1)
+        inc(commandsLen[^1], paramKey.len + 2) # plus `-` and 1 space
+      of LongFlag:    # `LongFlag` are optionals. Always prefixed with double `--`
+        add strCommand, indent("--" & paramKey, 1)
+        inc(commandsLen[^1], paramKey.len + 3) # plus `--` and 1 space
+      inc i
+
+    index.add (
+      strCommand,
+      cmd.description,
+      commandsLen[^1],
+      cmd.commandType
+    )
+
+  # Order commands by length 
+  let
+    orderedCmds = sorted(commandsLen, system.cmp[int], order = SortOrder.Descending)
+    baseCmdIndent = orderedCmds[0]
+  var usageOutput: string
+  if cli.description.len != 0 and showExtras:
+    # prepend extra information when pressing `-h` or `--help`
+    # infos about the author, app and copyright notes.
+    add usageOutput, "\e[90m" & cli.description & "\e[0m"
+
+  if cli.error.len != 0:
+    stdout.write(cli.error & "\n\n")
+  elif cli.invalidArg.len != 0:
+    stdout.write("Unknown argument \"$1\"\n\n" % [cli.invalidArg])
+  elif cli.extras.len != 0:
+    stdout.write(cli.extras & "\n\n")
+
+  for k, i in index.mpairs:
+    if i.commandType == typeCommentLine:
+      if k != 0:
+        add usageOutput, NewLine
+      add usageOutput, i.command
+      add usageOutput, NewLine
+      continue
+
+    if i.command in highlights:
+      i.command = "\e[97;92m" & i.command & "\e[0m"
+    var baseIndent = 10 + (baseCmdIndent - i.commandLen)
+    if i.commandType == typeSubCommandLine:
+      # indent sub commands by 2 spaces
+      baseIndent = baseIndent - 2
+      add usageOutput, indent(i.command, 2)
+    else:
+      add usageOutput, indent(i.command, 2)
+    add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
+    add usageOutput, NewLine
+  stdout.write usageOutput
+
+proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
+      highlights: seq[string] = @[], showExtras, showVersion = false) =
+  ## Quit from current state and print the application index
+  if shouldQuit:
+    cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
+    quit()
+
+proc printUsage*(cli: Klymene): string =
+  ## Parse and print usage based on given command line parameters
+  var inputArgs: seq[string] = commandLineParams()
+  quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
+  let inputCmd = inputArgs[0]
+  if not cli.hasCommand inputCmd:
+    if inputCmd in ["-h", "--help"]:
+      # Quit and prompt usage with `showExtras`
+      # for displaying extra comments and options
+      quitApp(cli, true, showExtras = true)
+    elif inputCmd in ["-v", "--version"]:
+      quitApp(cli, true, showVersion = true)
+
+    let suggested = cli.startsWith inputCmd
+    if suggested.status == true:  # quit and highlight possible matches
+      quitApp(cli, true, highlights = suggested.commands)
+    else: quitApp(cli, true)  # quit and prompt index
+  inputArgs.delete(0) # delete command name from current seq
+
+  var command: Command = cli.getCommand(inputCmd)
+  if command.expectParams():
+    var gotVariant: bool             # prevent multiple variants at once
+    var mainInputArg: string
+    if inputArgs.len != 0:
+      mainInputArg = inputArgs[0]
+
+    for i in 0 .. inputArgs.high:
+      var p: string
+      if inputArgs[i].startsWith("--"):   # get long flags
+        p = inputArgs[i][2..^1]
+      elif inputArgs[i][0] == '-':        # get short flags
+        p = inputArgs[i][1..^1]
+      else:                           # get variant or custom param
+        p = inputArgs[i]
+      # echo command.args
+
+      if command.args.hasKey(p):
+        case command.args[p].ptype:
+        of Variant:
+          if gotVariant:
+            cli.error = "Choose one of the options"
+            quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd])
+          gotVariant = true
+        of Key:
+          echo command.args[p].key
+        of ShortFlag:
+          echo "short flag"
+        of LongFlag:
+          command.args[p].vLong = true
+      elif command.index[0].ptype == Key:
+        echo command.args[command.index[0].pid].key
+      else:
+        # Quit, prompt usage and highlight all possible
+        # commands that match with given input (if any)
+        if p in ["h", "help"] and command.args.hasKey(mainInputArg):
+          cli.extras = command.args[mainInputArg].help
+          quitApp(cli, shouldQuit = true, showUsage = false)
+        else:
+          cli.invalidArg = p
+          quitApp(cli, true, highlights = @[inputCmd])
+  else:
+    quitApp(cli, inputArgs.len != 0) # quit when a command does not support extra args
+    command = cli.commands[inputCmd]
+  result = command.callbackName
+
 proc addSeparator*(cli: Klymene, id: string, key: int) =
   ## Add a new command separator, with or without a label
   let sepId = id & "__" & $key
   var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
-  cli.commands[sepId] = Command(commandType: CommentLine, name: label)
+  cli.commands[sepId] = Command(commandType: typeCommentLine, name: label)
 
 proc addDescription*(cli: Klymene, desc: string) =
   cli.description &= desc
@@ -103,16 +318,17 @@ proc addVersion*(cli: Klymene, vers: string) =
 
 proc addCommand*(cli: Klymene, id, cmdId, desc: string,
                   args: seq[ParamTuple], callbackIdent: string,
-                  isSubCommand: bool, isSeparator = false) =
+                  isSubCommand: bool, callback: Callback) =
   if cli.commands.hasKey(id):
     raise newException(KlymeneDefect, $ConflictCommandName % [id])
   if isSubCommand:    
-    cli.commands[id] = Command(commandType: SubCommandLine)
+    cli.commands[id] = Command(commandType: typeSubCommandLine)
   else:
-    cli.commands[id] = Command(commandType: CommandLine)
+    cli.commands[id] = Command(commandType: typeCommandLine)
   cli.commands[id].name = id
   cli.commands[id].commandName = cmdId
   cli.commands[id].callbackName = callbackIdent
+  cli.commands[id].callback = callback
   cli.commands[id].description = desc
   cli.commands[id].index = args
 
@@ -142,10 +358,38 @@ proc addCommand*(cli: Klymene, id, cmdId, desc: string,
       if param.help.len != 0:
         cli.commands[id].args[param.pid].help = param.help
 
+#
+# Compile time API
+#
+proc `%`(i: string): NimNode =
+  result = ident(i)
+
 macro App*(body) =
   result = newStmtList()
-  result.add newVarStmt(ident "cli", newCall(ident "Klymene"))
+  result.add newVarStmt(
+    ident "cli",
+    newCall(ident "Klymene")
+  )
+  result.add(
+    newAssignment(
+      newDotExpr(
+        ident "cli",
+        ident "commands"
+      ),
+      newCall(
+        nnkBracketExpr.newTree(
+          ident "newOrderedTable",
+          ident "string",
+          ident "Command"
+        )
+      )
+    )
+  )
+
   result.add body
+
+macro settings*(opts) =
+  discard
 
 macro about*(info) =
   ## Macro for adding info and other comments above usage commands.
@@ -161,17 +405,16 @@ macro about*(info) =
     elif i.kind == nnkCommand:
       if i[0].kind == nnkStrLit:
         i[1].expectKind nnkIntLit
-        let commentLine = i[0]
+        let typeCommentLine = i[0]
         let size = i[1]
         result.add quote do:
-          cli.addDescription(indent(`commentLine`, `size`) & NewLine)
+          cli.addDescription(indent(`typeCommentLine`, `size`) & NewLine)
   let currentAppVersion = $pkg().getVersion
   result.add quote do:
     cli.addVersion `currentAppVersion`
   result.add quote do:
     cli.addDescription(NewLine)
 
-include ./private/runtime
 
 template handleTupleConstr(x: untyped) =
   for a in x:
@@ -183,19 +426,32 @@ template handleTupleConstr(x: untyped) =
     else: error(InvalidVariantWithFlags)
   var paramHelpers: seq[tuple[k, help: string]]
 
-template handleFlags(x: untyped) =
-  for a in x:
-    if a.kind == nnkCharLit:
-      # handle short flags based on chars
-      cmdParams.add (ptype: ShortFlag, pid: $(char(a.intVal)), help: "")
-    elif a.kind == nnkStrLit:
-      # handle long flags and parameters
-      var param = a.strVal
-      var paramType = Key
-      if a.strVal.startsWith("--"):
-        param = param[2..^1]
-        paramType = LongFlag
-      cmdParams.add (ptype: paramType, pid: param, help: "")
+template handleShortFlag(x: untyped) =
+  # handle short flags based on chars
+  cmdParams.add (ptype: ShortFlag, pid: $(char(x.intVal)), help: "")
+
+proc addValue(paramName: string, paramDefaultValue: string): NimNode {.compileTime.} =
+  let value = nnkObjConstr.newTree(
+    % "Value",
+    nnkExprColonExpr.newTree(
+      % "vType",
+      % "LongFlag"
+    ),
+    nnkExprColonExpr.newTree(
+      % "vLong",
+      newLit("false")
+    )
+  )
+  result = nnkExprEqExpr.newTree(% paramName, value)
+
+template handleLongFlagOrNamedArg(x: untyped) =
+  # handle long flags or static named arguments
+  var param = x.strVal
+  var paramType = Key
+  if x.strVal.startsWith("--"):
+    param = param[2..^1]
+    paramType = LongFlag
+  cmdParams.add (ptype: paramType, pid: param, help: "")
 
 let suffixCommand {.compileTime.} = "Command"
 
@@ -235,12 +491,10 @@ proc handleNamedArguments(tk: NimNode, cmdParams: var seq[ParamTuple]) {.compile
     expectKind arg, nnkIdent
     cmdParams.add((ptype: Key, pid: arg.strVal, help: ""))
 
-proc `%`(i: string): NimNode =
-  result = ident(i)
-
 macro commands*(lines: untyped) =
   expectKind lines, nnkStmtList
   result = newStmtList()
+  result.add(newCommentStmtNode("Register commands"))
   var
     commandsConditional = newNimNode(nnkIfStmt)
     registeredCommands: seq[string]
@@ -263,6 +517,7 @@ macro commands*(lines: untyped) =
         )
       )
     elif line[0].strVal == "$":
+      # Handle commands and sub commands
       var
         newCommandId: NimNode
         newCommandDesc = newNimNode nnkStrLit
@@ -276,26 +531,9 @@ macro commands*(lines: untyped) =
         newCommandId = line[1][0]
       elif line[1].kind == nnkStrLit:
         newCommandId = line[1]
-
-      # Store callback of current command in callbacks table
-      let
-        callbackFunction = newStmtList()
-        callbackIdent = getCallbackIdent()
-  
-      callbackFunction.add newDotExpr(
-        % callbackIdent,
-        % "runCommand"
-      )
-      commandsConditional.add(
-        nnkElifBranch.newTree(
-          nnkInfix.newTree(
-            % "==",
-            % "commandName",
-            newLit(callbackIdent)
-          ),
-          newStmtList(newCall(callbackFunction))
-        )
-      )
+      
+      if newCommandId.strVal in registeredCommands:
+        error("The command ID already exists")
 
       # Command Parser
       # parse command arguments, flags and description
@@ -305,7 +543,7 @@ macro commands*(lines: untyped) =
             continue
         var cmdParams: seq[ParamTuple]
         if token.kind == nnkCommand:
-          for tk in token:
+          for tk in token[1 .. ^1]: # ignore command id
             if tk.kind == nnkAccQuoted:
               tk.handleNamedArguments(cmdParams)
             elif tk.kind == nnkCommand:
@@ -316,10 +554,18 @@ macro commands*(lines: untyped) =
                   # A\B\C Variant commands using tuple
                   # constructor ("start", "stop", "refresh")
                   handleTupleConstr(arg)
+                elif arg.kind == nnkCharLit:
+                  handleShortFlag(arg)
+                elif tk.kind == nnkStrLit:
+                  handleLongFlagOrNamedArg(tk)
             elif tk.kind == nnkTupleConstr:
               # A\B\C Variant commands using tuple
               # constructor ("start", "stop", "refresh")
               handleTupleConstr(tk)
+            elif tk.kind == nnkCharLit:
+              handleShortFlag(tk)
+            elif tk.kind == nnkStrLit:
+              handleLongFlagOrNamedArg(tk)
           if cmdParams.len != 0:
             newCommandParams.add cmdParams
         elif token.kind == nnkStmtList:
@@ -335,34 +581,86 @@ macro commands*(lines: untyped) =
                 if eqIdent(help[1][0], p.pid):
                   p.help = help[1][1].strVal
       
+
+      # Store callback of current command in callbacks table
+      let
+        callbackIdent = getCallbackIdent()
+        callbackFunction = newDotExpr(ident callbackIdent, ident "runCommand")
+      var
+        cmdId = newCommandId
+        paramsSeqNode = newTree nnkPrefix
+        paramsBracket = newTree nnkBracket
+      paramsSeqNode.add ident "@"
+      for param in newCommandParams:
+        paramsBracket.add(
+            nnkTupleConstr.newTree(
+              newLit param.ptype,
+              newLit param.pid,
+              newLit param.help 
+            )
+          )
+      paramsSeqNode.add(paramsBracket)
+      let addCommandNode = newTree nnkCall
+      if isSubCommand:
+        cmdId = ident subCommandId
+      addCommandNode.add(
+          newDotExpr(
+            ident "cli",
+            ident "addCommand"
+          ),
+          newCommandId,
+          cmdId,
+          newCommandDesc,
+          paramsSeqNode,
+          newLit callbackIdent,
+          newLit isSubCommand,
+          callbackFunction
+        )
+      result.add(addCommandNode)
       # memorize the command id
       registeredCommands.add(newCommandId.strVal)
-
-      # register a new command
-      result.add quote do:
-        var cmdId = `newCommandId`
-        var isSubCommand: bool
-        if `isSubCommand` != 0:
-          cmdId = `subCommandId`
-          isSubCommand = true
-        cli.addCommand(
-          `newCommandId`,
-          cmdId,
-          `newCommandDesc`,
-          `newCommandParams`,
-          `callbackIdent`,
-          isSubCommand = isSubCommand
-        )
-
-  result.add(
-    newLetStmt(
-      % "commandName",
-      newCall(
-        newDotExpr(
-          % "cli",
-          % "printUsage"
+      # add command to main conditional statement
+      commandsConditional.add(
+        nnkElifBranch.newTree(
+          nnkInfix.newTree(
+            % "==",
+            % "commandName",
+            newLit(callbackIdent)
+          ),
+          newStmtList(
+            newCall(
+              newDotExpr(
+                newTree(
+                  nnkBracketExpr,
+                  newDotExpr(ident "cli", ident "commands"),
+                  newLit newCommandId.strVal
+                ),
+                ident "callback",
+              ),
+                newDotExpr(
+                  newDotExpr(
+                    newTree(
+                      nnkBracketExpr,
+                      newDotExpr(ident "cli", ident "commands"),
+                      newLit newCommandId.strVal
+                    ),
+                    ident "args",
+                  ),
+                  ident "addr"
+                )
+            )
+          )
         )
       )
-    ),
-    commandsConditional
+  result.add(
+    newLetStmt(
+      ident "commandName",
+      newCall(newDotExpr(% "cli", % "printUsage"))
+    )
   )
+  result.add(
+    newCommentStmtNode("Conditionals\nHere we'll decide which command to run")
+  )
+  result.add(commandsConditional)
+  when defined debugcli:
+    echo result.repr

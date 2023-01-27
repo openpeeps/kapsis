@@ -19,6 +19,7 @@ proc blue*(s: string, sty: set[Style] = {}, nl = true) =
   ## Set output color to blue
   cliEcho(s, fgBlue, sty, nl)
 
+
 proc yellow*(s: string, sty: set[Style] = {}, nl = true) =
   ## Set output color to yellow
   cliEcho(s, fgYellow, sty, nl)

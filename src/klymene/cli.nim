@@ -1,20 +1,69 @@
-import ./interactive/colors
+# include std/terminal
+# import ./interactive/colors
+
 import std/terminal
+# include std/terminalstyledEchoProcessArg
 
 from std/strutils import `%`, spaces, indent
+export ForegroundColor
+
+export `%`
 
 const BR = ""
+type Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor]
 
-proc display*(label: string, color: string = "white", indent=0, br="") =
+proc span*(label: string, fg = fgDefault, bg = bgDefault): Span =
+  result = (label, fg, bg)
+
+proc blue*(label: string): Span =
+  result = (label, fgBlue, bgDefault)
+
+proc yellow*(label: string): Span =
+  result = (label, fgYellow, bgDefault)
+
+proc green*(label: string): Span =
+  result = (label, fgGreen, bgDefault)
+
+proc http(ssl: bool): string =
+  result = if ssl: "https://" else: "http://"
+
+proc url*(uri: string, port: int = 0, ssl = false): Span =
+  if port == 0:
+    result = (http(ssl) & uri, fgDefault, bgDefault)
+  else:
+    result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault)
+
+proc toggle*(onOff: bool): Span =
+  result = if onOff:
+            (" ON ", fgDefault, bgGreen)
+          else:
+            (" OFF ", fgDefault, bgRed)
+
+proc display*(spans: varargs[Span]) = 
+  var k = 0
+  for span in spans:
+    if k != 0:
+      write stdout, indent("", 1)
+    stdout.setBackgroundColor(span.bg)
+    stdout.setForegroundColor(span.fg)
+    write(stdout, span.text)
+    stdout.resetAttributes()
+    inc k
+  write(stdout, "\n")
+
+proc display*(i: int, spans: varargs[Span]) = 
+  var k = 0
+  write(stdout, indent("", i))
+  spans.display()
+
+proc display*(label: string, indent=0, br="") =
     ## Display a single line in one color
     var text: string
     if indent == 0: text = label
     else: text = label.indent(indent)
 
     if br == "before" or br == "both": echo BR  # add a new line before label
-    # if color.len == 0:
-    # else:
-    white(text)
+    display span(text)
     if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*() = 
@@ -39,7 +88,7 @@ proc prompt*(label: string, color: string = "white", default=""): string =
 proc promptSecret*(label: string, color:string="white", required=true): string =
     ## Prompt a hidden field and read from secret input
     display(label)
-    result = terminal.readPasswordFromStdin()
+    result = readPasswordFromStdin()
     if result.len == 0 and required == true:
         return promptSecret(label, required=true)
 
