@@ -279,6 +279,7 @@ proc printUsage*(cli: Klymene): string =
           if gotVariant:
             cli.error = "Choose one of the options"
             quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd])
+          command.args[p].vTuple = p
           gotVariant = true
         of Key:
           command.args[p].vStr = p
