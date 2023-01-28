@@ -4,7 +4,7 @@ on:
     tags:
       - '*.*.*'
     branches:
-      main
+      - main
 env:
   nim-version: 'stable'
   nim-src: src/${{ github.event.repository.name }}.nim
