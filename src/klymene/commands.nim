@@ -273,8 +273,6 @@ proc printUsage*(cli: Klymene): string =
         p = inputArgs[i][1..^1]
       else:                           # get variant or custom param
         p = inputArgs[i]
-      # echo command.args
-
       if command.args.hasKey(p):
         case command.args[p].ptype:
         of Variant:
@@ -283,13 +281,14 @@ proc printUsage*(cli: Klymene): string =
             quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd])
           gotVariant = true
         of Key:
-          echo command.args[p].key
+          command.args[p].vStr = p
         of ShortFlag:
-          echo "short flag"
+          command.args[p].vShort = true
         of LongFlag:
           command.args[p].vLong = true
       elif command.index[0].ptype == Key:
-        echo command.args[command.index[0].pid].key
+        # echo command.args[command.index[0].pid].key
+        command.args[command.index[0].pid].vStr = p
       else:
         # Quit, prompt usage and highlight all possible
         # commands that match with given input (if any)
