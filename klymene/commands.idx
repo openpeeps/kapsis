@@ -1,0 +1,30 @@
+MaximumDepthSubCommand	klymene/commands.html#MaximumDepthSubCommand	KlymeneErrors.MaximumDepthSubCommand	
+ParentCommandNotFound	klymene/commands.html#ParentCommandNotFound	KlymeneErrors.ParentCommandNotFound	
+ConflictCommandName	klymene/commands.html#ConflictCommandName	KlymeneErrors.ConflictCommandName	
+KlymeneErrors	klymene/commands.html#KlymeneErrors	commands: KlymeneErrors	
+Key	klymene/commands.html#Key	ParameterType.Key	
+Variant	klymene/commands.html#Variant	ParameterType.Variant	
+LongFlag	klymene/commands.html#LongFlag	ParameterType.LongFlag	
+ShortFlag	klymene/commands.html#ShortFlag	ParameterType.ShortFlag	
+ParameterType	klymene/commands.html#ParameterType	commands: ParameterType	
+ParamTuple	klymene/commands.html#ParamTuple	commands: ParamTuple	
+Parameter	klymene/commands.html#Parameter	commands: Parameter	
+Values	klymene/commands.html#Values	commands: Values	
+typeCommandLine	klymene/commands.html#typeCommandLine	CommandType.typeCommandLine	
+typeCommentLine	klymene/commands.html#typeCommentLine	CommandType.typeCommentLine	
+typeSubCommandLine	klymene/commands.html#typeSubCommandLine	CommandType.typeSubCommandLine	
+CommandType	klymene/commands.html#CommandType	commands: CommandType	
+Callback	klymene/commands.html#Callback	commands: Callback	
+Command	klymene/commands.html#Command	commands: Command	
+Klymene	klymene/commands.html#Klymene	commands: Klymene	
+KlymeneDefect	klymene/commands.html#KlymeneDefect	commands: KlymeneDefect	
+SyntaxError	klymene/commands.html#SyntaxError	commands: SyntaxError	
+printUsage	klymene/commands.html#printUsage,Klymene	commands: printUsage(cli: Klymene): string	
+addSeparator	klymene/commands.html#addSeparator,Klymene,string,int	commands: addSeparator(cli: Klymene; id: string; key: int)	
+addDescription	klymene/commands.html#addDescription,Klymene,string	commands: addDescription(cli: Klymene; desc: string)	
+addVersion	klymene/commands.html#addVersion,Klymene,string	commands: addVersion(cli: Klymene; vers: string)	
+addCommand	klymene/commands.html#addCommand,Klymene,string,string,string,seq[ParamTuple],string,bool,Callback	commands: addCommand(cli: Klymene; id, cmdId, desc: string; args: seq[ParamTuple];\n           callbackIdent: string; isSubCommand: bool; callback: Callback)	
+App	klymene/commands.html#App.m	commands: App(body)	
+settings	klymene/commands.html#settings.m	commands: settings(opts)	
+about	klymene/commands.html#about.m	commands: about(info)	
+commands	klymene/commands.html#commands.m,untyped	commands: commands(lines: untyped)	
