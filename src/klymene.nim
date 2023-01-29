@@ -7,7 +7,7 @@ import klymene/commands
 export commands
 
 when isMainModule:
-  import ../examples/[newCommand]
+  import ../examples/[newCommand, helloCommand, helloWorldCommand]
 
   App:
     about:
@@ -19,3 +19,10 @@ when isMainModule:
         ?       "Create a new project"            # describe your command
         ? app   "Create a new WEB project"        # describe a specific argument
         ? rest  "Create a new REST API project"
+      
+      --- "Dev stuff"
+      $ "hello":
+        ? "A second command"
+      
+      $ "hello.world":
+        ? "A sub command"

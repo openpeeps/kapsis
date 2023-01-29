@@ -12,3 +12,6 @@ srcDir        = "src"
 requires "nim >= 1.6.0"
 requires "illwill"
 requires "pkginfo"
+
+task dev, "for test purposes":
+  exec "nim c -r src/klymene.nim"
