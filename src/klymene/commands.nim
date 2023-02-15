@@ -265,6 +265,7 @@ proc printUsage*(cli: Klymene): string =
     if inputArgs.len != 0:
       mainInputArg = inputArgs[0]
 
+    let indexlen = command.index.len
     for i in 0 .. inputArgs.high:
       var p: string
       if inputArgs[i].startsWith("--"):   # get long flags
@@ -273,6 +274,7 @@ proc printUsage*(cli: Klymene): string =
         p = inputArgs[i][1..^1]
       else:                           # get variant or custom param
         p = inputArgs[i]
+
       if command.args.hasKey(p):
         case command.args[p].ptype:
         of Variant:
@@ -287,13 +289,13 @@ proc printUsage*(cli: Klymene): string =
           command.args[p].vShort = true
         of LongFlag:
           command.args[p].vLong = true
-      elif command.index[0].ptype == Key:
-        # echo command.args[command.index[0].pid].key
-        command.args[command.index[0].pid].vStr = p
       else:
-        # Quit, prompt usage and highlight all possible
-        # commands that match with given input (if any)
-        if p in ["h", "help"] and command.args.hasKey(mainInputArg):
+        if indexlen >= i:
+          if command.index[i].ptype == Key:
+            command.args[command.index[i].pid].vStr = p
+        elif p in ["h", "help"] and command.args.hasKey(mainInputArg):
+          # Quit, prompt usage and highlight all possible
+          # commands that match with given input (if any)
           cli.extras = command.args[mainInputArg].help
           quitApp(cli, shouldQuit = true, showUsage = false)
         else:
@@ -314,6 +316,8 @@ proc addDescription*(cli: Klymene, desc: string) =
   cli.description &= desc
 
 proc addVersion*(cli: Klymene, vers: string) =
+  ## Use `.nimble` file to retrieve the app version
+  ## and show in Usage when `-v` or `--version`
   cli.version = vers
 
 proc addCommand*(cli: Klymene, id, cmdId, desc: string,
@@ -652,6 +656,8 @@ macro commands*(lines: untyped) =
           )
         )
       )
+  # TODO check if `about` macro has been called,
+  # otherwise, get description and version from nimble file.
   result.add(
     newLetStmt(
       ident "commandName",
