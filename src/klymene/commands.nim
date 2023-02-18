@@ -560,8 +560,8 @@ macro commands*(lines: untyped) =
                   handleTupleConstr(arg)
                 elif arg.kind == nnkCharLit:
                   handleShortFlag(arg)
-                elif tk.kind == nnkStrLit:
-                  handleLongFlagOrNamedArg(tk)
+                elif arg.kind == nnkStrLit:
+                  handleLongFlagOrNamedArg(arg)
             elif tk.kind == nnkTupleConstr:
               # A\B\C Variant commands using tuple
               # constructor ("start", "stop", "refresh")
