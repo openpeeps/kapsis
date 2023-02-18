@@ -6,6 +6,8 @@
 import klymene/commands
 export commands
 
+import klymene/db
+
 when isMainModule:
   import ../examples/[newCommand, helloCommand, helloWorldCommand]
 
