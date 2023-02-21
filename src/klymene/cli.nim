@@ -5,51 +5,69 @@ import std/terminal
 # include std/terminalstyledEchoProcessArg
 
 from std/strutils import `%`, spaces, indent
-export ForegroundColor
+export ForegroundColor, BackgroundColor
 
 export `%`
 
 const BR = ""
-type Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor]
+type
+  Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor, indentSize: int]
+  Row* = seq[Span]
 
-proc span*(label: string, fg = fgDefault, bg = bgDefault): Span =
-  result = (label, fg, bg)
+proc span*(label: string, fg = fgDefault, bg = bgDefault, indentSize = 1): Span =
+  result = (label, fg, bg, indentSize)
 
-proc blue*(label: string): Span =
-  result = (label, fgBlue, bgDefault)
+proc blue*(label: string, indentSize = 1): Span =
+  result = (label, fgBlue, bgDefault, indentSize)
 
-proc yellow*(label: string): Span =
-  result = (label, fgYellow, bgDefault)
+proc yellow*(label: string, indentSize = 1): Span =
+  result = (label, fgYellow, bgDefault, indentSize)
 
-proc green*(label: string): Span =
-  result = (label, fgGreen, bgDefault)
+proc green*(label: string, indentSize = 1): Span =
+  result = (label, fgGreen, bgDefault, indentSize)
 
 proc http(ssl: bool): string =
   result = if ssl: "https://" else: "http://"
 
 proc url*(uri: string, port: int = 0, ssl = false): Span =
   if port == 0:
-    result = (http(ssl) & uri, fgDefault, bgDefault)
+    result = (http(ssl) & uri, fgDefault, bgDefault, 1)
   else:
-    result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault)
+    result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault, 1)
 
 proc toggle*(onOff: bool): Span =
   result = if onOff:
-            (" ON ", fgDefault, bgGreen)
+            (" ON ", fgDefault, bgGreen, 1)
           else:
-            (" OFF ", fgDefault, bgRed)
+            (" OFF ", fgDefault, bgRed, 1)
 
 proc display*(spans: varargs[Span]) = 
   var k = 0
   for span in spans:
     if k != 0:
-      write stdout, indent("", 1)
+      write stdout, spaces(span.indentSize)
     stdout.setBackgroundColor(span.bg)
     stdout.setForegroundColor(span.fg)
     write(stdout, span.text)
     stdout.resetAttributes()
     inc k
   write(stdout, "\n")
+
+proc display*(spans: seq[Span]) = 
+  var k = 0
+  for span in spans:
+    # if k != 0:
+    write stdout, spaces(span.indentSize)
+    stdout.setBackgroundColor(span.bg)
+    stdout.setForegroundColor(span.fg)
+    write(stdout, span.text)
+    stdout.resetAttributes()
+    inc k
+  write(stdout, "\n")
+
+iterator rows*(items: seq[Row]): Row =
+  for item in items:
+    yield item
 
 proc display*(i: int, spans: varargs[Span]) = 
   var k = 0
