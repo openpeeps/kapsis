@@ -37,7 +37,7 @@
 Compile with `-d:debugcli` to show generated commands at compile-time 
 
 ```nim
-import myapp/commands/[newCommand]
+import ./commands/[newCommand, helloCommand, helloWorldCommand]
 
 App:
   about:
@@ -49,6 +49,13 @@ App:
       ?       "Create a new project"            # describe your command
       ? app   "Create a new WEB project"        # describe a specific argument
       ? rest  "Create a new REST API project"
+    
+    --- "Dev stuff"   # a label/separator
+    $ "hello":
+      ? "A second command"
+    --- # a separator without label
+    $ "hello.world":
+      ? "A sub command"
 ```
 
 Once compiled run `myapp -h` to print:
