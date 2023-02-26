@@ -51,6 +51,19 @@ App:
       ? rest  "Create a new REST API project"
 ```
 
+Once compiled run `myapp -h` to print:
+
+```
+👋 Yay! My command line interface
+
+  new app|rest          Create a new project
+
+Dev stuff:
+  hello                 A second command
+  hello.world           A sub command
+```
+
+
 ### Imports & Callbacks
 Each registered command requires an import statement.
 
