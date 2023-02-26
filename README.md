@@ -70,6 +70,13 @@ Dev stuff:
   hello.world           A sub command
 ```
 
+Append a command with `-h` to show all flags/arguments, including description, for example
+```
+myapp new -h
+```
+
+**Note**: `-h`/`--help` and `-v`/`--version` are built-in flags (version is extracted from `.nimble` file)
+
 
 ### Imports & Callbacks
 Each registered command requires an import statement.
