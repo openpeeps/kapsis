@@ -15,6 +15,8 @@ import std/strutils
 from std/os import commandLineParams, sleep
 from std/algorithm import sorted, SortOrder
 
+import ./db
+
 export tables
 
 type
@@ -77,6 +79,9 @@ type
     version*: string
     invalidArg*: string
     error*: string
+    rootCommand*: string
+      ## when enabled, holds a command ident
+      ## that can be used as a root command.
     extras*: string
       # when suffixed with `-h` `--help`
       # holds temporary extra info related to
@@ -164,10 +169,11 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
     let paramsLen = cmd.args.len
     add strCommand, cmd.commandName
     commandsLen.add strCommand.len
+    var prev: ParameterType
     for paramKey, parameter in pairs(cmd.args):
       case parameter.ptype:
       of Variant:     # `Variant` expose a group of params as a|b|c|d
-        if i == 0:
+        if i == 0 or prev in {ShortFlag, LongFlag, Key}:
           add strCommand, indent(paramKey, 1)
         else:
           add strCommand, paramKey
@@ -176,16 +182,21 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
           # add pipe separator for variant-based parameters
           add strCommand, indent(style "|", 0)
         inc commandsLen[^1]
-      of Key:         # `Key` params can handle dynamic strings
-        add strCommand, indent("<" & "\e[0m" & paramKey & ">", 1)
+      of Key:
+        # `Key` params can handle dynamic strings
+        add strCommand, indent("\e[90m<\e[0m" & "\e[0m" & paramKey & "\e[90m>\e[0m", 1)
         inc(commandsLen[^1], paramKey.len + 3) # plus `<` and `>` and 1 space
-      of ShortFlag:   # `ShortFlag` are optionals. Always prefixed with a single `-`
+      of ShortFlag:
+        # `ShortFlag` are optionals. Always prefixed with a single `-`
         add strCommand, indent("-" & paramKey, 1)
-        inc(commandsLen[^1], paramKey.len + 2) # plus `-` and 1 space
-      of LongFlag:    # `LongFlag` are optionals. Always prefixed with double `--`
+        inc(commandsLen[^1], paramKey.len + 2)
+        # plus `-` and 1 space
+      of LongFlag:
+        # `LongFlag` are optionals. Always prefixed with double `--`
         add strCommand, indent("--" & paramKey, 1)
         inc(commandsLen[^1], paramKey.len + 3) # plus `--` and 1 space
       inc i
+      prev = parameter.ptype
 
     index.add (
       strCommand,
@@ -243,20 +254,30 @@ proc printUsage*(cli: Klymene): string =
   ## Parse and print usage based on given command line parameters
   var inputArgs: seq[string] = commandLineParams()
   quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
-  let inputCmd = inputArgs[0]
+  
+  var inputCmd = inputArgs[0]
+  var skipRooted: bool 
+  if cli.rootCommand.len != 0 and cli.hasCommand(inputCmd) == false:
+    inputCmd = cli.rootCommand
+    skipRooted = true
+
   if not cli.hasCommand inputCmd:
     if inputCmd in ["-h", "--help"]:
       # Quit and prompt usage with `showExtras`
       # for displaying extra comments and options
       quitApp(cli, true, showExtras = true)
     elif inputCmd in ["-v", "--version"]:
+      # print current version
       quitApp(cli, true, showVersion = true)
 
     let suggested = cli.startsWith inputCmd
     if suggested.status == true:  # quit and highlight possible matches
       quitApp(cli, true, highlights = suggested.commands)
     else: quitApp(cli, true)  # quit and prompt index
-  inputArgs.delete(0) # delete command name from current seq
+  
+  if not skipRooted:
+    # if not skipped delete command name from current seq
+    inputArgs.delete(0)
 
   var command: Command = cli.getCommand(inputCmd)
   if command.expectParams():
@@ -268,11 +289,14 @@ proc printUsage*(cli: Klymene): string =
     let indexlen = command.index.len
     for i in 0 .. inputArgs.high:
       var p: string
-      if inputArgs[i].startsWith("--"):   # get long flags
+      if inputArgs[i].startsWith("--"):
+        # get long flags
         p = inputArgs[i][2..^1]
-      elif inputArgs[i][0] == '-':        # get short flags
+      elif inputArgs[i][0] == '-':
+        # get short flags
         p = inputArgs[i][1..^1]
-      else:                           # get variant or custom param
+      else:
+        # get variant or custom param
         p = inputArgs[i]
 
       if command.args.hasKey(p):
@@ -392,8 +416,11 @@ macro App*(body) =
 
   result.add body
 
-macro settings*(opts) =
-  discard
+var rootCommand {.compileTime.}: string
+macro settings*(database: static DBType, rootCmd: static string = "") =
+  ## Change your CLI settings
+  echo database
+  rootCommand = rootCmd
 
 macro about*(info) =
   ## Macro for adding info and other comments above usage commands.
@@ -434,26 +461,14 @@ template handleShortFlag(x: untyped) =
   # handle short flags based on chars
   cmdParams.add (ptype: ShortFlag, pid: $(char(x.intVal)), help: "")
 
-proc addValue(paramName: string, paramDefaultValue: string): NimNode {.compileTime.} =
-  let value = nnkObjConstr.newTree(
-    % "Value",
-    nnkExprColonExpr.newTree(
-      % "vType",
-      % "LongFlag"
-    ),
-    nnkExprColonExpr.newTree(
-      % "vLong",
-      newLit("false")
-    )
-  )
-  result = nnkExprEqExpr.newTree(% paramName, value)
-
-template handleLongFlagOrNamedArg(x: untyped) =
+template handleLongFlagOrNamedArg(x: untyped, isFlag = false) =
   # handle long flags or static named arguments
   var param = x.strVal
   var paramType = Key
   if x.strVal.startsWith("--"):
     param = param[2..^1]
+    paramType = LongFlag
+  elif isFlag:
     paramType = LongFlag
   cmdParams.add (ptype: paramType, pid: param, help: "")
 
@@ -494,6 +509,42 @@ proc handleNamedArguments(tk: NimNode, cmdParams: var seq[ParamTuple]) {.compile
   for arg in tk:
     expectKind arg, nnkIdent
     cmdParams.add((ptype: Key, pid: arg.strVal, help: ""))
+
+proc elifBodyNode(newCommandId: string): NimNode {.compileTime.} =
+  newStmtList(
+    newCall(
+      newDotExpr(
+        nnkBracketExpr.newTree(
+          newDotExpr(ident "cli", ident "commands"),
+          newLit newCommandId
+        ),
+        ident "callback",
+      ),
+      newDotExpr(
+        newDotExpr(
+          nnkBracketExpr.newTree(
+            newDotExpr(ident "cli", ident "commands"),
+            newLit newCommandId
+          ),
+          ident "args",
+        ),
+        ident "addr"
+      )
+    )
+  )
+
+proc elifCommandBranch(callbackIdent, newCommandId: string): NimNode {.compileTime.} =
+  nnkElifBranch.newTree(
+    nnkInfix.newTree(
+      % "==",
+      % "commandName",
+      newLit(callbackIdent)
+    ),
+    elifBodyNode(newCommandId)
+  )
+
+proc elseCommandBranch(newCommandId: string): NimNode {.compileTime.} =
+  nnkElseExpr.newTree(elifBodyNode(newCommandId))
 
 macro commands*(lines: untyped) =
   expectKind lines, nnkStmtList
@@ -562,6 +613,10 @@ macro commands*(lines: untyped) =
                   handleShortFlag(arg)
                 elif arg.kind == nnkStrLit:
                   handleLongFlagOrNamedArg(arg)
+                elif arg.kind == nnKBracket:
+                  # handle sets of flags
+                  for a in arg:
+                    handleLongFlagOrNamedArg(a, isFlag = true)
             elif tk.kind == nnkTupleConstr:
               # A\B\C Variant commands using tuple
               # constructor ("start", "stop", "refresh")
@@ -624,38 +679,24 @@ macro commands*(lines: untyped) =
       # memorize the command id
       registeredCommands.add(newCommandId.strVal)
       # add command to main conditional statement
-      commandsConditional.add(
-        nnkElifBranch.newTree(
-          nnkInfix.newTree(
-            % "==",
-            % "commandName",
-            newLit(callbackIdent)
+      commandsConditional.add elifCommandBranch(callbackIdent, newCommandId.strVal)
+
+  if rootCommand.len != 0:
+    # setting a root command
+    if rootCommand in registeredCommands:
+      # echo registeredCommands
+      # rootCommand = callbackIdent()
+      result.add(
+        newAssignment(
+          newDotExpr(
+            ident("cli"),
+            ident("rootCommand")
           ),
-          newStmtList(
-            newCall(
-              newDotExpr(
-                newTree(
-                  nnkBracketExpr,
-                  newDotExpr(ident "cli", ident "commands"),
-                  newLit newCommandId.strVal
-                ),
-                ident "callback",
-              ),
-                newDotExpr(
-                  newDotExpr(
-                    newTree(
-                      nnkBracketExpr,
-                      newDotExpr(ident "cli", ident "commands"),
-                      newLit newCommandId.strVal
-                    ),
-                    ident "args",
-                  ),
-                  ident "addr"
-                )
-            )
-          )
+          newLit(rootCommand)
         )
       )
+      commandsConditional.add elseCommandBranch(rootCommand)
+
   # TODO check if `about` macro has been called,
   # otherwise, get description and version from nimble file.
   result.add(
@@ -668,5 +709,6 @@ macro commands*(lines: untyped) =
     newCommentStmtNode("Conditionals\nHere we'll decide which command to run")
   )
   result.add(commandsConditional)
+
   when defined debugcli:
     echo result.repr

@@ -22,9 +22,8 @@ when isMainModule:
         ? app   "Create a new WEB project"        # describe a specific argument
         ? rest  "Create a new REST API project"
       
-      --- "Dev stuff"
+      --- "Dev stuff"   # a label/separator
       $ "hello":
         ? "A second command"
-      
-      $ "hello.world":
-        ? "A sub command"
+      --- ""
+      $ "hello.world"
