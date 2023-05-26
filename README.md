@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/openpeep/klymene/main/.github/klymene.png" width="225px" alt="Klymene CLI framework"><br>
+  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene.png" width="225px" alt="Klymene CLI framework"><br>
   Klymene &mdash; Build delightful command line interfaces with Nim language 👑
 </p>
 
@@ -8,8 +8,12 @@
 </p>
 
 <p align="center">
+  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene-example.png" width="526px" alt="Klymene CLI Example"><br>
+</p>
+
+<p align="center">
   <a href="https://openpeep.github.io/klymene/">API reference</a><br><br>
-  <img src="https://github.com/openpeep/klymene/workflows/test/badge.svg" alt="Github Actions"> <img src="https://github.com/openpeep/klymene/workflows/docs/badge.svg" alt="Github Actions">
+  <img src="https://github.com/openpeeps/klymene/workflows/test/badge.svg" alt="Github Actions"> <img src="https://github.com/openpeeps/klymene/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
 
@@ -45,15 +49,15 @@ App:
     "👋 Yay! My command line interface"
 
   commands:
+    --- "Main commands" # separator
     $ "new" ("app", "rest"):
       ?       "Create a new project"            # describe your command
       ? app   "Create a new WEB project"        # describe a specific argument
       ? rest  "Create a new REST API project"
     
-    --- "Dev stuff"   # a label/separator
+    --- "Dev stuff" # separator with text
     $ "hello":
       ? "A second command"
-    --- # a separator without label
     $ "hello.world":
       ? "A sub command"
 ```
@@ -95,6 +99,12 @@ proc runCommand*(v: Values) =
 # TODO
 Do the do. Add more examples
 
+### ❤ Contributions & Support
+- 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/klymene/issues)
+- 👋 Wanna help? [Fork it!](https://github.com/openpeeps/klymene/fork)
+- 😎 [Get €20 in cloud credits from Hetzner](https://hetzner.cloud/?ref=Hm0mYGM9NxZ4)
+- 🥰 [Donate to The Enthusiast via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
+
 ### 🎩 License
-Klymene | `MIT` license. [Made by Humans from OpenPeep](https://github.com/openpeep).<br>
-Copyright &copy; 2023 OpenPeep & Contributors &mdash; All rights reserved.
+Klymene | `MIT` license. [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
+Copyright &copy; 2023 OpenPeeps & Contributors &mdash; All rights reserved.

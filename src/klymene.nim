@@ -17,13 +17,13 @@ when isMainModule:
       "👋 Yay! My command line interface"
 
     commands:
+      --- "Main commands" # separator
       $ "new" ("app", "rest"):
         ?       "Create a new project"            # describe your command
         ? app   "Create a new WEB project"        # describe a specific argument
         ? rest  "Create a new REST API project"
-      
-      --- "Dev stuff"   # a label/separator
+      --- "Dev stuff" # separator with text
       $ "hello":
         ? "A second command"
-      --- ""
-      $ "hello.world"
+      $ "hello.world":
+        ? "A sub command"

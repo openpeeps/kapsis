@@ -419,7 +419,6 @@ macro App*(body) =
 var rootCommand {.compileTime.}: string
 macro settings*(database: static DBType, rootCmd: static string = "") =
   ## Change your CLI settings
-  echo database
   rootCommand = rootCmd
 
 macro about*(info) =
