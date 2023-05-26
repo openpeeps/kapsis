@@ -1,8 +1,8 @@
 # Klymene - Build delightful Command Line Interfaces.
 # 
-#   (c) 2022 George Lemon | MIT license
-#       Made by Humans from OpenPeep
-#       https://github.com/openpeep/klymene
+#   (c) 2023 George Lemon | MIT license
+#       Made by Humans from OpenPeeps
+#       https://github.com/openpeeps/klymene
 #       
 #       https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
 
@@ -79,9 +79,9 @@ type
     version*: string
     invalidArg*: string
     error*: string
-    rootCommand*: string
-      ## when enabled, holds a command ident
-      ## that can be used as a root command.
+    mainCommand*: string
+      ## used to set a main command that can be called
+      ## without specifying the command id..
     extras*: string
       # when suffixed with `-h` `--help`
       # holds temporary extra info related to
@@ -91,6 +91,7 @@ type
   SyntaxError* = object of CatchableError
 
 const NewLine = "\n"
+const defaultFlags = ["-h", "--help", "-v", "--version"]
 let
   TokenSeparator {.compileTime.} = "---"
   InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
@@ -244,22 +245,25 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
   stdout.write usageOutput
 
 proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
-      highlights: seq[string] = @[], showExtras, showVersion = false) =
+      highlights: seq[string] = @[], showExtras, showVersion = false,
+      exitStatus = QuitSuccess) =
   ## Quit from current state and print the application index
   if shouldQuit:
     cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
-    quit()
+    quit(exitStatus)
 
 proc printUsage*(cli: Klymene): string =
   ## Parse and print usage based on given command line parameters
   var inputArgs: seq[string] = commandLineParams()
-  quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
-  
-  var inputCmd = inputArgs[0]
-  var skipRooted: bool 
-  if cli.rootCommand.len != 0 and cli.hasCommand(inputCmd) == false:
-    inputCmd = cli.rootCommand
-    skipRooted = true
+  quitApp(cli, inputArgs.len == 0, exitStatus = QuitFailure) # quit & prompt usage if missing args
+  var
+    inputCmd = inputArgs[0]
+    isMainCommand: bool 
+  if cli.mainCommand.len != 0 and
+          cli.hasCommand(inputCmd) == false and
+          inputCmd notin defaultFlags:
+    inputCmd = cli.mainCommand
+    isMainCommand = true
 
   if not cli.hasCommand inputCmd:
     if inputCmd in ["-h", "--help"]:
@@ -269,13 +273,12 @@ proc printUsage*(cli: Klymene): string =
     elif inputCmd in ["-v", "--version"]:
       # print current version
       quitApp(cli, true, showVersion = true)
-
     let suggested = cli.startsWith inputCmd
     if suggested.status == true:  # quit and highlight possible matches
-      quitApp(cli, true, highlights = suggested.commands)
-    else: quitApp(cli, true)  # quit and prompt index
+      quitApp(cli, true, highlights = suggested.commands, exitStatus = QuitFailure)
+    else: quitApp(cli, true, exitStatus = QuitFailure)  # quit and prompt index
   
-  if not skipRooted:
+  if not isMainCommand:
     # if not skipped delete command name from current seq
     inputArgs.delete(0)
 
@@ -304,7 +307,8 @@ proc printUsage*(cli: Klymene): string =
         of Variant:
           if gotVariant:
             cli.error = "Choose one of the options"
-            quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd])
+            quitApp(cli, shouldQuit = true, showUsage = false,
+                    highlights = @[inputcmd], exitStatus = QuitFailure)
           command.args[p].vTuple = p
           gotVariant = true
         of Key:
@@ -324,7 +328,7 @@ proc printUsage*(cli: Klymene): string =
           quitApp(cli, shouldQuit = true, showUsage = false)
         else:
           cli.invalidArg = p
-          quitApp(cli, true, highlights = @[inputCmd])
+          quitApp(cli, true, highlights = @[inputCmd], exitStatus = QuitFailure)
   else:
     quitApp(cli, inputArgs.len != 0) # quit when a command does not support extra args
     command = cli.commands[inputCmd]
@@ -416,10 +420,10 @@ macro App*(body) =
 
   result.add body
 
-var rootCommand {.compileTime.}: string
-macro settings*(database: static DBType, rootCmd: static string = "") =
+var mainCommand {.compileTime.}: string
+macro settings*(database: static DBType, mainCmd: static string = "") =
   ## Change your CLI settings
-  rootCommand = rootCmd
+  mainCommand = mainCmd
 
 macro about*(info) =
   ## Macro for adding info and other comments above usage commands.
@@ -587,7 +591,7 @@ macro commands*(lines: untyped) =
         newCommandId = line[1]
       
       if newCommandId.strVal in registeredCommands:
-        error("The command ID already exists")
+        error("Duplicated command ID: " & newCommandId.strVal)
 
       # Command Parser
       # parse command arguments, flags and description
@@ -680,21 +684,19 @@ macro commands*(lines: untyped) =
       # add command to main conditional statement
       commandsConditional.add elifCommandBranch(callbackIdent, newCommandId.strVal)
 
-  if rootCommand.len != 0:
-    # setting a root command
-    if rootCommand in registeredCommands:
-      # echo registeredCommands
-      # rootCommand = callbackIdent()
+  # setup a m
+  if mainCommand.len != 0:
+    if mainCommand in registeredCommands:
       result.add(
         newAssignment(
           newDotExpr(
             ident("cli"),
-            ident("rootCommand")
+            ident("mainCommand")
           ),
-          newLit(rootCommand)
+          newLit(mainCommand)
         )
       )
-      commandsConditional.add elseCommandBranch(rootCommand)
+      commandsConditional.add elseCommandBranch(mainCommand)
 
   # TODO check if `about` macro has been called,
   # otherwise, get description and version from nimble file.
