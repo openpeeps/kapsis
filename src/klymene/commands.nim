@@ -255,7 +255,7 @@ proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
 proc printUsage*(cli: Klymene): string =
   ## Parse and print usage based on given command line parameters
   var inputArgs: seq[string] = commandLineParams()
-  quitApp(cli, inputArgs.len == 0, exitStatus = QuitFailure) # quit & prompt usage if missing args
+  quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
   var
     inputCmd = inputArgs[0]
     isMainCommand: bool 
@@ -307,8 +307,7 @@ proc printUsage*(cli: Klymene): string =
         of Variant:
           if gotVariant:
             cli.error = "Choose one of the options"
-            quitApp(cli, shouldQuit = true, showUsage = false,
-                    highlights = @[inputcmd], exitStatus = QuitFailure)
+            quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd], exitStatus = QuitFailure)
           command.args[p].vTuple = p
           gotVariant = true
         of Key:
@@ -328,9 +327,9 @@ proc printUsage*(cli: Klymene): string =
           quitApp(cli, shouldQuit = true, showUsage = false)
         else:
           cli.invalidArg = p
-          quitApp(cli, true, highlights = @[inputCmd], exitStatus = QuitFailure)
+          quitApp(cli, true, highlights = @[inputCmd])
   else:
-    quitApp(cli, inputArgs.len != 0) # quit when a command does not support extra args
+    quitApp(cli, inputArgs.len != 0, exitStatus = QuitFailure) # quit if there is no support for extra args
     command = cli.commands[inputCmd]
   result = command.callbackName
 
