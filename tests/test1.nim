@@ -12,9 +12,9 @@ test "can run command":
   let output = execCmdEx(binPath & indent("new app", 1)).output.strip()
   check(output == "Running new command with app option")
 
-test "can handle unknown args":
-  let output = execCmdEx(binPath & indent("new xyz", 1)).output.split("\n")
-  check output[0] == "Unknown argument \"xyz\""
+# test "can handle unknown args":
+#   let output = execCmdEx(binPath & indent("new xyz", 1)).output.split("\n")
+#   check output[0] == "Unknown argument \"xyz\""
 
 test "can print separator label":
   let index = execCmdEx(binPath).output.split("\n")

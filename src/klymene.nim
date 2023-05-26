@@ -1,8 +1,9 @@
 # Klymene - Build delightful Command Line Interfaces.
 # 
-#   (c) 2022 George Lemon | MIT license
-#       Made by Humans from OpenPeep
-#       https://github.com/openpeep/klymene
+#   (c) 2023 George Lemon | MIT license
+#       Made by Humans from OpenPeeps
+#       https://github.com/openpeesp/klymene
+
 import klymene/commands
 export commands
 
@@ -22,8 +23,9 @@ when isMainModule:
         ?       "Create a new project"            # describe your command
         ? app   "Create a new WEB project"        # describe a specific argument
         ? rest  "Create a new REST API project"
+      
       --- "Dev stuff" # separator with text
-      $ "hello":
+      $ "hello" `input` ["jazz"]:
         ? "A second command"
       $ "hello.world":
         ? "A sub command"

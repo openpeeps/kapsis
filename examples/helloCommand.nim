@@ -1,4 +1,6 @@
 import ../src/klymene/runtime
 
 proc runCommand*(v: Values) =
-  echo "Hello" 
+  echo "Hello " & v.get("input")
+  if v.flag("jazz"):
+    echo "warm nostalgic jazz"

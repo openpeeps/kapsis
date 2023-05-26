@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene-example.png" width="526px" alt="Klymene CLI Example"><br>
+  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene-cli.png" width="650px" alt="Klymene CLI Example"><br>
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 
 ## 😍 Key Features
 - [x] Generates Commands & Subcommands based on Nim's Macros
-- [ ] CLI flat file Database `JSON`, `BSON`, `LMDB` or `SQLite`
+- [ ] CLI flat file Database `JSON`, `MessagePack`, `LMDB` or `SQLite`
 - [ ] Plugins. Extend your CLI functionality
 - [ ] Self Updater
 - [ ] Auto-Generates Bash/ZSH Completion scripts
@@ -41,6 +41,7 @@
 Compile with `-d:debugcli` to show generated commands at compile-time 
 
 ```nim
+import klymene
 import ./commands/[newCommand, helloCommand, helloWorldCommand]
 
 App:
@@ -56,7 +57,7 @@ App:
       ? rest  "Create a new REST API project"
     
     --- "Dev stuff" # separator with text
-    $ "hello":
+    $ "hello" `input` ["jazz"]:
       ? "A second command"
     $ "hello.world":
       ? "A sub command"
@@ -68,11 +69,11 @@ Once compiled run `myapp -h` to print:
 👋 Yay! My command line interface
 
 Main commands:
-  new app|rest          Create a new project
+  new app|rest                  Create a new project
 
 Dev stuff:
-  hello                 A second command
-  hello.world           A sub command
+  hello <input> --jazz          A second command
+  hello.world                   A sub command
 ```
 
 Append a command with `-h` to show all flags/arguments, including description, for example
