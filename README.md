@@ -67,6 +67,7 @@ Once compiled run `myapp -h` to print:
 ```
 👋 Yay! My command line interface
 
+Main commands:
   new app|rest          Create a new project
 
 Dev stuff:
