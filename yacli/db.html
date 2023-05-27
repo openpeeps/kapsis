@@ -17,10 +17,10 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>src/yacli</title>
-<link rel="stylesheet" type="text/css" href="nimdoc.out.css">
+<title>src/yacli/db</title>
+<link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
-<script type="text/javascript" src="dochack.js"></script>
+<script type="text/javascript" src="../dochack.js"></script>
 
 <script type="text/javascript">
 function main() {
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', main);
 <body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">src/yacli</h1>
+    <h1 class="title">src/yacli/db</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', main);
   <div id="global-links">
     <ul class="simple">
     <li>
-      <a href="theindex.html">Index</a>
+      <a href="../theindex.html">Index</a>
     </li>
     </ul>
   </div>
@@ -99,15 +99,16 @@ window.addEventListener('DOMContentLoaded', main);
   </div>
   <ul class="simple simple-toc" id="toc-list">
 <li>
-  <a class="reference reference-toplevel" href="#6" id="56">Imports</a>
+  <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
-    
-  </ul>
-</li>
-<li>
-  <a class="reference reference-toplevel" href="#19" id="69">Exports</a>
-  <ul class="simple simple-toc-section">
-    
+      <li><a class="reference" href="#Database"
+    title="Database = ref object
+  dbType: DBType
+  version: string">Database</a></li>
+  <li><a class="reference" href="#DBType"
+    title="DBType = enum
+  dbJSON, dbMsgPacked, dbLMDB, dbSQLite">DBType</a></li>
+
   </ul>
 </li>
 
@@ -118,16 +119,31 @@ window.addEventListener('DOMContentLoaded', main);
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc">Register commandsConditionals Here we'll decide which command to run</p>
-  <div class="section" id="6">
-<h1><a class="toc-backref" href="#6">Imports</a></h1>
+  <p class="module-desc"></p>
+  <div class="section" id="7">
+<h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
-<a class="reference external" href="yacli/commands.html">yacli/commands</a>, <a class="reference external" href="yacli/db.html">yacli/db</a>, <a class="reference external" href="_._/examples/newCommand.html">../examples/newCommand</a>, <a class="reference external" href="_._/examples/helloCommand.html">../examples/helloCommand</a>, <a class="reference external" href="_._/examples/helloWorldCommand.html">../examples/helloWorldCommand</a>
-</dl></div>
-<div class="section" id="19">
-<h1><a class="toc-backref" href="#19">Exports</a></h1>
-<dl class="item">
-<a href="yacli/commands.html#ParamTuple"><span class="Identifier">ParamTuple</span></a>, <a href="yacli/commands.html#MaximumDepthSubCommand"><span class="Identifier">MaximumDepthSubCommand</span></a>, <a href="yacli/commands.html#about.m"><span class="Identifier">about</span></a>, <a href="yacli/commands.html#settings.m,staticDBType,staticstring"><span class="Identifier">settings</span></a>, <a href="yacli/commands.html#ParentCommandNotFound"><span class="Identifier">ParentCommandNotFound</span></a>, <a href="yacli/commands.html#ParameterType"><span class="Identifier">ParameterType</span></a>, <a href="yacli/commands.html#commands.m,untyped"><span class="Identifier">commands</span></a>, <a href="yacli/commands.html#SyntaxError"><span class="Identifier">SyntaxError</span></a>, <a href="yacli/commands.html#App.m"><span class="Identifier">App</span></a>, <a href="yacli/commands.html#Yacli"><span class="Identifier">Yacli</span></a>, <a href="yacli/commands.html#addSeparator,Yacli,string,int"><span class="Identifier">addSeparator</span></a>, <a href="yacli/commands.html#addVersion,Yacli,string"><span class="Identifier">addVersion</span></a>, <a href="yacli/commands.html#Command"><span class="Identifier">Command</span></a>, <a href="yacli/commands.html#printUsage,Yacli"><span class="Identifier">printUsage</span></a>, <a href="yacli/commands.html#YacliDefect"><span class="Identifier">YacliDefect</span></a>, <a href="yacli/commands.html#addDescription,Yacli,string"><span class="Identifier">addDescription</span></a>, <a href="yacli/commands.html#Parameter"><span class="Identifier">Parameter</span></a>, <a href="yacli/commands.html#Values"><span class="Identifier">Values</span></a>, <a href="yacli/commands.html#Callback"><span class="Identifier">Callback</span></a>, <a href="yacli/commands.html#YacliErrors"><span class="Identifier">YacliErrors</span></a>, <a href="yacli/commands.html#ConflictCommandName"><span class="Identifier">ConflictCommandName</span></a>, <a href="yacli/commands.html#CommandType"><span class="Identifier">CommandType</span></a>, <a href="yacli/commands.html#addCommand,Yacli,string,string,string,seq[ParamTuple],string,bool,Callback"><span class="Identifier">addCommand</span></a>
+<div id="Database">
+<dt><pre><a href="db.html#Database"><span class="Identifier">Database</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Identifier">dbType</span><span class="Other">:</span> <a href="db.html#DBType"><span class="Identifier">DBType</span></a>
+  <span class="Identifier">version</span><span class="Other">:</span> <span class="Identifier">string</span>
+</pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+<div id="DBType">
+<dt><pre><a href="db.html#DBType"><span class="Identifier">DBType</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">dbJSON</span><span class="Other">,</span> <span class="Identifier">dbMsgPacked</span><span class="Other">,</span> <span class="Identifier">dbLMDB</span><span class="Other">,</span> <span class="Identifier">dbSQLite</span></pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
+
 </dl></div>
 
   </div>

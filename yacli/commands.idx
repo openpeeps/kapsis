@@ -1,0 +1,30 @@
+MaximumDepthSubCommand	yacli/commands.html#MaximumDepthSubCommand	YacliErrors.MaximumDepthSubCommand	
+ParentCommandNotFound	yacli/commands.html#ParentCommandNotFound	YacliErrors.ParentCommandNotFound	
+ConflictCommandName	yacli/commands.html#ConflictCommandName	YacliErrors.ConflictCommandName	
+YacliErrors	yacli/commands.html#YacliErrors	commands: YacliErrors	
+Key	yacli/commands.html#Key	ParameterType.Key	
+Variant	yacli/commands.html#Variant	ParameterType.Variant	
+LongFlag	yacli/commands.html#LongFlag	ParameterType.LongFlag	
+ShortFlag	yacli/commands.html#ShortFlag	ParameterType.ShortFlag	
+ParameterType	yacli/commands.html#ParameterType	commands: ParameterType	
+ParamTuple	yacli/commands.html#ParamTuple	commands: ParamTuple	
+Parameter	yacli/commands.html#Parameter	commands: Parameter	
+Values	yacli/commands.html#Values	commands: Values	
+typeCommandLine	yacli/commands.html#typeCommandLine	CommandType.typeCommandLine	
+typeCommentLine	yacli/commands.html#typeCommentLine	CommandType.typeCommentLine	
+typeSubCommandLine	yacli/commands.html#typeSubCommandLine	CommandType.typeSubCommandLine	
+CommandType	yacli/commands.html#CommandType	commands: CommandType	
+Callback	yacli/commands.html#Callback	commands: Callback	
+Command	yacli/commands.html#Command	commands: Command	
+Yacli	yacli/commands.html#Yacli	commands: Yacli	
+YacliDefect	yacli/commands.html#YacliDefect	commands: YacliDefect	
+SyntaxError	yacli/commands.html#SyntaxError	commands: SyntaxError	
+printUsage	yacli/commands.html#printUsage,Yacli	commands: printUsage(cli: Yacli): string	
+addSeparator	yacli/commands.html#addSeparator,Yacli,string,int	commands: addSeparator(cli: Yacli; id: string; key: int)	
+addDescription	yacli/commands.html#addDescription,Yacli,string	commands: addDescription(cli: Yacli; desc: string)	
+addVersion	yacli/commands.html#addVersion,Yacli,string	commands: addVersion(cli: Yacli; vers: string)	
+addCommand	yacli/commands.html#addCommand,Yacli,string,string,string,seq[ParamTuple],string,bool,Callback	commands: addCommand(cli: Yacli; id, cmdId, desc: string; args: seq[ParamTuple];\n           callbackIdent: string; isSubCommand: bool; callback: Callback)	
+App	yacli/commands.html#App.m	commands: App(body)	
+settings	yacli/commands.html#settings.m,staticDBType,staticstring	commands: settings(database: static DBType; mainCmd: static string = &quot;&quot;)	
+about	yacli/commands.html#about.m	commands: about(info)	
+commands	yacli/commands.html#commands.m,untyped	commands: commands(lines: untyped)	

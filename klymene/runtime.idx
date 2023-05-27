@@ -1,4 +1,0 @@
-flag	klymene/runtime.html#flag,Values,string	runtime: flag(values: Values; argName: string): bool	
-has	klymene/runtime.html#has,Values,string	runtime: has(values: Values; argName: string): bool	
-get	klymene/runtime.html#get,Values,string	runtime: get(values: Values; argName: string): string	
-toInt	klymene/runtime.html#toInt,string	runtime: toInt(str: string): int	
