@@ -1,10 +1,8 @@
-# Klymene - Build delightful Command Line Interfaces.
+# yacli - Build delightful Command Line interfaces in seconds
 # 
 #   (c) 2023 George Lemon | MIT license
 #       Made by Humans from OpenPeeps
-#       https://github.com/openpeeps/klymene
-#       
-#       https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
+#       https://github.com/openpeeps/yacli
 
 {.warning[Spacing]: off.}
 
@@ -20,7 +18,7 @@ import ./db
 export tables
 
 type
-  KlymeneErrors* = enum
+  YacliErrors* = enum
     MaximumDepthSubCommand = "Maximum subcommand depth reached (3 levels)"
     ParentCommandNotFound = "Could not find a command id \"$1\""
     ConflictCommandName = "Command name \"$1\" already exists"
@@ -68,7 +66,7 @@ type
         # a seq for ordering command args
     else: discard # ignore comment lines
 
-  Klymene* = ref object
+  Yacli* = ref object
     indent*: int8
       # Used to indent & align comments (default 25 spaces)
     app_name*: string
@@ -87,7 +85,7 @@ type
       # holds temporary extra info related to
       # a command flags/params
 
-  KlymeneDefect* = object of CatchableError
+  YacliDefect* = object of CatchableError
   SyntaxError* = object of CatchableError
 
 const NewLine = "\n"
@@ -101,19 +99,19 @@ let
 # Runtime API
 #
 
-proc init[K: typedesc[Klymene]](cli: K): Klymene =
-  ## Initialize an instance of Klymene
+proc init[K: typedesc[Yacli]](cli: K): Yacli =
+  ## Initialize an instance of Yacli
   result = cli()
 
-proc hasCommand(cli: Klymene, id: string): bool = 
+proc hasCommand(cli: Yacli, id: string): bool = 
   ## Determine if command exists by id
   result = cli.commands.hasKey(id)
 
-proc getCommand(cli: Klymene, id: string): Command =
+proc getCommand(cli: Yacli, id: string): Command =
   ## Return a Command instance based on given `id`
   result = cli.commands[id]
 
-proc startsWith(cli: Klymene, prefix: string): tuple[status: bool, commands: seq[string]] =
+proc startsWith(cli: Yacli, prefix: string): tuple[status: bool, commands: seq[string]] =
   ## Determine if there any commands that match given prefix.
   if prefix.contains("."):
     var prefixes = prefix.split(".")
@@ -141,7 +139,7 @@ proc expectParams(command: Command): bool =
 proc style(str: string): string {.inline.} =
   result = "\e[90m" & str & "\e[0m"
 
-proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
+proc printAppIndex(cli: Yacli, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
   ## Print index with available commands, flags and parameters
   if showVersion: 
     echo cli.version
@@ -247,14 +245,14 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
     add usageOutput, NewLine
   stdout.write usageOutput
 
-proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
+proc quitApp(cli: Yacli, shouldQuit: bool, showUsage = true,
       highlights: seq[string] = @[], showExtras, showVersion = false,
       exitStatus = QuitSuccess) =
   if shouldQuit:
     cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
     quit(exitStatus)
 
-proc printUsage*(cli: Klymene): string =
+proc printUsage*(cli: Yacli): string =
   ## Parse and print usage based on given command line parameters
   var inputArgs: seq[string] = commandLineParams()
   quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
@@ -342,25 +340,25 @@ proc printUsage*(cli: Klymene): string =
     command = cli.commands[inputCmd]
   result = command.callbackName
 
-proc addSeparator*(cli: Klymene, id: string, key: int) =
+proc addSeparator*(cli: Yacli, id: string, key: int) =
   ## Add a new command separator, with or without a label
   let sepId = id & "__" & $key
   var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
   cli.commands[sepId] = Command(commandType: typeCommentLine, name: label)
 
-proc addDescription*(cli: Klymene, desc: string) =
+proc addDescription*(cli: Yacli, desc: string) =
   cli.description &= desc
 
-proc addVersion*(cli: Klymene, vers: string) =
+proc addVersion*(cli: Yacli, vers: string) =
   ## Use `.nimble` file to retrieve the app version
   ## and show in Usage when `-v` or `--version`
   cli.version = vers
 
-proc addCommand*(cli: Klymene, id, cmdId, desc: string,
+proc addCommand*(cli: Yacli, id, cmdId, desc: string,
                   args: seq[ParamTuple], callbackIdent: string,
                   isSubCommand: bool, callback: Callback) =
   if cli.commands.hasKey(id):
-    raise newException(KlymeneDefect, $ConflictCommandName % [id])
+    raise newException(YacliDefect, $ConflictCommandName % [id])
   if isSubCommand:    
     cli.commands[id] = Command(commandType: typeSubCommandLine)
   else:
@@ -380,7 +378,7 @@ proc addCommand*(cli: Klymene, id, cmdId, desc: string,
       countDelimiters: int8
     for k, param in pairs(args):
       if cli.commands[id].args.hasKey(param.pid):
-        raise newException(KlymeneDefect, "Duplicate parameter name for \"$1\"" % [param.pid])
+        raise newException(YacliDefect, "Duplicate parameter name for \"$1\"" % [param.pid])
       cli.commands[id].args[param.pid] = Parameter(ptype: param.ptype)
       case param.ptype:
       of Variant:
@@ -408,7 +406,7 @@ macro App*(body) =
   result = newStmtList()
   result.add newVarStmt(
     ident "cli",
-    newCall(ident "Klymene")
+    newCall(ident "Yacli")
   )
   result.add(
     newAssignment(

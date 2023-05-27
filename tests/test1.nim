@@ -1,6 +1,6 @@
 import std/[unittest, strutils, os, osproc]
 
-let binPath = getCurrentDir() / "src" / "klymene.out"
+let binPath = getCurrentDir() / "src" / "yacli.out"
 
 test "can run":
   check fileExists(binPath)

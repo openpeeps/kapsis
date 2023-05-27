@@ -1,4 +1,4 @@
-import ../src/klymene/runtime
+import ../src/yacli/runtime
 
 proc runCommand*(v: Values) =
   echo "Hello " & v.get("input")

@@ -1,3 +1,9 @@
+# yacli - Build delightful Command Line interfaces in seconds
+# 
+#   (c) 2023 George Lemon | MIT license
+#       Made by Humans from OpenPeeps
+#       https://github.com/openpeeps/yacli
+
 import std/tables
 from ./commands import Values, Parameter, ParameterType
 from std/strutils import parseInt

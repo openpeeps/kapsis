@@ -1,19 +1,19 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene.png" width="225px" alt="Klymene CLI framework"><br>
-  Klymene &mdash; Build delightful command line interfaces with Nim language 👑
+  <img src="https://raw.githubusercontent.com/openpeeps/yacli/main/.github/yacli.png" width="225px" alt="yacli framework"><br>
+  yacli &mdash; Build delightful command line interfaces with Nim language 👑
 </p>
 
 <p align="center">
-  <code>nimble install klymene</code>
+  <code>nimble install yacli</code>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/openpeeps/klymene/main/.github/klymene-cli.png" width="650px" alt="Klymene CLI Example"><br>
+  <img src="https://raw.githubusercontent.com/openpeeps/yacli/main/.github/klymene-cli.png" width="650px" alt="yacli Example"><br>
 </p>
 
 <p align="center">
-  <a href="https://openpeep.github.io/klymene/">API reference</a><br><br>
-  <img src="https://github.com/openpeeps/klymene/workflows/test/badge.svg" alt="Github Actions"> <img src="https://github.com/openpeeps/klymene/workflows/docs/badge.svg" alt="Github Actions">
+  <a href="https://openpeep.github.io/yacli/">API reference</a><br><br>
+  <img src="https://github.com/openpeeps/yacli/workflows/test/badge.svg" alt="Github Actions"> <img src="https://github.com/openpeeps/yacli/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
 
@@ -41,7 +41,7 @@
 Compile with `-d:debugcli` to show generated commands at compile-time 
 
 ```nim
-import klymene
+import yacli
 import ./commands/[newCommand, helloCommand, helloWorldCommand]
 
 App:
@@ -92,7 +92,7 @@ which in this case should be named `newCommand.nim`.
 
 This is your `newCommand.nim`
 ```nim
-import klymene/runtime
+import yacli/runtime
 
 proc runCommand*(v: Values) =
   # my stuff
@@ -102,11 +102,11 @@ proc runCommand*(v: Values) =
 Do the do. Add more examples
 
 ### ❤ Contributions & Support
-- 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/klymene/issues)
-- 👋 Wanna help? [Fork it!](https://github.com/openpeeps/klymene/fork)
+- 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/yacli/issues)
+- 👋 Wanna help? [Fork it!](https://github.com/openpeeps/yacli/fork)
 - 😎 [Get €20 in cloud credits from Hetzner](https://hetzner.cloud/?ref=Hm0mYGM9NxZ4)
 - 🥰 [Donate to The Enthusiast via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
 
 ### 🎩 License
-Klymene | `MIT` license. [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
+`yacli` | `MIT` license. [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
 Copyright &copy; 2023 OpenPeeps & Contributors &mdash; All rights reserved.

@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "George Lemon"
-description   = "Build delightful command line interfaces"
+description   = "Build delightful command line interfaces in seconds"
 license       = "MIT"
 srcDir        = "src"
 
@@ -14,5 +14,5 @@ requires "illwill"
 requires "pkginfo"
 requires "msgpack4nim#head"
 
-task dev, "for test purposes":
-  exec "nim c -r src/klymene.nim"
+task dev, "dev mode":
+  exec "nim c -r src/yacli.nim"

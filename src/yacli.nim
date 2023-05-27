@@ -1,13 +1,13 @@
-# Klymene - Build delightful Command Line Interfaces.
+# yacli - Build delightful Command Line interfaces in seconds
 # 
 #   (c) 2023 George Lemon | MIT license
 #       Made by Humans from OpenPeeps
-#       https://github.com/openpeesp/klymene
+#       https://github.com/openpeeps/yacli
 
-import klymene/commands
+import yacli/commands
 export commands
 
-import klymene/db
+import yacli/db
 
 when isMainModule:
   import ../examples/[newCommand, helloCommand, helloWorldCommand]
