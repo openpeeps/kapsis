@@ -1,0 +1,6 @@
+dbJSON	kapsis/db.html#dbJSON	DBType.dbJSON	
+dbMsgPacked	kapsis/db.html#dbMsgPacked	DBType.dbMsgPacked	
+dbLMDB	kapsis/db.html#dbLMDB	DBType.dbLMDB	
+dbSQLite	kapsis/db.html#dbSQLite	DBType.dbSQLite	
+DBType	kapsis/db.html#DBType	db: DBType	
+Database	kapsis/db.html#Database	db: Database	

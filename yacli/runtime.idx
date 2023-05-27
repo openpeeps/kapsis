@@ -1,4 +1,0 @@
-flag	yacli/runtime.html#flag,Values,string	runtime: flag(values: Values; argName: string): bool	
-has	yacli/runtime.html#has,Values,string	runtime: has(values: Values; argName: string): bool	
-get	yacli/runtime.html#get,Values,string	runtime: get(values: Values; argName: string): string	
-toInt	yacli/runtime.html#toInt,string	runtime: toInt(str: string): int	

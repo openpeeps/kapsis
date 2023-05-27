@@ -1,6 +1,0 @@
-dbJSON	yacli/db.html#dbJSON	DBType.dbJSON	
-dbMsgPacked	yacli/db.html#dbMsgPacked	DBType.dbMsgPacked	
-dbLMDB	yacli/db.html#dbLMDB	DBType.dbLMDB	
-dbSQLite	yacli/db.html#dbSQLite	DBType.dbSQLite	
-DBType	yacli/db.html#DBType	db: DBType	
-Database	yacli/db.html#Database	db: Database	

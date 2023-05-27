@@ -1,0 +1,30 @@
+MaximumDepthSubCommand	kapsis/commands.html#MaximumDepthSubCommand	KapsisErrors.MaximumDepthSubCommand	
+ParentCommandNotFound	kapsis/commands.html#ParentCommandNotFound	KapsisErrors.ParentCommandNotFound	
+ConflictCommandName	kapsis/commands.html#ConflictCommandName	KapsisErrors.ConflictCommandName	
+KapsisErrors	kapsis/commands.html#KapsisErrors	commands: KapsisErrors	
+Key	kapsis/commands.html#Key	ParameterType.Key	
+Variant	kapsis/commands.html#Variant	ParameterType.Variant	
+LongFlag	kapsis/commands.html#LongFlag	ParameterType.LongFlag	
+ShortFlag	kapsis/commands.html#ShortFlag	ParameterType.ShortFlag	
+ParameterType	kapsis/commands.html#ParameterType	commands: ParameterType	
+ParamTuple	kapsis/commands.html#ParamTuple	commands: ParamTuple	
+Parameter	kapsis/commands.html#Parameter	commands: Parameter	
+Values	kapsis/commands.html#Values	commands: Values	
+typeCommandLine	kapsis/commands.html#typeCommandLine	CommandType.typeCommandLine	
+typeCommentLine	kapsis/commands.html#typeCommentLine	CommandType.typeCommentLine	
+typeSubCommandLine	kapsis/commands.html#typeSubCommandLine	CommandType.typeSubCommandLine	
+CommandType	kapsis/commands.html#CommandType	commands: CommandType	
+Callback	kapsis/commands.html#Callback	commands: Callback	
+Command	kapsis/commands.html#Command	commands: Command	
+Kapsis	kapsis/commands.html#Kapsis	commands: Kapsis	
+KapsisDefect	kapsis/commands.html#KapsisDefect	commands: KapsisDefect	
+SyntaxError	kapsis/commands.html#SyntaxError	commands: SyntaxError	
+printUsage	kapsis/commands.html#printUsage,Kapsis	commands: printUsage(cli: Kapsis): string	
+addSeparator	kapsis/commands.html#addSeparator,Kapsis,string,int	commands: addSeparator(cli: Kapsis; id: string; key: int)	
+addDescription	kapsis/commands.html#addDescription,Kapsis,string	commands: addDescription(cli: Kapsis; desc: string)	
+addVersion	kapsis/commands.html#addVersion,Kapsis,string	commands: addVersion(cli: Kapsis; vers: string)	
+addCommand	kapsis/commands.html#addCommand,Kapsis,string,string,string,seq[ParamTuple],string,bool,Callback	commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];\n           callbackIdent: string; isSubCommand: bool; callback: Callback)	
+App	kapsis/commands.html#App.m	commands: App(body)	
+settings	kapsis/commands.html#settings.m,staticDBType,staticstring	commands: settings(database: static DBType; mainCmd: static string = &quot;&quot;)	
+about	kapsis/commands.html#about.m	commands: about(info)	
+commands	kapsis/commands.html#commands.m,untyped	commands: commands(lines: untyped)	

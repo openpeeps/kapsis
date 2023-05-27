@@ -1,0 +1,4 @@
+flag	kapsis/runtime.html#flag,Values,string	runtime: flag(values: Values; argName: string): bool	
+has	kapsis/runtime.html#has,Values,string	runtime: has(values: Values; argName: string): bool	
+get	kapsis/runtime.html#get,Values,string	runtime: get(values: Values; argName: string): string	
+toInt	kapsis/runtime.html#toInt,string	runtime: toInt(str: string): int	
