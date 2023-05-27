@@ -1,8 +1,8 @@
-# Klymene - Build delightful Command Line Interfaces.
+# kapsis - Build delightful Command Line Interfaces.
 # 
 #   (c) 2022 George Lemon | MIT license
 #       Made by Humans from OpenPeep
-#       https://github.com/openpeep/klymene
+#       https://github.com/openpeep/kapsis
 
 # References
 # https://github.com/nim-lang/nimble/blob/master/nimble.bash-completion

@@ -15,4 +15,4 @@ requires "pkginfo"
 requires "msgpack4nim#head"
 
 task dev, "dev mode":
-  exec "nim c -r src/yacli.nim"
+  exec "nim c -r src/kapsis.nim"

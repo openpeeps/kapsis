@@ -1,11 +1,5 @@
 import macros, tables, terminal
 
-# Klymene is a fancy nymph CLI framework written in Nim,
-# and helps developers creating beautiful command line interfaces.
-# 
-# Copyright (C) 2021 George Lemon <georgelemon@protonmail.com>
-# https://github.com/icyphox/fab/blob/master/src/fab.nim
-
 template cliEcho*(s: string, fg: ForegroundColor, style: set[Style] = {}, nl = true, lightFg = false) =
   setForeGroundColor(fg, lightFg)
   # Todo replace writeStyled with styledWriteLine/styledWrite or styledEcho

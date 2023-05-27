@@ -1,6 +1,6 @@
 import std/[unittest, strutils, os, osproc]
 
-let binPath = getCurrentDir() / "src" / "yacli.out"
+let binPath = getCurrentDir() / "src" / "kapsis.out"
 
 test "can run":
   check fileExists(binPath)

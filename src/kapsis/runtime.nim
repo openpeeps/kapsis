@@ -1,8 +1,8 @@
-# yacli - Build delightful Command Line interfaces in seconds
+# kepsis - Build delightful Command Line interfaces in seconds
 # 
 #   (c) 2023 George Lemon | MIT license
 #       Made by Humans from OpenPeeps
-#       https://github.com/openpeeps/yacli
+#       https://github.com/openpeeps/kepsis
 
 import std/tables
 from ./commands import Values, Parameter, ParameterType

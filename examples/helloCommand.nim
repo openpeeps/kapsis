@@ -1,4 +1,4 @@
-import ../src/yacli/runtime
+import ../src/kapsis/runtime
 
 proc runCommand*(v: Values) =
   echo "Hello " & v.get("input")

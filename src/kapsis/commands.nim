@@ -1,8 +1,8 @@
-# yacli - Build delightful Command Line interfaces in seconds
+# kapsis - Build delightful Command Line interfaces in seconds
 # 
 #   (c) 2023 George Lemon | MIT license
 #       Made by Humans from OpenPeeps
-#       https://github.com/openpeeps/yacli
+#       https://github.com/openpeeps/kapsis
 
 {.warning[Spacing]: off.}
 
@@ -18,7 +18,7 @@ import ./db
 export tables
 
 type
-  YacliErrors* = enum
+  KapsisErrors* = enum
     MaximumDepthSubCommand = "Maximum subcommand depth reached (3 levels)"
     ParentCommandNotFound = "Could not find a command id \"$1\""
     ConflictCommandName = "Command name \"$1\" already exists"
@@ -66,7 +66,7 @@ type
         # a seq for ordering command args
     else: discard # ignore comment lines
 
-  Yacli* = ref object
+  Kapsis* = ref object
     indent*: int8
       # Used to indent & align comments (default 25 spaces)
     app_name*: string
@@ -85,7 +85,7 @@ type
       # holds temporary extra info related to
       # a command flags/params
 
-  YacliDefect* = object of CatchableError
+  KapsisDefect* = object of CatchableError
   SyntaxError* = object of CatchableError
 
 const NewLine = "\n"
@@ -99,19 +99,19 @@ let
 # Runtime API
 #
 
-proc init[K: typedesc[Yacli]](cli: K): Yacli =
-  ## Initialize an instance of Yacli
+proc init[K: typedesc[Kapsis]](cli: K): Kapsis =
+  ## Initialize an instance of Kapsis
   result = cli()
 
-proc hasCommand(cli: Yacli, id: string): bool = 
+proc hasCommand(cli: Kapsis, id: string): bool = 
   ## Determine if command exists by id
   result = cli.commands.hasKey(id)
 
-proc getCommand(cli: Yacli, id: string): Command =
+proc getCommand(cli: Kapsis, id: string): Command =
   ## Return a Command instance based on given `id`
   result = cli.commands[id]
 
-proc startsWith(cli: Yacli, prefix: string): tuple[status: bool, commands: seq[string]] =
+proc startsWith(cli: Kapsis, prefix: string): tuple[status: bool, commands: seq[string]] =
   ## Determine if there any commands that match given prefix.
   if prefix.contains("."):
     var prefixes = prefix.split(".")
@@ -139,7 +139,7 @@ proc expectParams(command: Command): bool =
 proc style(str: string): string {.inline.} =
   result = "\e[90m" & str & "\e[0m"
 
-proc printAppIndex(cli: Yacli, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
+proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
   ## Print index with available commands, flags and parameters
   if showVersion: 
     echo cli.version
@@ -245,14 +245,14 @@ proc printAppIndex(cli: Yacli, highlights: seq[string], showExtras, showVersion,
     add usageOutput, NewLine
   stdout.write usageOutput
 
-proc quitApp(cli: Yacli, shouldQuit: bool, showUsage = true,
+proc quitApp(cli: Kapsis, shouldQuit: bool, showUsage = true,
       highlights: seq[string] = @[], showExtras, showVersion = false,
       exitStatus = QuitSuccess) =
   if shouldQuit:
     cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
     quit(exitStatus)
 
-proc printUsage*(cli: Yacli): string =
+proc printUsage*(cli: Kapsis): string =
   ## Parse and print usage based on given command line parameters
   var inputArgs: seq[string] = commandLineParams()
   quitApp(cli, inputArgs.len == 0) # quit & prompt usage if missing args
@@ -340,25 +340,25 @@ proc printUsage*(cli: Yacli): string =
     command = cli.commands[inputCmd]
   result = command.callbackName
 
-proc addSeparator*(cli: Yacli, id: string, key: int) =
+proc addSeparator*(cli: Kapsis, id: string, key: int) =
   ## Add a new command separator, with or without a label
   let sepId = id & "__" & $key
   var label = if id.len != 0: "\e[1m" & id  & ":\e[0m" else: id
   cli.commands[sepId] = Command(commandType: typeCommentLine, name: label)
 
-proc addDescription*(cli: Yacli, desc: string) =
+proc addDescription*(cli: Kapsis, desc: string) =
   cli.description &= desc
 
-proc addVersion*(cli: Yacli, vers: string) =
+proc addVersion*(cli: Kapsis, vers: string) =
   ## Use `.nimble` file to retrieve the app version
   ## and show in Usage when `-v` or `--version`
   cli.version = vers
 
-proc addCommand*(cli: Yacli, id, cmdId, desc: string,
+proc addCommand*(cli: Kapsis, id, cmdId, desc: string,
                   args: seq[ParamTuple], callbackIdent: string,
                   isSubCommand: bool, callback: Callback) =
   if cli.commands.hasKey(id):
-    raise newException(YacliDefect, $ConflictCommandName % [id])
+    raise newException(KapsisDefect, $ConflictCommandName % [id])
   if isSubCommand:    
     cli.commands[id] = Command(commandType: typeSubCommandLine)
   else:
@@ -378,7 +378,7 @@ proc addCommand*(cli: Yacli, id, cmdId, desc: string,
       countDelimiters: int8
     for k, param in pairs(args):
       if cli.commands[id].args.hasKey(param.pid):
-        raise newException(YacliDefect, "Duplicate parameter name for \"$1\"" % [param.pid])
+        raise newException(KapsisDefect, "Duplicate parameter name for \"$1\"" % [param.pid])
       cli.commands[id].args[param.pid] = Parameter(ptype: param.ptype)
       case param.ptype:
       of Variant:
@@ -406,7 +406,7 @@ macro App*(body) =
   result = newStmtList()
   result.add newVarStmt(
     ident "cli",
-    newCall(ident "Yacli")
+    newCall(ident "Kapsis")
   )
   result.add(
     newAssignment(

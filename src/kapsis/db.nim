@@ -1,8 +1,8 @@
-# Yacli - Build delightful Command Line interfaces in seconds
+# kapsis - Build delightful Command Line interfaces in seconds
 # 
 #   (c) 2023 George Lemon | MIT license
 #       Made by Humans from OpenPeeps
-#       https://github.com/openpeeps/yacli
+#       https://github.com/openpeeps/kapsis
 
 import std/[macros, strutils, os]
 import pkg/pkginfo
