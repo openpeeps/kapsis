@@ -65,7 +65,7 @@ type
       description: string
       args: OrderedTable[string, Parameter]
       index: seq[ParamTuple]
-        # A seq that reflects the order of your parameters 
+        # a seq for ordering command args
     else: discard # ignore comment lines
 
   Klymene* = ref object
@@ -153,15 +153,18 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
     commandsLen: seq[int]
     index: seq[
       tuple[
-        command, description: string,
+        id, command, description: string,
         commandLen: int,
         commandType: CommandType
       ]
     ]
 
+  if cli.mainCommand.len != 0:
+    # don't print the name of the main command.
+    setLen cli.commands[cli.mainCommand].commandName, 0
   for id, cmd in pairs(cli.commands):
     if cmd.commandType == typeCommentLine:
-      index.add (cmd.name, "", 0, typeCommentLine)
+      index.add (id, cmd.name, "", 0, typeCommentLine)
       continue
     var
       i = 0
@@ -200,6 +203,7 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
       prev = parameter.ptype
 
     index.add (
+      id,
       strCommand,
       cmd.description,
       commandsLen[^1],
@@ -230,8 +234,7 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
       add usageOutput, i.command
       add usageOutput, NewLine
       continue
-
-    if i.command in highlights:
+    if i.id in highlights:
       i.command = "\e[97;92m" & i.command & "\e[0m"
     var baseIndent = 10 + (baseCmdIndent - i.commandLen)
     if i.commandType == typeSubCommandLine:
@@ -247,7 +250,6 @@ proc printAppIndex(cli: Klymene, highlights: seq[string], showExtras, showVersio
 proc quitApp(cli: Klymene, shouldQuit: bool, showUsage = true,
       highlights: seq[string] = @[], showExtras, showVersion = false,
       exitStatus = QuitSuccess) =
-  ## Quit from current state and print the application index
   if shouldQuit:
     cli.printAppIndex(highlights, showExtras, showVersion, showUsage)
     quit(exitStatus)
@@ -259,12 +261,6 @@ proc printUsage*(cli: Klymene): string =
   var
     inputCmd = inputArgs[0]
     isMainCommand: bool 
-  if cli.mainCommand.len != 0 and
-          cli.hasCommand(inputCmd) == false and
-          inputCmd notin defaultFlags:
-    inputCmd = cli.mainCommand
-    isMainCommand = true
-
   if not cli.hasCommand inputCmd:
     if inputCmd in ["-h", "--help"]:
       # Quit and prompt usage with `showExtras`
@@ -273,11 +269,23 @@ proc printUsage*(cli: Klymene): string =
     elif inputCmd in ["-v", "--version"]:
       # print current version
       quitApp(cli, true, showVersion = true)
+    
     let suggested = cli.startsWith inputCmd
     if suggested.status == true:  # quit and highlight possible matches
       quitApp(cli, true, highlights = suggested.commands, exitStatus = QuitFailure)
-    else: quitApp(cli, true, exitStatus = QuitFailure)  # quit and prompt index
-  
+    else:
+      if cli.mainCommand.len != 0 and
+            cli.hasCommand(inputCmd) == false and
+            inputCmd notin defaultFlags:
+        inputCmd = cli.mainCommand
+        isMainCommand = true
+      else:
+        quitApp(cli, true, exitStatus = QuitFailure)  # quit and prompt index
+  else:
+    if "-h" in inputArgs or "--help" in inputArgs:
+      cli.extras = cli.getCommand(inputCmd).description
+      quitApp(cli, shouldQuit = true, showUsage = false)
+
   if not isMainCommand:
     # if not skipped delete command name from current seq
     inputArgs.delete(0)
@@ -307,7 +315,8 @@ proc printUsage*(cli: Klymene): string =
         of Variant:
           if gotVariant:
             cli.error = "Choose one of the options"
-            quitApp(cli, shouldQuit = true, showUsage = false, highlights = @[inputcmd], exitStatus = QuitFailure)
+            quitApp(cli, shouldQuit = true, showUsage = false,
+                  highlights = @[inputcmd], exitStatus = QuitFailure)
           command.args[p].vTuple = p
           gotVariant = true
         of Key:
@@ -317,14 +326,14 @@ proc printUsage*(cli: Klymene): string =
         of LongFlag:
           command.args[p].vLong = true
       else:
-        if indexlen >= i:
-          if command.index[i].ptype == Key:
-            command.args[command.index[i].pid].vStr = p
-        elif p in ["h", "help"] and command.args.hasKey(mainInputArg):
+        if p in ["h", "help"] and command.args.hasKey(mainInputArg):
           # Quit, prompt usage and highlight all possible
           # commands that match with given input (if any)
           cli.extras = command.args[mainInputArg].help
           quitApp(cli, shouldQuit = true, showUsage = false)
+        elif indexlen >= i:
+          if command.index[i].ptype == Key:
+            command.args[command.index[i].pid].vStr = p
         else:
           cli.invalidArg = p
           quitApp(cli, true, highlights = @[inputCmd])
@@ -389,9 +398,9 @@ proc addCommand*(cli: Klymene, id, cmdId, desc: string,
       if param.help.len != 0:
         cli.commands[id].args[param.pid].help = param.help
 
-#
-# Compile time API
-#
+
+## Compile time API
+
 proc `%`(i: string): NimNode =
   result = ident(i)
 
@@ -447,7 +456,6 @@ macro about*(info) =
     cli.addVersion `currentAppVersion`
   result.add quote do:
     cli.addDescription(NewLine)
-
 
 template handleTupleConstr(x: untyped) =
   for a in x:
