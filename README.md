@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://openpeep.github.io/kapsis/">API reference</a><br><br>
+  <a href="https://openpeeps.github.io/kapsis/">API reference</a><br><br>
   <img src="https://github.com/openpeeps/kapsis/workflows/test/badge.svg" alt="Github Actions"> <img src="https://github.com/openpeeps/kapsis/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
