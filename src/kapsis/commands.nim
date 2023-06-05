@@ -518,6 +518,25 @@ proc handleNamedArguments(tk: NimNode, cmdParams: var seq[ParamTuple]) {.compile
     expectKind arg, nnkIdent
     cmdParams.add((ptype: Key, pid: arg.strVal, help: ""))
 
+proc handleCommand(tk: NimNode, cmdParams: var seq[ParamTuple]) {.compileTime.} =
+  for arg in tk:
+    if arg.kind == nnkAccQuoted:
+      arg.handleNamedArguments(cmdParams)
+    elif arg.kind == nnkTupleConstr:
+      # A\B\C Variant commands using tuple
+      # constructor ("start", "stop", "refresh")
+      handleTupleConstr(arg)
+    elif arg.kind == nnkCharLit:
+      handleShortFlag(arg)
+    elif arg.kind == nnkStrLit:
+      handleLongFlagOrNamedArg(arg)
+    elif arg.kind == nnKBracket:
+      # handle sets of flags
+      for a in arg:
+        handleLongFlagOrNamedArg(a, isFlag = true)
+    elif arg.kind == nnkCommand:
+      arg.handleCommand(cmdParams)
+
 proc elifBodyNode(newCommandId: string): NimNode {.compileTime.} =
   newStmtList(
     newCall(
@@ -610,21 +629,7 @@ macro commands*(lines: untyped) =
             if tk.kind == nnkAccQuoted:
               tk.handleNamedArguments(cmdParams)
             elif tk.kind == nnkCommand:
-              for arg in tk:
-                if arg.kind == nnkAccQuoted:
-                  arg.handleNamedArguments(cmdParams)
-                elif arg.kind == nnkTupleConstr:
-                  # A\B\C Variant commands using tuple
-                  # constructor ("start", "stop", "refresh")
-                  handleTupleConstr(arg)
-                elif arg.kind == nnkCharLit:
-                  handleShortFlag(arg)
-                elif arg.kind == nnkStrLit:
-                  handleLongFlagOrNamedArg(arg)
-                elif arg.kind == nnKBracket:
-                  # handle sets of flags
-                  for a in arg:
-                    handleLongFlagOrNamedArg(a, isFlag = true)
+              tk.handleCommand(cmdParams)
             elif tk.kind == nnkTupleConstr:
               # A\B\C Variant commands using tuple
               # constructor ("start", "stop", "refresh")
