@@ -240,9 +240,9 @@ proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion
   for k, i in index.mpairs:
     # add commands from native source
     usageOutput.renderStrCommands(k, i)
-  # add plug
-  pluggables.add ("plugins", "Plugins", "", 0, typeCommentLine)
 
+  # Todo
+  # pluggables.add ("plugins", "Plugins", "", 0, typeCommentLine)
   for k, i in pluggables.mpairs:
     # add commands from pluggables (if any)
     usageOutput.renderStrCommands(k, i)
