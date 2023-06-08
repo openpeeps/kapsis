@@ -52,9 +52,10 @@ type
     typeSubCommandLine
 
   Callback* = proc(v: Values) {.nimcall.}
+  RenderableCommand = tuple[id, command, description: string, commandLen: int, commandType: CommandType]
   Command* = object
     name*: string
-      # Holds the raw command name
+    isNative*: bool
     case commandType: CommandType
     of typeCommandLine, typeSubCommandLine:
       commandName: string
@@ -84,6 +85,7 @@ type
       # when suffixed with `-h` `--help`
       # holds temporary extra info related to
       # a command flags/params
+    allowPlugins*: bool
 
   KapsisDefect* = object of CatchableError
   SyntaxError* = object of CatchableError
@@ -91,7 +93,7 @@ type
 const NewLine = "\n"
 const defaultFlags = ["-h", "--help", "-v", "--version"]
 let
-  TokenSeparator {.compileTime.} = "---"
+  # TokenSeparator {.compileTime.} = "---"
   InvalidVariantWithFlags {.compileTime.} = "Variant parameters cannot contain flags"
   InvalidCommandDefinition {.compileTime.} = "Invalid command definition"
 
@@ -139,6 +141,25 @@ proc expectParams(command: Command): bool =
 proc style(str: string): string {.inline.} =
   result = "\e[90m" & str & "\e[0m"
 
+template renderStrCommands(usageOutput: var string, k: int, i: RenderableCommand) =
+  if i.commandType == typeCommentLine:
+    if k != 0:
+      add usageOutput, NewLine
+    add usageOutput, i.command
+    add usageOutput, NewLine
+    continue
+  if i.id in highlights:
+    i.command = "\e[97;92m" & i.command & "\e[0m"
+  var baseIndent = 10 + (baseCmdIndent - i.commandLen)
+  if i.commandType == typeSubCommandLine:
+    # indent sub commands by 2 spaces
+    baseIndent = baseIndent - 2
+    add usageOutput, indent(i.command, 2)
+  else:
+    add usageOutput, indent(i.command, 2)
+  add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
+  add usageOutput, NewLine
+
 proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion, showUsage: bool) =
   ## Print index with available commands, flags and parameters
   if showVersion: 
@@ -149,16 +170,10 @@ proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion
     return
   var
     commandsLen: seq[int]
-    index: seq[
-      tuple[
-        id, command, description: string,
-        commandLen: int,
-        commandType: CommandType
-      ]
-    ]
+    index, pluggables: seq[RenderableCommand]
 
   if cli.mainCommand.len != 0:
-    # don't print the name of the main command.
+    # skip printing the name of the main command, if set 
     setLen cli.commands[cli.mainCommand].commandName, 0
   for id, cmd in pairs(cli.commands):
     if cmd.commandType == typeCommentLine:
@@ -167,7 +182,7 @@ proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion
     var
       i = 0
       strCommand: string
-      baseIndent = 2
+      # baseIndent = 2
     let paramsLen = cmd.args.len
     add strCommand, cmd.commandName
     commandsLen.add strCommand.len
@@ -199,14 +214,11 @@ proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion
         inc(commandsLen[^1], paramKey.len + 3) # plus `--` and 1 space
       inc i
       prev = parameter.ptype
-
-    index.add (
-      id,
-      strCommand,
-      cmd.description,
-      commandsLen[^1],
-      cmd.commandType
-    )
+    let cmdTuple: RenderableCommand = (id, strCommand, cmd.description, commandsLen[^1], cmd.commandType)
+    if cmd.isNative:
+      add index, cmdTuple 
+    else:
+      add pluggables, cmdTuple
 
   # Order commands by length 
   let
@@ -226,23 +238,14 @@ proc printAppIndex(cli: Kapsis, highlights: seq[string], showExtras, showVersion
     stdout.write(cli.extras & "\n\n")
 
   for k, i in index.mpairs:
-    if i.commandType == typeCommentLine:
-      if k != 0:
-        add usageOutput, NewLine
-      add usageOutput, i.command
-      add usageOutput, NewLine
-      continue
-    if i.id in highlights:
-      i.command = "\e[97;92m" & i.command & "\e[0m"
-    var baseIndent = 10 + (baseCmdIndent - i.commandLen)
-    if i.commandType == typeSubCommandLine:
-      # indent sub commands by 2 spaces
-      baseIndent = baseIndent - 2
-      add usageOutput, indent(i.command, 2)
-    else:
-      add usageOutput, indent(i.command, 2)
-    add usageOutput, indent("\e[90m" & i.description & "\e[0m", baseIndent)
-    add usageOutput, NewLine
+    # add commands from native source
+    usageOutput.renderStrCommands(k, i)
+  # add plug
+  pluggables.add ("plugins", "Plugins", "", 0, typeCommentLine)
+
+  for k, i in pluggables.mpairs:
+    # add commands from pluggables (if any)
+    usageOutput.renderStrCommands(k, i)
   stdout.write usageOutput
 
 proc quitApp(cli: Kapsis, shouldQuit: bool, showUsage = true,
@@ -356,7 +359,8 @@ proc addVersion*(cli: Kapsis, vers: string) =
 
 proc addCommand*(cli: Kapsis, id, cmdId, desc: string,
                   args: seq[ParamTuple], callbackIdent: string,
-                  isSubCommand: bool, callback: Callback) =
+                  isSubCommand: bool, callback: Callback, isNative = true) =
+  ## Register a new command 
   if cli.commands.hasKey(id):
     raise newException(KapsisDefect, $ConflictCommandName % [id])
   if isSubCommand:    
@@ -369,13 +373,9 @@ proc addCommand*(cli: Kapsis, id, cmdId, desc: string,
   cli.commands[id].callback = callback
   cli.commands[id].description = desc
   cli.commands[id].index = args
+  cli.commands[id].isNative = isNative
 
   if args.len != 0:
-    var
-      strCounter = 0      # holds params length
-      strCommand: string
-      hasDelimiter: bool
-      countDelimiters: int8
     for k, param in pairs(args):
       if cli.commands[id].args.hasKey(param.pid):
         raise newException(KapsisDefect, "Duplicate parameter name for \"$1\"" % [param.pid])
@@ -437,7 +437,6 @@ macro about*(info) =
   ## when user press `app -h` or `app --help`
   info.expectKind nnkStmtList
   result = newStmtList()
-
   for i in info:
     if i.kind == nnkStrLit:
       result.add quote do:
@@ -455,6 +454,31 @@ macro about*(info) =
   result.add quote do:
     cli.addDescription(NewLine)
 
+type
+  PluginType* = enum
+    plugDynLib, plugAndPlay
+
+macro pluggable*(pluginType: set[PluginType]) =
+  result = newStmtList()
+  result.add(
+    nnkVarSection.newTree(
+      nnkIdentDefs.newTree(
+        ident "thr",
+        nnkBracketExpr.newTree(
+          ident "Thread",
+          newNimNode(nnkPar).add(ident "Kapsis")
+        ),
+        newEmptyNode()
+      )
+    ),
+    newCall(
+      newDotExpr(ident "thr", ident "initPlugins"),
+      ident("cli")
+    )
+  )
+  result.add quote do:
+    cli.allowPlugins = true
+
 template handleTupleConstr(x: untyped) =
   for a in x:
     if a.kind == nnkStrLit:
@@ -463,7 +487,7 @@ template handleTupleConstr(x: untyped) =
         error(InvalidVariantWithFlags)
       cmdParams.add (ptype: Variant, pid: a.strVal, help: "")
     else: error(InvalidVariantWithFlags)
-  var paramHelpers: seq[tuple[k, help: string]]
+  # var paramHelpers: seq[tuple[k, help: string]]
 
 template handleShortFlag(x: untyped) =
   # handle short flags based on chars
@@ -580,7 +604,7 @@ macro commands*(lines: untyped) =
   var
     commandsConditional = newNimNode(nnkIfStmt)
     registeredCommands: seq[string]
-    isParentCommand: bool
+    # isParentCommand: bool
   for k, line in lines.pairs():
     expectKind line, nnkPrefix
     expectKind line[0], nnkIdent
