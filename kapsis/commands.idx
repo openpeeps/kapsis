@@ -23,8 +23,12 @@ printUsage	kapsis/commands.html#printUsage,Kapsis	commands: printUsage(cli: Kaps
 addSeparator	kapsis/commands.html#addSeparator,Kapsis,string,int	commands: addSeparator(cli: Kapsis; id: string; key: int)	
 addDescription	kapsis/commands.html#addDescription,Kapsis,string	commands: addDescription(cli: Kapsis; desc: string)	
 addVersion	kapsis/commands.html#addVersion,Kapsis,string	commands: addVersion(cli: Kapsis; vers: string)	
-addCommand	kapsis/commands.html#addCommand,Kapsis,string,string,string,seq[ParamTuple],string,bool,Callback	commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];\n           callbackIdent: string; isSubCommand: bool; callback: Callback)	
+addCommand	kapsis/commands.html#addCommand,Kapsis,string,string,string,seq[ParamTuple],string,bool,Callback	commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];\n           callbackIdent: string; isSubCommand: bool; callback: Callback;\n           isNative = true)	
 App	kapsis/commands.html#App.m	commands: App(body)	
 settings	kapsis/commands.html#settings.m,staticDBType,staticstring	commands: settings(database: static DBType; mainCmd: static string = &quot;&quot;)	
 about	kapsis/commands.html#about.m	commands: about(info)	
+plugDynLib	kapsis/commands.html#plugDynLib	PluginType.plugDynLib	
+plugAndPlay	kapsis/commands.html#plugAndPlay	PluginType.plugAndPlay	
+PluginType	kapsis/commands.html#PluginType	commands: PluginType	
+pluggable	kapsis/commands.html#pluggable.m,set[PluginType]	commands: pluggable(pluginType: set[PluginType])	
 commands	kapsis/commands.html#commands.m,untyped	commands: commands(lines: untyped)	

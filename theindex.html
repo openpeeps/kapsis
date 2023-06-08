@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', main);
 <div class="document" id="documentId">
   <div class="container">
     <h1 class="title">Index</h1>
-    Modules: <a href="_._/examples/helloCommand.html">../examples/helloCommand</a>, <a href="_._/examples/helloWorldCommand.html">../examples/helloWorldCommand</a>, <a href="_._/examples/newCommand.html">../examples/newCommand</a>, <a href="kapsis/commands.html">kapsis/commands</a>, <a href="kapsis/db.html">kapsis/db</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>.<br/><p /><h2>API symbols</h2>
+    Modules: <a href="_._/examples/helloCommand.html">../examples/helloCommand</a>, <a href="_._/examples/helloWorldCommand.html">../examples/helloWorldCommand</a>, <a href="_._/examples/newCommand.html">../examples/newCommand</a>, <a href="kapsis/commands.html">kapsis/commands</a>, <a href="kapsis/db.html">kapsis/db</a>, <a href="kapsis/pluggable.html">kapsis/pluggable</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="about" href="#about"><span>about:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="commands: about(info)" href="kapsis/commands.html#about.m">commands: about(info)</a></li>
@@ -78,8 +78,10 @@ window.addEventListener('DOMContentLoaded', main);
 <dt><a name="addCommand" href="#addCommand"><span>addCommand:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
-           callbackIdent: string; isSubCommand: bool; callback: Callback)" href="kapsis/commands.html#addCommand%2CKapsis%2Cstring%2Cstring%2Cstring%2Cseq%5BParamTuple%5D%2Cstring%2Cbool%2CCallback">commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
-           callbackIdent: string; isSubCommand: bool; callback: Callback)</a></li>
+           callbackIdent: string; isSubCommand: bool; callback: Callback;
+           isNative = true)" href="kapsis/commands.html#addCommand%2CKapsis%2Cstring%2Cstring%2Cstring%2Cseq%5BParamTuple%5D%2Cstring%2Cbool%2CCallback">commands: addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
+           callbackIdent: string; isSubCommand: bool; callback: Callback;
+           isNative = true)</a></li>
           </ul></dd>
 <dt><a name="addDescription" href="#addDescription"><span>addDescription:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -153,6 +155,10 @@ window.addEventListener('DOMContentLoaded', main);
 <li><a class="reference external"
           data-doc-search-tag="runtime: has(values: Values; argName: string): bool" href="kapsis/runtime.html#has%2CValues%2Cstring">runtime: has(values: Values; argName: string): bool</a></li>
           </ul></dd>
+<dt><a name="initPlugins" href="#initPlugins"><span>initPlugins:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="pluggable: initPlugins(thread: var Thread[Kapsis]; cli: Kapsis)" href="kapsis/pluggable.html#initPlugins%2CThread%5BKapsis%5D%2CKapsis">pluggable: initPlugins(thread: var Thread[Kapsis]; cli: Kapsis)</a></li>
+          </ul></dd>
 <dt><a name="Kapsis" href="#Kapsis"><span>Kapsis:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="commands: Kapsis" href="kapsis/commands.html#Kapsis">commands: Kapsis</a></li>
@@ -192,6 +198,22 @@ window.addEventListener('DOMContentLoaded', main);
 <dt><a name="ParentCommandNotFound" href="#ParentCommandNotFound"><span>ParentCommandNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="KapsisErrors.ParentCommandNotFound" href="kapsis/commands.html#ParentCommandNotFound">KapsisErrors.ParentCommandNotFound</a></li>
+          </ul></dd>
+<dt><a name="plugAndPlay" href="#plugAndPlay"><span>plugAndPlay:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="PluginType.plugAndPlay" href="kapsis/commands.html#plugAndPlay">PluginType.plugAndPlay</a></li>
+          </ul></dd>
+<dt><a name="plugDynLib" href="#plugDynLib"><span>plugDynLib:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="PluginType.plugDynLib" href="kapsis/commands.html#plugDynLib">PluginType.plugDynLib</a></li>
+          </ul></dd>
+<dt><a name="pluggable" href="#pluggable"><span>pluggable:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="commands: pluggable(pluginType: set[PluginType])" href="kapsis/commands.html#pluggable.m%2Cset%5BPluginType%5D">commands: pluggable(pluginType: set[PluginType])</a></li>
+          </ul></dd>
+<dt><a name="PluginType" href="#PluginType"><span>PluginType:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="commands: PluginType" href="kapsis/commands.html#PluginType">commands: PluginType</a></li>
           </ul></dd>
 <dt><a name="printUsage" href="#printUsage"><span>printUsage:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -246,7 +268,7 @@ window.addEventListener('DOMContentLoaded', main);
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-05-27 06:54:39 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-06-08 17:49:24 UTC</small>
       </div>
     </div>
   </div>

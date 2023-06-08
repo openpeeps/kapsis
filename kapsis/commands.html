@@ -112,6 +112,7 @@ window.addEventListener('DOMContentLoaded', main);
   <li><a class="reference" href="#Command"
     title="Command = object
   name*: string
+  isNative*: bool
   case commandType: CommandType
   of typeCommandLine, typeSubCommandLine:
       commandName: string
@@ -137,7 +138,8 @@ window.addEventListener('DOMContentLoaded', main);
   error*: string
   mainCommand*: string       ## used to set a main command that can be called
                              ## without specifying the command id..
-  extras*: string">Kapsis</a></li>
+  extras*: string
+  allowPlugins*: bool">Kapsis</a></li>
   <li><a class="reference" href="#KapsisDefect"
     title="KapsisDefect = object of CatchableError">KapsisDefect</a></li>
   <li><a class="reference" href="#KapsisErrors"
@@ -170,6 +172,9 @@ window.addEventListener('DOMContentLoaded', main);
   Key, Variant, LongFlag, ShortFlag">ParameterType</a></li>
   <li><a class="reference" href="#ParamTuple"
     title="ParamTuple = tuple[ptype: ParameterType, pid, help: string]">ParamTuple</a></li>
+  <li><a class="reference" href="#PluginType"
+    title="PluginType = enum
+  plugDynLib, plugAndPlay">PluginType</a></li>
   <li><a class="reference" href="#SyntaxError"
     title="SyntaxError = object of CatchableError">SyntaxError</a></li>
   <li><a class="reference" href="#Values"
@@ -183,8 +188,10 @@ window.addEventListener('DOMContentLoaded', main);
       <ul class="simple nested-toc-section">addCommand
       <li><a class="reference" href="#addCommand%2CKapsis%2Cstring%2Cstring%2Cstring%2Cseq%5BParamTuple%5D%2Cstring%2Cbool%2CCallback"
     title="addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
-           callbackIdent: string; isSubCommand: bool; callback: Callback)">addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
-           callbackIdent: string; isSubCommand: bool; callback: Callback)</a></li>
+           callbackIdent: string; isSubCommand: bool; callback: Callback;
+           isNative = true)">addCommand(cli: Kapsis; id, cmdId, desc: string; args: seq[ParamTuple];
+           callbackIdent: string; isSubCommand: bool; callback: Callback;
+           isNative = true)</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">addDescription
@@ -228,6 +235,11 @@ window.addEventListener('DOMContentLoaded', main);
     title="commands(lines: untyped)">commands(lines: untyped)</a></li>
 
   </ul>
+  <ul class="simple nested-toc-section">pluggable
+      <li><a class="reference" href="#pluggable.m%2Cset%5BPluginType%5D"
+    title="pluggable(pluginType: set[PluginType])">pluggable(pluginType: set[PluginType])</a></li>
+
+  </ul>
   <ul class="simple nested-toc-section">settings
       <li><a class="reference" href="#settings.m%2CstaticDBType%2Cstaticstring"
     title="settings(database: static DBType; mainCmd: static string = &quot;&quot;)">settings(database: static DBType; mainCmd: static string = &quot;&quot;)</a></li>
@@ -264,6 +276,7 @@ window.addEventListener('DOMContentLoaded', main);
 <div id="Command">
 <dt><pre><a href="commands.html#Command"><span class="Identifier">Command</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">name</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
+  <span class="Identifier">isNative</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
   <span class="Keyword">case</span> <span class="Identifier">commandType</span><span class="Other">:</span> <a href="commands.html#CommandType"><span class="Identifier">CommandType</span></a>
   <span class="Keyword">of</span> <span class="Identifier">typeCommandLine</span><span class="Other">,</span> <span class="Identifier">typeSubCommandLine</span><span class="Other">:</span>
       <span class="Identifier">commandName</span><span class="Other">:</span> <span class="Identifier">string</span>
@@ -303,6 +316,7 @@ window.addEventListener('DOMContentLoaded', main);
   <span class="Identifier">mainCommand</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>       <span class="Comment">## used to set a main command that can be called</span>
                              <span class="Comment">## without specifying the command id..</span>
   <span class="Identifier">extras</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
+  <span class="Identifier">allowPlugins</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
 </pre></dt>
 <dd>
 
@@ -373,6 +387,15 @@ window.addEventListener('DOMContentLoaded', main);
 
 </dd>
 </div>
+<div id="PluginType">
+<dt><pre><a href="commands.html#PluginType"><span class="Identifier">PluginType</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">plugDynLib</span><span class="Other">,</span> <span class="Identifier">plugAndPlay</span></pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
 <div id="SyntaxError">
 <dt><pre><a href="commands.html#SyntaxError"><span class="Identifier">SyntaxError</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
 <dd>
@@ -396,11 +419,12 @@ window.addEventListener('DOMContentLoaded', main);
 <dl class="item">
 <div id="addCommand,Kapsis,string,string,string,seq[ParamTuple],string,bool,Callback">
 <dt><pre><span class="Keyword">proc</span> <a href="#addCommand%2CKapsis%2Cstring%2Cstring%2Cstring%2Cseq%5BParamTuple%5D%2Cstring%2Cbool%2CCallback"><span class="Identifier">addCommand</span></a><span class="Other">(</span><span class="Identifier">cli</span><span class="Other">:</span> <a href="commands.html#Kapsis"><span class="Identifier">Kapsis</span></a><span class="Other">;</span> <span class="Identifier">id</span><span class="Other">,</span> <span class="Identifier">cmdId</span><span class="Other">,</span> <span class="Identifier">desc</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">args</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="commands.html#ParamTuple"><span class="Identifier">ParamTuple</span></a><span class="Other">]</span><span class="Other">;</span>
-                <span class="Identifier">callbackIdent</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">isSubCommand</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">;</span> <span class="Identifier">callback</span><span class="Other">:</span> <a href="commands.html#Callback"><span class="Identifier">Callback</span></a><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KapsisDefect</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">KeyError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+                <span class="Identifier">callbackIdent</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">isSubCommand</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">;</span> <span class="Identifier">callback</span><span class="Other">:</span> <a href="commands.html#Callback"><span class="Identifier">Callback</span></a><span class="Other">;</span>
+                <span class="Identifier">isNative</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KapsisDefect</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">KeyError</span><span class="Other">]</span><span class="Other">,</span>
+                                   <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
-
+Register a new command 
 
 </dd>
 </div>
@@ -466,6 +490,14 @@ Macro for adding info and other comments above usage commands. Informations prov
 
 </dd>
 </div>
+<div id="pluggable.m,set[PluginType]">
+<dt><pre><span class="Keyword">macro</span> <a href="#pluggable.m%2Cset%5BPluginType%5D"><span class="Identifier">pluggable</span></a><span class="Other">(</span><span class="Identifier">pluginType</span><span class="Other">:</span> <span class="Identifier">set</span><span class="Other">[</span><a href="commands.html#PluginType"><span class="Identifier">PluginType</span></a><span class="Other">]</span><span class="Other">)</span></pre></dt>
+<dd>
+
+
+
+</dd>
+</div>
 <div id="settings.m,staticDBType,staticstring">
 <dt><pre><span class="Keyword">macro</span> <a href="#settings.m%2CstaticDBType%2Cstaticstring"><span class="Identifier">settings</span></a><span class="Other">(</span><span class="Identifier">database</span><span class="Other">:</span> <span class="Identifier">static</span> <span class="Identifier">DBType</span><span class="Other">;</span> <span class="Identifier">mainCmd</span><span class="Other">:</span> <span class="Identifier">static</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span></pre></dt>
 <dd>
@@ -484,7 +516,7 @@ Change your CLI settings
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-05-27 06:54:39 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-06-08 17:49:24 UTC</small>
       </div>
     </div>
   </div>
