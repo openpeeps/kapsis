@@ -7,16 +7,15 @@
 import kapsis/commands
 export commands
 
-import kapsis/db
-
 when isMainModule:
   import ../examples/[newCommand, helloCommand, helloWorldCommand]
+  import kapsis/[db, pluggable]
 
   App:
     about:
       # Optional. When not provided will use .nimble info
       "👋 Yay! My command line interface"
-
+    pluggable: {plugDynLib, plugAndPlay}
     commands:
       --- "Main commands" # separator
       $ "new" ("app", "rest"):
@@ -29,3 +28,4 @@ when isMainModule:
         ? "A second command"
       $ "hello.world":
         ? "A sub command"
+    
