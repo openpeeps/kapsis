@@ -17,8 +17,5 @@ requires "msgpack4nim#head"
 task dev, "dev mode":
   exec "nim c --mm:arc --threads:on -o:./bin/kapsis src/kapsis.nim"
 
-task plugin, "testing pluggable":
-  exec "nim c --mm:orc --app:lib --noMain examples/testPlugin.nim" 
-
 # task plugin2, "plugin 2":
 #   exec "nim c --app:lib --noMain --gc:orc"

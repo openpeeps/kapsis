@@ -1,6 +1,6 @@
 import std/[unittest, strutils, os, osproc]
 
-let binPath = getCurrentDir() / "src" / "kapsis.out"
+let binPath = getCurrentDir() / "bin" / "kapsis"
 
 test "can run":
   check fileExists(binPath)

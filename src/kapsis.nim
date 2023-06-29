@@ -9,13 +9,13 @@ export commands
 
 when isMainModule:
   import ../examples/[newCommand, helloCommand, helloWorldCommand]
-  import kapsis/[db, pluggable]
+  import kapsis/db
 
   App:
     about:
       # Optional. When not provided will use .nimble info
       "👋 Yay! My command line interface"
-    pluggable: {plugDynLib, plugAndPlay}
+    
     commands:
       --- "Main commands" # separator
       $ "new" ("app", "rest"):

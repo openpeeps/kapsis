@@ -26,6 +26,9 @@ type
   ParameterType* = enum
     Key, Variant, LongFlag, ShortFlag
 
+  PluginType* = enum
+    plugNone, plugDynLib, plugAndPlay
+
   ParamTuple* = tuple[ptype: ParameterType, pid, help: string]
 
   Parameter* = ref object
@@ -85,7 +88,7 @@ type
       # when suffixed with `-h` `--help`
       # holds temporary extra info related to
       # a command flags/params
-    allowPlugins*: bool
+    allowPlugins*: set[PluginType]
 
   KapsisDefect* = object of CatchableError
   SyntaxError* = object of CatchableError
@@ -454,12 +457,10 @@ macro about*(info) =
   result.add quote do:
     cli.addDescription(NewLine)
 
-type
-  PluginType* = enum
-    plugDynLib, plugAndPlay
-
 macro pluggable*(pluginType: set[PluginType]) =
   result = newStmtList()
+  result.add quote do:
+    cli.allowPlugins = `pluginType`
   result.add(
     nnkVarSection.newTree(
       nnkIdentDefs.newTree(
@@ -476,8 +477,6 @@ macro pluggable*(pluginType: set[PluginType]) =
       ident("cli")
     )
   )
-  result.add quote do:
-    cli.allowPlugins = true
 
 template handleTupleConstr(x: untyped) =
   for a in x:
