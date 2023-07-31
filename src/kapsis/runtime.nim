@@ -13,26 +13,35 @@ export Values
 proc flag*(values: Values, argName: string): bool =
   let cmd = values[]
   if cmd.hasKey(argName):
-    result = cmd[argName].vLong
+    case cmd[argName].ptype:
+    of LongFlag:
+      result = cmd[argName].vLong
+    of ShortFlag:
+      result = cmd[argName].vShort
+    else: discard
 
 proc has*(values: Values, argName: string): bool =
-  ## Determine if there is a value available for specified argument
+  ## Check for available value by given `argName`
   let cmd = values[]
   if cmd.hasKey(argName):
     let arg = cmd[argName]
-    if cmd[argName].ptype == Variant:
+    case cmd[argName].ptype
+    of Variant:
       result = arg.vTuple.len != 0
-    else:
+    of Key:
       result = arg.vStr.len != 0
+    else: raise newException(ValueError, "Flags can't hold values, yet")
 
 proc get*(values: Values, argName: string): string =
-  ## Retrieve a value from a dynamic argument
+  ## Retrieve available value by given `argName`
   if values.has(argName):
     let arg = values[][argName]
-    if arg.ptype == Variant:
+    case arg.ptype
+    of Variant:
       result = arg.vTuple
-    else:
+    of Key:
       result = arg.vStr
+    else: raise newException(ValueError, "Flags can't hold values, yet")
 
 proc toInt*(str: string): int =
   result = parseInt(str)
