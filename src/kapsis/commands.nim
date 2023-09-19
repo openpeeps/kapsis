@@ -430,7 +430,7 @@ macro App*(body) =
   result.add body
 
 var mainCommand {.compileTime.}: string
-macro settings*(database: static DBType, mainCmd: static string = "") =
+macro settings*(mainCmd: static string = "", database: static DBType = dbJSON) =
   ## Change your CLI settings
   mainCommand = mainCmd
 
