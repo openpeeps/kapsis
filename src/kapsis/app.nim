@@ -614,6 +614,8 @@ macro commands*(x: untyped, extras: untyped = nil) =
             else:
               if likely(Kapsis.commands[id.key].args.hasKey(input[i].key)):
                 let arg = Kapsis.commands[id.key].args[input[i].key]
+                if arg.datatype == vtBool and input[i].val.len == 0:
+                  input[i].val = "true" # passing a bool flag without value is set as true
                 collectInputData(inputValues, id.key,
                     input[i].key, input[i].val, arg)
                 add inputFlags, (input[i].key, input[i].val)
