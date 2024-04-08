@@ -604,6 +604,7 @@ macro commands*(x: untyped, extras: untyped = nil) =
         let cmd: KapsisCommand = Kapsis.commands[id.key]
         # first check for available flags
         var i = 0
+        var flagpos: seq[int]
         while i <= input.high:
           case input[i].kind
           of cmdLongOption, cmdShortOption:
@@ -619,12 +620,14 @@ macro commands*(x: untyped, extras: untyped = nil) =
                 collectInputData(inputValues, id.key,
                     input[i].key, input[i].val, arg)
                 add inputFlags, (input[i].key, input[i].val)
-                input.delete(i)
+                add flagpos, i
                 inc i
               else:
                 printError(unknownOption, input[i].key)
                 quit(QuitFailure)
           else: inc i
+        for fp in flagpos:
+          input.delete(fp)
         case cmd.ctype
         of ctCmd:
           let argstype = Kapsis.commands[id.key].argsIndex
