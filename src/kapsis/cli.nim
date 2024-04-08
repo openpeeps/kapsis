@@ -36,10 +36,11 @@ proc url*(uri: string, port: int = 0, ssl = false): Span =
     result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault, 1)
 
 proc toggle*(onOff: bool): Span =
-  result = if onOff:
-            (" ON ", fgDefault, bgGreen, 1)
-          else:
-            (" OFF ", fgDefault, bgRed, 1)
+  result =
+    if onOff:
+      (" ON ", fgDefault, bgGreen, 1)
+    else:
+      (" OFF ", fgDefault, bgRed, 1)
 
 proc display*(spans: varargs[Span]) = 
   var k = 0
@@ -75,50 +76,54 @@ proc display*(i: int, spans: varargs[Span]) =
   spans.display()
 
 proc display*(label: string, indent=0, br="") =
-    ## Display a single line in one color
-    var text: string
-    if indent == 0: text = label
-    else: text = label.indent(indent)
+  ## Display a single line in one color
+  var text: string
+  if indent == 0: text = label
+  else: text = label.indent(indent)
 
-    if br == "before" or br == "both": echo BR  # add a new line before label
-    display span(text)
-    if br == "after" or br == "both": echo BR   # add a new line after label
+  if br == "before" or br == "both": echo BR  # add a new line before label
+  display span(text)
+  if br == "after" or br == "both": echo BR   # add a new line after label
 
-proc displayInfo*() = 
-    ## Display ``info`` label with a predefined icon and color
+proc displayInfo*(x: string) = 
+  ## Display ``info`` label with a predefined icon and color
+  display(span("Info:", fgCyan), span(x))
 
-proc displaySuccess*() = 
-    ## Display ``success`` label with a predefined icon and color
+proc displaySuccess*(x: string) = 
+  ## Display ``success`` label with a predefined icon and color
+  display(span("Success:", fgGreen), span(x))
 
-proc displayWarning*() =
-    ## Display ``warning`` label with a predefined icon and color
+proc displayWarning*(x: string) =
+  ## Display ``warning`` label with a predefined icon and color
+  display(span("Warning:", fgYellow), span(x))
 
-proc displayError*() =
-    ## Display ``error` label with a predefined icon and color
+proc displayError*(x: string) =
+  ## Display ``error` label with a predefined icon and color
+  display(span("Error:", fgRed), span(x))
 
 proc prompt*(label: string, color: string = "white", default=""): string =
-    ## Prompt a question line and retrieve the input
-    display(label)
-    result = stdin.readLine()
-    if default.len != 0 and result.len == 0:
-       return default
+  ## Prompt a question line and retrieve the input
+  display(label)
+  result = stdin.readLine()
+  if default.len != 0 and result.len == 0:
+    return default
 
 proc promptSecret*(label: string, color:string="white", required=true): string =
-    ## Prompt a hidden field and read from secret input
-    display(label)
-    result = readPasswordFromStdin()
-    if result.len == 0 and required == true:
-        return promptSecret(label, required=true)
+  ## Prompt a hidden field and read from secret input
+  display(label)
+  result = readPasswordFromStdin()
+  if result.len == 0 and required == true:
+    return promptSecret(label, required=true)
 
 proc promptConfirm*(label: string, icon: string="👉"): bool =
-    ## Prompt a confirmation label that allows only boolean input values as follows:
-    ##      Positive: ``1``, ``yes``, ``True``, ``TRUE``, ``YES``, ``Yes``, ``y``, ``Y``
-    ##      Negative: ``0``, ``no``, ``False``, ``FALSE``, ``NO``, ``No``, ``n``, ``N``
-    let answer = prompt(label)
-    case answer:
-    of "true", "1", "yes", "True", "TRUE", "YES", "Yes", "y", "Y":
-        result = true
-    of "false", "0", "no", "False", "FALSE", "NO", "No", "n", "N":
-        result =  false
-    else:
-        result = promptConfirm(label)
+  ## Prompt a confirmation label that allows only boolean input values as follows:
+  ##      Positive: ``1``, ``yes``, ``True``, ``TRUE``, ``YES``, ``Yes``, ``y``, ``Y``
+  ##      Negative: ``0``, ``no``, ``False``, ``FALSE``, ``NO``, ``No``, ``n``, ``N``
+  let answer = prompt(label)
+  case answer:
+  of "true", "1", "yes", "True", "TRUE", "YES", "Yes", "y", "Y":
+      result = true
+  of "false", "0", "no", "False", "FALSE", "NO", "No", "n", "N":
+      result =  false
+  else:
+      result = promptConfirm(label)

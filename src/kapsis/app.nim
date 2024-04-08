@@ -21,8 +21,8 @@ type
     katVariant
 
   KapsisPath* = object
-    file: FileInfo
-    path: string
+    file*: FileInfo
+    path*: string
 
   KapsisValueType* = enum
     vtString = "string"
@@ -40,6 +40,8 @@ type
     vtDays = "days"
     vtMonths = "months"
     vtYears = "years"
+    vtJson = "json"
+    vtYaml = "yaml"
 
 
   KapsisErrorMessage* = enum
@@ -92,6 +94,10 @@ type
       vMonths: Duration
     of vtYears:
       vYears: Duration
+    of vtJson:
+      vJson: JsonNode
+    of vtYaml:
+      vYaml: string
 
   ValuesTable = OrderedTable[string, Value]
   Values* = ptr ValuesTable
@@ -295,7 +301,11 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
             cmdType = "cmdLongOption"
           elif x[1][0].eqIdent("-"):
             cmdType = "cmdShortOption"
-        else: error("Invalid argument declaration")
+        of nnkIdent:
+          argName = x[1]
+          cmdType = "cmdArgument"
+        else:
+          error("Invalid argument declaration")
         add result,
           newCall(
             ident "addArg",
