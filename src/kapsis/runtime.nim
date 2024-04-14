@@ -1,13 +1,13 @@
 import std/[tables, strutils]
 
 from ./app import Values, Value, KapsisValueType, KapsisPath,
-  getStr, getBool, getFloat, getInt, getPath,
+  getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
   getJson, getYaml
 
 export Values, Value, KapsisValueType, KapsisPath,
-  getStr, getBool, getFloat, getInt, getPath,
+  getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
   getJson, getYaml

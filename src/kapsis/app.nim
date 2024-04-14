@@ -118,6 +118,7 @@ type
         # keep indexing the registered arguments
       callback: proc(v: Values) {.nimcall.}
         # the command callback 
+      isOptional: bool
     of ctCmdSep:
       label: string
     of ctCmdDir:
@@ -134,10 +135,12 @@ type
 
   KapsisSettings = object
     usageIndent = 2
+    mainCommandId: string
 
   KapsisCli = ref object
     pkg*: tuple[description, version, author, license: string]
     commands = newOrderedTable[string, KapsisCommand]()
+    mainCommand: KapsisCommand
     settings: KapsisSettings
 
 var Kapsis* = KapsisCli()
@@ -375,24 +378,9 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
           echo "ok"
         else:
           error("Invalid short flag `-" & $(x[1]) & "`")
-    #       # let argDatatype = parseEnum[KapsisValueType](x[0].strVal)
-    #       # add result,
-    #       #   newCall(
-    #       #     ident "addArg",
-    #       #     cmdx,
-    #       #     newLit(x[1].strVal),
-    #       #     ident "cmdArgument",
-    #       #     ident argDatatype.symbolName()
-    #       #   )
-    #     else:
-    #       error("Invalid short flag `-" & x[1].strVal & "`")
-    #   elif x[0].eqIdent("--"):
-    #     # add long flags
-    #     if x[1].strVal.len > 1:
-    #       discard
-    #     else:
-    #       error("Invalid long flag `--" & x[1].strVal & "`")
-    #   else: discard # todo error
+      elif x[0].eqIdent("?"):
+        # parse optional arguments
+        discard # todo
     else: discard # error?
   cmdobj.addkv("ctype", ident symbolName(cmdType))
   case cmdType
@@ -562,6 +550,10 @@ template collectInputData(values: var ValuesTable,
 #   # Retrieve a callback ident name based on command name
 #   var cbid: string
 
+var kapsisSettings {.compileTime.} = KapsisSettings()
+macro settings*(mainCommand: static string) =
+  kapsisSettings.mainCommandId = mainCommand
+
 macro commands*(x: untyped, extras: untyped = nil) =
   # Register commands at compile-time.
   collectPackageInfo()
@@ -587,17 +579,23 @@ macro commands*(x: untyped, extras: untyped = nil) =
 
   # init runtime parser
   add blockStmt, quote do:
+    if Kapsis.commands.hasKey(`kapsisSettings`.mainCommandId):
+      Kapsis.mainCommand = Kapsis.commands[`kapsisSettings`.mainCommandId]
     var
       id: KapsisInput
       p = initOptParser(quoteShellCommand(commandLineParams()))
       input = p.getopt.toSeq()
       inputValues = ValuesTable()
+      inputFlags: seq[(string, string)]
+      hasDefaultCommand = Kapsis.mainCommand != nil
     if input.len == 0:
       printUsage()
       quit(QuitSuccess)
-    id = input[0]
-    input.delete(0)
-    var inputFlags: seq[(string, string)]
+    if Kapsis.commands.hasKey(input[0].key) == false and hasDefaultCommand:
+      id = (cmdArgument, Kapsis.mainCommand.id, "")
+    else:
+      id = input[0]
+      input.delete(0)
     case id.kind
     of cmdArgument:
       if Kapsis.commands.hasKey(id.key):
