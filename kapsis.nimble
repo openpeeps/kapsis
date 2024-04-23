@@ -15,6 +15,9 @@ requires "checksums"
 requires "https://github.com/openpeeps/voodoo"
 requires "pixie"
 requires "valido"
+requires "spinny#head"
+requires "nancy"
+requires "termstyle"
 
 task dev, "dev mode":
   exec "nim c --mm:arc --threads:on -o:./bin/kapsis src/kapsis.nim"

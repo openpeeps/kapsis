@@ -4,6 +4,10 @@
 import std/[macros, terminal]
 import pkg/valido
 
+import pkg/termstyle
+import pkg/[nancy, spinny, spinny/spinners]
+export nancy, spinny, spinners, termstyle
+
 # include std/terminalstyledEchoProcessArg
 
 from std/strutils import `%`, spaces, indent

@@ -198,7 +198,7 @@ proc printUsage*(showExtras = false, showCommand = "",
       cmd.outputCommand(output, cmdlen, true)
     else:
       add output, ("", "")
-      add output[0][0], cmd.desc
+      add output[0][0], "\e[90m" & cmd.desc & "\e[0m"
       for subk, subcmd in cmd.list:
         add output, ("", "")
         add cmdlen, subcmd.id.len
@@ -225,8 +225,8 @@ proc printUsage*(showExtras = false, showCommand = "",
         add output, ("", "")
         add output[^1][0], "\e[1m" & cmd.label & "\e[0m"
       of ctCmdDir:
-        add output, ("", "")
-        add cmdlen, id.len
+        add output, ("", "\e[90m" & cmd.desc & "\e[0m")
+        add cmdlen, cmd.idDir.len + 4
         add output[^1][0], cmd.idDir
         let icon = 
           if showExtras: "▲"
