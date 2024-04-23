@@ -1,7 +1,9 @@
 # include std/terminal
 # import ./interactive/colors
 
-import std/terminal
+import std/[macros, terminal]
+import pkg/valido
+
 # include std/terminalstyledEchoProcessArg
 
 from std/strutils import `%`, spaces, indent
@@ -13,6 +15,7 @@ const BR = ""
 type
   Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor, indentSize: int]
   Row* = seq[Span]
+  KapsisInputValue* = object of CatchableError
 
 proc span*(label: string, fg = fgDefault, bg = bgDefault, indentSize = 1): Span =
   result = (label, fg, bg, indentSize)
@@ -103,7 +106,10 @@ proc displayError*(x: string) =
 
 proc prompt*(label: string, color: string = "white", default=""): string =
   ## Prompt a question line and retrieve the input
-  display(label)
+  if default.len > 0:
+    display(span(label), span("(" & default & ")", fgCyan))
+  else:
+    display(label)
   result = stdin.readLine()
   if default.len != 0 and result.len == 0:
     return default
@@ -127,3 +133,28 @@ proc promptConfirm*(label: string, icon: string="👉"): bool =
       result =  false
   else:
       result = promptConfirm(label)
+
+proc askEmail*(label: string, default = "", skippable = false): string =
+  ## Prompt for a valid email address. Set `skippable` true
+  ## to skip empty values
+  if skippable:
+    result = prompt(label, default = default)
+    if result.len > 0 and result.isEmail == false:
+      raise newException(KapsisInputValue, "Invalid value: " & result)
+  else:
+    result = prompt(label, default = default)
+    while not result.isEmail:
+      displayError("Invalid value: " & result)
+      result = askEmail(label, default)
+
+proc askIP4*(label: string, default = "", skippable = false): string =
+  ## Prompt for a valid IPv4. Use `skippable` to skip empty values
+  if skippable:
+    result = prompt(label, default = default)
+    if result.len > 0 and result.isIP4 == false:
+      raise newException(KapsisInputValue, "Invalid value: " & result)
+  else:
+    result = prompt(label, default = default)
+    while not result.isEmail:
+      displayError("Invalid value: " & result)
+      result = askIP4(label, default)

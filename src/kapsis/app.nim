@@ -118,14 +118,14 @@ type
         # keep indexing the registered arguments
       callback: proc(v: Values) {.nimcall.}
         # the command callback 
-      isOptional: bool
+      isOptional, isSubCmd: bool
     of ctCmdSep:
       label: string
     of ctCmdDir:
       idDir: string
         # dir name
-      list: seq[KapsisCommand]
-        # a seq of KapsisCommand subcommands
+      list: OrderedTableRef[string, KapsisCommand]
+        # an ordered table containing sub commands
     desc: string
       # improve UX by describing each command, 
       # thanks to Nim's macro-system we can use
@@ -185,39 +185,58 @@ proc outputCommand(cmd: KapsisCommand,
   # else:
     # add output[^1][0], "\n"
 
-proc printUsage*(showExtras = false, showCommand = "") =
+proc printUsage*(showExtras = false, showCommand = "",
+    showSubCommands = false) =
   var output: seq[(string, string)] # output lines
   var cmdlen: seq[int]
   if showCommand.len > 0:
     # print usage of a specific command
-    add output, ("", "")
     let cmd = Kapsis.commands[showCommand]
-    add cmdlen, cmd.id.len
-    cmd.outputCommand(output, cmdlen, true)
-    return
+    if not showSubCommands:
+      add output, ("", "")
+      add cmdlen, cmd.id.len
+      cmd.outputCommand(output, cmdlen, true)
+    else:
+      add output, ("", "")
+      add output[0][0], cmd.desc
+      for subk, subcmd in cmd.list:
+        add output, ("", "")
+        add cmdlen, subcmd.id.len
+        subcmd.outputCommand(output, cmdlen, true)
   if showExtras:
     add output, ("", "")
     add output[0][0], "\e[90m" & Kapsis.pkg.description & "\n"
     add output[0][0], indent("(c) " & Kapsis.pkg.author & " | " & Kapsis.pkg.license & " License", 2)
     # todo author url from nimble file
     add output[0][0], indent("\nBuild Version: " & Kapsis.pkg.version & "\e[0m\n", 2)
-  for id, cmd in Kapsis.commands:
-    add output, ("", "")
-    case cmd.ctype
-    of ctCmd:   # write command
-      add cmdlen, id.len
-      cmd.outputCommand(output, cmdlen, showExtras)
-    of ctCmdSep: # write command separators
-      add output[^1][0], "\e[1m" & cmd.label & "\e[0m"
-    of ctCmdDir:
-      add output[^1][0], cmd.idDir
-    else: discard
-  let
-    orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
-    longestCmd = orderedCmdLen[0]
-  var
-    i = 0
-    plain: string
+  if not showSubCommands:
+    for id, cmd in Kapsis.commands:
+      case cmd.ctype
+      of ctCmd:   # write command
+        if not cmd.isSubCmd and showExtras == false:
+          add output, ("", "")
+          add cmdlen, id.len
+          cmd.outputCommand(output, cmdlen, showExtras)
+        elif showExtras:
+          add output, ("", "")
+          add cmdlen, id.len
+          cmd.outputCommand(output, cmdlen, showExtras)
+      of ctCmdSep: # write command separators
+        add output, ("", "")
+        add output[^1][0], "\e[1m" & cmd.label & "\e[0m"
+      of ctCmdDir:
+        add output, ("", "")
+        add cmdlen, id.len
+        add output[^1][0], cmd.idDir
+        let icon = 
+          if showExtras: "▲"
+          else: "▼"
+        add output[^1][0], indent("\e[36m" & icon & "\e[0m", 1)
+      else: discard
+  let orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
+  let longestCmd = orderedCmdLen[0]
+  var i = 0
+  var plain: string
   for x in output:
     if x[1].len > 0:
       display(x[0] & indent(x[1], (longestCmd - cmdlen[i]) + 10))
@@ -233,9 +252,15 @@ template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
     display("\e[31mError:\e[0m " & $(msg) % arg)
   quit(QuitFailure)
 
-proc addCommand*(k: KapsisCli, key: string,
-    cmd: KapsisCommand, isSubcmd = false) =
+proc addCommand*(k: KapsisCli, key: string, cmd: KapsisCommand) =
   ## Add a new command line
+  k.commands[key] = cmd
+
+proc addCommand*(k: KapsisCli, parent, key: string, cmd: KapsisCommand) =
+  if k.commands[parent].list == nil:
+    k.commands[parent].list = newOrderedTable[string, KapsisCommand]()
+  cmd.isSubCmd = true
+  k.commands[parent].list[key] = cmd
   k.commands[key] = cmd
 
 proc addArg*(cmd: var KapsisCommand, id: string, lkind: CmdLineKind,
@@ -365,7 +390,7 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
             let argName = z[1..^1][0][0]
             let argDesc = z[1..^1][0][1]
             # todo
-        of nnkCommand:
+        of nnkCall, nnkCommand:
           cmdType = ctCmdDir
           add subCommands, parse(z, id)
         else:
@@ -392,15 +417,24 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
       else: id.strVal
     # add the runnable callback
     cmdobj.addkv("callback", ident(callbackIdent))
-    add result,
-      newCall(
-        ident "addCommand",
-        ident "Kapsis",
-        newLit cmdIdentifier,
-        cmdx
-      )
+    if cmdParent == nil:
+      add result,
+        newCall(
+          ident "addCommand",
+          ident "Kapsis",
+          newLit cmdIdentifier,
+          cmdx
+        )
+    else:
+      add result,
+        newCall(
+          ident "addCommand",
+          ident "Kapsis",
+          newLit cmdParent.strVal,
+          newLit cmdIdentifier,
+          cmdx
+        )
   of ctCmdDir:
-    # echo subCommands.repr
     cmdobj.addkv("idDir", newLit(id.strVal))
     add result,
       newCall(
@@ -408,7 +442,6 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
         ident "Kapsis",
         newLit id.strVal,
         cmdx,
-        newLit(true),
       )
     for subCommand in subCommands:
       add result, subCommand
@@ -650,9 +683,9 @@ macro commands*(x: untyped, extras: untyped = nil) =
           # callback, otherwise this is the default exit code
           quit(QuitSuccess)
         of ctCmdDir:
-          discard
-          # echo "directory type"
-          # echo cmd.list.len
+          # directories don't have a callback to run
+          # instead, will list the available subcommands.
+          printUsage(false, cmd.idDir, true)
         else: discard
       else:
         printError(unknownCommand, id.key)
