@@ -73,6 +73,18 @@ proc display*(spans: seq[Span]) =
     inc k
   write(stdout, "\n")
 
+proc toString*(spans: seq[Span]): string =
+  ## Returns stringified `spans`
+  var k = 0
+  for span in spans:
+    add result, spaces(span.indentSize)
+    stdout.setBackgroundColor(span.bg)
+    stdout.setForegroundColor(span.fg)
+    write(stdout, span.text)
+    stdout.resetAttributes()
+    inc k
+  write(stdout, "\n")
+
 iterator rows*(items: seq[Row]): Row =
   for item in items:
     yield item
