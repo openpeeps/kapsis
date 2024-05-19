@@ -1,10 +1,10 @@
 import std/[tables, strutils]
 
-from ./app import Values, Value, KapsisValueType, KapsisPath,
+from ./app import Values, Value, KapsisErrorMessage, KapsisValueType, KapsisPath,
   getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml
+  getJson, getYaml, printError
 
 export Values, Value, KapsisValueType, KapsisPath,
   getStr, getBool, getFloat, getInt, getPath, getFile,
@@ -19,4 +19,10 @@ proc has*(values: Values, key: string): bool =
 
 proc get*(values: Values, key: string): Value =
   ## Retrieve a `Value` from `values` by `key`
-  result = values[][key]
+  if likely(values.has(key)):
+    return values[][key]
+  printError(missingArg, key)
+
+proc `$`*(x: KapsisPath): string =
+  ## Get stringified path from `KapsisPath` object
+  result = x.path
