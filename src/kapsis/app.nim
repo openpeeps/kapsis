@@ -183,10 +183,10 @@ proc outputCommand(cmd: KapsisCommand,
           inc cmdlen[^1], (len($(arg.datatype)) + 1)
         add str, "\e[90m]\e[0m"
     of cmdLongOption:
-      inc cmdlen[^1], (x.len + 3)     # count including `--` prefix + whitespace
+      inc cmdlen[^1], (x.len + 1)
       add str, indent(x, 1)
     of cmdShortOption:
-      inc cmdlen[^1], (x.len + 2)     # count including `-` prefix + whitespace
+      inc cmdlen[^1], (x.len + 1)
       add str, indent(x, 1)
     else: discard
   add output[^1][0], str  
