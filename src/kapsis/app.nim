@@ -55,6 +55,7 @@ type
   KapsisArgument* = object
     lkind: CmdLineKind
     datatype: KapsisValueType
+    isOptional: bool
     case argtype: KapsisArgType
     of katVariant:
       argVariant: seq[string]
@@ -119,7 +120,7 @@ type
         # keep indexing the registered arguments
       callback: proc(v: Values) {.nimcall.}
         # the command callback 
-      isOptional, isSubCmd: bool
+      isSubCmd: bool
     of ctCmdSep:
       label: string
     of ctCmdDir:
@@ -166,8 +167,9 @@ proc outputCommand(cmd: KapsisCommand,
     of cmdArgument:
       case arg.argtype
       of katArg:
-        inc cmdlen[^1], (x.len + 3) # count `<` `arg` `>` includes 1 ws indent
-        add str, indent("\e[90m<\e[0m", 1)
+        var i = (if arg.isOptional: 4 else: 3)
+        inc cmdlen[^1], (x.len + i) # count `<` `arg` `>` includes 1 ws indent
+        add str, indent(("\e[90m<$1\e[0m" % [if arg.isOptional: "?" else: ""]), 1)
         add str, x
         if showtype:
           add str, "\e[36m:" & $(arg.datatype) & "\e[0m"
@@ -266,8 +268,8 @@ proc addCommand*(k: KapsisCli, parent, key: string, cmd: KapsisCommand) =
   k.commands[parent].list[key] = cmd
   k.commands[key] = cmd
 
-proc prefix(id: sink string, lk: CmdLineKind): string =
-  case lk
+proc prefix(id: sink string, kind: CmdLineKind): string =
+  case kind
   of cmdShortOption:
     result = "-"
   of cmdLongOption:
@@ -275,18 +277,21 @@ proc prefix(id: sink string, lk: CmdLineKind): string =
   else: discard
   add result, id
 
-proc addArg*(cmd: KapsisCommand, id: string, lk: CmdLineKind,
-    datatype: KapsisValueType, argtype = KapsisArgType.katArg) =
+proc addArg*(cmd: KapsisCommand, id: string, kind: CmdLineKind,
+      datatype: KapsisValueType, argtype = KapsisArgType.katArg,
+      isOpt = false) =
   ## Create a new argument
-  cmd.args[id.prefix(lk)] = KapsisArgument(
-    lkind: lk,
+  cmd.args[id.prefix(kind)] = KapsisArgument(
+    lkind: kind,
     datatype: datatype,
-    argtype: argtype
+    argtype: argtype,
+    isOptional: isOpt
   )
-  if lk == cmdArgument:
-    cmd.argsIndex.add((lk, id))
+  if kind == cmdArgument:
+    cmd.argsIndex.add((kind, id))
 
-proc addVariant*(cmd: KapsisCommand, id: string, argVariant: openarray[string]) =
+proc addVariant*(cmd: KapsisCommand, id: string,
+    argVariant: openarray[string]) =
   ## Create a new argument
   cmd.args[id] = KapsisArgument(
     lkind: CmdLineKind.cmdArgument,
@@ -306,6 +311,44 @@ expandGetters(renameCallback)
 proc addkv(cmdobj: NimNode, key: string, val: NimNode) {.compileTime.} =
   add cmdobj, nnkExprColonExpr.newTree(ident(key), val)
 
+template parseArgument(node: NimNode, isOpt: bool) {.dirty.} =
+  try:
+    let vtype = parseEnum[KapsisValueType](node[0].strVal)
+    var
+      argName: string
+      argType = vtype.symbolName
+      cmdArgType: string
+    case node[1].kind
+    of nnkAccQuoted:
+      argName = node[1][0].strVal
+      cmdArgType = "cmdArgument"
+    of nnkPrefix:
+      if node[1][0].eqIdent("--"):
+        argName = node[1][1].strVal
+        cmdArgType = "cmdLongOption"
+      elif node[1][0].eqIdent("-"):
+        argName = node[1][1].strVal
+        cmdArgType = "cmdShortOption"
+      else:
+        error("Invalid flag, expected --xyz or -x")
+    of nnkIdent:
+      argName = node[1].strVal
+      cmdArgType = "cmdArgument"
+    else:
+      error("Invalid argument " & $(node[1].kind))
+    add result,
+      newCall(
+        ident "addArg",
+        cmdx,
+        newLit $(argName),
+        ident cmdArgType,
+        ident argType,
+        ident "katArg",
+        newLit isOpt
+      )
+  except:
+    error("Unknown type " & node[0].strVal & ". Use one of: " & KapsisValueType.toSeq().join(", "), x[0])
+
 proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
   let id = cmd[0]
   result = newStmtList()
@@ -316,7 +359,6 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
     )
   var cmdType: KapsisCommandType
   var callbackIdent = id.strVal & "Command"
-  # var subCommands = newNimNode(nnkBracket)
   var subCommands: seq[NimNode]
   add result, newLetStmt(cmdx, cmdObj)
   for x in cmd[1..^1]:
@@ -324,57 +366,23 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
     of nnkAccQuoted:
       echo x
     of nnkCall, nnkCommand:
-      try:
-        let vtype = parseEnum[KapsisValueType](x[0].strVal)
-        expectLen(x, 2)
-        var
-          argName: string
-          argType = vtype.symbolName
-          cmdType: string
-        case x[1].kind
-        of nnkAccQuoted:
-          argName = x[1][0].strVal
-          cmdType = "cmdArgument"
-        of nnkPrefix:
-          if x[1][0].eqIdent("--"):
-            argName = x[1][1].strVal
-            cmdType = "cmdLongOption"
-          elif x[1][0].eqIdent("-"):
-            argName = x[1][1].strVal
-            cmdType = "cmdShortOption"
-          else:
-            error("Invalid flag, expected --xyz or -x")
-        of nnkIdent:
-          argName = x[1].strVal
-          cmdType = "cmdArgument"
-        else:
-          error("Invalid argument " & $(x[1].kind))
-        add result,
-          newCall(
-            ident "addArg",
-            cmdx,
-            newLit $(argName),
-            ident cmdType,
-            ident argType
-          )
-      except:
-        error("Unknown type " & x[0].strVal & ". Use one of: " & KapsisValueType.toSeq().join(", "), x[0])
+      parseArgument(x, false)
     of nnkTupleConstr:
       # parse pairs of short/long flags
       if x.len == 2:
         for t in x:
-          var cmdType: string
+          var flagtype: string
           if t[0][0].eqIdent("--"):
-            cmdType = "cmdLongOption"
+            flagtype = "cmdLongOption"
           elif t[0][0].eqIdent("-"):
-            cmdType = "cmdShortOption"
+            flagtype = "cmdShortOption"
           let vtype = parseEnum[KapsisValueType]($t[1])
           add result,
             newCall(
               ident "addArg",
               cmdx,
               newLit $(t[0][1]),
-              ident cmdType,
+              ident flagtype,
               ident vtype.symbolName
             )
       else:
@@ -420,7 +428,7 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
           error("Invalid short flag `-" & $(x[1]) & "`")
       elif x[0].eqIdent("?"):
         # parse optional arguments
-        discard # todo
+        parseArgument(x[1], true)
     else: discard # error?
   cmdobj.addkv("ctype", ident symbolName(cmdType))
   case cmdType
@@ -690,9 +698,10 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
               else:
                 printError(unexpectedOption, input[i].key)
             except IndexDefect:
+              let arg = cmd.args[index[i][1]]
+              if arg.isOptional: continue
               printUsage()
-              let datatype = cmd.args[index[i][1]].datatype
-              printError(missingArgument, index[i][1], $datatype)
+              printError(missingArgument, index[i][1], $(arg.datatype))
               QuitFailure.quit
           # run command's callback
           cmd.callback(values.addr)
@@ -717,117 +726,3 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
     else: discard
   add result, blockStmt
   # echo result.repr
-
-macro commands2*(x: untyped, extras: untyped = nil) =
-  # Register commands at compile-time.
-  collectPackageInfo()
-  result = nnkBlockStmt.newTree().add(newEmptyNode())
-  var blockStmt = newStmtList()
-  for cmd in x:
-    case cmd.kind
-    of nnkCommand:
-      add blockStmt, parse(cmd)
-    of nnkPrefix:
-      if cmd[0].eqIdent("--"):
-        add blockStmt, sep(cmd[1])
-    of nnkCall:
-      # parse commands without arguments/options
-      add blockStmt, parse(cmd)
-    else: discard # error?
-  add blockStmt, quote do:
-    Kapsis.pkg = (`appDescription`, `appVersion`, `appAuthor`, `appLicense`)
-  
-  if extras.kind != nnkNilLit:
-    # handle additional information
-    discard
-
-  # init runtime parser
-  add blockStmt, quote do:
-    if Kapsis.commands.hasKey(`kapsisSettings`.mainCommandId):
-      Kapsis.mainCommand = Kapsis.commands[`kapsisSettings`.mainCommandId]
-    var
-      id: KapsisInput
-      p = initOptParser(quoteShellCommand(commandLineParams()))
-      input = p.getopt.toSeq()
-      inputValues = ValuesTable()
-      inputFlags: seq[(string, string)]
-      hasDefaultCommand = Kapsis.mainCommand != nil
-    if input.len == 0:
-      printUsage()
-      quit(QuitSuccess)
-    if Kapsis.commands.hasKey(input[0].key) == false and hasDefaultCommand:
-      id = (cmdArgument, Kapsis.mainCommand.id, "")
-    else:
-      id = input[0]
-      input.delete(0)
-    case id.kind
-    of cmdArgument:
-      if Kapsis.commands.hasKey(id.key):
-        let cmd: KapsisCommand = Kapsis.commands[id.key]
-        # first check for available flags
-        var i = 0
-        var flagpos: seq[int]
-        while i <= input.high:
-          case input[i].kind
-          of cmdLongOption, cmdShortOption:
-            if input[i].key in ["help", "h"]:
-              # print usage if requested a helper
-              printUsage(showExtras = true, showCommand = id.key)
-              quit(QuitSuccess)
-            else:
-              if likely(Kapsis.commands[id.key].args.hasKey(input[i].key)):
-                let arg = Kapsis.commands[id.key].args[input[i].key]
-                if arg.datatype == vtBool and input[i].val.len == 0:
-                  input[i].val = "true" # passing a bool flag without value is set as true
-                collectValues(inputValues, id.key,
-                    input[i].key, input[i].val, arg)
-                add inputFlags, (input[i].key, input[i].val)
-                add flagpos, i
-                inc i
-              else:
-                printError(unknownOption, input[i].key)
-                quit(QuitFailure)
-          else: inc i
-        # for fp in flagpos:
-          # input.delete(fp)
-        case cmd.ctype
-        of ctCmd:
-          let argstype = Kapsis.commands[id.key].argsIndex
-          for i in 0..argstype.high:
-            try:
-              if input[i].kind == argstype[i][0]:
-                if Kapsis.commands[id.key].args.hasKey(argstype[i][1]):
-                  let arg = Kapsis.commands[id.key].args[argstype[i][1]]
-                  let val = input[i].key
-                  collectInputData(inputValues, id.key,
-                    argstype[i][1], val, arg)
-              else:
-                printError(unexpectedOption, input[i].key)
-            except IndexDefect:
-              printUsage()
-              let datatype = Kapsis.commands[id.key].args[argstype[i][1]].datatype
-              printError(missingArgument, argstype[i][1], $datatype)
-              quit(QuitFailure)
-          # run command's callback
-          cmd.callback(inputValues.addr)
-          # use either fail() or ok() in your command's
-          # callback, otherwise this is the default exit code
-          quit(QuitSuccess)
-        of ctCmdDir:
-          # directories don't have a callback to run
-          # instead, will list the available subcommands.
-          printUsage(false, cmd.idDir, true)
-        else: discard
-      else:
-        printError(unknownCommand, id.key)
-    of cmdLongOption, cmdShortOption:
-      case id.key
-      of "help", "h":
-        printUsage(showExtras = true)
-      of "version", "v":
-        display(Kapsis.pkg.version)
-      else:
-        printError(unknownOption, id.key)
-    else: discard
-  add result, blockStmt
-
