@@ -336,16 +336,15 @@ template parseArgument(node: NimNode, isOpt: bool) {.dirty.} =
       cmdArgType = "cmdArgument"
     else:
       error("Invalid argument " & $(node[1].kind))
-    add result,
-      newCall(
-        ident "addArg",
-        cmdx,
-        newLit $(argName),
-        ident cmdArgType,
-        ident argType,
-        ident "katArg",
-        newLit isOpt
-      )
+    discard result.add(newCall(
+      ident "addArg",
+      cmdx,
+      newLit $(argName),
+      ident cmdArgType,
+      ident argType,
+      ident "katArg",
+      newLit isOpt
+    ))
   except:
     error("Unknown type " & node[0].strVal & ". Use one of: " & KapsisValueType.toSeq().join(", "), x[0])
 
