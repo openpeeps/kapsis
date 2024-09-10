@@ -4,18 +4,17 @@ from ./app import Values, Value, KapsisErrorMessage, KapsisValueType, KapsisPath
   getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml, printError
+  getJson, getYaml, getUrl, printError
 
 export Values, Value, KapsisValueType, KapsisPath,
   getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml
+  getJson, getYaml, getUrl
 
 proc has*(values: Values, key: string): bool =
   ## Checks if `values` contains an arg by `key`
-  let cmd = values[]
-  result = cmd.hasKey(key)
+  result = values[].hasKey(key)
 
 proc get*(values: Values, key: string): Value =
   ## Retrieve a `Value` from `values` by `key`

@@ -6,9 +6,10 @@
 #       https://github.com/openpeeps/kapsis
 
 import std/[macros, macrocache, os, times, tables,
-  strutils, sequtils, parseopt, json, oids, enumutils]
+  strutils, sequtils, parseopt, json, oids, enumutils,
+  uri]
 
-import pkg/[voodoo, checksums/md5]
+import pkg/[voodoo, jsony, checksums/md5]
 
 from std/algorithm import sorted, SortOrder
 import ./cli
@@ -42,6 +43,7 @@ type
     vtYears = "years"
     vtJson = "json"
     vtYaml = "yaml"
+    vtUrl = "url"
 
 
   KapsisErrorMessage* = enum
@@ -100,6 +102,8 @@ type
       vJson: JsonNode
     of vtYaml:
       vYaml: string
+    of vtUrl:
+      vUrl: Uri
 
   ValuesTable = OrderedTable[string, Value]
   Values* = ptr ValuesTable
@@ -198,7 +202,7 @@ proc outputCommand(cmd: KapsisCommand,
   # else:
     # add output[^1][0], "\n"
 
-proc printUsage*(showExtras = false, showCommand = "",
+proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
     showSubCommands = false) =
   var output: seq[(string, string)] # output lines
   var cmdlen: seq[int]
@@ -222,7 +226,7 @@ proc printUsage*(showExtras = false, showCommand = "",
     add output[0][0], indent("(c) " & Kapsis.pkg.author & " | " & Kapsis.pkg.license & " License", 2)
     # todo author url from nimble file
     add output[0][0], indent("\nBuild Version: " & Kapsis.pkg.version & "\e[0m\n", 2)
-  if not showSubCommands:
+  if showSubCommands == false and showCommand.len == 0:
     for id, cmd in Kapsis.commands:
       case cmd.ctype
       of ctCmd:   # write command
@@ -519,7 +523,7 @@ proc isInt*(v: string): bool =
     discard
 
 template collectValues(values: var ValuesTable,
-    argName, val: string, arg: KapsisArgument) =
+    argName: string, val: sink string, arg: KapsisArgument) =
   block:
     var hasError: bool
     case arg.datatype
@@ -601,7 +605,18 @@ template collectValues(values: var ValuesTable,
           vHours: initDuration(hours = v))
       except ValueError:
         hasError = true
-      # todo other cases
+    of vtJson:
+      try:
+        let v: JsonNode = fromJson(val)
+        values[argName] = Value(vt: vtJson, vJson: v)
+      except jsony.JsonError, ValueError:
+        hasError = true
+    of vtUrl:
+      try:
+        let v = uri.parseUri(val)
+        values[argName] = Value(vt: vtUrl, vUrl: v)
+      except UriParseError:
+        hasError = true
     else: discard
     if hasError:
       printError(typeMismatch, argName, $arg.datatype)
@@ -664,13 +679,13 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
           of cmdLongOption, cmdShortOption:
             if input[i].key in ["help", "h"]:
               # print helpers of a specific command
-              printUsage(showExtras=true, showCommand=id.key)
+              printUsage(showExtras=false, showCommand=id.key)
               QuitSuccess.quit
             else:
               let key = prefix(input[i].key, input[i].kind)
               if likely cmd.args.hasKey(key):
                 let arg = cmd.args[key]
-                # passing a `vtBool` flag without a specific
+                # passing a `vtBool` flag without specifying
                 # a value is interpreted as `true`
                 if arg.datatype == vtBool and input[i].val.len == 0:
                   input[i].val = "true"
