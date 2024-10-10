@@ -338,6 +338,16 @@ template parseArgument(node: NimNode, isOpt: bool) {.dirty.} =
     of nnkIdent:
       argName = node[1].strVal
       cmdArgType = "cmdArgument"
+    of nnkStrLit:
+      if node[1].strVal.startsWith("--"):
+        argName = node[1].strVal[2..^1]
+        cmdArgType = "cmdLongOption"
+      elif node[1].strVal.startsWith("-"):
+        argName = node[1].strVal[1..^1]
+        cmdArgType = "cmdShortOption"
+      else:
+        argName = node[1].strVal
+        cmdArgType = "cmdArgument"
     else:
       error("Invalid argument " & $(node[1].kind))
     discard result.add(newCall(

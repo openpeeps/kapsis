@@ -4,8 +4,8 @@
 import std/[macros, terminal]
 import pkg/valido
 
-import pkg/termstyle
-import pkg/[nancy, spinny, spinny/spinners]
+import pkg/[termstyle, nancy]
+import ./interactive/[spinny, spinny/spinners]
 export nancy, spinny, spinners, termstyle
 
 # include std/terminalstyledEchoProcessArg
@@ -116,9 +116,11 @@ proc displayWarning*(x: string) =
   ## Display ``warning`` label with a predefined icon and color
   display(span("Warning:", fgYellow), span(x))
 
-proc displayError*(x: string) =
+proc displayError*(x: string, quitProcess = false) =
   ## Display ``error` label with a predefined icon and color
   display(span("Error:", fgRed), span(x))
+  if quitProcess:
+    quit()
 
 proc prompt*(label: string, color: string = "white", default=""): string =
   ## Prompt a question line and retrieve the input
