@@ -1,7 +1,7 @@
 # include std/terminal
 # import ./interactive/colors
 
-import std/[macros, terminal]
+import std/[macros, terminal, sequtils]
 import pkg/valido
 
 import pkg/[termstyle, nancy]
@@ -32,6 +32,12 @@ proc yellow*(label: string, indentSize = 1): Span =
 
 proc green*(label: string, indentSize = 1): Span =
   result = (label, fgGreen, bgDefault, indentSize)
+
+proc blueSpan*(label: string, indentSize = 1): Span = blue(label, indentSize)
+proc yellowSpan*(label: string, indentSize = 1): Span = yellow(label, indentSize)
+proc greenSpan*(label: string, indentSize = 1): Span = green(label, indentSize)
+proc cyanSpan*(label: string, indentSize = 1): Span =
+  result = (label, fgCyan, bgDefault, indentSize)
 
 proc http(ssl: bool): string =
   result = if ssl: "https://" else: "http://"
@@ -90,7 +96,6 @@ iterator rows*(items: seq[Row]): Row =
     yield item
 
 proc display*(i: int, spans: varargs[Span]) = 
-  var k = 0
   write(stdout, indent("", i))
   spans.display()
 
@@ -105,22 +110,52 @@ proc display*(label: string, indent=0, br="") =
   if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*(x: string) = 
-  ## Display ``info`` label with a predefined icon and color
+  ## Display `info` label with a predefined icon and color
   display(span("Info:", fgCyan), span(x))
 
+proc displayInfo*(x: varargs[Span], indentSize: int) = 
+  ## Display `info` label with a predefined icon and color
+  var x = x.toSeq()
+  x.insert(span("Info:", fgCyan, indentSize = indentSize), 0)
+  display(x)
+
+proc displayInfo*(x: varargs[Span]) = 
+  ## Display `info` label with a predefined icon and color
+  var x = x.toSeq()
+  x.insert(span("Info:", fgCyan, indentSize = 0), 0)
+  display(x)
+
 proc displaySuccess*(x: string) = 
-  ## Display ``success`` label with a predefined icon and color
+  ## Display `success` label with a predefined icon and color
   display(span("Success:", fgGreen), span(x))
 
 proc displayWarning*(x: string) =
-  ## Display ``warning`` label with a predefined icon and color
+  ## Display `warning` label with a predefined icon and color
   display(span("Warning:", fgYellow), span(x))
 
+proc displayWarning*(x: varargs[Span], indentSize: int) = 
+  ## Display `warning` label with a predefined icon and color
+  var x = x.toSeq()
+  x.insert(span("Warning:", fgYellow, indentSize = indentSize), 0)
+  display(x)
+
+proc displayWarning*(x: varargs[Span]) = 
+  ## Display `warning` label with a predefined icon and color
+  var x = x.toSeq()
+  x.insert(span("Warning:", fgYellow, indentSize = 0), 0)
+  display(x)
+
 proc displayError*(x: string, quitProcess = false) =
-  ## Display ``error` label with a predefined icon and color
+  ## Display `error` label with a predefined icon and color
   display(span("Error:", fgRed), span(x))
   if quitProcess:
     quit()
+
+proc displayError*(x: varargs[Span]) = 
+  ## Display `error` label with a predefined icon and color
+  var x = x.toSeq()
+  x.insert(span("Error:", fgRed, indentSize = 0), 0)
+  display(x)
 
 proc prompt*(label: string, color: string = "white", default=""): string =
   ## Prompt a question line and retrieve the input
@@ -141,8 +176,8 @@ proc promptSecret*(label: string, color:string="white", required=true): string =
 
 proc promptConfirm*(label: string, icon: string="👉"): bool =
   ## Prompt a confirmation label that allows only boolean input values as follows:
-  ##      Positive: ``1``, ``yes``, ``True``, ``TRUE``, ``YES``, ``Yes``, ``y``, ``Y``
-  ##      Negative: ``0``, ``no``, ``False``, ``FALSE``, ``NO``, ``No``, ``n``, ``N``
+  ##      Positive: `1`, `yes`, `True`, `TRUE`, `YES`, `Yes`, `y`, `Y`
+  ##      Negative: `0`, `no`, `False`, `FALSE`, `NO`, `No`, `n`, `N`
   let answer = prompt(label)
   case answer:
   of "true", "1", "yes", "True", "TRUE", "YES", "Yes", "y", "Y":
