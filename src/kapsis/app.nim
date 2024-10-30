@@ -163,9 +163,10 @@ template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
   quit(QuitFailure)
 
 proc outputCommand(cmd: KapsisCommand,
-    output: var seq[(string, string)],
-    cmdlen: var seq[int], showtype = false) =
+    output: var seq[(string, string, seq[string])],
+    cmdlen: var seq[int], showtype = false, showFlags = false) =
   var str = indent(cmd.id, Kapsis.settings.usageIndent)
+  var flags: seq[string]
   for x, arg in cmd.args:
     case arg.lkind
     of cmdArgument:
@@ -189,13 +190,19 @@ proc outputCommand(cmd: KapsisCommand,
           inc cmdlen[^1], (len($(arg.datatype)) + 1)
         add str, "\e[90m]\e[0m"
     of cmdLongOption:
-      inc cmdlen[^1], (x.len + 1)
-      add str, indent(x, 1)
+      if showFlags:
+        # inc cmdlen[^1], (x.len + 1)
+        add flags, x
     of cmdShortOption:
-      inc cmdlen[^1], (x.len + 1)
-      add str, indent(x, 1)
+      if showFlags:
+        # inc cmdlen[^1], (x.len + 1)
+        add flags, x
     else: discard
-  add output[^1][0], str  
+  add output[^1][0], str
+  if not showFlags:
+    add output[^1][0], indent("⚑", 1)
+  else:
+    add output[^1][2], flags
   add output[^1][1], "\e[90m" & cmd.desc & "\e[0m"
   # if cmd.desc.len > 0:
     # add output[^1][1], "\n"
@@ -204,24 +211,24 @@ proc outputCommand(cmd: KapsisCommand,
 
 proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
     showSubCommands = false) =
-  var output: seq[(string, string)] # output lines
+  var output: seq[(string, string, seq[string])] # output lines
   var cmdlen: seq[int]
   if showCommand.len > 0:
     # print usage of a specific command
     let cmd = Kapsis.commands[showCommand]
     if not showSubCommands:
-      add output, ("", "")
+      add output, ("", "", @[])
       add cmdlen, cmd.id.len
-      cmd.outputCommand(output, cmdlen, true)
+      cmd.outputCommand(output, cmdlen, true, showExtras)
     else:
-      add output, ("", "")
+      add output, ("", "", @[])
       add output[0][0], "\e[90m" & cmd.desc & "\e[0m"
       for subk, subcmd in cmd.list:
-        add output, ("", "")
+        add output, ("", "", @[""])
         add cmdlen, subcmd.id.len
-        subcmd.outputCommand(output, cmdlen, true)
+        subcmd.outputCommand(output, cmdlen, true, showExtras)
   if showExtras:
-    add output, ("", "")
+    add output, ("", "", @[])
     add output[0][0], "\e[90m" & Kapsis.pkg.description & "\n"
     add output[0][0], indent("(c) " & Kapsis.pkg.author & " | " & Kapsis.pkg.license & " License", 2)
     # todo author url from nimble file
@@ -231,18 +238,18 @@ proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
       case cmd.ctype
       of ctCmd:   # write command
         if not cmd.isSubCmd and showExtras == false:
-          add output, ("", "")
+          add output, ("", "", @[])
           add cmdlen, id.len
-          cmd.outputCommand(output, cmdlen, showExtras)
+          cmd.outputCommand(output, cmdlen, showExtras, showExtras)
         elif showExtras:
-          add output, ("", "")
+          add output, ("", "", @[])
           add cmdlen, id.len
-          cmd.outputCommand(output, cmdlen, showExtras)
+          cmd.outputCommand(output, cmdlen, showExtras, showExtras)
       of ctCmdSep: # write command separators
-        add output, ("", "")
+        add output, ("", "", @[])
         add output[^1][0], "\e[1m" & cmd.label & "\e[0m"
       of ctCmdDir:
-        add output, ("", "\e[90m" & cmd.desc & "\e[0m")
+        add output, ("", "\e[90m" & cmd.desc & "\e[0m", @[])
         add cmdlen, cmd.idDir.len + 4
         add output[^1][0], cmd.idDir
         let icon = 
@@ -257,6 +264,11 @@ proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
   for x in output:
     if x[1].len > 0:
       display(x[0] & indent(x[1], (longestCmd - cmdlen[i]) + 10))
+      if x[2].len > 0 and showExtras:
+        for y in x[2]:
+          write(stdout, indent(y, 4))
+          write(stdout, "\n")
+          # todo output argument description
       inc i
     else:
       display(x[0])
