@@ -693,6 +693,7 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
       if likely(Kapsis.commands.hasKey(id.key)):
         let cmd: KapsisCommand = Kapsis.commands[id.key]
         var i = 0
+        var flagpos: seq[int]
         while i <= input.high:
           case input[i].kind
           of cmdLongOption, cmdShortOption:
@@ -709,6 +710,7 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
                 if arg.datatype == vtBool and input[i].val.len == 0:
                   input[i].val = "true"
                 values.collectValues(key, input[i].val, arg)
+                add flagpos, i
                 inc i
               else:
                 printError(unknownOption, key)
@@ -718,9 +720,11 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
         case cmd.ctype
         of ctCmd:
           let index = cmd.argsIndex
+          for x in flagpos:
+            input.delete(x) # delete flags
           for i in 0..index.high:
             if index[i][0] in {cmdLongOption, cmdShortOption}:
-              continue
+              continue # already collected, skipping flags
             try:
               if input[i].kind == index[i][0]:
                 if cmd.args.hasKey(index[i][1]):
