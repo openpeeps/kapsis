@@ -687,9 +687,6 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
     else:
       id = input[0]
       input.delete(0)
-    # flags don't have a fixed position,
-    # they can be specified at any position
-    var flags: seq[KapsisInput]
     var values = ValuesTable()
     case id.kind
     of cmdArgument:
@@ -712,7 +709,6 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
                 if arg.datatype == vtBool and input[i].val.len == 0:
                   input[i].val = "true"
                 values.collectValues(key, input[i].val, arg)
-                input.delete(i)
                 inc i
               else:
                 printError(unknownOption, key)
