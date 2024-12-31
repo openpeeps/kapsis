@@ -561,11 +561,8 @@ template collectValues(values: var ValuesTable,
         if val.isBool or val.isInt or val.isFloat:
           hasError = true
         elif val.len > 0:
-          if val[0] in IdentStartChars:
-            values[argName] =
-              Value(vt: vtString, vStr: val)
-          else:
-            hasError = true
+          values[argName] =
+            Value(vt: vtString, vStr: val)
         else:
           hasError = true
     of vtBool:
@@ -720,9 +717,12 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
         case cmd.ctype
         of ctCmd:
           let index = cmd.argsIndex
-          for x in flagpos:
-            input.delete(x) # delete flags
+          # for x in flagpos:
+            # input.delete(x) # delete flags
           for i in 0..index.high:
+            if i in flagpos:
+              echo "flag"
+              continue
             if index[i][0] in {cmdLongOption, cmdShortOption}:
               continue # already collected, skipping flags
             try:
