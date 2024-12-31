@@ -11,7 +11,7 @@ srcDir        = "src"
 
 requires "nim >= 2.0.0"
 requires "illwill"
-requires "checksums"
+requires "checksums >= 0.2.1"
 requires "https://github.com/openpeeps/voodoo"
 # requires "pixie" # todo to generate beautiful showcase screen of the app
 requires "jsony"
