@@ -5,9 +5,9 @@
 #       Made by Humans from OpenPeeps
 #       https://github.com/openpeeps/kapsis
 
-import std/[macros, macrocache, os, times, tables,
-  strutils, sequtils, parseopt, json, oids, enumutils,
-  uri]
+import std/[macros, os, times, tables,
+  strutils, sequtils, parseopt, json,
+  oids, enumutils, uri]
 
 import pkg/[voodoo, jsony, checksums/md5]
 
@@ -673,22 +673,22 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
       Kapsis.mainCommand = Kapsis.commands[`kapsisSettings`.mainCommandId]
     var
       p = quoteShellCommand(commandLineParams()).initOptParser
-      id: KapsisInput
+      kapsisCommandId: KapsisInput
       input = p.getopt.toSeq()
       defaultCommand = Kapsis.mainCommand != nil
     if input.len == 0:
       printUsage()
       QuitSuccess.quit
     if Kapsis.commands.hasKey(input[0].key) == false and defaultCommand:
-      id = (cmdArgument, Kapsis.mainCommand.id, "")
+      kapsisCommandId = (cmdArgument, Kapsis.mainCommand.id, "")
     else:
-      id = input[0]
-      input.delete(0)
+      kapsisCommandId = input[0]
+      sequtils.delete(input, 0, 0)
     var values = ValuesTable()
-    case id.kind
+    case kapsisCommandId.kind
     of cmdArgument:
-      if likely(Kapsis.commands.hasKey(id.key)):
-        let cmd: KapsisCommand = Kapsis.commands[id.key]
+      if likely(Kapsis.commands.hasKey(kapsisCommandId.key)):
+        let cmd: KapsisCommand = Kapsis.commands[kapsisCommandId.key]
         var i = 0
         var flagpos: seq[int]
         while i <= input.high:
@@ -696,7 +696,7 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
           of cmdLongOption, cmdShortOption:
             if input[i].key in ["help", "h"]:
               # print helpers of a specific command
-              printUsage(showExtras=false, showCommand=id.key)
+              printUsage(showExtras=false, showCommand=kapsisCommandId.key)
               QuitSuccess.quit
             else:
               let key = prefix(input[i].key, input[i].kind)
@@ -721,7 +721,7 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
             # input.delete(x) # delete flags
           for i in 0..index.high:
             if i in flagpos:
-              echo "flag"
+              #echo "flag"
               continue
             if index[i][0] in {cmdLongOption, cmdShortOption}:
               continue # already collected, skipping flags
@@ -749,16 +749,16 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
           # instead, will list the available subcommands.
           printUsage(false, cmd.idDir, true)
         else: discard
-      else: printError(unknownCommand, id.key)
+      else: printError(unknownCommand, kapsisCommandId.key)
     of cmdLongOption, cmdShortOption:
       # print usage including argument types.
       # -v/--version prints the current version
       # of the application that is automatically
       # retrieved from your .nimble file
-      case id.key
+      case kapsisCommandId.key
       of "help", "h":     printUsage(showExtras = true)
       of "version", "v":  display(Kapsis.pkg.version)
-      else:               printError(unknownOption, id.key)
+      else:               printError(unknownOption, kapsisCommandId.key)
     else: discard
   add result, blockStmt
   # echo result.repr
