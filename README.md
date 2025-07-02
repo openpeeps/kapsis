@@ -1,5 +1,4 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/openpeeps/kapsis/main/.github/logo.png" width="225px" alt="kapsis framework"><br>
   Kapsis &mdash; Build delightful & intuitive command line interfaces with Nim language 👑
 </p>
 
@@ -67,7 +66,6 @@ todo let others add more commands to your kapsis app via shared libraries.
 - 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/kapsis/issues)
 - 👋 Wanna help? [Fork it!](https://github.com/openpeeps/kapsis/fork)
 - 😎 [Get €20 in cloud credits from Hetzner](https://hetzner.cloud/?ref=Hm0mYGM9NxZ4)
-- 🥰 [Donate to The Enthusiast via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
 
 ### 🎩 License
 `MIT` license. [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
