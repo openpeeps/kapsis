@@ -7,11 +7,12 @@
 
 import std/[macros, os, times, tables,
   strutils, sequtils, parseopt, json,
-  oids, enumutils, uri]
+  oids, enumutils, uri, options]
 
 import pkg/[voodoo, jsony, checksums/md5]
 
 from std/algorithm import sorted, SortOrder
+from std/nativesockets import Port
 import ./cli
 
 export tables, parseopt, os, cli, expandGetters
@@ -44,6 +45,7 @@ type
     vtJson = "json"
     vtYaml = "yaml"
     vtUrl = "url"
+    vtPort = "port"
 
 
   KapsisErrorMessage* = enum
@@ -104,6 +106,8 @@ type
       vYaml: string
     of vtUrl:
       vUrl: Uri
+    of vtPort:
+      vPort: Port
 
   ValuesTable = OrderedTable[string, Value]
   Values* = ptr ValuesTable
@@ -141,7 +145,10 @@ type
 
   KapsisSettings = object
     usageIndent = 2
-    mainCommandId: string
+    mainCommandId: Option[string]
+    exitAfterCallback = true
+    heading: Option[string]
+      # when provided it shows a heading above printed usage
 
   KapsisCli = ref object
     pkg*: tuple[description, version, author, license: string]
@@ -164,8 +171,10 @@ template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
 
 proc outputCommand(cmd: KapsisCommand,
     output: var seq[(string, string, seq[string])],
-    cmdlen: var seq[int], showtype = false, showFlags = false) =
-  var str = indent(cmd.id, Kapsis.settings.usageIndent)
+    cmdlen: var seq[int], showtype = false, showFlags = false,
+    extraIndent = 0
+  ) =
+  var str = indent(cmd.id, Kapsis.settings.usageIndent + extraIndent)
   var flags: seq[string]
   for x, arg in cmd.args:
     case arg.lkind
@@ -229,10 +238,15 @@ proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
         subcmd.outputCommand(output, cmdlen, true, showExtras)
   if showExtras:
     add output, ("", "", @[])
+    
+    # print application info
+    if Kapsis.settings.heading.isSome:
+      add output[0][0], "\e[1m" & Kapsis.settings.heading.get() & "\e[0m\n"
     add output[0][0], "\e[90m" & Kapsis.pkg.description & "\n"
     add output[0][0], indent("(c) " & Kapsis.pkg.author & " | " & Kapsis.pkg.license & " License", 2)
-    # todo author url from nimble file
     add output[0][0], indent("\nBuild Version: " & Kapsis.pkg.version & "\e[0m\n", 2)
+    # todo author url from nimble file
+
   if showSubCommands == false and showCommand.len == 0:
     for id, cmd in Kapsis.commands:
       case cmd.ctype
@@ -244,24 +258,29 @@ proc printUsage*(showExtras = false, showCommand = newStringOfCap(0),
         elif showExtras:
           add output, ("", "", @[])
           add cmdlen, id.len
-          cmd.outputCommand(output, cmdlen, showExtras, showExtras)
+          cmd.outputCommand(output, cmdlen, showExtras, showExtras,
+            if cmd.isSubCmd: Kapsis.settings.usageIndent else: 0)
       of ctCmdSep: # write command separators
         add output, ("", "", @[])
         add output[^1][0], "\e[1m" & cmd.label & "\e[0m"
       of ctCmdDir:
         add output, ("", "\e[90m" & cmd.desc & "\e[0m", @[])
-        add cmdlen, cmd.idDir.len + 4
-        add output[^1][0], cmd.idDir
+        add cmdlen, cmd.idDir.len + 2 # account for dir slash
+        add output[^1][0], indent(cmd.idDir, Kapsis.settings.usageIndent)
         let icon = 
           if showExtras: "▲"
           else: "▼"
         add output[^1][0], indent("\e[36m" & icon & "\e[0m", 1)
       else: discard
-  let orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
-  let longestCmd = orderedCmdLen[0]
-  var i = 0
-  var plain: string
+  let
+    orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
+    longestCmd = orderedCmdLen[0] # get longest command length
+  var
+    i = 0
+    plain: string
   for x in output:
+    # in case the command has a description
+    # we align it properly
     if x[1].len > 0:
       display(x[0] & indent(x[1], (longestCmd - cmdlen[i]) + 10))
       if x[2].len > 0 and showExtras:
@@ -636,20 +655,34 @@ template collectValues(values: var ValuesTable,
         values[argName] = Value(vt: vtUrl, vUrl: v)
       except UriParseError:
         hasError = true
+    of vtPort:
+      try:
+        let v = Port(parseInt(val))
+        values[argName] = Value(vt: vtPort, vPort: v)
+      except ValueError:
+        hasError = true
     else: discard
     if hasError:
       printError(typeMismatch, argName, $arg.datatype)
 
 var kapsisSettings {.compileTime.} = KapsisSettings()
-macro settings*(mainCommand: static string) =
+macro settings*(
+    mainCommand: static Option[string] = none(string),
+    exitAfterCallback: static bool = true,
+    heading: static string = ""
+  ) =
+  if heading.len > 0:
+    kapsisSettings.heading = some(heading)
   kapsisSettings.mainCommandId = mainCommand
+  kapsisSettings.exitAfterCallback = exitAfterCallback
 
 macro commands*(registeredCommands: untyped, extras: untyped = nil) =
   collectPackageInfo()
   result = newNimNode(nnkBlockStmt)
   add result, newEmptyNode()
   var blockStmt = newStmtList()
-  for cmd in registeredCommands:
+  var headingComment = newLit("")
+  for i, cmd in registeredCommands:
     case cmd.kind
     of nnkCommand:
       add blockStmt, parse(cmd)
@@ -659,18 +692,22 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
     of nnkCall:
       # parse commands without arguments/options
       add blockStmt, parse(cmd)
+    of nnkCommentStmt:
+      # doc comments are treated as descriptions
+      if i == 0: headingComment.strVal = cmd.strVal & "\n"
     else: discard # error?
   
   # set meta information
   add blockStmt, quote do:
-    Kapsis.pkg = (`appDescription`, `appVersion`, `appAuthor`, `appLicense`)
+    Kapsis.pkg = (`headingComment` & `appDescription`,
+          `appVersion`, `appAuthor`, `appLicense`)
   
   # init kapsis runtime 
   add blockStmt, quote do:
-    if Kapsis.commands.hasKey(`kapsisSettings`.mainCommandId):
-      # set custom settings
-      # todo
-      Kapsis.mainCommand = Kapsis.commands[`kapsisSettings`.mainCommandId]
+    if `kapsisSettings`.mainCommandId.isSome:
+      if Kapsis.commands.hasKey(`kapsisSettings`.mainCommandId.get()):
+        # TODO set custom settings
+        Kapsis.mainCommand = Kapsis.commands[`kapsisSettings`.mainCommandId.get()]
     var
       p = quoteShellCommand(commandLineParams()).initOptParser
       kapsisCommandId: KapsisInput
@@ -695,7 +732,8 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
           case input[i].kind
           of cmdLongOption, cmdShortOption:
             if input[i].key in ["help", "h"]:
-              # print helpers of a specific command
+              # `--help` or `-h` options are reserved
+              # to print usage of the application
               printUsage(showExtras=false, showCommand=kapsisCommandId.key)
               QuitSuccess.quit
             else:
@@ -721,7 +759,6 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
             # input.delete(x) # delete flags
           for i in 0..index.high:
             if i in flagpos:
-              #echo "flag"
               continue
             if index[i][0] in {cmdLongOption, cmdShortOption}:
               continue # already collected, skipping flags
@@ -743,7 +780,8 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
           cmd.callback(values.addr)
           # use either fail() or ok() in your command's
           # callback, otherwise this is the default exit code
-          quit(QuitSuccess)
+          when `kapsisSettings`.exitAfterCallback == true:
+            quit(QuitSuccess)
         of ctCmdDir:
           # directories don't have a callback to run
           # instead, will list the available subcommands.
@@ -752,13 +790,12 @@ macro commands*(registeredCommands: untyped, extras: untyped = nil) =
       else: printError(unknownCommand, kapsisCommandId.key)
     of cmdLongOption, cmdShortOption:
       # print usage including argument types.
-      # -v/--version prints the current version
-      # of the application that is automatically
-      # retrieved from your .nimble file
+      # -v/--version prints the current version of the app
+      # which is retrieved from the nimble file
+      # during compile time.
       case kapsisCommandId.key
       of "help", "h":     printUsage(showExtras = true)
       of "version", "v":  display(Kapsis.pkg.version)
       else:               printError(unknownOption, kapsisCommandId.key)
     else: discard
   add result, blockStmt
-  # echo result.repr

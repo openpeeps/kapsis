@@ -1,6 +1,3 @@
-# include std/terminal
-# import ./interactive/colors
-
 import std/[macros, terminal, sequtils]
 import pkg/valido
 

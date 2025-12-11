@@ -4,13 +4,13 @@ from ./app import Values, Value, KapsisErrorMessage, KapsisValueType, KapsisPath
   getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml, getUrl, printError
+  getJson, getYaml, getUrl, printError, getPort
 
 export Values, Value, KapsisValueType, KapsisPath,
   getStr, getBool, getFloat, getInt, getPath, getFile,
   getFilename, getDir, getMilliseconds, getSeconds,
   getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml, getUrl
+  getJson, getYaml, getUrl, getPort
 
 proc has*(values: Values, key: string): bool =
   ## Checks if `values` contains an arg by `key`
