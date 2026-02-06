@@ -34,6 +34,7 @@ type
     vtFile = "file"
     vtPath = "path"
     vtFilename = "filename"
+    vtFilepath = "filepath"
     vtDir = "dir"
     vtMilliseconds = "miliseconds"
     vtSeconds = "seconds"
@@ -84,6 +85,8 @@ type
       vPath: KapsisPath
     of vtFilename:
       vFilename: string
+    of vtFilepath:
+      vFilepath: string
     of vtDir:
       vDir: KapsisPath
     of vtMilliseconds:
@@ -616,6 +619,8 @@ template collectValues(values: var ValuesTable,
         values[argName] = Value(vt: vtFilename, vFilename: val)
       else:
         hasError = true
+    of vtFilepath:
+        values[argName] = Value(vt: vtFilepath, vFilepath: val)
     of vtDir:
       if dirExists(val):
         values[argName] = Value(vt: vtDir,
