@@ -1,11 +1,10 @@
 import std/[macros, terminal, sequtils]
 import pkg/valido
 
-import pkg/[termstyle, nancy]
+import pkg/[termstyle, nancy, noise]
 import ./interactive/[spinny, spinny/spinners]
-export nancy, spinny, spinners, termstyle
 
-# include std/terminalstyledEchoProcessArg
+export nancy, spinny, spinners, termstyle
 
 from std/strutils import `%`, spaces, indent
 export ForegroundColor, BackgroundColor
@@ -156,13 +155,17 @@ proc displayError*(x: varargs[Span]) =
 
 proc prompt*(label: string, color: string = "white", default=""): string =
   ## Prompt a question line and retrieve the input
-  if default.len > 0:
-    display(span(label), span("(" & default & ")", fgCyan))
-  else:
-    display(label)
-  result = stdin.readLine()
-  if default.len != 0 and result.len == 0:
-    return default
+  var noise = Noise.init()
+  let p =
+    if default.len > 0:
+      Styler.init(styleBright, label, fgWhite, " (" & default & ")", fgWhite, ": ")
+    else:
+      Styler.init(fgWhite, label & ": ")
+  noise.setPrompt(p)
+  while true:
+    let ok = noise.readLine()
+    if not ok: break
+    return if noise.getLine.len > 0: noise.getLine() else: default
 
 proc promptSecret*(label: string, color:string="white", required=true): string =
   ## Prompt a hidden field and read from secret input

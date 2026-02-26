@@ -18,6 +18,7 @@ requires "jsony"
 requires "valido"
 requires "nancy"
 requires "termstyle"
+requires "noise"
 
 task dev, "dev mode":
   exec "nim c --mm:arc --threads:on -o:./bin/kapsis src/kapsis.nim"
