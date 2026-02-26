@@ -1,4 +1,4 @@
-import std/[macros, terminal, sequtils]
+import std/[macros, terminal, sequtils, strutils]
 import pkg/valido
 
 import pkg/[termstyle, nancy, noise]
@@ -155,17 +155,18 @@ proc displayError*(x: varargs[Span]) =
 
 proc prompt*(label: string, color: string = "white", default=""): string =
   ## Prompt a question line and retrieve the input
-  var noise = Noise.init()
   let p =
     if default.len > 0:
       Styler.init(styleBright, label, fgWhite, " (" & default & ")", fgWhite, ": ")
     else:
       Styler.init(fgWhite, label & ": ")
-  noise.setPrompt(p)
+  var nois = Noise.init()
+  nois.setPrompt(p)
   while true:
-    let ok = noise.readLine()
-    if not ok: break
-    return if noise.getLine.len > 0: noise.getLine() else: default
+    let ok = nois.readLine()
+    if not ok: quit()
+    let input = nois.getLine.strip()
+    return if input.len > 0: input else: default
 
 proc promptSecret*(label: string, color:string="white", required=true): string =
   ## Prompt a hidden field and read from secret input
