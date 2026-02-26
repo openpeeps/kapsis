@@ -1,0 +1,9 @@
+nimTitle	spinny	kapsis/interactive/spinny.html	module src/kapsis/interactive/spinny		0
+nim	newSpinny	kapsis/interactive/spinny.html#newSpinny,string,Spinner	proc newSpinny(text: string; s: Spinner; time = false): Spinny		28
+nim	setSymbolColor	kapsis/interactive/spinny.html#setSymbolColor,Spinny,proc(string)	proc setSymbolColor(spinny: Spinny; color: proc (x: string): string)		38
+nim	setSymbol	kapsis/interactive/spinny.html#setSymbol,Spinny,string	proc setSymbol(spinny: Spinny; symbol: string)		42
+nim	setText	kapsis/interactive/spinny.html#setText,Spinny,string	proc setText(spinny: Spinny; text: string)		45
+nim	start	kapsis/interactive/spinny.html#start,Spinny	proc start(spinny: Spinny)		108
+nim	stop	kapsis/interactive/spinny.html#stop,Spinny	proc stop(spinny: Spinny)		123
+nim	success	kapsis/interactive/spinny.html#success,Spinny,string	proc success(spinny: Spinny; msg: string)		126
+nim	error	kapsis/interactive/spinny.html#error,Spinny,string	proc error(spinny: Spinny; msg: string)		129

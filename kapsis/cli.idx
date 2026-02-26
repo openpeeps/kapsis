@@ -1,0 +1,38 @@
+nimTitle	cli	kapsis/cli.html	module src/kapsis/cli		0
+nim	Span	kapsis/cli.html#Span	tuple Span		16
+nim	Row	kapsis/cli.html#Row	type Row		17
+nim	KapsisInputValue	kapsis/cli.html#KapsisInputValue	object KapsisInputValue		18
+nim	span	kapsis/cli.html#span,string,int	proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span		20
+nim	blue	kapsis/cli.html#blue,string,int	proc blue(label: string; indentSize = 1): Span		23
+nim	yellow	kapsis/cli.html#yellow,string,int	proc yellow(label: string; indentSize = 1): Span		26
+nim	green	kapsis/cli.html#green,string,int	proc green(label: string; indentSize = 1): Span		29
+nim	blueSpan	kapsis/cli.html#blueSpan,string,int	proc blueSpan(label: string; indentSize = 1): Span		32
+nim	yellowSpan	kapsis/cli.html#yellowSpan,string,int	proc yellowSpan(label: string; indentSize = 1): Span		33
+nim	greenSpan	kapsis/cli.html#greenSpan,string,int	proc greenSpan(label: string; indentSize = 1): Span		34
+nim	cyanSpan	kapsis/cli.html#cyanSpan,string,int	proc cyanSpan(label: string; indentSize = 1): Span		35
+nim	url	kapsis/cli.html#url,string,int	proc url(uri: string; port: int = 0; ssl = false): Span		41
+nim	toggle	kapsis/cli.html#toggle,bool	proc toggle(onOff: bool): Span		47
+nim	display	kapsis/cli.html#display,varargs[Span]	proc display(spans: varargs[Span])		54
+nim	display	kapsis/cli.html#display,seq[Span]	proc display(spans: seq[Span])		66
+nim	toString	kapsis/cli.html#toString,seq[Span]	proc toString(spans: seq[Span]): string		78
+nim	rows	kapsis/cli.html#rows.i,seq[Row]	iterator rows(items: seq[Row]): Row		90
+nim	display	kapsis/cli.html#display,int,varargs[Span]	proc display(i: int; spans: varargs[Span])		94
+nim	display	kapsis/cli.html#display,string,int,string	proc display(label: string; indent = 0; br = "")		98
+nim	displayInfo	kapsis/cli.html#displayInfo,string	proc displayInfo(x: string)		108
+nim	displayInfo	kapsis/cli.html#displayInfo,varargs[Span],int	proc displayInfo(x: varargs[Span]; indentSize: int)		112
+nim	displayInfo	kapsis/cli.html#displayInfo,varargs[Span]	proc displayInfo(x: varargs[Span])		118
+nim	displaySuccess	kapsis/cli.html#displaySuccess,string	proc displaySuccess(x: string)		124
+nim	displayWarning	kapsis/cli.html#displayWarning,string	proc displayWarning(x: string)		128
+nim	displayWarning	kapsis/cli.html#displayWarning,varargs[Span],int	proc displayWarning(x: varargs[Span]; indentSize: int)		132
+nim	displayWarning	kapsis/cli.html#displayWarning,varargs[Span]	proc displayWarning(x: varargs[Span])		138
+nim	displayError	kapsis/cli.html#displayError,string	proc displayError(x: string; quitProcess = false)		144
+nim	displayError	kapsis/cli.html#displayError,varargs[Span]	proc displayError(x: varargs[Span])		150
+nim	prompt	kapsis/cli.html#prompt,string,string,string	proc prompt(label: string; color: string = "white"; default = ""): string		156
+nim	promptSecret	kapsis/cli.html#promptSecret,string,string	proc promptSecret(label: string; color: string = "white"; required = true): string		171
+nim	promptConfirm	kapsis/cli.html#promptConfirm,string,string	proc promptConfirm(label: string; icon: string = "👉"): bool		178
+nim	askEmail	kapsis/cli.html#askEmail,string,string	proc askEmail(label: string; default = ""; skippable = false): string		191
+nim	askIP4	kapsis/cli.html#askIP4,string,string	proc askIP4(label: string; default = ""; skippable = false): string		204
+nimgrp	displaywarning	kapsis/cli.html#displayWarning-procs-all	proc		128
+nimgrp	displayinfo	kapsis/cli.html#displayInfo-procs-all	proc		108
+nimgrp	displayerror	kapsis/cli.html#displayError-procs-all	proc		144
+nimgrp	display	kapsis/cli.html#display-procs-all	proc		54

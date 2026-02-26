@@ -1,0 +1,75 @@
+nimTitle	app	kapsis/app.html	module src/kapsis/app		0
+nim	katArg	kapsis/app.html#katArg	KapsisArgType.katArg		21
+nim	katVariant	kapsis/app.html#katVariant	KapsisArgType.katVariant		21
+nim	KapsisArgType	kapsis/app.html#KapsisArgType	enum KapsisArgType		21
+nim	KapsisPath	kapsis/app.html#KapsisPath	object KapsisPath		25
+nim	vtString	kapsis/app.html#vtString	KapsisValueType.vtString		29
+nim	vtBool	kapsis/app.html#vtBool	KapsisValueType.vtBool		29
+nim	vtInt	kapsis/app.html#vtInt	KapsisValueType.vtInt		29
+nim	vtFloat	kapsis/app.html#vtFloat	KapsisValueType.vtFloat		29
+nim	vtFile	kapsis/app.html#vtFile	KapsisValueType.vtFile		29
+nim	vtPath	kapsis/app.html#vtPath	KapsisValueType.vtPath		29
+nim	vtFilename	kapsis/app.html#vtFilename	KapsisValueType.vtFilename		29
+nim	vtFilepath	kapsis/app.html#vtFilepath	KapsisValueType.vtFilepath		29
+nim	vtDir	kapsis/app.html#vtDir	KapsisValueType.vtDir		29
+nim	vtMilliseconds	kapsis/app.html#vtMilliseconds	KapsisValueType.vtMilliseconds		29
+nim	vtSeconds	kapsis/app.html#vtSeconds	KapsisValueType.vtSeconds		29
+nim	vtMinutes	kapsis/app.html#vtMinutes	KapsisValueType.vtMinutes		29
+nim	vtHours	kapsis/app.html#vtHours	KapsisValueType.vtHours		29
+nim	vtDays	kapsis/app.html#vtDays	KapsisValueType.vtDays		29
+nim	vtMonths	kapsis/app.html#vtMonths	KapsisValueType.vtMonths		29
+nim	vtYears	kapsis/app.html#vtYears	KapsisValueType.vtYears		29
+nim	vtJson	kapsis/app.html#vtJson	KapsisValueType.vtJson		29
+nim	vtYaml	kapsis/app.html#vtYaml	KapsisValueType.vtYaml		29
+nim	vtUrl	kapsis/app.html#vtUrl	KapsisValueType.vtUrl		29
+nim	vtPort	kapsis/app.html#vtPort	KapsisValueType.vtPort		29
+nim	KapsisValueType	kapsis/app.html#KapsisValueType	enum KapsisValueType		29
+nim	unknownOption	kapsis/app.html#unknownOption	KapsisErrorMessage.unknownOption		52
+nim	unknownCommand	kapsis/app.html#unknownCommand	KapsisErrorMessage.unknownCommand		52
+nim	unexpectedOption	kapsis/app.html#unexpectedOption	KapsisErrorMessage.unexpectedOption		52
+nim	typeMismatch	kapsis/app.html#typeMismatch	KapsisErrorMessage.typeMismatch		52
+nim	missingArgument	kapsis/app.html#missingArgument	KapsisErrorMessage.missingArgument		52
+nim	missingArg	kapsis/app.html#missingArg	KapsisErrorMessage.missingArg		52
+nim	KapsisErrorMessage	kapsis/app.html#KapsisErrorMessage	enum KapsisErrorMessage		52
+nim	KapsisArgument	kapsis/app.html#KapsisArgument	object KapsisArgument		60
+nim	Value	kapsis/app.html#Value	object Value		72
+nim	Values	kapsis/app.html#Values	type Values		116
+nim	ctCmd	kapsis/app.html#ctCmd	KapsisCommandType.ctCmd		118
+nim	ctCmdDir	kapsis/app.html#ctCmdDir	KapsisCommandType.ctCmdDir		118
+nim	ctCmdSep	kapsis/app.html#ctCmdSep	KapsisCommandType.ctCmdSep		118
+nim	KapsisCommandType	kapsis/app.html#KapsisCommandType	enum KapsisCommandType		118
+nim	KapsisCommand	kapsis/app.html#KapsisCommand	type KapsisCommand		123
+nim	KapsisInput	kapsis/app.html#KapsisInput	tuple KapsisInput		147
+nim	Kapsis	kapsis/app.html#Kapsis	var Kapsis		162
+nim	printError	kapsis/app.html#printError.t,KapsisErrorMessage,varargs[string]	template printError(msg: KapsisErrorMessage; arg: varargs[string])		167
+nim	printUsage	kapsis/app.html#printUsage	proc printUsage(showExtras = false; showCommand = newStringOfCap(0);\n           showSubCommands = false)		224
+nim	addCommand	kapsis/app.html#addCommand,KapsisCli,string,KapsisCommand	proc addCommand(k: KapsisCli; key: string; cmd: KapsisCommand)		298
+nim	addCommand	kapsis/app.html#addCommand,KapsisCli,string,string,KapsisCommand	proc addCommand(k: KapsisCli; parent, key: string; cmd: KapsisCommand)		302
+nim	addArg	kapsis/app.html#addArg,KapsisCommand,string,CmdLineKind,KapsisValueType	proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;\n       datatype: KapsisValueType; argtype = KapsisArgType.katArg; isOpt = false)		318
+nim	addVariant	kapsis/app.html#addVariant,KapsisCommand,string,openArray[string]	proc addVariant(cmd: KapsisCommand; id: string; argVariant: openArray[string])		331
+nim	getStr	kapsis/app.html#getStr,Value	proc getStr(value: Value): string		72
+nim	getBool	kapsis/app.html#getBool,Value	proc getBool(value: Value): bool		72
+nim	getInt	kapsis/app.html#getInt,Value	proc getInt(value: Value): int		72
+nim	getFloat	kapsis/app.html#getFloat,Value	proc getFloat(value: Value): float		72
+nim	getFile	kapsis/app.html#getFile,Value	proc getFile(value: Value): KapsisPath		72
+nim	getPath	kapsis/app.html#getPath,Value	proc getPath(value: Value): KapsisPath		72
+nim	getFilename	kapsis/app.html#getFilename,Value	proc getFilename(value: Value): string		72
+nim	getFilepath	kapsis/app.html#getFilepath,Value	proc getFilepath(value: Value): string		72
+nim	getDir	kapsis/app.html#getDir,Value	proc getDir(value: Value): KapsisPath		72
+nim	getMilliseconds	kapsis/app.html#getMilliseconds,Value	proc getMilliseconds(value: Value): Duration		72
+nim	getSeconds	kapsis/app.html#getSeconds,Value	proc getSeconds(value: Value): Duration		72
+nim	getMinutes	kapsis/app.html#getMinutes,Value	proc getMinutes(value: Value): Duration		72
+nim	getHours	kapsis/app.html#getHours,Value	proc getHours(value: Value): Duration		72
+nim	getDays	kapsis/app.html#getDays,Value	proc getDays(value: Value): Duration		72
+nim	getMonths	kapsis/app.html#getMonths,Value	proc getMonths(value: Value): Duration		72
+nim	getYears	kapsis/app.html#getYears,Value	proc getYears(value: Value): Duration		72
+nim	getJson	kapsis/app.html#getJson,Value	proc getJson(value: Value): JsonNode		72
+nim	getYaml	kapsis/app.html#getYaml,Value	proc getYaml(value: Value): string		72
+nim	getUrl	kapsis/app.html#getUrl,Value	proc getUrl(value: Value): Uri		72
+nim	getPort	kapsis/app.html#getPort,Value	proc getPort(value: Value): Port		344
+nim	isBool	kapsis/app.html#isBool,string	proc isBool(v: string): bool		552
+nim	isFloat	kapsis/app.html#isFloat,string	proc isFloat(v: string): bool		555
+nim	isInt	kapsis/app.html#isInt,string	proc isInt(v: string): bool		562
+nim	settings	kapsis/app.html#settings.m,staticOption[string],staticbool,staticstring	macro settings(mainCommand: static Option[string] = none(string);\n         exitAfterCallback: static bool = true; heading: static string = "")		674
+nim	commands	kapsis/app.html#commands.m,untyped,untyped	macro commands(registeredCommands: untyped; extras: untyped = nil)		684
+nimgrp	addcommand	kapsis/app.html#addCommand-procs-all	proc		298
