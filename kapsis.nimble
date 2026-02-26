@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.2.1"
+version       = "0.2.2"
 author        = "George Lemon"
 description   = "Build delightful command line interfaces in seconds"
 license       = "MIT"
