@@ -126,5 +126,8 @@ proc stop*(spinny: Spinny) =
 proc success*(spinny: Spinny, msg: string) =
   spinny.stop(StopSuccess, msg)
 
+proc success*(spinny: Spinny) =
+  spinny.stop(StopSuccess)
+
 proc error*(spinny: Spinny, msg: string) =
   spinny.stop(StopError, msg)
