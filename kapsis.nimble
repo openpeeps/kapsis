@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.2.2"
+version       = "0.2.1"
 author        = "George Lemon"
 description   = "Build delightful command line interfaces in seconds"
 license       = "MIT"
@@ -12,7 +12,7 @@ srcDir        = "src"
 requires "nim >= 2.0.0"
 requires "illwill"
 requires "checksums >= 0.2.1"
-requires "https://github.com/openpeeps/voodoo"
+requires "vooodoo >= 0.1.1"
 # requires "pixie" # todo to generate beautiful showcase screen of the app
 requires "jsony"
 requires "valido"
