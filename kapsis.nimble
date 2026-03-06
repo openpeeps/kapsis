@@ -12,7 +12,7 @@ srcDir        = "src"
 requires "nim >= 2.0.0"
 requires "illwill"
 requires "checksums >= 0.2.1"
-requires "vooodoo >= 0.1.1"
+requires "voodoo >= 0.1.1"
 # requires "pixie" # todo to generate beautiful showcase screen of the app
 requires "jsony"
 requires "valido"
