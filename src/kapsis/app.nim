@@ -411,7 +411,7 @@ proc parse(cmd: NimNode, cmdParent: NimNode = nil): NimNode {.compileTime.} =
   for x in cmd[1..^1]:
     case x.kind
     of nnkAccQuoted:
-      echo x
+      discard
     of nnkCall, nnkCommand:
       parseArgument(x, false)
     of nnkTupleConstr:
@@ -543,11 +543,14 @@ template collectPackageInfo {.dirty.} =
     appAuthor: string
     appLicense: string
   if info.len > 0:
-    var pkginfo = info.parseJSON()
-    appVersion = pkginfo["version"].getStr
-    appDescription = pkginfo["desc"].getStr
-    appAuthor = pkginfo["author"].getStr
-    appLicense = pkginfo["license"].getStr
+    try:
+      var pkginfo = info.parseJSON()
+      appVersion = pkginfo["version"].getStr
+      appDescription = pkginfo["desc"].getStr
+      appAuthor = pkginfo["author"].getStr
+      appLicense = pkginfo["license"].getStr
+    except:
+      discard # ignore errors, we can still run without this info
 
 proc isBool*(v: string): bool =
   result = v in ["true", "false"]
