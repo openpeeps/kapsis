@@ -15,7 +15,7 @@ requires "checksums >= 0.2.1"
 requires "voodoo"
 # requires "pixie" # todo to generate beautiful showcase screen of the app
 requires "jsony"
-requires "valido"
+requires "valido#head"
 requires "nancy"
 requires "termstyle"
 requires "noise"
