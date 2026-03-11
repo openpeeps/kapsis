@@ -1,0 +1,4 @@
+nimTitle	runtime	kapsis/runtime.html	module src/kapsis/runtime		0
+nim	has	kapsis/runtime.html#has,Values,string	proc has(values: Values; key: string): bool		16
+nim	get	kapsis/runtime.html#get,Values,string	proc get(values: Values; key: string): Value		20
+nim	`$`	kapsis/runtime.html#$,KapsisPath	proc `$`(x: KapsisPath): string		26

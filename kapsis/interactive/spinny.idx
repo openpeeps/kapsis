@@ -6,4 +6,6 @@ nim	setText	kapsis/interactive/spinny.html#setText,Spinny,string	proc setText(sp
 nim	start	kapsis/interactive/spinny.html#start,Spinny	proc start(spinny: Spinny)		108
 nim	stop	kapsis/interactive/spinny.html#stop,Spinny	proc stop(spinny: Spinny)		123
 nim	success	kapsis/interactive/spinny.html#success,Spinny,string	proc success(spinny: Spinny; msg: string)		126
-nim	error	kapsis/interactive/spinny.html#error,Spinny,string	proc error(spinny: Spinny; msg: string)		129
+nim	success	kapsis/interactive/spinny.html#success,Spinny	proc success(spinny: Spinny)		129
+nim	error	kapsis/interactive/spinny.html#error,Spinny,string	proc error(spinny: Spinny; msg: string)		132
+nimgrp	success	kapsis/interactive/spinny.html#success-procs-all	proc		126

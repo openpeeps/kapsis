@@ -47,29 +47,29 @@ nim	addCommand	kapsis/app.html#addCommand,KapsisCli,string,KapsisCommand	proc ad
 nim	addCommand	kapsis/app.html#addCommand,KapsisCli,string,string,KapsisCommand	proc addCommand(k: KapsisCli; parent, key: string; cmd: KapsisCommand)		302
 nim	addArg	kapsis/app.html#addArg,KapsisCommand,string,CmdLineKind,KapsisValueType	proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;\n       datatype: KapsisValueType; argtype = KapsisArgType.katArg; isOpt = false)		318
 nim	addVariant	kapsis/app.html#addVariant,KapsisCommand,string,openArray[string]	proc addVariant(cmd: KapsisCommand; id: string; argVariant: openArray[string])		331
-nim	getStr	kapsis/app.html#getStr,Value	proc getStr(value: Value): string		72
-nim	getBool	kapsis/app.html#getBool,Value	proc getBool(value: Value): bool		72
-nim	getInt	kapsis/app.html#getInt,Value	proc getInt(value: Value): int		72
-nim	getFloat	kapsis/app.html#getFloat,Value	proc getFloat(value: Value): float		72
-nim	getFile	kapsis/app.html#getFile,Value	proc getFile(value: Value): KapsisPath		72
-nim	getPath	kapsis/app.html#getPath,Value	proc getPath(value: Value): KapsisPath		72
-nim	getFilename	kapsis/app.html#getFilename,Value	proc getFilename(value: Value): string		72
-nim	getFilepath	kapsis/app.html#getFilepath,Value	proc getFilepath(value: Value): string		72
-nim	getDir	kapsis/app.html#getDir,Value	proc getDir(value: Value): KapsisPath		72
-nim	getMilliseconds	kapsis/app.html#getMilliseconds,Value	proc getMilliseconds(value: Value): Duration		72
-nim	getSeconds	kapsis/app.html#getSeconds,Value	proc getSeconds(value: Value): Duration		72
-nim	getMinutes	kapsis/app.html#getMinutes,Value	proc getMinutes(value: Value): Duration		72
-nim	getHours	kapsis/app.html#getHours,Value	proc getHours(value: Value): Duration		72
-nim	getDays	kapsis/app.html#getDays,Value	proc getDays(value: Value): Duration		72
-nim	getMonths	kapsis/app.html#getMonths,Value	proc getMonths(value: Value): Duration		72
-nim	getYears	kapsis/app.html#getYears,Value	proc getYears(value: Value): Duration		72
-nim	getJson	kapsis/app.html#getJson,Value	proc getJson(value: Value): JsonNode		72
-nim	getYaml	kapsis/app.html#getYaml,Value	proc getYaml(value: Value): string		72
-nim	getUrl	kapsis/app.html#getUrl,Value	proc getUrl(value: Value): Uri		72
-nim	getPort	kapsis/app.html#getPort,Value	proc getPort(value: Value): Port		344
-nim	isBool	kapsis/app.html#isBool,string	proc isBool(v: string): bool		552
-nim	isFloat	kapsis/app.html#isFloat,string	proc isFloat(v: string): bool		555
-nim	isInt	kapsis/app.html#isInt,string	proc isInt(v: string): bool		562
-nim	settings	kapsis/app.html#settings.m,staticOption[string],staticbool,staticstring	macro settings(mainCommand: static Option[string] = none(string);\n         exitAfterCallback: static bool = true; heading: static string = "")		674
-nim	commands	kapsis/app.html#commands.m,untyped,untyped	macro commands(registeredCommands: untyped; extras: untyped = nil)		684
+nim	getStr	kapsis/app.html#getStr,Value	proc getStr(value: Value): lent string		72
+nim	getBool	kapsis/app.html#getBool,Value	proc getBool(value: Value): lent bool		72
+nim	getInt	kapsis/app.html#getInt,Value	proc getInt(value: Value): lent int		72
+nim	getFloat	kapsis/app.html#getFloat,Value	proc getFloat(value: Value): lent float		72
+nim	getFile	kapsis/app.html#getFile,Value	proc getFile(value: Value): lent KapsisPath		72
+nim	getPath	kapsis/app.html#getPath,Value	proc getPath(value: Value): lent KapsisPath		72
+nim	getFilename	kapsis/app.html#getFilename,Value	proc getFilename(value: Value): lent string		72
+nim	getFilepath	kapsis/app.html#getFilepath,Value	proc getFilepath(value: Value): lent string		72
+nim	getDir	kapsis/app.html#getDir,Value	proc getDir(value: Value): lent KapsisPath		72
+nim	getMilliseconds	kapsis/app.html#getMilliseconds,Value	proc getMilliseconds(value: Value): lent Duration		72
+nim	getSeconds	kapsis/app.html#getSeconds,Value	proc getSeconds(value: Value): lent Duration		72
+nim	getMinutes	kapsis/app.html#getMinutes,Value	proc getMinutes(value: Value): lent Duration		72
+nim	getHours	kapsis/app.html#getHours,Value	proc getHours(value: Value): lent Duration		72
+nim	getDays	kapsis/app.html#getDays,Value	proc getDays(value: Value): lent Duration		72
+nim	getMonths	kapsis/app.html#getMonths,Value	proc getMonths(value: Value): lent Duration		72
+nim	getYears	kapsis/app.html#getYears,Value	proc getYears(value: Value): lent Duration		72
+nim	getJson	kapsis/app.html#getJson,Value	proc getJson(value: Value): lent JsonNode		72
+nim	getYaml	kapsis/app.html#getYaml,Value	proc getYaml(value: Value): lent string		72
+nim	getUrl	kapsis/app.html#getUrl,Value	proc getUrl(value: Value): lent Uri		72
+nim	getPort	kapsis/app.html#getPort,Value	proc getPort(value: Value): lent Port		344
+nim	isBool	kapsis/app.html#isBool,string	proc isBool(v: string): bool		555
+nim	isFloat	kapsis/app.html#isFloat,string	proc isFloat(v: string): bool		558
+nim	isInt	kapsis/app.html#isInt,string	proc isInt(v: string): bool		565
+nim	settings	kapsis/app.html#settings.m,staticOption[string],staticbool,staticstring	macro settings(mainCommand: static Option[string] = none(string);\n         exitAfterCallback: static bool = true; heading: static string = "")		677
+nim	commands	kapsis/app.html#commands.m,untyped,untyped	macro commands(registeredCommands: untyped; extras: untyped = nil)		687
 nimgrp	addcommand	kapsis/app.html#addCommand-procs-all	proc		298

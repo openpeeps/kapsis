@@ -25,8 +25,12 @@
   <div class="document" id="documentId">
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/app.html">kapsis/app</a>, <a href="kapsis/cli.html">kapsis/cli</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>.<br/><p /><h2>API symbols</h2>
-<dl><dt><a name="addArg" href="#addArg"><span>addArg:</span></a></dt><dd><ul class="simple">
+      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/app.html">kapsis/app</a>, <a href="kapsis/cli.html">kapsis/cli</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>.<br/><p /><h2>API symbols</h2>
+<dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="runtime: proc `$`(x: KapsisPath): string" href="kapsis/runtime.html#%24%2CKapsisPath">runtime: proc `$`(x: KapsisPath): string</a></li>
+          </ul></dd>
+<dt><a name="addArg" href="#addArg"><span>addArg:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="app: proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;
        datatype: KapsisValueType; argtype = KapsisArgType.katArg; isOpt = false)" href="kapsis/app.html#addArg%2CKapsisCommand%2Cstring%2CCmdLineKind%2CKapsisValueType">app: proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;
@@ -250,85 +254,89 @@
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc fgYellow(s: string): string" href="kapsis/interactive/spinny/colorize.html#fgYellow%2Cstring">colorize: proc fgYellow(s: string): string</a></li>
           </ul></dd>
+<dt><a name="get" href="#get"><span>get:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="runtime: proc get(values: Values; key: string): Value" href="kapsis/runtime.html#get%2CValues%2Cstring">runtime: proc get(values: Values; key: string): Value</a></li>
+          </ul></dd>
 <dt><a name="getBool" href="#getBool"><span>getBool:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getBool(value: Value): bool" href="kapsis/app.html#getBool%2CValue">app: proc getBool(value: Value): bool</a></li>
+          data-doc-search-tag="app: proc getBool(value: Value): lent bool" href="kapsis/app.html#getBool%2CValue">app: proc getBool(value: Value): lent bool</a></li>
           </ul></dd>
 <dt><a name="getDays" href="#getDays"><span>getDays:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getDays(value: Value): Duration" href="kapsis/app.html#getDays%2CValue">app: proc getDays(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getDays(value: Value): lent Duration" href="kapsis/app.html#getDays%2CValue">app: proc getDays(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getDir" href="#getDir"><span>getDir:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getDir(value: Value): KapsisPath" href="kapsis/app.html#getDir%2CValue">app: proc getDir(value: Value): KapsisPath</a></li>
+          data-doc-search-tag="app: proc getDir(value: Value): lent KapsisPath" href="kapsis/app.html#getDir%2CValue">app: proc getDir(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getFile" href="#getFile"><span>getFile:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFile(value: Value): KapsisPath" href="kapsis/app.html#getFile%2CValue">app: proc getFile(value: Value): KapsisPath</a></li>
+          data-doc-search-tag="app: proc getFile(value: Value): lent KapsisPath" href="kapsis/app.html#getFile%2CValue">app: proc getFile(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getFilename" href="#getFilename"><span>getFilename:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFilename(value: Value): string" href="kapsis/app.html#getFilename%2CValue">app: proc getFilename(value: Value): string</a></li>
+          data-doc-search-tag="app: proc getFilename(value: Value): lent string" href="kapsis/app.html#getFilename%2CValue">app: proc getFilename(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getFilepath" href="#getFilepath"><span>getFilepath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFilepath(value: Value): string" href="kapsis/app.html#getFilepath%2CValue">app: proc getFilepath(value: Value): string</a></li>
+          data-doc-search-tag="app: proc getFilepath(value: Value): lent string" href="kapsis/app.html#getFilepath%2CValue">app: proc getFilepath(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getFloat" href="#getFloat"><span>getFloat:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFloat(value: Value): float" href="kapsis/app.html#getFloat%2CValue">app: proc getFloat(value: Value): float</a></li>
+          data-doc-search-tag="app: proc getFloat(value: Value): lent float" href="kapsis/app.html#getFloat%2CValue">app: proc getFloat(value: Value): lent float</a></li>
           </ul></dd>
 <dt><a name="getHours" href="#getHours"><span>getHours:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getHours(value: Value): Duration" href="kapsis/app.html#getHours%2CValue">app: proc getHours(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getHours(value: Value): lent Duration" href="kapsis/app.html#getHours%2CValue">app: proc getHours(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getInt" href="#getInt"><span>getInt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getInt(value: Value): int" href="kapsis/app.html#getInt%2CValue">app: proc getInt(value: Value): int</a></li>
+          data-doc-search-tag="app: proc getInt(value: Value): lent int" href="kapsis/app.html#getInt%2CValue">app: proc getInt(value: Value): lent int</a></li>
           </ul></dd>
 <dt><a name="getJson" href="#getJson"><span>getJson:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getJson(value: Value): JsonNode" href="kapsis/app.html#getJson%2CValue">app: proc getJson(value: Value): JsonNode</a></li>
+          data-doc-search-tag="app: proc getJson(value: Value): lent JsonNode" href="kapsis/app.html#getJson%2CValue">app: proc getJson(value: Value): lent JsonNode</a></li>
           </ul></dd>
 <dt><a name="getMilliseconds" href="#getMilliseconds"><span>getMilliseconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMilliseconds(value: Value): Duration" href="kapsis/app.html#getMilliseconds%2CValue">app: proc getMilliseconds(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getMilliseconds(value: Value): lent Duration" href="kapsis/app.html#getMilliseconds%2CValue">app: proc getMilliseconds(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getMinutes" href="#getMinutes"><span>getMinutes:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMinutes(value: Value): Duration" href="kapsis/app.html#getMinutes%2CValue">app: proc getMinutes(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getMinutes(value: Value): lent Duration" href="kapsis/app.html#getMinutes%2CValue">app: proc getMinutes(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getMonths" href="#getMonths"><span>getMonths:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMonths(value: Value): Duration" href="kapsis/app.html#getMonths%2CValue">app: proc getMonths(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getMonths(value: Value): lent Duration" href="kapsis/app.html#getMonths%2CValue">app: proc getMonths(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getPath" href="#getPath"><span>getPath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getPath(value: Value): KapsisPath" href="kapsis/app.html#getPath%2CValue">app: proc getPath(value: Value): KapsisPath</a></li>
+          data-doc-search-tag="app: proc getPath(value: Value): lent KapsisPath" href="kapsis/app.html#getPath%2CValue">app: proc getPath(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getPort" href="#getPort"><span>getPort:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getPort(value: Value): Port" href="kapsis/app.html#getPort%2CValue">app: proc getPort(value: Value): Port</a></li>
+          data-doc-search-tag="app: proc getPort(value: Value): lent Port" href="kapsis/app.html#getPort%2CValue">app: proc getPort(value: Value): lent Port</a></li>
           </ul></dd>
 <dt><a name="getSeconds" href="#getSeconds"><span>getSeconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getSeconds(value: Value): Duration" href="kapsis/app.html#getSeconds%2CValue">app: proc getSeconds(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getSeconds(value: Value): lent Duration" href="kapsis/app.html#getSeconds%2CValue">app: proc getSeconds(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getStr" href="#getStr"><span>getStr:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getStr(value: Value): string" href="kapsis/app.html#getStr%2CValue">app: proc getStr(value: Value): string</a></li>
+          data-doc-search-tag="app: proc getStr(value: Value): lent string" href="kapsis/app.html#getStr%2CValue">app: proc getStr(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getUrl" href="#getUrl"><span>getUrl:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getUrl(value: Value): Uri" href="kapsis/app.html#getUrl%2CValue">app: proc getUrl(value: Value): Uri</a></li>
+          data-doc-search-tag="app: proc getUrl(value: Value): lent Uri" href="kapsis/app.html#getUrl%2CValue">app: proc getUrl(value: Value): lent Uri</a></li>
           </ul></dd>
 <dt><a name="getYaml" href="#getYaml"><span>getYaml:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getYaml(value: Value): string" href="kapsis/app.html#getYaml%2CValue">app: proc getYaml(value: Value): string</a></li>
+          data-doc-search-tag="app: proc getYaml(value: Value): lent string" href="kapsis/app.html#getYaml%2CValue">app: proc getYaml(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getYears" href="#getYears"><span>getYears:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getYears(value: Value): Duration" href="kapsis/app.html#getYears%2CValue">app: proc getYears(value: Value): Duration</a></li>
+          data-doc-search-tag="app: proc getYears(value: Value): lent Duration" href="kapsis/app.html#getYears%2CValue">app: proc getYears(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="green" href="#green"><span>green:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -337,6 +345,10 @@
 <dt><a name="greenSpan" href="#greenSpan"><span>greenSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="cli: proc greenSpan(label: string; indentSize = 1): Span" href="kapsis/cli.html#greenSpan%2Cstring%2Cint">cli: proc greenSpan(label: string; indentSize = 1): Span</a></li>
+          </ul></dd>
+<dt><a name="has" href="#has"><span>has:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="runtime: proc has(values: Values; key: string): bool" href="kapsis/runtime.html#has%2CValues%2Cstring">runtime: proc has(values: Values; key: string): bool</a></li>
           </ul></dd>
 <dt><a name="hidden" href="#hidden"><span>hidden:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -776,6 +788,8 @@
           </ul></dd>
 <dt><a name="success" href="#success"><span>success:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
+          data-doc-search-tag="spinny: proc success(spinny: Spinny)" href="kapsis/interactive/spinny.html#success%2CSpinny">spinny: proc success(spinny: Spinny)</a></li>
+          <li><a class="reference external"
           data-doc-search-tag="spinny: proc success(spinny: Spinny; msg: string)" href="kapsis/interactive/spinny.html#success%2CSpinny%2Cstring">spinny: proc success(spinny: Spinny; msg: string)</a></li>
           </ul></dd>
 <dt><a name="toggle" href="#toggle"><span>toggle:</span></a></dt><dd><ul class="simple">
@@ -910,7 +924,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-26 19:53:47 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-11 22:41:47 UTC</small>
       </div>
     </div>
   </div>
