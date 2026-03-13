@@ -2,7 +2,7 @@ import std/[macros, terminal, sequtils, strutils]
 import pkg/valido
 
 import pkg/[termstyle, nancy, noise]
-import ./interactive/[spinny, spinny/spinners]
+import ./spinny, ./spinny/spinners
 
 export nancy, spinny, spinners, termstyle
 

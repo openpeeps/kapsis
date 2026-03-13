@@ -1,17 +1,8 @@
-import std/[tables, strutils]
+import std/[tables, strutils, json]
+import ./interactive/prompts
 
-from ./app import Values, Value, KapsisErrorMessage, KapsisValueType, KapsisPath,
-  getStr, getBool, getFloat, getInt, getPath, getFile,
-  getFilename, getDir, getMilliseconds, getSeconds,
-  getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml, getUrl, printError, getPort,
-  getFilepath
-
-export Values, Value, KapsisValueType, KapsisPath,
-  getStr, getBool, getFloat, getInt, getPath, getFile,
-  getFilename, getDir, getMilliseconds, getSeconds,
-  getMinutes, getHours, getDays, getMonths, getYears,
-  getJson, getYaml, getUrl, getPort, getFilepath
+import ./types
+export types
 
 proc has*(values: Values, key: string): bool =
   ## Checks if `values` contains an arg by `key`
@@ -21,7 +12,7 @@ proc get*(values: Values, key: string): Value =
   ## Retrieve a `Value` from `values` by `key`
   if likely(values.has(key)):
     return values[][key]
-  printError(missingArg, key)
+  printError(missingArgument, key)
 
 proc `$`*(x: KapsisPath): string =
   ## Get stringified path from `KapsisPath` object

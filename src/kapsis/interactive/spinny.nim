@@ -4,12 +4,12 @@ import spinny/[colorize, spinners]
 export spinners, colorize
 
 type
-  Spinny = ref object
+  Spinny* = ref object
     text: string
     running: bool
     frames: seq[string]
     frame: string
-    interval: int
+    interval: int = 30
     customSymbol: bool
     trackTime: bool
     startTime: MonoTime
