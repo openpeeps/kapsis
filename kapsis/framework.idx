@@ -1,0 +1,12 @@
+nimTitle	framework	kapsis/framework.html	module src/kapsis/framework		0
+nim	CmdArg	kapsis/framework.html#CmdArg	type CmdArg		16
+nim	cmdCommand	kapsis/framework.html#cmdCommand	CommandType.cmdCommand		31
+nim	cmdGroup	kapsis/framework.html#cmdGroup	CommandType.cmdGroup		31
+nim	cmdSeparator	kapsis/framework.html#cmdSeparator	CommandType.cmdSeparator		31
+nim	CommandType	kapsis/framework.html#CommandType	enum CommandType		31
+nim	Command	kapsis/framework.html#Command	type Command		35
+nim	Kapsis	kapsis/framework.html#Kapsis	type Kapsis		53
+nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		456
+nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		516
+nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		521
+nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		526

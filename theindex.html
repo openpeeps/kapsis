@@ -25,34 +25,18 @@
   <div class="document" id="documentId">
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/app.html">kapsis/app</a>, <a href="kapsis/cli.html">kapsis/cli</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/framework.html">kapsis/framework</a>, <a href="kapsis/interactive/prompts.html">kapsis/interactive/prompts</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>, <a href="kapsis/types.html">kapsis/types</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="runtime: proc `$`(x: KapsisPath): string" href="kapsis/runtime.html#%24%2CKapsisPath">runtime: proc `$`(x: KapsisPath): string</a></li>
           </ul></dd>
-<dt><a name="addArg" href="#addArg"><span>addArg:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;
-       datatype: KapsisValueType; argtype = KapsisArgType.katArg; isOpt = false)" href="kapsis/app.html#addArg%2CKapsisCommand%2Cstring%2CCmdLineKind%2CKapsisValueType">app: proc addArg(cmd: KapsisCommand; id: string; kind: CmdLineKind;
-       datatype: KapsisValueType; argtype = KapsisArgType.katArg; isOpt = false)</a></li>
-          </ul></dd>
-<dt><a name="addCommand" href="#addCommand"><span>addCommand:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc addCommand(k: KapsisCli; key: string; cmd: KapsisCommand)" href="kapsis/app.html#addCommand%2CKapsisCli%2Cstring%2CKapsisCommand">app: proc addCommand(k: KapsisCli; key: string; cmd: KapsisCommand)</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="app: proc addCommand(k: KapsisCli; parent, key: string; cmd: KapsisCommand)" href="kapsis/app.html#addCommand%2CKapsisCli%2Cstring%2Cstring%2CKapsisCommand">app: proc addCommand(k: KapsisCli; parent, key: string; cmd: KapsisCommand)</a></li>
-          </ul></dd>
-<dt><a name="addVariant" href="#addVariant"><span>addVariant:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc addVariant(cmd: KapsisCommand; id: string; argVariant: openArray[string])" href="kapsis/app.html#addVariant%2CKapsisCommand%2Cstring%2CopenArray%5Bstring%5D">app: proc addVariant(cmd: KapsisCommand; id: string; argVariant: openArray[string])</a></li>
-          </ul></dd>
 <dt><a name="askEmail" href="#askEmail"><span>askEmail:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc askEmail(label: string; default = &quot;&quot;; skippable = false): string" href="kapsis/cli.html#askEmail%2Cstring%2Cstring">cli: proc askEmail(label: string; default = &quot;&quot;; skippable = false): string</a></li>
+          data-doc-search-tag="prompts: proc askEmail(label: string; default = &quot;&quot;; skippable = false): string" href="kapsis/interactive/prompts.html#askEmail%2Cstring%2Cstring">prompts: proc askEmail(label: string; default = &quot;&quot;; skippable = false): string</a></li>
           </ul></dd>
 <dt><a name="askIP4" href="#askIP4"><span>askIP4:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc askIP4(label: string; default = &quot;&quot;; skippable = false): string" href="kapsis/cli.html#askIP4%2Cstring%2Cstring">cli: proc askIP4(label: string; default = &quot;&quot;; skippable = false): string</a></li>
+          data-doc-search-tag="prompts: proc askIP4(label: string; default = &quot;&quot;; skippable = false): string" href="kapsis/interactive/prompts.html#askIP4%2Cstring%2Cstring">prompts: proc askIP4(label: string; default = &quot;&quot;; skippable = false): string</a></li>
           </ul></dd>
 <dt><a name="bgBlack" href="#bgBlack"><span>bgBlack:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -120,71 +104,87 @@
           </ul></dd>
 <dt><a name="blue" href="#blue"><span>blue:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc blue(label: string; indentSize = 1): Span" href="kapsis/cli.html#blue%2Cstring%2Cint">cli: proc blue(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc blue(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#blue%2Cstring%2Cint">prompts: proc blue(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="blueSpan" href="#blueSpan"><span>blueSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc blueSpan(label: string; indentSize = 1): Span" href="kapsis/cli.html#blueSpan%2Cstring%2Cint">cli: proc blueSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc blueSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#blueSpan%2Cstring%2Cint">prompts: proc blueSpan(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="bold" href="#bold"><span>bold:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc bold(s: string): string" href="kapsis/interactive/spinny/colorize.html#bold%2Cstring">colorize: proc bold(s: string): string</a></li>
           </ul></dd>
-<dt><a name="commands" href="#commands"><span>commands:</span></a></dt><dd><ul class="simple">
+<dt><a name="CmdArg" href="#CmdArg"><span>CmdArg:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: macro commands(registeredCommands: untyped; extras: untyped = nil)" href="kapsis/app.html#commands.m%2Cuntyped%2Cuntyped">app: macro commands(registeredCommands: untyped; extras: untyped = nil)</a></li>
+          data-doc-search-tag="framework: type CmdArg" href="kapsis/framework.html#CmdArg">framework: type CmdArg</a></li>
           </ul></dd>
-<dt><a name="ctCmd" href="#ctCmd"><span>ctCmd:</span></a></dt><dd><ul class="simple">
+<dt><a name="CmdArgValueType" href="#CmdArgValueType"><span>CmdArgValueType:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisCommandType.ctCmd" href="kapsis/app.html#ctCmd">app: KapsisCommandType.ctCmd</a></li>
+          data-doc-search-tag="types: enum CmdArgValueType" href="kapsis/types.html#CmdArgValueType">types: enum CmdArgValueType</a></li>
           </ul></dd>
-<dt><a name="ctCmdDir" href="#ctCmdDir"><span>ctCmdDir:</span></a></dt><dd><ul class="simple">
+<dt><a name="cmdCommand" href="#cmdCommand"><span>cmdCommand:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisCommandType.ctCmdDir" href="kapsis/app.html#ctCmdDir">app: KapsisCommandType.ctCmdDir</a></li>
+          data-doc-search-tag="framework: CommandType.cmdCommand" href="kapsis/framework.html#cmdCommand">framework: CommandType.cmdCommand</a></li>
           </ul></dd>
-<dt><a name="ctCmdSep" href="#ctCmdSep"><span>ctCmdSep:</span></a></dt><dd><ul class="simple">
+<dt><a name="cmdGroup" href="#cmdGroup"><span>cmdGroup:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisCommandType.ctCmdSep" href="kapsis/app.html#ctCmdSep">app: KapsisCommandType.ctCmdSep</a></li>
+          data-doc-search-tag="framework: CommandType.cmdGroup" href="kapsis/framework.html#cmdGroup">framework: CommandType.cmdGroup</a></li>
+          </ul></dd>
+<dt><a name="cmdSeparator" href="#cmdSeparator"><span>cmdSeparator:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: CommandType.cmdSeparator" href="kapsis/framework.html#cmdSeparator">framework: CommandType.cmdSeparator</a></li>
+          </ul></dd>
+<dt><a name="collectValues" href="#collectValues"><span>collectValues:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)" href="kapsis/types.html#collectValues.t%2CValuesTable%2Cstring%2Csinkstring%2C">types: template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)</a></li>
+          </ul></dd>
+<dt><a name="Command" href="#Command"><span>Command:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: type Command" href="kapsis/framework.html#Command">framework: type Command</a></li>
+          </ul></dd>
+<dt><a name="CommandType" href="#CommandType"><span>CommandType:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: enum CommandType" href="kapsis/framework.html#CommandType">framework: enum CommandType</a></li>
           </ul></dd>
 <dt><a name="cyanSpan" href="#cyanSpan"><span>cyanSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc cyanSpan(label: string; indentSize = 1): Span" href="kapsis/cli.html#cyanSpan%2Cstring%2Cint">cli: proc cyanSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc cyanSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#cyanSpan%2Cstring%2Cint">prompts: proc cyanSpan(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="display" href="#display"><span>display:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc display(i: int; spans: varargs[Span])" href="kapsis/cli.html#display%2Cint%2Cvarargs%5BSpan%5D">cli: proc display(i: int; spans: varargs[Span])</a></li>
+          data-doc-search-tag="prompts: proc display(i: int; spans: varargs[Span])" href="kapsis/interactive/prompts.html#display%2Cint%2Cvarargs%5BSpan%5D">prompts: proc display(i: int; spans: varargs[Span])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc display(spans: seq[Span])" href="kapsis/cli.html#display%2Cseq%5BSpan%5D">cli: proc display(spans: seq[Span])</a></li>
+          data-doc-search-tag="prompts: proc display(spans: seq[Span])" href="kapsis/interactive/prompts.html#display%2Cseq%5BSpan%5D">prompts: proc display(spans: seq[Span])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc display(label: string; indent = 0; br = &quot;&quot;)" href="kapsis/cli.html#display%2Cstring%2Cint%2Cstring">cli: proc display(label: string; indent = 0; br = &quot;&quot;)</a></li>
+          data-doc-search-tag="prompts: proc display(label: string; indent = 0; br = &quot;&quot;)" href="kapsis/interactive/prompts.html#display%2Cstring%2Cint%2Cstring">prompts: proc display(label: string; indent = 0; br = &quot;&quot;)</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc display(spans: varargs[Span])" href="kapsis/cli.html#display%2Cvarargs%5BSpan%5D">cli: proc display(spans: varargs[Span])</a></li>
+          data-doc-search-tag="prompts: proc display(spans: varargs[Span])" href="kapsis/interactive/prompts.html#display%2Cvarargs%5BSpan%5D">prompts: proc display(spans: varargs[Span])</a></li>
           </ul></dd>
 <dt><a name="displayError" href="#displayError"><span>displayError:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayError(x: string; quitProcess = false)" href="kapsis/cli.html#displayError%2Cstring">cli: proc displayError(x: string; quitProcess = false)</a></li>
+          data-doc-search-tag="prompts: proc displayError(x: string; quitProcess = false)" href="kapsis/interactive/prompts.html#displayError%2Cstring">prompts: proc displayError(x: string; quitProcess = false)</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayError(x: varargs[Span])" href="kapsis/cli.html#displayError%2Cvarargs%5BSpan%5D">cli: proc displayError(x: varargs[Span])</a></li>
+          data-doc-search-tag="prompts: proc displayError(x: varargs[Span])" href="kapsis/interactive/prompts.html#displayError%2Cvarargs%5BSpan%5D">prompts: proc displayError(x: varargs[Span])</a></li>
           </ul></dd>
 <dt><a name="displayInfo" href="#displayInfo"><span>displayInfo:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayInfo(x: string)" href="kapsis/cli.html#displayInfo%2Cstring">cli: proc displayInfo(x: string)</a></li>
+          data-doc-search-tag="prompts: proc displayInfo(x: string)" href="kapsis/interactive/prompts.html#displayInfo%2Cstring">prompts: proc displayInfo(x: string)</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayInfo(x: varargs[Span])" href="kapsis/cli.html#displayInfo%2Cvarargs%5BSpan%5D">cli: proc displayInfo(x: varargs[Span])</a></li>
+          data-doc-search-tag="prompts: proc displayInfo(x: varargs[Span])" href="kapsis/interactive/prompts.html#displayInfo%2Cvarargs%5BSpan%5D">prompts: proc displayInfo(x: varargs[Span])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayInfo(x: varargs[Span]; indentSize: int)" href="kapsis/cli.html#displayInfo%2Cvarargs%5BSpan%5D%2Cint">cli: proc displayInfo(x: varargs[Span]; indentSize: int)</a></li>
+          data-doc-search-tag="prompts: proc displayInfo(x: varargs[Span]; indentSize: int)" href="kapsis/interactive/prompts.html#displayInfo%2Cvarargs%5BSpan%5D%2Cint">prompts: proc displayInfo(x: varargs[Span]; indentSize: int)</a></li>
           </ul></dd>
 <dt><a name="displaySuccess" href="#displaySuccess"><span>displaySuccess:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc displaySuccess(x: string)" href="kapsis/cli.html#displaySuccess%2Cstring">cli: proc displaySuccess(x: string)</a></li>
+          data-doc-search-tag="prompts: proc displaySuccess(x: string)" href="kapsis/interactive/prompts.html#displaySuccess%2Cstring">prompts: proc displaySuccess(x: string)</a></li>
           </ul></dd>
 <dt><a name="displayWarning" href="#displayWarning"><span>displayWarning:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayWarning(x: string)" href="kapsis/cli.html#displayWarning%2Cstring">cli: proc displayWarning(x: string)</a></li>
+          data-doc-search-tag="prompts: proc displayWarning(x: string)" href="kapsis/interactive/prompts.html#displayWarning%2Cstring">prompts: proc displayWarning(x: string)</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayWarning(x: varargs[Span])" href="kapsis/cli.html#displayWarning%2Cvarargs%5BSpan%5D">cli: proc displayWarning(x: varargs[Span])</a></li>
+          data-doc-search-tag="prompts: proc displayWarning(x: varargs[Span])" href="kapsis/interactive/prompts.html#displayWarning%2Cvarargs%5BSpan%5D">prompts: proc displayWarning(x: varargs[Span])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="cli: proc displayWarning(x: varargs[Span]; indentSize: int)" href="kapsis/cli.html#displayWarning%2Cvarargs%5BSpan%5D%2Cint">cli: proc displayWarning(x: varargs[Span]; indentSize: int)</a></li>
+          data-doc-search-tag="prompts: proc displayWarning(x: varargs[Span]; indentSize: int)" href="kapsis/interactive/prompts.html#displayWarning%2Cvarargs%5BSpan%5D%2Cint">prompts: proc displayWarning(x: varargs[Span]; indentSize: int)</a></li>
           </ul></dd>
 <dt><a name="error" href="#error"><span>error:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -260,91 +260,95 @@
           </ul></dd>
 <dt><a name="getBool" href="#getBool"><span>getBool:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getBool(value: Value): lent bool" href="kapsis/app.html#getBool%2CValue">app: proc getBool(value: Value): lent bool</a></li>
+          data-doc-search-tag="types: proc getBool(value: Value): lent bool" href="kapsis/types.html#getBool%2CValue">types: proc getBool(value: Value): lent bool</a></li>
           </ul></dd>
 <dt><a name="getDays" href="#getDays"><span>getDays:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getDays(value: Value): lent Duration" href="kapsis/app.html#getDays%2CValue">app: proc getDays(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getDays(value: Value): lent Duration" href="kapsis/types.html#getDays%2CValue">types: proc getDays(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getDir" href="#getDir"><span>getDir:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getDir(value: Value): lent KapsisPath" href="kapsis/app.html#getDir%2CValue">app: proc getDir(value: Value): lent KapsisPath</a></li>
+          data-doc-search-tag="types: proc getDir(value: Value): lent KapsisPath" href="kapsis/types.html#getDir%2CValue">types: proc getDir(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getFile" href="#getFile"><span>getFile:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFile(value: Value): lent KapsisPath" href="kapsis/app.html#getFile%2CValue">app: proc getFile(value: Value): lent KapsisPath</a></li>
+          data-doc-search-tag="types: proc getFile(value: Value): lent KapsisPath" href="kapsis/types.html#getFile%2CValue">types: proc getFile(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getFilename" href="#getFilename"><span>getFilename:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFilename(value: Value): lent string" href="kapsis/app.html#getFilename%2CValue">app: proc getFilename(value: Value): lent string</a></li>
+          data-doc-search-tag="types: proc getFilename(value: Value): lent string" href="kapsis/types.html#getFilename%2CValue">types: proc getFilename(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getFilepath" href="#getFilepath"><span>getFilepath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFilepath(value: Value): lent string" href="kapsis/app.html#getFilepath%2CValue">app: proc getFilepath(value: Value): lent string</a></li>
+          data-doc-search-tag="types: proc getFilepath(value: Value): lent string" href="kapsis/types.html#getFilepath%2CValue">types: proc getFilepath(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getFloat" href="#getFloat"><span>getFloat:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getFloat(value: Value): lent float" href="kapsis/app.html#getFloat%2CValue">app: proc getFloat(value: Value): lent float</a></li>
+          data-doc-search-tag="types: proc getFloat(value: Value): lent float" href="kapsis/types.html#getFloat%2CValue">types: proc getFloat(value: Value): lent float</a></li>
           </ul></dd>
 <dt><a name="getHours" href="#getHours"><span>getHours:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getHours(value: Value): lent Duration" href="kapsis/app.html#getHours%2CValue">app: proc getHours(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getHours(value: Value): lent Duration" href="kapsis/types.html#getHours%2CValue">types: proc getHours(value: Value): lent Duration</a></li>
+          </ul></dd>
+<dt><a name="getIdent" href="#getIdent"><span>getIdent:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: proc getIdent(value: Value): lent string" href="kapsis/types.html#getIdent%2CValue">types: proc getIdent(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getInt" href="#getInt"><span>getInt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getInt(value: Value): lent int" href="kapsis/app.html#getInt%2CValue">app: proc getInt(value: Value): lent int</a></li>
+          data-doc-search-tag="types: proc getInt(value: Value): lent int" href="kapsis/types.html#getInt%2CValue">types: proc getInt(value: Value): lent int</a></li>
           </ul></dd>
 <dt><a name="getJson" href="#getJson"><span>getJson:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getJson(value: Value): lent JsonNode" href="kapsis/app.html#getJson%2CValue">app: proc getJson(value: Value): lent JsonNode</a></li>
+          data-doc-search-tag="types: proc getJson(value: Value): lent JsonNode" href="kapsis/types.html#getJson%2CValue">types: proc getJson(value: Value): lent JsonNode</a></li>
           </ul></dd>
 <dt><a name="getMilliseconds" href="#getMilliseconds"><span>getMilliseconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMilliseconds(value: Value): lent Duration" href="kapsis/app.html#getMilliseconds%2CValue">app: proc getMilliseconds(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getMilliseconds(value: Value): lent Duration" href="kapsis/types.html#getMilliseconds%2CValue">types: proc getMilliseconds(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getMinutes" href="#getMinutes"><span>getMinutes:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMinutes(value: Value): lent Duration" href="kapsis/app.html#getMinutes%2CValue">app: proc getMinutes(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getMinutes(value: Value): lent Duration" href="kapsis/types.html#getMinutes%2CValue">types: proc getMinutes(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getMonths" href="#getMonths"><span>getMonths:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getMonths(value: Value): lent Duration" href="kapsis/app.html#getMonths%2CValue">app: proc getMonths(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getMonths(value: Value): lent Duration" href="kapsis/types.html#getMonths%2CValue">types: proc getMonths(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getPath" href="#getPath"><span>getPath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getPath(value: Value): lent KapsisPath" href="kapsis/app.html#getPath%2CValue">app: proc getPath(value: Value): lent KapsisPath</a></li>
+          data-doc-search-tag="types: proc getPath(value: Value): lent KapsisPath" href="kapsis/types.html#getPath%2CValue">types: proc getPath(value: Value): lent KapsisPath</a></li>
           </ul></dd>
 <dt><a name="getPort" href="#getPort"><span>getPort:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getPort(value: Value): lent Port" href="kapsis/app.html#getPort%2CValue">app: proc getPort(value: Value): lent Port</a></li>
+          data-doc-search-tag="types: proc getPort(value: Value): lent Port" href="kapsis/types.html#getPort%2CValue">types: proc getPort(value: Value): lent Port</a></li>
           </ul></dd>
 <dt><a name="getSeconds" href="#getSeconds"><span>getSeconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getSeconds(value: Value): lent Duration" href="kapsis/app.html#getSeconds%2CValue">app: proc getSeconds(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getSeconds(value: Value): lent Duration" href="kapsis/types.html#getSeconds%2CValue">types: proc getSeconds(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="getStr" href="#getStr"><span>getStr:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getStr(value: Value): lent string" href="kapsis/app.html#getStr%2CValue">app: proc getStr(value: Value): lent string</a></li>
+          data-doc-search-tag="types: proc getStr(value: Value): lent string" href="kapsis/types.html#getStr%2CValue">types: proc getStr(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getUrl" href="#getUrl"><span>getUrl:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getUrl(value: Value): lent Uri" href="kapsis/app.html#getUrl%2CValue">app: proc getUrl(value: Value): lent Uri</a></li>
+          data-doc-search-tag="types: proc getUrl(value: Value): lent Uri" href="kapsis/types.html#getUrl%2CValue">types: proc getUrl(value: Value): lent Uri</a></li>
           </ul></dd>
 <dt><a name="getYaml" href="#getYaml"><span>getYaml:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getYaml(value: Value): lent string" href="kapsis/app.html#getYaml%2CValue">app: proc getYaml(value: Value): lent string</a></li>
+          data-doc-search-tag="types: proc getYaml(value: Value): lent string" href="kapsis/types.html#getYaml%2CValue">types: proc getYaml(value: Value): lent string</a></li>
           </ul></dd>
 <dt><a name="getYears" href="#getYears"><span>getYears:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: proc getYears(value: Value): lent Duration" href="kapsis/app.html#getYears%2CValue">app: proc getYears(value: Value): lent Duration</a></li>
+          data-doc-search-tag="types: proc getYears(value: Value): lent Duration" href="kapsis/types.html#getYears%2CValue">types: proc getYears(value: Value): lent Duration</a></li>
           </ul></dd>
 <dt><a name="green" href="#green"><span>green:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc green(label: string; indentSize = 1): Span" href="kapsis/cli.html#green%2Cstring%2Cint">cli: proc green(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc green(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#green%2Cstring%2Cint">prompts: proc green(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="greenSpan" href="#greenSpan"><span>greenSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc greenSpan(label: string; indentSize = 1): Span" href="kapsis/cli.html#greenSpan%2Cstring%2Cint">cli: proc greenSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc greenSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#greenSpan%2Cstring%2Cint">prompts: proc greenSpan(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="has" href="#has"><span>has:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -354,81 +358,133 @@
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc hidden(s: string): string" href="kapsis/interactive/spinny/colorize.html#hidden%2Cstring">colorize: proc hidden(s: string): string</a></li>
           </ul></dd>
+<dt><a name="initApp" href="#initApp"><span>initApp:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: template initApp(stmtNodes: untyped)" href="kapsis/framework.html#initApp.t%2Cuntyped">framework: template initApp(stmtNodes: untyped)</a></li>
+          </ul></dd>
+<dt><a name="initCLI" href="#initCLI"><span>initCLI:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: template initCLI(stmtNodes: untyped)" href="kapsis/framework.html#initCLI.t%2Cuntyped">framework: template initCLI(stmtNodes: untyped)</a></li>
+          </ul></dd>
+<dt><a name="initCLIApplication" href="#initCLIApplication"><span>initCLIApplication:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: template initCLIApplication(stmtNodes: untyped)" href="kapsis/framework.html#initCLIApplication.t%2Cuntyped">framework: template initCLIApplication(stmtNodes: untyped)</a></li>
+          </ul></dd>
+<dt><a name="initKapsis" href="#initKapsis"><span>initKapsis:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: macro initKapsis(stmtNodes: untyped)" href="kapsis/framework.html#initKapsis.m%2Cuntyped">framework: macro initKapsis(stmtNodes: untyped)</a></li>
+          </ul></dd>
 <dt><a name="invert" href="#invert"><span>invert:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc invert(s: string): string" href="kapsis/interactive/spinny/colorize.html#invert%2Cstring">colorize: proc invert(s: string): string</a></li>
           </ul></dd>
-<dt><a name="isBool" href="#isBool"><span>isBool:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc isBool(v: string): bool" href="kapsis/app.html#isBool%2Cstring">app: proc isBool(v: string): bool</a></li>
-          </ul></dd>
-<dt><a name="isFloat" href="#isFloat"><span>isFloat:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc isFloat(v: string): bool" href="kapsis/app.html#isFloat%2Cstring">app: proc isFloat(v: string): bool</a></li>
-          </ul></dd>
-<dt><a name="isInt" href="#isInt"><span>isInt:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc isInt(v: string): bool" href="kapsis/app.html#isInt%2Cstring">app: proc isInt(v: string): bool</a></li>
-          </ul></dd>
 <dt><a name="Kapsis" href="#Kapsis"><span>Kapsis:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: var Kapsis" href="kapsis/app.html#Kapsis">app: var Kapsis</a></li>
-          </ul></dd>
-<dt><a name="KapsisArgType" href="#KapsisArgType"><span>KapsisArgType:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: enum KapsisArgType" href="kapsis/app.html#KapsisArgType">app: enum KapsisArgType</a></li>
-          </ul></dd>
-<dt><a name="KapsisArgument" href="#KapsisArgument"><span>KapsisArgument:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: object KapsisArgument" href="kapsis/app.html#KapsisArgument">app: object KapsisArgument</a></li>
-          </ul></dd>
-<dt><a name="KapsisCommand" href="#KapsisCommand"><span>KapsisCommand:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: type KapsisCommand" href="kapsis/app.html#KapsisCommand">app: type KapsisCommand</a></li>
-          </ul></dd>
-<dt><a name="KapsisCommandType" href="#KapsisCommandType"><span>KapsisCommandType:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: enum KapsisCommandType" href="kapsis/app.html#KapsisCommandType">app: enum KapsisCommandType</a></li>
+          data-doc-search-tag="framework: type Kapsis" href="kapsis/framework.html#Kapsis">framework: type Kapsis</a></li>
           </ul></dd>
 <dt><a name="KapsisErrorMessage" href="#KapsisErrorMessage"><span>KapsisErrorMessage:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: enum KapsisErrorMessage" href="kapsis/app.html#KapsisErrorMessage">app: enum KapsisErrorMessage</a></li>
-          </ul></dd>
-<dt><a name="KapsisInput" href="#KapsisInput"><span>KapsisInput:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: tuple KapsisInput" href="kapsis/app.html#KapsisInput">app: tuple KapsisInput</a></li>
+          data-doc-search-tag="types: enum KapsisErrorMessage" href="kapsis/types.html#KapsisErrorMessage">types: enum KapsisErrorMessage</a></li>
           </ul></dd>
 <dt><a name="KapsisInputValue" href="#KapsisInputValue"><span>KapsisInputValue:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: object KapsisInputValue" href="kapsis/cli.html#KapsisInputValue">cli: object KapsisInputValue</a></li>
+          data-doc-search-tag="prompts: object KapsisInputValue" href="kapsis/interactive/prompts.html#KapsisInputValue">prompts: object KapsisInputValue</a></li>
           </ul></dd>
 <dt><a name="KapsisPath" href="#KapsisPath"><span>KapsisPath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: object KapsisPath" href="kapsis/app.html#KapsisPath">app: object KapsisPath</a></li>
+          data-doc-search-tag="types: object KapsisPath" href="kapsis/types.html#KapsisPath">types: object KapsisPath</a></li>
           </ul></dd>
-<dt><a name="KapsisValueType" href="#KapsisValueType"><span>KapsisValueType:</span></a></dt><dd><ul class="simple">
+<dt><a name="ktBool" href="#ktBool"><span>ktBool:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: enum KapsisValueType" href="kapsis/app.html#KapsisValueType">app: enum KapsisValueType</a></li>
+          data-doc-search-tag="types: CmdArgValueType.ktBool" href="kapsis/types.html#ktBool">types: CmdArgValueType.ktBool</a></li>
           </ul></dd>
-<dt><a name="katArg" href="#katArg"><span>katArg:</span></a></dt><dd><ul class="simple">
+<dt><a name="ktDays" href="#ktDays"><span>ktDays:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisArgType.katArg" href="kapsis/app.html#katArg">app: KapsisArgType.katArg</a></li>
+          data-doc-search-tag="types: CmdArgValueType.ktDays" href="kapsis/types.html#ktDays">types: CmdArgValueType.ktDays</a></li>
           </ul></dd>
-<dt><a name="katVariant" href="#katVariant"><span>katVariant:</span></a></dt><dd><ul class="simple">
+<dt><a name="ktDir" href="#ktDir"><span>ktDir:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisArgType.katVariant" href="kapsis/app.html#katVariant">app: KapsisArgType.katVariant</a></li>
+          data-doc-search-tag="types: CmdArgValueType.ktDir" href="kapsis/types.html#ktDir">types: CmdArgValueType.ktDir</a></li>
+          </ul></dd>
+<dt><a name="ktFile" href="#ktFile"><span>ktFile:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktFile" href="kapsis/types.html#ktFile">types: CmdArgValueType.ktFile</a></li>
+          </ul></dd>
+<dt><a name="ktFilename" href="#ktFilename"><span>ktFilename:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktFilename" href="kapsis/types.html#ktFilename">types: CmdArgValueType.ktFilename</a></li>
+          </ul></dd>
+<dt><a name="ktFilepath" href="#ktFilepath"><span>ktFilepath:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktFilepath" href="kapsis/types.html#ktFilepath">types: CmdArgValueType.ktFilepath</a></li>
+          </ul></dd>
+<dt><a name="ktFloat" href="#ktFloat"><span>ktFloat:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktFloat" href="kapsis/types.html#ktFloat">types: CmdArgValueType.ktFloat</a></li>
+          </ul></dd>
+<dt><a name="ktHours" href="#ktHours"><span>ktHours:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktHours" href="kapsis/types.html#ktHours">types: CmdArgValueType.ktHours</a></li>
+          </ul></dd>
+<dt><a name="ktIdent" href="#ktIdent"><span>ktIdent:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktIdent" href="kapsis/types.html#ktIdent">types: CmdArgValueType.ktIdent</a></li>
+          </ul></dd>
+<dt><a name="ktInt" href="#ktInt"><span>ktInt:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktInt" href="kapsis/types.html#ktInt">types: CmdArgValueType.ktInt</a></li>
+          </ul></dd>
+<dt><a name="ktJson" href="#ktJson"><span>ktJson:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktJson" href="kapsis/types.html#ktJson">types: CmdArgValueType.ktJson</a></li>
+          </ul></dd>
+<dt><a name="ktMilliseconds" href="#ktMilliseconds"><span>ktMilliseconds:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktMilliseconds" href="kapsis/types.html#ktMilliseconds">types: CmdArgValueType.ktMilliseconds</a></li>
+          </ul></dd>
+<dt><a name="ktMinutes" href="#ktMinutes"><span>ktMinutes:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktMinutes" href="kapsis/types.html#ktMinutes">types: CmdArgValueType.ktMinutes</a></li>
+          </ul></dd>
+<dt><a name="ktMonths" href="#ktMonths"><span>ktMonths:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktMonths" href="kapsis/types.html#ktMonths">types: CmdArgValueType.ktMonths</a></li>
+          </ul></dd>
+<dt><a name="ktPath" href="#ktPath"><span>ktPath:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktPath" href="kapsis/types.html#ktPath">types: CmdArgValueType.ktPath</a></li>
+          </ul></dd>
+<dt><a name="ktPort" href="#ktPort"><span>ktPort:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktPort" href="kapsis/types.html#ktPort">types: CmdArgValueType.ktPort</a></li>
+          </ul></dd>
+<dt><a name="ktSeconds" href="#ktSeconds"><span>ktSeconds:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktSeconds" href="kapsis/types.html#ktSeconds">types: CmdArgValueType.ktSeconds</a></li>
+          </ul></dd>
+<dt><a name="ktString" href="#ktString"><span>ktString:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktString" href="kapsis/types.html#ktString">types: CmdArgValueType.ktString</a></li>
+          </ul></dd>
+<dt><a name="ktUrl" href="#ktUrl"><span>ktUrl:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktUrl" href="kapsis/types.html#ktUrl">types: CmdArgValueType.ktUrl</a></li>
+          </ul></dd>
+<dt><a name="ktYaml" href="#ktYaml"><span>ktYaml:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktYaml" href="kapsis/types.html#ktYaml">types: CmdArgValueType.ktYaml</a></li>
+          </ul></dd>
+<dt><a name="ktYears" href="#ktYears"><span>ktYears:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktYears" href="kapsis/types.html#ktYears">types: CmdArgValueType.ktYears</a></li>
           </ul></dd>
 <dt><a name="makeSpinner" href="#makeSpinner"><span>makeSpinner:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinners: proc makeSpinner(interval: int; frames: openArray[string]): Spinner" href="kapsis/interactive/spinny/spinners.html#makeSpinner%2Cint%2CopenArray%5Bstring%5D">spinners: proc makeSpinner(interval: int; frames: openArray[string]): Spinner</a></li>
           </ul></dd>
-<dt><a name="missingArg" href="#missingArg"><span>missingArg:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.missingArg" href="kapsis/app.html#missingArg">app: KapsisErrorMessage.missingArg</a></li>
-          </ul></dd>
 <dt><a name="missingArgument" href="#missingArgument"><span>missingArgument:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.missingArgument" href="kapsis/app.html#missingArgument">app: KapsisErrorMessage.missingArgument</a></li>
+          data-doc-search-tag="types: KapsisErrorMessage.missingArgument" href="kapsis/types.html#missingArgument">types: KapsisErrorMessage.missingArgument</a></li>
           </ul></dd>
 <dt><a name="newSpinny" href="#newSpinny"><span>newSpinny:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -436,33 +492,27 @@
           </ul></dd>
 <dt><a name="printError" href="#printError"><span>printError:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: template printError(msg: KapsisErrorMessage; arg: varargs[string])" href="kapsis/app.html#printError.t%2CKapsisErrorMessage%2Cvarargs%5Bstring%5D">app: template printError(msg: KapsisErrorMessage; arg: varargs[string])</a></li>
-          </ul></dd>
-<dt><a name="printUsage" href="#printUsage"><span>printUsage:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: proc printUsage(showExtras = false; showCommand = newStringOfCap(0);
-           showSubCommands = false)" href="kapsis/app.html#printUsage">app: proc printUsage(showExtras = false; showCommand = newStringOfCap(0);
-           showSubCommands = false)</a></li>
+          data-doc-search-tag="types: template printError(msg: KapsisErrorMessage; arg: varargs[string])" href="kapsis/types.html#printError.t%2CKapsisErrorMessage%2Cvarargs%5Bstring%5D">types: template printError(msg: KapsisErrorMessage; arg: varargs[string])</a></li>
           </ul></dd>
 <dt><a name="prompt" href="#prompt"><span>prompt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc prompt(label: string; color: string = &quot;white&quot;; default = &quot;&quot;): string" href="kapsis/cli.html#prompt%2Cstring%2Cstring%2Cstring">cli: proc prompt(label: string; color: string = &quot;white&quot;; default = &quot;&quot;): string</a></li>
+          data-doc-search-tag="prompts: proc prompt(label: string; color: string = &quot;white&quot;; default = &quot;&quot;): string" href="kapsis/interactive/prompts.html#prompt%2Cstring%2Cstring%2Cstring">prompts: proc prompt(label: string; color: string = &quot;white&quot;; default = &quot;&quot;): string</a></li>
           </ul></dd>
 <dt><a name="promptConfirm" href="#promptConfirm"><span>promptConfirm:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc promptConfirm(label: string; icon: string = &quot;👉&quot;): bool" href="kapsis/cli.html#promptConfirm%2Cstring%2Cstring">cli: proc promptConfirm(label: string; icon: string = &quot;👉&quot;): bool</a></li>
+          data-doc-search-tag="prompts: proc promptConfirm(label: string; icon: string = &quot;👉&quot;): bool" href="kapsis/interactive/prompts.html#promptConfirm%2Cstring%2Cstring">prompts: proc promptConfirm(label: string; icon: string = &quot;👉&quot;): bool</a></li>
           </ul></dd>
 <dt><a name="promptSecret" href="#promptSecret"><span>promptSecret:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc promptSecret(label: string; color: string = &quot;white&quot;; required = true): string" href="kapsis/cli.html#promptSecret%2Cstring%2Cstring">cli: proc promptSecret(label: string; color: string = &quot;white&quot;; required = true): string</a></li>
+          data-doc-search-tag="prompts: proc promptSecret(label: string; color: string = &quot;white&quot;; required = true): string" href="kapsis/interactive/prompts.html#promptSecret%2Cstring%2Cstring">prompts: proc promptSecret(label: string; color: string = &quot;white&quot;; required = true): string</a></li>
           </ul></dd>
 <dt><a name="Row" href="#Row"><span>Row:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: type Row" href="kapsis/cli.html#Row">cli: type Row</a></li>
+          data-doc-search-tag="prompts: type Row" href="kapsis/interactive/prompts.html#Row">prompts: type Row</a></li>
           </ul></dd>
 <dt><a name="rows" href="#rows"><span>rows:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: iterator rows(items: seq[Row]): Row" href="kapsis/cli.html#rows.i%2Cseq%5BRow%5D">cli: iterator rows(items: seq[Row]): Row</a></li>
+          data-doc-search-tag="prompts: iterator rows(items: seq[Row]): Row" href="kapsis/interactive/prompts.html#rows.i%2Cseq%5BRow%5D">prompts: iterator rows(items: seq[Row]): Row</a></li>
           </ul></dd>
 <dt><a name="setSymbol" href="#setSymbol"><span>setSymbol:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -475,12 +525,6 @@
 <dt><a name="setText" href="#setText"><span>setText:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinny: proc setText(spinny: Spinny; text: string)" href="kapsis/interactive/spinny.html#setText%2CSpinny%2Cstring">spinny: proc setText(spinny: Spinny; text: string)</a></li>
-          </ul></dd>
-<dt><a name="settings" href="#settings"><span>settings:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: macro settings(mainCommand: static Option[string] = none(string);
-         exitAfterCallback: static bool = true; heading: static string = &quot;&quot;)" href="kapsis/app.html#settings.m%2CstaticOption%5Bstring%5D%2Cstaticbool%2Cstaticstring">app: macro settings(mainCommand: static Option[string] = none(string);
-         exitAfterCallback: static bool = true; heading: static string = &quot;&quot;)</a></li>
           </ul></dd>
 <dt><a name="skArc" href="#skArc"><span>skArc:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -768,15 +812,19 @@
           </ul></dd>
 <dt><a name="Span" href="#Span"><span>Span:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: tuple Span" href="kapsis/cli.html#Span">cli: tuple Span</a></li>
+          data-doc-search-tag="prompts: tuple Span" href="kapsis/interactive/prompts.html#Span">prompts: tuple Span</a></li>
           </ul></dd>
 <dt><a name="span" href="#span"><span>span:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span" href="kapsis/cli.html#span%2Cstring%2Cint">cli: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span" href="kapsis/interactive/prompts.html#span%2Cstring%2Cint">prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="Spinner" href="#Spinner"><span>Spinner:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinners: object Spinner" href="kapsis/interactive/spinny/spinners.html#Spinner">spinners: object Spinner</a></li>
+          </ul></dd>
+<dt><a name="Spinny" href="#Spinny"><span>Spinny:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: type Spinny" href="kapsis/interactive/spinny.html#Spinny">spinny: type Spinny</a></li>
           </ul></dd>
 <dt><a name="start" href="#start"><span>start:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -794,15 +842,15 @@
           </ul></dd>
 <dt><a name="toggle" href="#toggle"><span>toggle:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc toggle(onOff: bool): Span" href="kapsis/cli.html#toggle%2Cbool">cli: proc toggle(onOff: bool): Span</a></li>
+          data-doc-search-tag="prompts: proc toggle(onOff: bool): Span" href="kapsis/interactive/prompts.html#toggle%2Cbool">prompts: proc toggle(onOff: bool): Span</a></li>
           </ul></dd>
 <dt><a name="toString" href="#toString"><span>toString:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc toString(spans: seq[Span]): string" href="kapsis/cli.html#toString%2Cseq%5BSpan%5D">cli: proc toString(spans: seq[Span]): string</a></li>
+          data-doc-search-tag="prompts: proc toString(spans: seq[Span]): string" href="kapsis/interactive/prompts.html#toString%2Cseq%5BSpan%5D">prompts: proc toString(spans: seq[Span]): string</a></li>
           </ul></dd>
 <dt><a name="typeMismatch" href="#typeMismatch"><span>typeMismatch:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.typeMismatch" href="kapsis/app.html#typeMismatch">app: KapsisErrorMessage.typeMismatch</a></li>
+          data-doc-search-tag="types: KapsisErrorMessage.typeMismatch" href="kapsis/types.html#typeMismatch">types: KapsisErrorMessage.typeMismatch</a></li>
           </ul></dd>
 <dt><a name="underline" href="#underline"><span>underline:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -810,121 +858,45 @@
           </ul></dd>
 <dt><a name="unexpectedOption" href="#unexpectedOption"><span>unexpectedOption:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.unexpectedOption" href="kapsis/app.html#unexpectedOption">app: KapsisErrorMessage.unexpectedOption</a></li>
+          data-doc-search-tag="types: KapsisErrorMessage.unexpectedOption" href="kapsis/types.html#unexpectedOption">types: KapsisErrorMessage.unexpectedOption</a></li>
           </ul></dd>
 <dt><a name="unknownCommand" href="#unknownCommand"><span>unknownCommand:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.unknownCommand" href="kapsis/app.html#unknownCommand">app: KapsisErrorMessage.unknownCommand</a></li>
+          data-doc-search-tag="types: KapsisErrorMessage.unknownCommand" href="kapsis/types.html#unknownCommand">types: KapsisErrorMessage.unknownCommand</a></li>
           </ul></dd>
 <dt><a name="unknownOption" href="#unknownOption"><span>unknownOption:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisErrorMessage.unknownOption" href="kapsis/app.html#unknownOption">app: KapsisErrorMessage.unknownOption</a></li>
+          data-doc-search-tag="types: KapsisErrorMessage.unknownOption" href="kapsis/types.html#unknownOption">types: KapsisErrorMessage.unknownOption</a></li>
           </ul></dd>
 <dt><a name="url" href="#url"><span>url:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc url(uri: string; port: int = 0; ssl = false): Span" href="kapsis/cli.html#url%2Cstring%2Cint">cli: proc url(uri: string; port: int = 0; ssl = false): Span</a></li>
+          data-doc-search-tag="prompts: proc url(uri: string; port: int = 0; ssl = false): Span" href="kapsis/interactive/prompts.html#url%2Cstring%2Cint">prompts: proc url(uri: string; port: int = 0; ssl = false): Span</a></li>
           </ul></dd>
 <dt><a name="Value" href="#Value"><span>Value:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: object Value" href="kapsis/app.html#Value">app: object Value</a></li>
+          data-doc-search-tag="types: object Value" href="kapsis/types.html#Value">types: object Value</a></li>
           </ul></dd>
 <dt><a name="Values" href="#Values"><span>Values:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: type Values" href="kapsis/app.html#Values">app: type Values</a></li>
+          data-doc-search-tag="types: type Values" href="kapsis/types.html#Values">types: type Values</a></li>
           </ul></dd>
-<dt><a name="vtBool" href="#vtBool"><span>vtBool:</span></a></dt><dd><ul class="simple">
+<dt><a name="ValuesTable" href="#ValuesTable"><span>ValuesTable:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtBool" href="kapsis/app.html#vtBool">app: KapsisValueType.vtBool</a></li>
-          </ul></dd>
-<dt><a name="vtDays" href="#vtDays"><span>vtDays:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtDays" href="kapsis/app.html#vtDays">app: KapsisValueType.vtDays</a></li>
-          </ul></dd>
-<dt><a name="vtDir" href="#vtDir"><span>vtDir:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtDir" href="kapsis/app.html#vtDir">app: KapsisValueType.vtDir</a></li>
-          </ul></dd>
-<dt><a name="vtFile" href="#vtFile"><span>vtFile:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtFile" href="kapsis/app.html#vtFile">app: KapsisValueType.vtFile</a></li>
-          </ul></dd>
-<dt><a name="vtFilename" href="#vtFilename"><span>vtFilename:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtFilename" href="kapsis/app.html#vtFilename">app: KapsisValueType.vtFilename</a></li>
-          </ul></dd>
-<dt><a name="vtFilepath" href="#vtFilepath"><span>vtFilepath:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtFilepath" href="kapsis/app.html#vtFilepath">app: KapsisValueType.vtFilepath</a></li>
-          </ul></dd>
-<dt><a name="vtFloat" href="#vtFloat"><span>vtFloat:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtFloat" href="kapsis/app.html#vtFloat">app: KapsisValueType.vtFloat</a></li>
-          </ul></dd>
-<dt><a name="vtHours" href="#vtHours"><span>vtHours:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtHours" href="kapsis/app.html#vtHours">app: KapsisValueType.vtHours</a></li>
-          </ul></dd>
-<dt><a name="vtInt" href="#vtInt"><span>vtInt:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtInt" href="kapsis/app.html#vtInt">app: KapsisValueType.vtInt</a></li>
-          </ul></dd>
-<dt><a name="vtJson" href="#vtJson"><span>vtJson:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtJson" href="kapsis/app.html#vtJson">app: KapsisValueType.vtJson</a></li>
-          </ul></dd>
-<dt><a name="vtMilliseconds" href="#vtMilliseconds"><span>vtMilliseconds:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtMilliseconds" href="kapsis/app.html#vtMilliseconds">app: KapsisValueType.vtMilliseconds</a></li>
-          </ul></dd>
-<dt><a name="vtMinutes" href="#vtMinutes"><span>vtMinutes:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtMinutes" href="kapsis/app.html#vtMinutes">app: KapsisValueType.vtMinutes</a></li>
-          </ul></dd>
-<dt><a name="vtMonths" href="#vtMonths"><span>vtMonths:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtMonths" href="kapsis/app.html#vtMonths">app: KapsisValueType.vtMonths</a></li>
-          </ul></dd>
-<dt><a name="vtPath" href="#vtPath"><span>vtPath:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtPath" href="kapsis/app.html#vtPath">app: KapsisValueType.vtPath</a></li>
-          </ul></dd>
-<dt><a name="vtPort" href="#vtPort"><span>vtPort:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtPort" href="kapsis/app.html#vtPort">app: KapsisValueType.vtPort</a></li>
-          </ul></dd>
-<dt><a name="vtSeconds" href="#vtSeconds"><span>vtSeconds:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtSeconds" href="kapsis/app.html#vtSeconds">app: KapsisValueType.vtSeconds</a></li>
-          </ul></dd>
-<dt><a name="vtString" href="#vtString"><span>vtString:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtString" href="kapsis/app.html#vtString">app: KapsisValueType.vtString</a></li>
-          </ul></dd>
-<dt><a name="vtUrl" href="#vtUrl"><span>vtUrl:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtUrl" href="kapsis/app.html#vtUrl">app: KapsisValueType.vtUrl</a></li>
-          </ul></dd>
-<dt><a name="vtYaml" href="#vtYaml"><span>vtYaml:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtYaml" href="kapsis/app.html#vtYaml">app: KapsisValueType.vtYaml</a></li>
-          </ul></dd>
-<dt><a name="vtYears" href="#vtYears"><span>vtYears:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="app: KapsisValueType.vtYears" href="kapsis/app.html#vtYears">app: KapsisValueType.vtYears</a></li>
+          data-doc-search-tag="types: type ValuesTable" href="kapsis/types.html#ValuesTable">types: type ValuesTable</a></li>
           </ul></dd>
 <dt><a name="yellow" href="#yellow"><span>yellow:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc yellow(label: string; indentSize = 1): Span" href="kapsis/cli.html#yellow%2Cstring%2Cint">cli: proc yellow(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc yellow(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#yellow%2Cstring%2Cint">prompts: proc yellow(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 <dt><a name="yellowSpan" href="#yellowSpan"><span>yellowSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="cli: proc yellowSpan(label: string; indentSize = 1): Span" href="kapsis/cli.html#yellowSpan%2Cstring%2Cint">cli: proc yellowSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc yellowSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#yellowSpan%2Cstring%2Cint">prompts: proc yellowSpan(label: string; indentSize = 1): Span</a></li>
           </ul></dd>
 </dl>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-11 22:41:47 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-15 04:29:09 UTC</small>
       </div>
     </div>
   </div>

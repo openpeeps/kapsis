@@ -1,4 +1,5 @@
 nimTitle	spinny	kapsis/interactive/spinny.html	module src/kapsis/interactive/spinny		0
+nim	Spinny	kapsis/interactive/spinny.html#Spinny	type Spinny		7
 nim	newSpinny	kapsis/interactive/spinny.html#newSpinny,string,Spinner	proc newSpinny(text: string; s: Spinner; time = false): Spinny		28
 nim	setSymbolColor	kapsis/interactive/spinny.html#setSymbolColor,Spinny,proc(string)	proc setSymbolColor(spinny: Spinny; color: proc (x: string): string)		38
 nim	setSymbol	kapsis/interactive/spinny.html#setSymbol,Spinny,string	proc setSymbol(spinny: Spinny; symbol: string)		42

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>src/kapsis/runtime</title>
+<title>src/kapsis/framework</title>
 
 <!-- Google fonts -->
 <link href='https://fonts.googleapis.com/css?family=Lato:400,600,900' rel='stylesheet' type='text/css'/>
@@ -24,7 +24,7 @@
 <body>
   <div class="document" id="documentId">
     <div class="container">
-      <h1 class="title">src/kapsis/runtime</h1>
+      <h1 class="title">src/kapsis/framework</h1>
       <div class="row">
   <div class="three columns">
     <div class="theme-select-wrapper">
@@ -56,18 +56,55 @@
 </li>
 <li>
   <details open>
-    <summary><a class="reference reference-toplevel" href="#12" id="62">Procs</a></summary>
+    <summary><a class="reference reference-toplevel" href="#7" id="57">Types</a></summary>
     <ul class="simple simple-toc-section">
-      <ul class="simple nested-toc-section">$
-  <li><a class="reference" href="#%24%2CKapsisPath" title="`$`(x: KapsisPath): string">`$`(x: KapsisPath): string</a></li>
+      <li><a class="reference" href="#CmdArg" title="CmdArg = ref object
+  kind*: CmdLineKind
+  dataType*: CmdArgValueType ## The type of the argument, used for parsing and validation at runtime
+  name*: string              ## The name of the argument, used to reference it in the command's code block
+  description*: string       ## A description of the argument that will be shown in the help message
+  isOptional*: bool ## When an argument is optional, it means that the user
+                    ## doesn't have to provide it when executing the command">CmdArg</a></li>
+<li><a class="reference" href="#Command" title="Command = ref object
+  case
+  of cmdCommand:
+    description*: string     ## A description of the command that will be shown in the help message
+  else:
+    nil">Command</a></li>
+<li><a class="reference" href="#CommandType" title="CommandType = enum
+  cmdCommand, cmdGroup, cmdSeparator">CommandType</a></li>
+<li><a class="reference" href="#Kapsis" title="Kapsis = ref object
+  author*, version*, license*, description*: string">Kapsis</a></li>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
+    <summary><a class="reference reference-toplevel" href="#17" id="67">Macros</a></summary>
+    <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">initKapsis
+  <li><a class="reference" href="#initKapsis.m%2Cuntyped" title="initKapsis(stmtNodes: untyped)">initKapsis(stmtNodes: untyped)</a></li>
 
 </ul>
-<ul class="simple nested-toc-section">get
-  <li><a class="reference" href="#get%2CValues%2Cstring" title="get(values: Values; key: string): Value">get(values: Values; key: string): Value</a></li>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
+    <summary><a class="reference reference-toplevel" href="#18" id="68">Templates</a></summary>
+    <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">initApp
+  <li><a class="reference" href="#initApp.t%2Cuntyped" title="initApp(stmtNodes: untyped)">initApp(stmtNodes: untyped)</a></li>
 
 </ul>
-<ul class="simple nested-toc-section">has
-  <li><a class="reference" href="#has%2CValues%2Cstring" title="has(values: Values; key: string): bool">has(values: Values; key: string): bool</a></li>
+<ul class="simple nested-toc-section">initCLI
+  <li><a class="reference" href="#initCLI.t%2Cuntyped" title="initCLI(stmtNodes: untyped)">initCLI(stmtNodes: untyped)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">initCLIApplication
+  <li><a class="reference" href="#initCLIApplication.t%2Cuntyped" title="initCLIApplication(stmtNodes: untyped)">initCLIApplication(stmtNodes: untyped)</a></li>
 
 </ul>
 
@@ -89,41 +126,110 @@
     <div class="section" id="6">
   <h1><a class="toc-backref" href="#6">Imports</a></h1>
   <dl class="item">
-    <a class="reference external" href="interactive/prompts.html">interactive/prompts</a>, <a class="reference external" href="types.html">types</a>
+    <a class="reference external" href="types.html">types</a>, <a class="reference external" href="interactive/prompts.html">interactive/prompts</a>
   </dl>
 </div>
-<div class="section" id="12">
-  <h1><a class="toc-backref" href="#12">Procs</a></h1>
+<div class="section" id="7">
+  <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
-    <div id="$-procs-all">
-  <div id="$,KapsisPath">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%24%2CKapsisPath"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="types.html#KapsisPath"><span class="Identifier">KapsisPath</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+    <div id="CmdArg">
+  <dt><pre><a href="framework.html#CmdArg"><span class="Identifier">CmdArg</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Identifier">kind</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">CmdLineKind</span>
+  <span class="Identifier">dataType</span><span class="Operator">*</span><span class="Other">:</span> <a href="types.html#CmdArgValueType"><span class="Identifier">CmdArgValueType</span></a> <span class="Comment">## The type of the argument, used for parsing and validation at runtime</span>
+  <span class="Identifier">name</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>              <span class="Comment">## The name of the argument, used to reference it in the command's code block</span>
+  <span class="Identifier">description</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>       <span class="Comment">## A description of the argument that will be shown in the help message</span>
+  <span class="Identifier">isOptional</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Comment">## When an argument is optional, it means that the user</span>
+                    <span class="Comment">## doesn't have to provide it when executing the command</span></pre></dt>
   <dd>
     
-    Get stringified path from <tt class="docutils literal"><span class="pre"><span class="Identifier">KapsisPath</span></span></tt> object
+    The CmdArg object represents an argument of a command, it contains all the information about the argument, such as its name, type and whether it's optional or not, used for parsing and validation at runtime
+    
+  </dd>
+</div>
+<div id="Command">
+  <dt><pre><a href="framework.html#Command"><span class="Identifier">Command</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Keyword">case</span>
+  <span class="Keyword">of</span> <span class="Identifier">cmdCommand</span><span class="Other">:</span>
+    <span class="Identifier">description</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>     <span class="Comment">## A description of the command that will be shown in the help message</span>
+  <span class="Keyword">else</span><span class="Other">:</span>
+    <span class="Keyword">nil</span></pre></dt>
+  <dd>
+    
+    The Command object represents a command in the CLI application, it contains all the information about the command, such as its name, description, arguments and the code block that will be executed when the command is called.
+    
+  </dd>
+</div>
+<div id="CommandType">
+  <dt><pre><a href="framework.html#CommandType"><span class="Identifier">CommandType</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">cmdCommand</span><span class="Other">,</span> <span class="Identifier">cmdGroup</span><span class="Other">,</span> <span class="Identifier">cmdSeparator</span></pre></dt>
+  <dd>
+    
+    The type of the command, used for parsing and validation at runtime
+    
+  </dd>
+</div>
+<div id="Kapsis">
+  <dt><pre><a href="framework.html#Kapsis"><span class="Identifier">Kapsis</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Identifier">author</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">version</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">license</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">description</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+  </dl>
+</div>
+<div class="section" id="17">
+  <h1><a class="toc-backref" href="#17">Macros</a></h1>
+  <dl class="item">
+    <div id="initKapsis-macros-all">
+  <div id="initKapsis.m,untyped">
+  <dt><pre><span class="Keyword">macro</span> <a href="#initKapsis.m%2Cuntyped"><span class="Identifier">initKapsis</span></a><span class="Other">(</span><span class="Identifier">stmtNodes</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
+  <dd>
+    
+    <p>Initializes a Kapsis application by parsing the commands.</p>
+<p>Kapsis will try to collect metadata from the provided statements, if not provided it will try to collect it from the <tt class="docutils literal"><span class="pre"><span class="Operator">.</span><span class="Identifier">nimble</span></span></tt> file.</p>
+
     
   </dd>
 </div>
 
 </div>
-<div id="get-procs-all">
-  <div id="get,Values,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#get%2CValues%2Cstring"><span class="Identifier">get</span></a><span class="Other">(</span><span class="Identifier">values</span><span class="Other">:</span> <a href="types.html#Values"><span class="Identifier">Values</span></a><span class="Other">;</span> <span class="Identifier">key</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <a href="types.html#Value"><span class="Identifier">Value</span></a> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KeyError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+
+  </dl>
+</div>
+<div class="section" id="18">
+  <h1><a class="toc-backref" href="#18">Templates</a></h1>
+  <dl class="item">
+    <div id="initApp-templates-all">
+  <div id="initApp.t,untyped">
+  <dt><pre><span class="Keyword">template</span> <a href="#initApp.t%2Cuntyped"><span class="Identifier">initApp</span></a><span class="Other">(</span><span class="Identifier">stmtNodes</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
   <dd>
     
-    Retrieve a <tt class="docutils literal"><span class="pre"><span class="Identifier">Value</span></span></tt> from <tt class="docutils literal"><span class="pre"><span class="Identifier">values</span></span></tt> by <tt class="docutils literal"><span class="pre"><span class="Identifier">key</span></span></tt>
+    Alias for <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt>, you can use either <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt> or <tt class="docutils literal"><span class="pre"><span class="Identifier">initApp</span></span></tt> to initialize your Kapsis application
     
   </dd>
 </div>
 
 </div>
-<div id="has-procs-all">
-  <div id="has,Values,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#has%2CValues%2Cstring"><span class="Identifier">has</span></a><span class="Other">(</span><span class="Identifier">values</span><span class="Other">:</span> <a href="types.html#Values"><span class="Identifier">Values</span></a><span class="Other">;</span> <span class="Identifier">key</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="initCLI-templates-all">
+  <div id="initCLI.t,untyped">
+  <dt><pre><span class="Keyword">template</span> <a href="#initCLI.t%2Cuntyped"><span class="Identifier">initCLI</span></a><span class="Other">(</span><span class="Identifier">stmtNodes</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
   <dd>
     
-    Checks if <tt class="docutils literal"><span class="pre"><span class="Identifier">values</span></span></tt> contains an arg by <tt class="docutils literal"><span class="pre"><span class="Identifier">key</span></span></tt>
+    Alias for <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt>, you can use either <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt> or <tt class="docutils literal"><span class="pre"><span class="Identifier">initCLI</span></span></tt> to initialize your Kapsis application
+    
+  </dd>
+</div>
+
+</div>
+<div id="initCLIApplication-templates-all">
+  <div id="initCLIApplication.t,untyped">
+  <dt><pre><span class="Keyword">template</span> <a href="#initCLIApplication.t%2Cuntyped"><span class="Identifier">initCLIApplication</span></a><span class="Other">(</span><span class="Identifier">stmtNodes</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
+  <dd>
+    
+    Alias for <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt>, you can use either <tt class="docutils literal"><span class="pre"><span class="Identifier">initKapsis</span></span></tt> or <tt class="docutils literal"><span class="pre"><span class="Identifier">initCLIApplcation</span></span></tt> to initialize your Kapsis application
     
   </dd>
 </div>
