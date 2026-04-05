@@ -8,6 +8,9 @@ import ./kapsis/[framework, runtime]
 export framework, tables
 
 when isMainModule:
+  #
+  # Define your command handlers here
+  #
   proc helloCommand(v: Values) =
     echo v.get("pkgname").getStr
 
@@ -16,27 +19,32 @@ when isMainModule:
       echo v.get("greeting").getStr
     echo v.get("name").getStr
 
-  proc colorsRedCommand(v: Values) =
-    echo "Red color command, name: ", v.get("name").getStr
+  proc colorsOrangeCommand(v: Values) =
+    echo "The one that is orangely out of its head"
   
   proc colorsBlueCommand(v: Values) =
-    echo "Blue color command, name: ", v.get("name").getStr
+    echo "Now everyone loves the new blue / Cause it’s the truest"
 
-  when isMainModule:
-    initKapsis do:
-      commands do:
-        -- "Crazy stuff"
-        hello name.string, int(age), ?bool(verbose):
-          ## This is a comment
-        
-        -- "Another command"
-        greet name.string, ?string(greeting):
-          ## Another comment
+  proc colorsWhateverColorCommand(v: Values) =
+    echo "Whatever color command"
 
-        -- "Subcommand example"
-        colors:
-          ## Colors command with subcommands
-          red string(name):
-            ## Red color command
-          blue string(name):
-            ## Blue color command
+  #
+  # Init Kapsis with the defined commands
+  #
+  initKapsis do:
+    commands do:
+      -- "Crazy stuff"
+      hello name.string, int(age), ?bool(verbose):
+        ## Describe your command here
+      
+      -- "Another command"
+      greet name.string, ?string(greeting):
+        ## Greeting someone with an optional greeting message
+
+      -- "Colors by Ken Nordine"
+      colors:
+        ## Colors are cool, let's have some fun with them
+        blue bool(enable):
+          ## Blue was the bluest blue can be blue
+        orange bool(enable):
+          ## The silly old color who lives next to red

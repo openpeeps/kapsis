@@ -25,10 +25,10 @@ You can build modular CLIs with Kapsis via plugins, which are just dynamic libra
 The plugin-based architecture is very flexible and allows for a wide range of use cases, from simple command extensions to complex integrations with other tools and services.
 
 ```nim
-import kapsis
+init pkg/kapsis
 
 #
-# Command definitions
+# Define your command handlers here
 #
 proc helloCommand(v: Values) =
   echo v.get("pkgname").getStr
@@ -38,32 +38,35 @@ proc greetCommand(v: Values) =
     echo v.get("greeting").getStr
   echo v.get("name").getStr
 
-proc colorsRedCommand(v: Values) =
-  echo "Red color command, name: ", v.get("name").getStr
+proc colorsOrangeCommand(v: Values) =
+  echo "The one that is orangely out of its head"
 
 proc colorsBlueCommand(v: Values) =
-  echo "Blue color command, name: ", v.get("name").getStr
+  echo "Now everyone loves the new blue / Cause it’s the truest"
+
+proc colorsWhateverColorCommand(v: Values) =
+  echo "Whatever color command"
 
 #
-# Kapsis initialization
+# Init Kapsis with the defined commands
 #
 initKapsis do:
   commands do:
     -- "Crazy stuff"
     hello name.string, int(age), ?bool(verbose):
-      ## This is a comment
+      ## Describe your command here
     
     -- "Another command"
     greet name.string, ?string(greeting):
-      ## Another comment
+      ## Greeting someone with an optional greeting message
 
-    -- "Subcommand example"
+    -- "Colors by Ken Nordine"
     colors:
-      ## Colors command with subcommands
-      red string(name):
-        ## Red color command
-      blue string(name):
-        ## Blue color command
+      ## Colors are cool, let's have some fun with them
+      blue bool(enable):
+        ## Blue was the bluest blue can be blue
+      orange bool(enable):
+        ## The silly old color who lives next to red
 ```
 
 
