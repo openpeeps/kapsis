@@ -27,6 +27,26 @@ The plugin-based architecture is very flexible and allows for a wide range of us
 ```nim
 import kapsis
 
+#
+# Command definitions
+#
+proc helloCommand(v: Values) =
+  echo v.get("pkgname").getStr
+
+proc greetCommand(v: Values) =
+  if v.has("greeting"):
+    echo v.get("greeting").getStr
+  echo v.get("name").getStr
+
+proc colorsRedCommand(v: Values) =
+  echo "Red color command, name: ", v.get("name").getStr
+
+proc colorsBlueCommand(v: Values) =
+  echo "Blue color command, name: ", v.get("name").getStr
+
+#
+# Kapsis initialization
+#
 initKapsis do:
   commands do:
     -- "Crazy stuff"
@@ -39,9 +59,10 @@ initKapsis do:
 
     -- "Subcommand example"
     colors:
-      red:
+      ## Colors command with subcommands
+      red string(name):
         ## Red color command
-      blue:
+      blue string(name):
         ## Blue color command
 ```
 
