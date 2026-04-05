@@ -5,6 +5,7 @@
 #       https://github.com/openpeeps/kapsis
 
 import ./kapsis/[framework, runtime]
+import ./kapsis/interactive/prompts
 export framework, tables
 
 when isMainModule:
@@ -25,8 +26,10 @@ when isMainModule:
   proc colorsBlueCommand(v: Values) =
     echo "Now everyone loves the new blue / Cause it’s the truest"
 
-  proc colorsWhateverColorCommand(v: Values) =
-    echo "Whatever color command"
+  proc colorsAllCommand(v: Values) =
+    displayInfo "Colors is a spoken-word jazz album released in 1966 by voice-over and recording artist Ken Nordine"
+    if v.has("--sure"):
+      displaySuccess "Listen on YouTube 🔈 https://www.youtube.com/watch?v=66OkZGoI7Bk&list=PLG2Yb0-YL20c88ZRUl3YAhjLxTIbPql9u"
 
   #
   # Init Kapsis with the defined commands
@@ -48,3 +51,5 @@ when isMainModule:
           ## Blue was the bluest blue can be blue
         orange bool(enable):
           ## The silly old color who lives next to red
+        all ?bool("--sure"):
+          ## Get all the colors!
