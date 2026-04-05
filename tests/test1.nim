@@ -1,23 +1,12 @@
-import std/[unittest, strutils, os, osproc]
+# This is just an example to get you started. You may wish to put all of your
+# tests into a single file, or separate them into multiple `test1`, `test2`
+# etc. files (better names are recommended, just make sure the name starts with
+# the letter 't').
+#
+# To run these tests, simply execute `nimble test`.
 
-let binPath = getCurrentDir() / "bin" / "kapsis"
+import unittest
 
-test "can run":
-  check fileExists(binPath)
-  let o = execCmdEx(binPath)
-  check o.exitCode == 0
-
-test "can run command":
-  let o = execCmdEx(binPath & indent("new app", 1))
-  check(o.output.strip() == "Running new command with app option")
-  check o.exitCode == 0
-
-test "can run hello command":
-  let o = execCmdEx(binPath & indent("hello", 1))
-  check(o.output.strip() == "Hello")
-  check o.exitCode == 0
-
-test "can run hello.world command":
-  let o = execCmdEx(binPath & indent("hello.world", 1))
-  check(o.output.strip() == "Hello World!")
-  check o.exitCode == 0
+import kapsis2
+test "can add":
+  check add(5, 5) == 10
