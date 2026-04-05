@@ -8,22 +8,35 @@ import ./kapsis/[framework, runtime]
 export framework, tables
 
 when isMainModule:
-  proc installCommand(v: Values) =
+  proc helloCommand(v: Values) =
     echo v.get("pkgname").getStr
 
-  proc developCommand(v: Values) =
-    echo "Hello, World!"
+  proc greetCommand(v: Values) =
+    if v.has("greeting"):
+      echo v.get("greeting").getStr
+    echo v.get("name").getStr
 
-  proc buildCommand(v: Values) =
-    echo "Hello, World!"  
+  proc colorsRedCommand(v: Values) =
+    echo "Red color command, name: ", v.get("name").getStr
+  
+  proc colorsBlueCommand(v: Values) =
+    echo "Blue color command, name: ", v.get("name").getStr
 
   when isMainModule:
     initKapsis do:
-      commands:
-        -- "Package Manager"
-        install string(pkgname), string("-x"):
-          ## Installs a list of packages
-        develop string(pkgname), int(age), string("-x"):
-          ## Clones a list of packages for development. Adds them to a develop file if specified or
-        build bool(pkgname):
-          ## Builds a list of packages for development. Adds them to a develop file if specified or
+      commands do:
+        -- "Crazy stuff"
+        hello name.string, int(age), ?bool(verbose):
+          ## This is a comment
+        
+        -- "Another command"
+        greet name.string, ?string(greeting):
+          ## Another comment
+
+        -- "Subcommand example"
+        colors:
+          ## Colors command with subcommands
+          red string(name):
+            ## Red color command
+          blue string(name):
+            ## Blue color command
