@@ -158,11 +158,12 @@ proc preparePrintCommand(cmd: Command,
           add flags, arg.name & "\e[36m:" & $arg.dataType & "\e[0m"
       else: discard
     add output[^1][0], str
-    if not showFlags:
-      add output[^1][0], indent("⚑", 1)
-      inc cmdlen[^1], 2
-    else:
-      add output[^1][2], flags
+    if cmd.arguments.len > 0:
+      if not showFlags:
+        add output[^1][0], indent("⚑", 1)
+        inc cmdlen[^1], 2
+      else:
+        add output[^1][2], flags
     add output[^1][1], cmd.description
     
   of cmdSeparator:
