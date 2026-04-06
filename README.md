@@ -6,6 +6,8 @@
 - [x] Supports subcommands and nested subcommands
 - [x] Supports flags and options with or without values
 - [x] Detailed error messages for invalid input
+- [ ] Pluggable Commands via Shared libraries
+- [ ] Translatable Commands
 
 
 ## About
@@ -18,6 +20,9 @@ Kapsis can collect metadata from the provided statements, but if not provided it
 - `description`: A short description of the application, shown in the help message.
 - `license`: The license of the application, shown in the help message.
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/openpeeps/kapsis/main/.github/Screen Shot 2026-04-06 at 17.37.30.png" alt="Screenshot" width="75%">
+</p>
 
 ### Extensible API
 You can build modular CLIs with Kapsis via plugins, which are just dynamic libraries that can be loaded at runtime. This allows everyone to create and share their own plugins with commands that can be loaded into other Kapsis applications.
@@ -43,9 +48,6 @@ proc colorsOrangeCommand(v: Values) =
 
 proc colorsBlueCommand(v: Values) =
   echo "Now everyone loves the new blue / Cause it’s the truest"
-
-proc colorsWhateverColorCommand(v: Values) =
-  echo "Whatever color command"
 
 #
 # Init Kapsis with the defined commands
