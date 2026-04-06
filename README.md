@@ -25,7 +25,7 @@ You can build modular CLIs with Kapsis via plugins, which are just dynamic libra
 The plugin-based architecture is very flexible and allows for a wide range of use cases, from simple command extensions to complex integrations with other tools and services.
 
 ```nim
-init pkg/kapsis
+import pkg/kapsis
 
 #
 # Define your command handlers here
