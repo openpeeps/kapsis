@@ -21,7 +21,7 @@ Kapsis can collect metadata from the provided statements, but if not provided it
 - `license`: The license of the application, shown in the help message.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/openpeeps/kapsis/main/.github/Screen Shot 2026-04-06 at 17.37.30.png" alt="Screenshot" width="50%">
+<img src="https://raw.githubusercontent.com/openpeeps/kapsis/main/.github/Screen Shot 2026-04-06 at 17.37.30.png" alt="Screenshot" width="75%">
 </p>
 
 ### Extensible API
