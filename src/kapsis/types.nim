@@ -7,7 +7,7 @@
 import std/[times, json, uri, net, os, tables, strutils]
 
 import pkg/voodoo/setget
-import pkg/jsony
+import pkg/openparser/json
 
 export expandGetters
 
@@ -181,7 +181,7 @@ template collectValues*(values: var ValuesTable,
       try:
         let v: JsonNode = fromJson(val)
         values[argName] = Value(kt: ktJson, vJson: v)
-      except jsony.JsonError, ValueError: discard
+      except OpenParserJsonError, ValueError: discard
     of ktUrl:
       try:
         let v = uri.parseUri(val)
