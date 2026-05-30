@@ -8,8 +8,11 @@ import std/[macros, tables, strutils, os, json, sequtils,
           parseopt, options, times, macrocache,
           algorithm, wordwrap]
 
+import pkg/floof
+
 import ./types, ./interactive/prompts
 
+export options
 export tables, types, toSeq, CmdLineKind
 
 type
@@ -54,6 +57,10 @@ type
     author*, version*, license*, description*: string
       # Metadata fields for the application, used in the
       # help message and for informational purposes
+    defaultCommand*: Option[string]
+      # A one-shot command is a command that will be executed immediately
+      # when the application is run, without the user having to type it in,
+      # it's useful for running a specific command directly from the CLI
     commands: OrderedTableRef[string, Command]
       # A table of commands, where the key is the command name
       # and the value is the Command object
@@ -175,12 +182,16 @@ proc printUsage(app: Kapsis,
     showTypes = false,
     showFlags = false,
     someSomeCommand: Option[string] = none(string),
-    quitProcess = false) =
+    quitProcess = false,
+    searchTerm: Option[string] = none(string)) =
   # Prints the usage information for the Kapsis application,
   # including the list of commands and their descriptions.
   var output: seq[(string, string, seq[string])] # output lines
   var cmdlen: seq[int]
-  
+  var enableFuzzySearch = searchTerm.isSome()
+    # when `searchTerm` is provided, we enable fuzzy search for commands
+    # most probably the user is asking for help on a specific command 
+    # adn we want to show the most relevant commands at the top of the list
   if showExtras:
     add output, ("", "", @[])
     add output[0][0], "\e[90m" & app.description & "\n"
@@ -188,59 +199,58 @@ proc printUsage(app: Kapsis,
     add output[0][0], indent("\nBuild Version: " & app.version & "\e[0m", 2)
     add output, ("", "", @[])
 
+  var haystack: seq[string]
   if someSomeCommand.isSome():
-    # in case we're showing usage for a specific command
-    # for id, cmd in app.commands:
-    #   var args: seq[string]
-    #   for arg in cmd.arguments:
-    #     var argStr = ""
-    #     if arg.isOptional: argStr.add("?")
-    #     argStr.add(arg.name & ":" & $arg.dataType)
-    #     args.add(argStr)
-    #   output.add((cmd.name, cmd.description, args))
-    #   cmdlen.add(cmd.name.len)
     discard
   else:
     # otherwise show usage for all commands
     for id, cmd in app.commands:
       add output, ("", "", @[])
       add cmdlen, cmd.name.len
+      if cmd.kind == cmdCommand:
+        haystack.add(cmd.description)
       preparePrintCommand(cmd, output, cmdlen,
-          showTypes = showTypes, showFlags = showFlags)
-  var plain: string
+          showTypes = showTypes,
+          showFlags = showFlags)
+
   let orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
-  let longestCmd = orderedCmdLen[0] # get longest command length\
+  let longestCmd = orderedCmdLen[0] # get longest command length
+  var highlightIndexes: seq[int]
+  if searchTerm.isSome():
+    let results = floof.search(searchTerm.get(), haystack)
+    # for i, res in results:
+      # echo res
+      # highlightIndexes.add(i) # offset by header and label lines
+  # echo highlightIndexes
+  
   # Now print each command, padding so the comment aligns
   var i = 0
   for x in output:
+    var isHighlighted = false
     if x[1].len > 0:
-      # we need to calculate the necessary padding
-      # to align the comments, we know the longest command without
-      # ansii codes, so we can calculate the padding for each command
-      let cmdLineLen = stripAnsi(x[0]).len
-      var pad = longestCmd - cmdLineLen + 18 # +2 for spacing
+      let strippedCmd = stripAnsi(x[0])
+      var pad = longestCmd - strippedCmd.len + 18
       if showTypes:
         pad -= 2
+      elif x[0].contains("⚑"):
+        pad += 2
       let wrapped = wrapWords(x[1], 60)
       let lines = wrapped.splitLines
       for j, line in lines:
         if j == 0:
-          display(x[0] & repeat(" ", pad) & "\e[90m" & line & "\e[0m")
+          let prefix = if isHighlighted: "\e[43;30m" else: "" # yellow bg, black fg
+          let suffix = if isHighlighted: "\e[0m" else: ""
+          display(prefix & x[0] & repeat(" ", pad) & "\e[90m" & line & "\e[0m" & suffix)
         else:
           display(repeat(" ", longestCmd + 16) & "\e[90m" & line & "\e[0m")
       inc i
     else:
       display(x[0])
     if x[2].len > 0 and showExtras:
-      var maxFlagLen = 1
-      for flag in x[2]:
-        let flagLen = stripAnsi(flag).len
-        if flagLen > maxFlagLen:
-          maxFlagLen = flagLen
-      # Print each flag, right-aligned
-      for flag in x[2]:
-        let flagLen = stripAnsi(flag).len
-        let pad = maxFlagLen - flagLen
+      var flagLens = x[2].mapIt(stripAnsi(it).len)
+      let maxFlagLen = flagLens.max
+      for idx, flag in x[2]:
+        let pad = maxFlagLen - flagLens[idx]
         display(repeat(' ', pad) & flag, 8)
   if quitProcess: quit(0)
 
@@ -367,13 +377,25 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
 proc parseCommandInput(app: Kapsis) =
   # Parses the command line arguments and executes the corresponding command
   var p = quoteShellCommand(commandLineParams()).initOptParser
-  let userInput = p.getopt.toSeq()
+  var userInput = p.getopt.toSeq()
   if userInput.len > 0 == false:
     printUsage(app, showTypes = false, quitProcess = true)
   let input = userInput[0]
   if input.kind == cmdArgument:
+    var hasCmd: bool
+    var reqCmd: string
+    
     if likely(app.commands.hasKey(input.key)):
-      let cmd = app.commands[input.key]
+      hasCmd = true
+      reqCmd = input.key
+    elif app.defaultCommand.isSome():
+      # insert the default command at the beginning of the user input
+      hasCmd = true
+      reqCmd = app.defaultCommand.get()
+      userInput.insert((cmdArgument, reqCmd, ""), 0)
+
+    if hasCmd:
+      let cmd = app.commands[reqCmd]
       var i = 1
       var posArgIdx = 0
       var values = ValuesTable()
@@ -437,16 +459,20 @@ proc parseCommandInput(app: Kapsis) =
       # callback and pass the collected values to it
       cmd.callback(addr values)
     else:
-      # if the default command is defined, execute it with the user's 
-      # input as arguments
       displayError("Unknown command: " & input.key)
   else:
     # usually this means the user is asking for `-h or --help`, `-v or --version`
     if likely(input.kind == cmdShortOption or input.kind == cmdLongOption):
       if input.key == "h" or input.key == "help":
         # show everything in the help message, including argument types and flags
+        let fuzzyInput = 
+          if input.val.len > 0:
+            some(input.val)
+          else:
+            none(string)
         printUsage(app, showExtras = true, showTypes = true,
-                    showFlags = true, quitProcess = true)
+                    showFlags = true, quitProcess = true,
+                    searchTerm = fuzzyInput)
       elif input.key == "v" or input.key == "version":
         display(app.version)
       else:
@@ -461,6 +487,18 @@ macro initKapsis*(stmtNodes: untyped) =
   ## it will try to collect it from the `.nimble` file.
   var appNode = nnkObjConstr.newTree(ident"Kapsis")
   appNode.collectMetadata(stmtNodes)
+
+  for stmtNode in stmtNodes[0..^2]:
+    case stmtNode.kind
+    of nnkCall:
+      if stmtNode[0].eqIdent"defaultCommand":
+        if stmtNode.len != 2 or stmtNode[1][0].kind != nnkStrLit:
+          error("Invalid defaultCommand definition", stmtNode)
+        appNode.add(nnkExprColonExpr.newTree(
+          ident"defaultCommand", newCall(ident"some", stmtNode[1][0])))
+      else:
+        error("Unknown statement in initKapsis: " & $stmtNode[0], stmtNode)
+    else: discard
   
   # parse commands, the `commands` nnkCall should be the
   # last node inside the `stmtNodes` block
