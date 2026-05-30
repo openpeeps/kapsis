@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>src/kapsis/interactive/spinny</title>
+<title>kapsis/interactive/spinny</title>
 
 <!-- Google fonts -->
 <link href='https://fonts.googleapis.com/css?family=Lato:400,600,900' rel='stylesheet' type='text/css'/>
@@ -16,15 +16,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="../../nimdoc.out.css?v=2.2.8">
+<link rel="stylesheet" type="text/css" href="../../nimdoc.out.css?v=2.2.10">
 
 <!-- JS -->
-<script type="text/javascript" src="../../dochack.js?v=2.2.8"></script>
+<script type="text/javascript" src="../../dochack.js?v=2.2.10"></script>
 </head>
 <body>
   <div class="document" id="documentId">
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" id="nav-burger">&#9776;</label>
+    <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
-      <h1 class="title">src/kapsis/interactive/spinny</h1>
+      <h1 class="title">kapsis/interactive/spinny</h1>
       <div class="row">
   <div class="three columns">
     <div class="theme-select-wrapper">
@@ -126,7 +129,7 @@
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="Spinny">
-  <dt><pre><a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span></pre></dt>
+  <dt><pre><a href="#Spinny"><span class="Identifier">Spinny</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span></pre></dt>
   <dd>
     
     
@@ -141,7 +144,7 @@
   <dl class="item">
     <div id="error-procs-all">
   <div id="error,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#error%2CSpinny%2Cstring"><span class="Identifier">error</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#error%2CSpinny%2Cstring"><span class="Identifier">error</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -152,7 +155,7 @@
 </div>
 <div id="newSpinny-procs-all">
   <div id="newSpinny,string,Spinner">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinny%2Cstring%2CSpinner"><span class="Identifier">newSpinny</span></a><span class="Other">(</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a><span class="Other">;</span> <span class="Identifier">time</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinny%2Cstring%2CSpinner"><span class="Identifier">newSpinny</span></a><span class="Other">(</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a><span class="Other">;</span> <span class="Identifier">time</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -164,7 +167,7 @@
 </div>
 <div id="setSymbol-procs-all">
   <div id="setSymbol,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbol%2CSpinny%2Cstring"><span class="Identifier">setSymbol</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">symbol</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbol%2CSpinny%2Cstring"><span class="Identifier">setSymbol</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">symbol</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -176,7 +179,7 @@
 </div>
 <div id="setSymbolColor-procs-all">
   <div id="setSymbolColor,Spinny,proc(string)">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbolColor%2CSpinny%2Cproc%28string%29"><span class="Identifier">setSymbolColor</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">color</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbolColor%2CSpinny%2Cproc%28string%29"><span class="Identifier">setSymbolColor</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">color</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -188,7 +191,7 @@
 </div>
 <div id="setText-procs-all">
   <div id="setText,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setText%2CSpinny%2Cstring"><span class="Identifier">setText</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#setText%2CSpinny%2Cstring"><span class="Identifier">setText</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -199,7 +202,7 @@
 </div>
 <div id="start-procs-all">
   <div id="start,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#start%2CSpinny"><span class="Identifier">start</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">ResourceExhaustedError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#start%2CSpinny"><span class="Identifier">start</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">ResourceExhaustedError</span><span class="Other">]</span><span class="Other">,</span>
                              <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -211,7 +214,7 @@
 </div>
 <div id="stop-procs-all">
   <div id="stop,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#stop%2CSpinny"><span class="Identifier">stop</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#stop%2CSpinny"><span class="Identifier">stop</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -222,7 +225,7 @@
 </div>
 <div id="success-procs-all">
   <div id="success,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -230,7 +233,7 @@
   </dd>
 </div>
 <div id="success,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny%2Cstring"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="spinny.html#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny%2Cstring"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -255,7 +258,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-15 04:29:09 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-05-30 09:24:17 UTC</small>
       </div>
     </div>
   </div>

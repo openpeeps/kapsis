@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>src/kapsis/interactive/spinny/spinners</title>
+<title>kapsis/interactive/spinny/spinners</title>
 
 <!-- Google fonts -->
 <link href='https://fonts.googleapis.com/css?family=Lato:400,600,900' rel='stylesheet' type='text/css'/>
@@ -16,15 +16,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="../../../nimdoc.out.css?v=2.2.8">
+<link rel="stylesheet" type="text/css" href="../../../nimdoc.out.css?v=2.2.10">
 
 <!-- JS -->
-<script type="text/javascript" src="../../../dochack.js?v=2.2.8"></script>
+<script type="text/javascript" src="../../../dochack.js?v=2.2.10"></script>
 </head>
 <body>
   <div class="document" id="documentId">
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" id="nav-burger">&#9776;</label>
+    <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
-      <h1 class="title">src/kapsis/interactive/spinny/spinners</h1>
+      <h1 class="title">kapsis/interactive/spinny/spinners</h1>
       <div class="row">
   <div class="three columns">
     <div class="theme-select-wrapper">
@@ -309,7 +312,7 @@
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="Spinner">
-  <dt><pre><a href="spinners.html#Spinner"><span class="Identifier">Spinner</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#Spinner"><span class="Identifier">Spinner</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">interval</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">int</span>
   <span class="Identifier">frames</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span></pre></dt>
   <dd>
@@ -325,7 +328,7 @@
   <h1><a class="toc-backref" href="#10">Consts</a></h1>
   <dl class="item">
     <div id="skArc">
-  <dt><pre><a href="spinners.html#skArc"><span class="Identifier">skArc</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◜&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◝&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◞&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◡&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◟&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skArc"><span class="Identifier">skArc</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◜&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◝&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◞&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◡&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◟&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -333,7 +336,7 @@
   </dd>
 </div>
 <div id="skArrow">
-  <dt><pre><a href="spinners.html#skArrow"><span class="Identifier">skArrow</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
+  <dt><pre><a href="#skArrow"><span class="Identifier">skArrow</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
            <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;←&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↑&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↗&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;→&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↘&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↙&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -342,7 +345,7 @@
   </dd>
 </div>
 <div id="skArrow2">
-  <dt><pre><a href="spinners.html#skArrow2"><span class="Identifier">skArrow2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⬆️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↗️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;➡️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↘️ &quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skArrow2"><span class="Identifier">skArrow2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⬆️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↗️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;➡️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↘️ &quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;⬇️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↙️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⬅️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;↖️ &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -351,7 +354,7 @@
   </dd>
 </div>
 <div id="skArrow3">
-  <dt><pre><a href="spinners.html#skArrow3"><span class="Identifier">skArrow3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▹▹▹▹▹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▸▹▹▹▹&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skArrow3"><span class="Identifier">skArrow3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▹▹▹▹▹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▸▹▹▹▹&quot;</span><span class="Other">,</span>
                                     <span class="StringLit">&quot;▹▸▹▹▹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▹▹▸▹▹&quot;</span><span class="Other">,</span>
                                     <span class="StringLit">&quot;▹▹▹▸▹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▹▹▹▹▸&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -361,7 +364,7 @@
   </dd>
 </div>
 <div id="skBalloon">
-  <dt><pre><a href="spinners.html#skBalloon"><span class="Identifier">skBalloon</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">140</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot; &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;@&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">,</span> <span class="StringLit">&quot; &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skBalloon"><span class="Identifier">skBalloon</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">140</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot; &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;@&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">,</span> <span class="StringLit">&quot; &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -369,7 +372,7 @@
   </dd>
 </div>
 <div id="skBalloon2">
-  <dt><pre><a href="spinners.html#skBalloon2"><span class="Identifier">skBalloon2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;.&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;°&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skBalloon2"><span class="Identifier">skBalloon2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;.&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;°&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;O&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;o&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -377,7 +380,7 @@
   </dd>
 </div>
 <div id="skBetaWave">
-  <dt><pre><a href="spinners.html#skBetaWave"><span class="Identifier">skBetaWave</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;ρββββββ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;βρβββββ&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skBetaWave"><span class="Identifier">skBetaWave</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;ρββββββ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;βρβββββ&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;ββρββββ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;βββρβββ&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;ββββρββ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;βββββρβ&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;ββββββρ&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
@@ -388,7 +391,7 @@
   </dd>
 </div>
 <div id="skBounce">
-  <dt><pre><a href="spinners.html#skBounce"><span class="Identifier">skBounce</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skBounce"><span class="Identifier">skBounce</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -396,7 +399,7 @@
   </dd>
 </div>
 <div id="skBouncingBall">
-  <dt><pre><a href="spinners.html#skBouncingBall"><span class="Identifier">skBouncingBall</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;( ●    )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(  ●   )&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skBouncingBall"><span class="Identifier">skBouncingBall</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;( ●    )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(  ●   )&quot;</span><span class="Other">,</span>
     <span class="StringLit">&quot;(   ●  )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(    ● )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(     ●)&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(    ● )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(   ●  )&quot;</span><span class="Other">,</span>
     <span class="StringLit">&quot;(  ●   )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;( ●    )&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;(●     )&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -406,7 +409,7 @@
   </dd>
 </div>
 <div id="skBouncingBar">
-  <dt><pre><a href="spinners.html#skBouncingBar"><span class="Identifier">skBouncingBar</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;[    ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[=   ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[==  ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[=== ]&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skBouncingBar"><span class="Identifier">skBouncingBar</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;[    ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[=   ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[==  ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[=== ]&quot;</span><span class="Other">,</span>
                                         <span class="StringLit">&quot;[ ===]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[  ==]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[   =]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[    ]&quot;</span><span class="Other">,</span>
                                         <span class="StringLit">&quot;[   =]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[  ==]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[ ===]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[====]&quot;</span><span class="Other">,</span>
                                         <span class="StringLit">&quot;[=== ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[==  ]&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;[=   ]&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
@@ -417,7 +420,7 @@
   </dd>
 </div>
 <div id="skBoxBounce">
-  <dt><pre><a href="spinners.html#skBoxBounce"><span class="Identifier">skBoxBounce</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▘&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▝&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▗&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skBoxBounce"><span class="Identifier">skBoxBounce</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▘&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▝&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▗&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -425,7 +428,7 @@
   </dd>
 </div>
 <div id="skBoxBounce2">
-  <dt><pre><a href="spinners.html#skBoxBounce2"><span class="Identifier">skBoxBounce2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▄&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skBoxBounce2"><span class="Identifier">skBoxBounce2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▄&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -433,7 +436,7 @@
   </dd>
 </div>
 <div id="skChristmas">
-  <dt><pre><a href="spinners.html#skChristmas"><span class="Identifier">skChristmas</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">400</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🎄&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skChristmas"><span class="Identifier">skChristmas</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">400</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🎄&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -441,7 +444,7 @@
   </dd>
 </div>
 <div id="skCircle">
-  <dt><pre><a href="spinners.html#skCircle"><span class="Identifier">skCircle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◡&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⊙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◠&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skCircle"><span class="Identifier">skCircle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◡&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⊙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◠&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -449,7 +452,7 @@
   </dd>
 </div>
 <div id="skCircleHalves">
-  <dt><pre><a href="spinners.html#skCircleHalves"><span class="Identifier">skCircleHalves</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◑&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◒&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skCircleHalves"><span class="Identifier">skCircleHalves</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◑&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◒&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -457,7 +460,7 @@
   </dd>
 </div>
 <div id="skCircleQuarters">
-  <dt><pre><a href="spinners.html#skCircleQuarters"><span class="Identifier">skCircleQuarters</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◷&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◵&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skCircleQuarters"><span class="Identifier">skCircleQuarters</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◷&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◵&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -465,7 +468,7 @@
   </dd>
 </div>
 <div id="skClock">
-  <dt><pre><a href="spinners.html#skClock"><span class="Identifier">skClock</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🕛 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕐 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕑 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕒 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕓 &quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skClock"><span class="Identifier">skClock</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🕛 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕐 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕑 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕒 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕓 &quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;🕔 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕕 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕖 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕗 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕘 &quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;🕙 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🕚 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -475,7 +478,7 @@
   </dd>
 </div>
 <div id="skDots">
-  <dt><pre><a href="spinners.html#skDots"><span class="Identifier">skDots</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠼&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots"><span class="Identifier">skDots</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠼&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠧&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠏&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -484,7 +487,7 @@
   </dd>
 </div>
 <div id="skDots2">
-  <dt><pre><a href="spinners.html#skDots2"><span class="Identifier">skDots2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots2"><span class="Identifier">skDots2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
            <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⣾&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣽&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣻&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢿&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡿&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣟&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣯&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣷&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -493,7 +496,7 @@
   </dd>
 </div>
 <div id="skDots3">
-  <dt><pre><a href="spinners.html#skDots3"><span class="Identifier">skDots3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠞&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots3"><span class="Identifier">skDots3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠞&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠳&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠓&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -502,7 +505,7 @@
   </dd>
 </div>
 <div id="skDots4">
-  <dt><pre><a href="spinners.html#skDots4"><span class="Identifier">skDots4</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠆&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠸&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots4"><span class="Identifier">skDots4</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠆&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠸&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠰&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠰&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠆&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -512,7 +515,7 @@
   </dd>
 </div>
 <div id="skDots5">
-  <dt><pre><a href="spinners.html#skDots5"><span class="Identifier">skDots5</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots5"><span class="Identifier">skDots5</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -522,7 +525,7 @@
   </dd>
 </div>
 <div id="skDots6">
-  <dt><pre><a href="spinners.html#skDots6"><span class="Identifier">skDots6</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots6"><span class="Identifier">skDots6</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠁&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
@@ -533,7 +536,7 @@
   </dd>
 </div>
 <div id="skDots7">
-  <dt><pre><a href="spinners.html#skDots7"><span class="Identifier">skDots7</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠈&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots7"><span class="Identifier">skDots7</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠈&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠈&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
@@ -544,7 +547,7 @@
   </dd>
 </div>
 <div id="skDots8">
-  <dt><pre><a href="spinners.html#skDots8"><span class="Identifier">skDots8</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots8"><span class="Identifier">skDots8</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠚&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠤&quot;</span><span class="Other">,</span>
                                   <span class="StringLit">&quot;⠦&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠖&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠒&quot;</span><span class="Other">,</span>
@@ -556,7 +559,7 @@
   </dd>
 </div>
 <div id="skDots8Bit">
-  <dt><pre><a href="spinners.html#skDots8Bit"><span class="Identifier">skDots8Bit</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠃&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠅&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots8Bit"><span class="Identifier">skDots8Bit</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠃&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠅&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;⠆&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡃&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;⡄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡅&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡆&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠈&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠉&quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;⠊&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠎&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠏&quot;</span><span class="Other">,</span>
@@ -606,7 +609,7 @@
   </dd>
 </div>
 <div id="skDots9">
-  <dt><pre><a href="spinners.html#skDots9"><span class="Identifier">skDots9</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots9"><span class="Identifier">skDots9</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
            <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⢹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢺&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢼&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⣇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡧&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡗&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡏&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -615,7 +618,7 @@
   </dd>
 </div>
 <div id="skDots10">
-  <dt><pre><a href="spinners.html#skDots10"><span class="Identifier">skDots10</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots10"><span class="Identifier">skDots10</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span>
             <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⢄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡈&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡠&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -624,7 +627,7 @@
   </dd>
 </div>
 <div id="skDots11">
-  <dt><pre><a href="spinners.html#skDots11"><span class="Identifier">skDots11</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots11"><span class="Identifier">skDots11</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
             <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠠&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠐&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠈&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -633,7 +636,7 @@
   </dd>
 </div>
 <div id="skDots12">
-  <dt><pre><a href="spinners.html#skDots12"><span class="Identifier">skDots12</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⢀⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡀⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢂⠀&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skDots12"><span class="Identifier">skDots12</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⢀⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡀⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠄⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢂⠀&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;⡂⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠅⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢃⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡃⠀&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;⠍⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⢋⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡋⠀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠍⠁&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;⢋⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⡋⠁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠍⠉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⠋⠉&quot;</span><span class="Other">,</span>
@@ -654,7 +657,7 @@
   </dd>
 </div>
 <div id="skDqpb">
-  <dt><pre><a href="spinners.html#skDqpb"><span class="Identifier">skDqpb</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;d&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;q&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;p&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;b&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skDqpb"><span class="Identifier">skDqpb</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;d&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;q&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;p&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;b&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -662,7 +665,7 @@
   </dd>
 </div>
 <div id="skEarth">
-  <dt><pre><a href="spinners.html#skEarth"><span class="Identifier">skEarth</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">180</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌍 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌎 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌏 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skEarth"><span class="Identifier">skEarth</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">180</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌍 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌎 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌏 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -670,7 +673,7 @@
   </dd>
 </div>
 <div id="skFlip">
-  <dt><pre><a href="spinners.html#skFlip"><span class="Identifier">skFlip</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">70</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;`&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;`&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;\'&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;´&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skFlip"><span class="Identifier">skFlip</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">70</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;`&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;`&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;\'&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;´&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;_&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -679,7 +682,7 @@
   </dd>
 </div>
 <div id="skGrenade">
-  <dt><pre><a href="spinners.html#skGrenade"><span class="Identifier">skGrenade</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;،   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;′   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ´ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ‾ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  ⸌&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skGrenade"><span class="Identifier">skGrenade</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;،   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;′   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ´ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ‾ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  ⸌&quot;</span><span class="Other">,</span>
                                     <span class="StringLit">&quot;  ⸊&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  |&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  ⁎&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  ⁕&quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ෴ &quot;</span><span class="Other">,</span>
                                     <span class="StringLit">&quot;  ⁓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
@@ -689,7 +692,7 @@
   </dd>
 </div>
 <div id="skGrowHorizontal">
-  <dt><pre><a href="spinners.html#skGrowHorizontal"><span class="Identifier">skGrowHorizontal</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▏&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▎&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▋&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skGrowHorizontal"><span class="Identifier">skGrowHorizontal</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▏&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▎&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▋&quot;</span><span class="Other">,</span>
     <span class="StringLit">&quot;▊&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▊&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▋&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▎&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -698,7 +701,7 @@
   </dd>
 </div>
 <div id="skGrowVertical">
-  <dt><pre><a href="spinners.html#skGrowVertical"><span class="Identifier">skGrowVertical</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▃&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▅&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▆&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skGrowVertical"><span class="Identifier">skGrowVertical</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▁&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▃&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▅&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▆&quot;</span><span class="Other">,</span>
     <span class="StringLit">&quot;▇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▆&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▅&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▄&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▃&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -707,7 +710,7 @@
   </dd>
 </div>
 <div id="skHamburger">
-  <dt><pre><a href="spinners.html#skHamburger"><span class="Identifier">skHamburger</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☱&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☴&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skHamburger"><span class="Identifier">skHamburger</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☱&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☴&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -715,7 +718,7 @@
   </dd>
 </div>
 <div id="skHearts">
-  <dt><pre><a href="spinners.html#skHearts"><span class="Identifier">skHearts</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
+  <dt><pre><a href="#skHearts"><span class="Identifier">skHearts</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
             <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;💛 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;💙 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;💜 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;💚 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;❤️ &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -724,7 +727,7 @@
   </dd>
 </div>
 <div id="skLayer">
-  <dt><pre><a href="spinners.html#skLayer"><span class="Identifier">skLayer</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">150</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;=&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;≡&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skLayer"><span class="Identifier">skLayer</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">150</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;=&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;≡&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -732,7 +735,7 @@
   </dd>
 </div>
 <div id="skLine">
-  <dt><pre><a href="spinners.html#skLine"><span class="Identifier">skLine</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">130</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;\\&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;|&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;/&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skLine"><span class="Identifier">skLine</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">130</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;\\&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;|&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;/&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -740,7 +743,7 @@
   </dd>
 </div>
 <div id="skLine2">
-  <dt><pre><a href="spinners.html#skLine2"><span class="Identifier">skLine2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;–&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;—&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;–&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skLine2"><span class="Identifier">skLine2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⠂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;–&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;—&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;–&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -748,7 +751,7 @@
   </dd>
 </div>
 <div id="skMonkey">
-  <dt><pre><a href="spinners.html#skMonkey"><span class="Identifier">skMonkey</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">300</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🙈 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙈 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙉 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙊 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skMonkey"><span class="Identifier">skMonkey</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">300</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🙈 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙈 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙉 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🙊 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -756,7 +759,7 @@
   </dd>
 </div>
 <div id="skMoon">
-  <dt><pre><a href="spinners.html#skMoon"><span class="Identifier">skMoon</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌑 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌒 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌓 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌔 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌕 &quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skMoon"><span class="Identifier">skMoon</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🌑 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌒 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌓 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌔 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌕 &quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;🌖 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌗 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌘 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -765,7 +768,7 @@
   </dd>
 </div>
 <div id="skNoise">
-  <dt><pre><a href="spinners.html#skNoise"><span class="Identifier">skNoise</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;░&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skNoise"><span class="Identifier">skNoise</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▓&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▒&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;░&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -773,7 +776,7 @@
   </dd>
 </div>
 <div id="skPipe">
-  <dt><pre><a href="spinners.html#skPipe"><span class="Identifier">skPipe</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
+  <dt><pre><a href="#skPipe"><span class="Identifier">skPipe</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span>
           <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;┤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;┘&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;┴&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;└&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;├&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;┌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;┬&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;┐&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -782,7 +785,7 @@
   </dd>
 </div>
 <div id="skPoint">
-  <dt><pre><a href="spinners.html#skPoint"><span class="Identifier">skPoint</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">125</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;∙∙∙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;●∙∙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;∙●∙&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skPoint"><span class="Identifier">skPoint</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">125</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;∙∙∙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;●∙∙&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;∙●∙&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;∙∙●&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;∙∙∙&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -791,7 +794,7 @@
   </dd>
 </div>
 <div id="skPong">
-  <dt><pre><a href="spinners.html#skPong"><span class="Identifier">skPong</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▐⠂       ▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐⠈       ▌&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skPong"><span class="Identifier">skPong</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▐⠂       ▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐⠈       ▌&quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;▐ ⠂      ▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐ ⠠      ▌&quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;▐  ⡀     ▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐  ⠠     ▌&quot;</span><span class="Other">,</span>
                                  <span class="StringLit">&quot;▐   ⠂    ▌&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▐   ⠈    ▌&quot;</span><span class="Other">,</span>
@@ -813,7 +816,7 @@
   </dd>
 </div>
 <div id="skRunner">
-  <dt><pre><a href="spinners.html#skRunner"><span class="Identifier">skRunner</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">140</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🚶 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🏃 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skRunner"><span class="Identifier">skRunner</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">140</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;🚶 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🏃 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -821,7 +824,7 @@
   </dd>
 </div>
 <div id="skShark">
-  <dt><pre><a href="spinners.html#skShark"><span class="Identifier">skShark</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▐|\\____________▌&quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skShark"><span class="Identifier">skShark</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▐|\\____________▌&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;▐_|\\___________▌&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;▐__|\\__________▌&quot;</span><span class="Other">,</span>
                                    <span class="StringLit">&quot;▐___|\\_________▌&quot;</span><span class="Other">,</span>
@@ -854,7 +857,7 @@
   </dd>
 </div>
 <div id="skSimpleDots">
-  <dt><pre><a href="spinners.html#skSimpleDots"><span class="Identifier">skSimpleDots</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">400</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;.  &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.. &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;...&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skSimpleDots"><span class="Identifier">skSimpleDots</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">400</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;.  &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.. &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;...&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -862,7 +865,7 @@
   </dd>
 </div>
 <div id="skSimpleDotsScrolling">
-  <dt><pre><a href="spinners.html#skSimpleDotsScrolling"><span class="Identifier">skSimpleDotsScrolling</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">200</span><span class="Other">,</span>
+  <dt><pre><a href="#skSimpleDotsScrolling"><span class="Identifier">skSimpleDotsScrolling</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">200</span><span class="Other">,</span>
                          <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;.  &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;.. &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;...&quot;</span><span class="Other">,</span> <span class="StringLit">&quot; ..&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;  .&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;   &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
@@ -871,7 +874,7 @@
   </dd>
 </div>
 <div id="skSmiley">
-  <dt><pre><a href="spinners.html#skSmiley"><span class="Identifier">skSmiley</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">200</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;😄 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;😝 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skSmiley"><span class="Identifier">skSmiley</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">200</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;😄 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;😝 &quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -879,7 +882,7 @@
   </dd>
 </div>
 <div id="skSquareCorners">
-  <dt><pre><a href="spinners.html#skSquareCorners"><span class="Identifier">skSquareCorners</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">180</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◰&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◳&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◱&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skSquareCorners"><span class="Identifier">skSquareCorners</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">180</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◰&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◳&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◲&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◱&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -887,7 +890,7 @@
   </dd>
 </div>
 <div id="skSquish">
-  <dt><pre><a href="spinners.html#skSquish"><span class="Identifier">skSquish</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;╫&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;╪&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skSquish"><span class="Identifier">skSquish</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;╫&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;╪&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -895,7 +898,7 @@
   </dd>
 </div>
 <div id="skStar">
-  <dt><pre><a href="spinners.html#skStar"><span class="Identifier">skStar</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">70</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;✶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✺&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✷&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skStar"><span class="Identifier">skStar</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">70</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;✶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✸&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✺&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✹&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;✷&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -903,7 +906,7 @@
   </dd>
 </div>
 <div id="skStar2">
-  <dt><pre><a href="spinners.html#skStar2"><span class="Identifier">skStar2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;+&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;x&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skStar2"><span class="Identifier">skStar2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;+&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;x&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -911,7 +914,7 @@
   </dd>
 </div>
 <div id="skToggle">
-  <dt><pre><a href="spinners.html#skToggle"><span class="Identifier">skToggle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">250</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⊶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⊷&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle"><span class="Identifier">skToggle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">250</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⊶&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⊷&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -919,7 +922,7 @@
   </dd>
 </div>
 <div id="skToggle2">
-  <dt><pre><a href="spinners.html#skToggle2"><span class="Identifier">skToggle2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▫&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▪&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle2"><span class="Identifier">skToggle2</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▫&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▪&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -927,7 +930,7 @@
   </dd>
 </div>
 <div id="skToggle3">
-  <dt><pre><a href="spinners.html#skToggle3"><span class="Identifier">skToggle3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;□&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;■&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle3"><span class="Identifier">skToggle3</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;□&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;■&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -935,7 +938,7 @@
   </dd>
 </div>
 <div id="skToggle4">
-  <dt><pre><a href="spinners.html#skToggle4"><span class="Identifier">skToggle4</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;■&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;□&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▪&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▫&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle4"><span class="Identifier">skToggle4</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;■&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;□&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▪&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▫&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -943,7 +946,7 @@
   </dd>
 </div>
 <div id="skToggle5">
-  <dt><pre><a href="spinners.html#skToggle5"><span class="Identifier">skToggle5</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▮&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▯&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle5"><span class="Identifier">skToggle5</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;▮&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;▯&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -951,7 +954,7 @@
   </dd>
 </div>
 <div id="skToggle6">
-  <dt><pre><a href="spinners.html#skToggle6"><span class="Identifier">skToggle6</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">300</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;ဝ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;၀&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle6"><span class="Identifier">skToggle6</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">300</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;ဝ&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;၀&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -959,7 +962,7 @@
   </dd>
 </div>
 <div id="skToggle7">
-  <dt><pre><a href="spinners.html#skToggle7"><span class="Identifier">skToggle7</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⦾&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⦿&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle7"><span class="Identifier">skToggle7</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⦾&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⦿&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -967,7 +970,7 @@
   </dd>
 </div>
 <div id="skToggle8">
-  <dt><pre><a href="spinners.html#skToggle8"><span class="Identifier">skToggle8</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◌&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle8"><span class="Identifier">skToggle8</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◍&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◌&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -975,7 +978,7 @@
   </dd>
 </div>
 <div id="skToggle9">
-  <dt><pre><a href="spinners.html#skToggle9"><span class="Identifier">skToggle9</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◎&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle9"><span class="Identifier">skToggle9</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◉&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◎&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -983,7 +986,7 @@
   </dd>
 </div>
 <div id="skToggle10">
-  <dt><pre><a href="spinners.html#skToggle10"><span class="Identifier">skToggle10</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;㊂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;㊀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;㊁&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle10"><span class="Identifier">skToggle10</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;㊂&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;㊀&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;㊁&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -991,7 +994,7 @@
   </dd>
 </div>
 <div id="skToggle11">
-  <dt><pre><a href="spinners.html#skToggle11"><span class="Identifier">skToggle11</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⧇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⧆&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle11"><span class="Identifier">skToggle11</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;⧇&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⧆&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -999,7 +1002,7 @@
   </dd>
 </div>
 <div id="skToggle12">
-  <dt><pre><a href="spinners.html#skToggle12"><span class="Identifier">skToggle12</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☗&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☖&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle12"><span class="Identifier">skToggle12</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">120</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☗&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☖&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -1007,7 +1010,7 @@
   </dd>
 </div>
 <div id="skToggle13">
-  <dt><pre><a href="spinners.html#skToggle13"><span class="Identifier">skToggle13</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;=&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skToggle13"><span class="Identifier">skToggle13</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">80</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;=&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;*&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;-&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -1015,7 +1018,7 @@
   </dd>
 </div>
 <div id="skTriangle">
-  <dt><pre><a href="spinners.html#skTriangle"><span class="Identifier">skTriangle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◢&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◣&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◥&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><a href="#skTriangle"><span class="Identifier">skTriangle</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">50</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;◢&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◣&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◤&quot;</span><span class="Other">,</span> <span class="StringLit">&quot;◥&quot;</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -1023,7 +1026,7 @@
   </dd>
 </div>
 <div id="skWeather">
-  <dt><pre><a href="spinners.html#skWeather"><span class="Identifier">skWeather</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌤 &quot;</span><span class="Other">,</span>
+  <dt><pre><a href="#skWeather"><span class="Identifier">skWeather</span></a> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="DecNumber">100</span><span class="Other">,</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Other">[</span><span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☀️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌤 &quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;⛅️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌥 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;☁️ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌧 &quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;🌨 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌧 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌨 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌧 &quot;</span><span class="Other">,</span>
                                      <span class="StringLit">&quot;🌨 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;⛈ &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌨 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌧 &quot;</span><span class="Other">,</span> <span class="StringLit">&quot;🌨 &quot;</span><span class="Other">,</span>
@@ -1043,7 +1046,7 @@
   <dl class="item">
     <div id="makeSpinner-procs-all">
   <div id="makeSpinner,int,openArray[string]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#makeSpinner%2Cint%2CopenArray%5Bstring%5D"><span class="Identifier">makeSpinner</span></a><span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="spinners.html#Spinner"><span class="Identifier">Spinner</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#makeSpinner%2Cint%2CopenArray%5Bstring%5D"><span class="Identifier">makeSpinner</span></a><span class="Other">(</span><span class="Identifier">interval</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">frames</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="#Spinner"><span class="Identifier">Spinner</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -1063,7 +1066,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-15 04:29:09 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-05-30 09:24:17 UTC</small>
       </div>
     </div>
   </div>

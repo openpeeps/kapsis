@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>src/kapsis/interactive/prompts</title>
+<title>kapsis/interactive/prompts</title>
 
 <!-- Google fonts -->
 <link href='https://fonts.googleapis.com/css?family=Lato:400,600,900' rel='stylesheet' type='text/css'/>
@@ -16,15 +16,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="../../nimdoc.out.css?v=2.2.8">
+<link rel="stylesheet" type="text/css" href="../../nimdoc.out.css?v=2.2.10">
 
 <!-- JS -->
-<script type="text/javascript" src="../../dochack.js?v=2.2.8"></script>
+<script type="text/javascript" src="../../dochack.js?v=2.2.10"></script>
 </head>
 <body>
   <div class="document" id="documentId">
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" id="nav-burger">&#9776;</label>
+    <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
-      <h1 class="title">src/kapsis/interactive/prompts</h1>
+      <h1 class="title">kapsis/interactive/prompts</h1>
       <div class="row">
   <div class="three columns">
     <div class="theme-select-wrapper">
@@ -200,7 +203,7 @@
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="KapsisInputValue">
-  <dt><pre><a href="prompts.html#KapsisInputValue"><span class="Identifier">KapsisInputValue</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
+  <dt><pre><a href="#KapsisInputValue"><span class="Identifier">KapsisInputValue</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
   <dd>
     
     
@@ -208,7 +211,7 @@
   </dd>
 </div>
 <div id="Row">
-  <dt><pre><a href="prompts.html#Row"><span class="Identifier">Row</span></a> <span class="Other">=</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span></pre></dt>
+  <dt><pre><a href="#Row"><span class="Identifier">Row</span></a> <span class="Other">=</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span></pre></dt>
   <dd>
     
     
@@ -216,7 +219,7 @@
   </dd>
 </div>
 <div id="Span">
-  <dt><pre><a href="prompts.html#Span"><span class="Identifier">Span</span></a> <span class="Other">=</span> <span class="Keyword">tuple</span><span class="Other">[</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">fg</span><span class="Other">:</span> <span class="Identifier">ForegroundColor</span><span class="Other">,</span> <span class="Identifier">bg</span><span class="Other">:</span> <span class="Identifier">BackgroundColor</span><span class="Other">,</span>
+  <dt><pre><a href="#Span"><span class="Identifier">Span</span></a> <span class="Other">=</span> <span class="Keyword">tuple</span><span class="Other">[</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">fg</span><span class="Other">:</span> <span class="Identifier">ForegroundColor</span><span class="Other">,</span> <span class="Identifier">bg</span><span class="Other">:</span> <span class="Identifier">BackgroundColor</span><span class="Other">,</span>
              <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">]</span></pre></dt>
   <dd>
     
@@ -258,7 +261,7 @@
 </div>
 <div id="blue-procs-all">
   <div id="blue,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#blue%2Cstring%2Cint"><span class="Identifier">blue</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#blue%2Cstring%2Cint"><span class="Identifier">blue</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -270,7 +273,7 @@
 </div>
 <div id="blueSpan-procs-all">
   <div id="blueSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#blueSpan%2Cstring%2Cint"><span class="Identifier">blueSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#blueSpan%2Cstring%2Cint"><span class="Identifier">blueSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -282,7 +285,7 @@
 </div>
 <div id="cyanSpan-procs-all">
   <div id="cyanSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#cyanSpan%2Cstring%2Cint"><span class="Identifier">cyanSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#cyanSpan%2Cstring%2Cint"><span class="Identifier">cyanSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -294,7 +297,7 @@
 </div>
 <div id="display-procs-all">
   <div id="display,int,varargs[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cint%2Cvarargs%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">i</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cint%2Cvarargs%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">i</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -312,7 +315,7 @@
   </dd>
 </div>
 <div id="display,seq[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cseq%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cseq%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
                                  <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -321,7 +324,7 @@
   </dd>
 </div>
 <div id="display,varargs[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cvarargs%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#display%2Cvarargs%5BSpan%5D"><span class="Identifier">display</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
                                      <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -342,7 +345,7 @@
   </dd>
 </div>
 <div id="displayError,varargs[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#displayError%2Cvarargs%5BSpan%5D"><span class="Identifier">displayError</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#displayError%2Cvarargs%5BSpan%5D"><span class="Identifier">displayError</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
                                       <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -363,7 +366,7 @@
   </dd>
 </div>
 <div id="displayInfo,varargs[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#displayInfo%2Cvarargs%5BSpan%5D"><span class="Identifier">displayInfo</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#displayInfo%2Cvarargs%5BSpan%5D"><span class="Identifier">displayInfo</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
                                      <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -372,7 +375,7 @@
   </dd>
 </div>
 <div id="displayInfo,varargs[Span],int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#displayInfo%2Cvarargs%5BSpan%5D%2Cint"><span class="Identifier">displayInfo</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#displayInfo%2Cvarargs%5BSpan%5D%2Cint"><span class="Identifier">displayInfo</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -405,7 +408,7 @@
   </dd>
 </div>
 <div id="displayWarning,varargs[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#displayWarning%2Cvarargs%5BSpan%5D"><span class="Identifier">displayWarning</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#displayWarning%2Cvarargs%5BSpan%5D"><span class="Identifier">displayWarning</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
                                         <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -414,7 +417,7 @@
   </dd>
 </div>
 <div id="displayWarning,varargs[Span],int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#displayWarning%2Cvarargs%5BSpan%5D%2Cint"><span class="Identifier">displayWarning</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#displayWarning%2Cvarargs%5BSpan%5D%2Cint"><span class="Identifier">displayWarning</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -426,7 +429,7 @@
 </div>
 <div id="green-procs-all">
   <div id="green,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#green%2Cstring%2Cint"><span class="Identifier">green</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#green%2Cstring%2Cint"><span class="Identifier">green</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -438,7 +441,7 @@
 </div>
 <div id="greenSpan-procs-all">
   <div id="greenSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#greenSpan%2Cstring%2Cint"><span class="Identifier">greenSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#greenSpan%2Cstring%2Cint"><span class="Identifier">greenSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -488,7 +491,7 @@
 </div>
 <div id="span-procs-all">
   <div id="span,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#span%2Cstring%2Cint"><span class="Identifier">span</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">fg</span> <span class="Other">=</span> <span class="Identifier">fgDefault</span><span class="Other">;</span> <span class="Identifier">bg</span> <span class="Other">=</span> <span class="Identifier">bgDefault</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#span%2Cstring%2Cint"><span class="Identifier">span</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">fg</span> <span class="Other">=</span> <span class="Identifier">fgDefault</span><span class="Other">;</span> <span class="Identifier">bg</span> <span class="Other">=</span> <span class="Identifier">bgDefault</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -500,7 +503,7 @@
 </div>
 <div id="toggle-procs-all">
   <div id="toggle,bool">
-  <dt><pre><span class="Keyword">proc</span> <a href="#toggle%2Cbool"><span class="Identifier">toggle</span></a><span class="Other">(</span><span class="Identifier">onOff</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#toggle%2Cbool"><span class="Identifier">toggle</span></a><span class="Other">(</span><span class="Identifier">onOff</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -511,7 +514,7 @@
 </div>
 <div id="toString-procs-all">
   <div id="toString,seq[Span]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#toString%2Cseq%5BSpan%5D"><span class="Identifier">toString</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="prompts.html#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#toString%2Cseq%5BSpan%5D"><span class="Identifier">toString</span></a><span class="Other">(</span><span class="Identifier">spans</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -523,7 +526,7 @@
 </div>
 <div id="url-procs-all">
   <div id="url,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#url%2Cstring%2Cint"><span class="Identifier">url</span></a><span class="Other">(</span><span class="Identifier">uri</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">;</span> <span class="Identifier">ssl</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#url%2Cstring%2Cint"><span class="Identifier">url</span></a><span class="Other">(</span><span class="Identifier">uri</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">;</span> <span class="Identifier">ssl</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -535,7 +538,7 @@
 </div>
 <div id="yellow-procs-all">
   <div id="yellow,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#yellow%2Cstring%2Cint"><span class="Identifier">yellow</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#yellow%2Cstring%2Cint"><span class="Identifier">yellow</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -547,7 +550,7 @@
 </div>
 <div id="yellowSpan-procs-all">
   <div id="yellowSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#yellowSpan%2Cstring%2Cint"><span class="Identifier">yellowSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#yellowSpan%2Cstring%2Cint"><span class="Identifier">yellowSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -565,7 +568,7 @@
   <dl class="item">
     <div id="rows-iterators-all">
   <div id="rows.i,seq[Row]">
-  <dt><pre><span class="Keyword">iterator</span> <a href="#rows.i%2Cseq%5BRow%5D"><span class="Identifier">rows</span></a><span class="Other">(</span><span class="Identifier">items</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="prompts.html#Row"><span class="Identifier">Row</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="prompts.html#Row"><span class="Identifier">Row</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">iterator</span> <a href="#rows.i%2Cseq%5BRow%5D"><span class="Identifier">rows</span></a><span class="Other">(</span><span class="Identifier">items</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="#Row"><span class="Identifier">Row</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="#Row"><span class="Identifier">Row</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -590,7 +593,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-15 04:29:09 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-05-30 09:24:17 UTC</small>
       </div>
     </div>
   </div>

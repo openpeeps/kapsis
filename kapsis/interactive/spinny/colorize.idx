@@ -1,4 +1,4 @@
-nimTitle	colorize	kapsis/interactive/spinny/colorize.html	module src/kapsis/interactive/spinny/colorize		0
+nimTitle	colorize	kapsis/interactive/spinny/colorize.html	module kapsis/interactive/spinny/colorize		0
 nim	fgRed	kapsis/interactive/spinny/colorize.html#fgRed,string	proc fgRed(s: string): string		5
 nim	fgBlack	kapsis/interactive/spinny/colorize.html#fgBlack,string	proc fgBlack(s: string): string		6
 nim	fgGreen	kapsis/interactive/spinny/colorize.html#fgGreen,string	proc fgGreen(s: string): string		7

@@ -1,4 +1,4 @@
-nimTitle	types	kapsis/types.html	module src/kapsis/types		0
+nimTitle	types	kapsis/types.html	module kapsis/types		0
 nim	ktString	kapsis/types.html#ktString	CmdArgValueType.ktString		15
 nim	ktBool	kapsis/types.html#ktBool	CmdArgValueType.ktBool		15
 nim	ktInt	kapsis/types.html#ktInt	CmdArgValueType.ktInt		15

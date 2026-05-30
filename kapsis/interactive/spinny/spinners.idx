@@ -1,4 +1,4 @@
-nimTitle	spinners	kapsis/interactive/spinny/spinners.html	module src/kapsis/interactive/spinny/spinners		0
+nimTitle	spinners	kapsis/interactive/spinny/spinners.html	module kapsis/interactive/spinny/spinners		0
 nim	Spinner	kapsis/interactive/spinny/spinners.html#Spinner	object Spinner		11
 nim	makeSpinner	kapsis/interactive/spinny/spinners.html#makeSpinner,int,openArray[string]	proc makeSpinner(interval: int; frames: openArray[string]): Spinner		15
 nim	skDots	kapsis/interactive/spinny/spinners.html#skDots	const skDots		19

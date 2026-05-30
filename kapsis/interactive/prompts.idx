@@ -1,4 +1,4 @@
-nimTitle	prompts	kapsis/interactive/prompts.html	module src/kapsis/interactive/prompts		0
+nimTitle	prompts	kapsis/interactive/prompts.html	module kapsis/interactive/prompts		0
 nim	Span	kapsis/interactive/prompts.html#Span	tuple Span		16
 nim	Row	kapsis/interactive/prompts.html#Row	type Row		17
 nim	KapsisInputValue	kapsis/interactive/prompts.html#KapsisInputValue	object KapsisInputValue		18
