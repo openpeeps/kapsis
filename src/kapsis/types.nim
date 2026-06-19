@@ -4,7 +4,7 @@
 #       Made by Humans from OpenPeeps
 #       https://github.com/openpeeps/kapsis
 
-import std/[times, json, uri, net, os, tables, strutils]
+import std/[times, json, uri, net, os, tables, strutils, terminal]
 
 import pkg/voodoo/setget
 import pkg/openparser/json
@@ -109,10 +109,14 @@ type
 
 template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
   ## Print `msg` error with `args` and quit with `QuitFailure` exit code 
+  setForegroundColor(fgRed)
+  write(stdout, "Error:")
+  resetAttributes()
   if arg.len == 0:
-    display("\e[31mError:\e[0m " & $(msg))
+    write(stdout, " " & $(msg))
   else:
-    display("\e[31mError:\e[0m " & $(msg) % arg)
+    write(stdout, " " & ($(msg) % arg))
+  write(stdout, "\n")
   quit(QuitFailure)
 
 template collectValues*(values: var ValuesTable,

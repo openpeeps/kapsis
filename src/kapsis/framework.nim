@@ -6,7 +6,7 @@
 
 import std/[macros, tables, strutils, os, json, sequtils,
           parseopt, options, times, macrocache,
-          algorithm, wordwrap]
+          algorithm, wordwrap, terminal]
 
 import pkg/floof
 
@@ -16,6 +16,12 @@ export options
 export tables, types, toSeq, CmdLineKind
 
 type
+  ColoredSegment* = object
+    text*: string
+    fg*: ForegroundColor
+    bright*: bool
+    bold*: bool
+
   CmdArg* = ref object
     ## The CmdArg object represents an argument of a command, it contains
     ## all the information about the argument, such as its name, type
@@ -115,66 +121,59 @@ proc collectMetadata(appNode: var NimNode, stmtNodes: NimNode) {.compileTime.} =
   appNode.add(nnkExprColonExpr.newTree(ident"description", description))
   appNode.add(nnkExprColonExpr.newTree(ident"license", license))
 
-proc stripAnsi(s: string): string =
-  ## Removes ANSI escape codes from a string for accurate length calculation
-  result = ""
-  var i = 0
-  while i < s.len:
-    if s[i] == '\e':
-      inc i
-      if i < s.len and s[i] == '[':
-        inc i
-        while i < s.len and s[i] notin {'m', 'K'}:
-          inc i
-        if i < s.len: inc i
-      else:
-        # skip unknown escape sequence
-        inc i
-    else:
-      result.add(s[i])
-      inc i
+proc renderColored(segments: seq[ColoredSegment]) =
+  for seg in segments:
+    if seg.fg != fgDefault:
+      stdout.setForegroundColor(seg.fg, seg.bright)
+    if seg.bold:
+      stdout.setStyle({styleBright})
+    write(stdout, seg.text)
+    stdout.resetAttributes()
+
+proc segmentLen(segments: seq[ColoredSegment]): int =
+  for s in segments: result += s.text.len
 
 proc preparePrintCommand(cmd: Command,
-    output: var seq[(string, string, seq[string])], 
+    output: var seq[(seq[ColoredSegment], string, seq[string])],
     cmdlen: var seq[int]; showTypes, showFlags = false,
     extraIndent = 2) =
-  # Prepares a command for printing in the help message,
-  # by adding its name, description and arguments to the output
-  # sequence, and calculating the command length
+  var parts: seq[ColoredSegment]
   var flags: seq[string]
   case cmd.kind
   of cmdCommand:
-    var str = indent(cmd.name, extraIndent)
+    parts.add ColoredSegment(text: indent(cmd.name, extraIndent))
     for x, arg in cmd.arguments:
-      inc cmdlen[^1], 1 # count the whitespace before each argument
+      inc cmdlen[^1], 1
       case arg.kind
       of cmdArgument:
         var i = (if arg.isOptional: 4 else: 3)
-        inc cmdlen[^1], (arg.name.len + i) # count `<` `arg` `>` includes 1 ws indent
-        add str, indent(("\e[90m<$1\e[0m" % [if arg.isOptional: "?" else: ""]), 1)
-        add str, arg.name
+        inc cmdlen[^1], (arg.name.len + i)
+        parts.add ColoredSegment(text: " <", fg: fgBlack, bright: true)
+        if arg.isOptional:
+          parts.add ColoredSegment(text: "?", fg: fgBlack, bright: true)
+        parts.add ColoredSegment(text: arg.name)
         if showTypes:
-          add str, "\e[36m:" & $arg.dataType & "\e[0m"
-          # inc cmdlen[^1], (len($arg.dataType) + 1)
-        add str, "\e[90m>\e[0m"
+          parts.add ColoredSegment(text: ":" & $arg.dataType, fg: fgCyan)
+        parts.add ColoredSegment(text: ">", fg: fgBlack, bright: true)
       of cmdLongOption:
         if showFlags:
-          add flags, arg.name & "\e[36m:" & $arg.dataType & "\e[0m"
+          flags.add arg.name & ":" & $arg.dataType
       of cmdShortOption:
         if showFlags:
-          add flags, arg.name & "\e[36m:" & $arg.dataType & "\e[0m"
+          flags.add arg.name & ":" & $arg.dataType
       else: discard
-    add output[^1][0], str
     if cmd.arguments.len > 0:
       if not showFlags:
-        add output[^1][0], indent("⚑", 1)
+        parts.add ColoredSegment(text: " ⚑")
         inc cmdlen[^1], 2
       else:
-        add output[^1][2], flags
-    add output[^1][1], cmd.description
-    
+        output[^1][2] = flags
+    output[^1][0] = parts
+    output[^1][1] = cmd.description
+
   of cmdSeparator:
-    add output[^1][0], "\e[1m" & cmd.name & "\e[0m"
+    parts.add ColoredSegment(text: cmd.name, bold: true)
+    output[^1][0] = parts
   else: discard
 
 proc printUsage(app: Kapsis,
@@ -186,26 +185,22 @@ proc printUsage(app: Kapsis,
     searchTerm: Option[string] = none(string)) =
   # Prints the usage information for the Kapsis application,
   # including the list of commands and their descriptions.
-  var output: seq[(string, string, seq[string])] # output lines
+  var output: seq[(seq[ColoredSegment], string, seq[string])]
   var cmdlen: seq[int]
   var enableFuzzySearch = searchTerm.isSome()
-    # when `searchTerm` is provided, we enable fuzzy search for commands
-    # most probably the user is asking for help on a specific command 
-    # adn we want to show the most relevant commands at the top of the list
   if showExtras:
-    add output, ("", "", @[])
-    add output[0][0], "\e[90m" & app.description & "\n"
-    add output[0][0], indent("(c) " & app.author & " | " & app.license & " License", 2)
-    add output[0][0], indent("\nBuild Version: " & app.version & "\e[0m", 2)
-    add output, ("", "", @[])
+    output.add (@[], "", @[])
+    output[0][0].add ColoredSegment(text: app.description & "\n", fg: fgBlack, bright: true)
+    output[0][0].add ColoredSegment(text: indent("(c) " & app.author & " | " & app.license & " License", 2), fg: fgBlack, bright: true)
+    output[0][0].add ColoredSegment(text: indent("\nBuild Version: " & app.version, 2), fg: fgBlack, bright: true)
+    output.add (@[], "", @[])
 
   var haystack: seq[string]
   if someSomeCommand.isSome():
     discard
   else:
-    # otherwise show usage for all commands
     for id, cmd in app.commands:
-      add output, ("", "", @[])
+      output.add (@[], "", @[])
       add cmdlen, cmd.name.len
       if cmd.kind == cmdCommand:
         haystack.add(cmd.description)
@@ -213,45 +208,65 @@ proc printUsage(app: Kapsis,
           showTypes = showTypes,
           showFlags = showFlags)
 
-  let orderedCmdLen = sorted(cmdlen, system.cmp[int], order = SortOrder.Descending)
-  let longestCmd = orderedCmdLen[0] # get longest command length
-  var highlightIndexes: seq[int]
-  if searchTerm.isSome():
-    let results = floof.search(searchTerm.get(), haystack)
-    # for i, res in results:
-      # echo res
-      # highlightIndexes.add(i) # offset by header and label lines
-  # echo highlightIndexes
-  
-  # Now print each command, padding so the comment aligns
+  let orderedCmdLen = sorted(cmdlen, cmp[int], order = SortOrder.Descending)
+  let longestCmd = orderedCmdLen[0]
+
   var i = 0
   for x in output:
     var isHighlighted = false
     if x[1].len > 0:
-      let strippedCmd = stripAnsi(x[0])
-      var pad = longestCmd - strippedCmd.len + 18
+      let plainLen = segmentLen(x[0])
+      var pad = longestCmd - plainLen + 18
+      let hasFlagIcon = block:
+        var found = false
+        for s in x[0]:
+          if s.text.contains("⚑"): found = true; break
+        found
       if showTypes:
         pad -= 2
-      elif x[0].contains("⚑"):
+      elif hasFlagIcon:
         pad += 2
       let wrapped = wrapWords(x[1], 60)
       let lines = wrapped.splitLines
       for j, line in lines:
         if j == 0:
-          let prefix = if isHighlighted: "\e[43;30m" else: "" # yellow bg, black fg
-          let suffix = if isHighlighted: "\e[0m" else: ""
-          display(prefix & x[0] & repeat(" ", pad) & "\e[90m" & line & "\e[0m" & suffix)
+          if isHighlighted:
+            stdout.setBackgroundColor(bgYellow)
+            stdout.setForegroundColor(fgBlack)
+          renderColored(x[0])
+          if isHighlighted:
+            stdout.resetAttributes()
+          write(stdout, repeat(" ", pad))
+          stdout.setForegroundColor(fgBlack, bright=true)
+          write(stdout, line)
+          stdout.resetAttributes()
+          write(stdout, "\n")
         else:
-          display(repeat(" ", longestCmd + 16) & "\e[90m" & line & "\e[0m")
+          write(stdout, repeat(" ", longestCmd + 16))
+          stdout.setForegroundColor(fgBlack, bright=true)
+          write(stdout, line)
+          stdout.resetAttributes()
+          write(stdout, "\n")
       inc i
     else:
-      display(x[0])
+      renderColored(x[0])
+      write(stdout, "\n")
     if x[2].len > 0 and showExtras:
-      var flagLens = x[2].mapIt(stripAnsi(it).len)
+      var flagLens: seq[int]
+      for f in x[2]: flagLens.add f.len
       let maxFlagLen = flagLens.max
       for idx, flag in x[2]:
         let pad = maxFlagLen - flagLens[idx]
-        display(repeat(' ', pad) & flag, 8)
+        write(stdout, repeat(' ', pad + 10))
+        let colonPos = flag.find(':')
+        if colonPos >= 0:
+          write(stdout, flag[0..<colonPos])
+          stdout.setForegroundColor(fgCyan)
+          write(stdout, flag[colonPos..^1])
+          stdout.resetAttributes()
+        else:
+          write(stdout, flag)
+        write(stdout, "\n")
   if quitProcess: quit(0)
 
 proc getCallbackName(s: string): NimNode =
