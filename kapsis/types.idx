@@ -32,7 +32,7 @@ nim	typeMismatch	kapsis/types.html#typeMismatch	KapsisErrorMessage.typeMismatch	
 nim	missingArgument	kapsis/types.html#missingArgument	KapsisErrorMessage.missingArgument		99
 nim	KapsisErrorMessage	kapsis/types.html#KapsisErrorMessage	enum KapsisErrorMessage		99
 nim	printError	kapsis/types.html#printError.t,KapsisErrorMessage,varargs[string]	template printError(msg: KapsisErrorMessage; arg: varargs[string])		110
-nim	collectValues	kapsis/types.html#collectValues.t,ValuesTable,string,sinkstring,	template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)		118
+nim	collectValues	kapsis/types.html#collectValues.t,ValuesTable,string,sinkstring,	template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)		122
 nim	getStr	kapsis/types.html#getStr,Value	proc getStr(value: Value): lent string		46
 nim	getBool	kapsis/types.html#getBool,Value	proc getBool(value: Value): lent bool		46
 nim	getInt	kapsis/types.html#getInt,Value	proc getInt(value: Value): lent int		46
@@ -53,4 +53,4 @@ nim	getJson	kapsis/types.html#getJson,Value	proc getJson(value: Value): lent Jso
 nim	getYaml	kapsis/types.html#getYaml,Value	proc getYaml(value: Value): lent string		46
 nim	getUrl	kapsis/types.html#getUrl,Value	proc getUrl(value: Value): lent Uri		46
 nim	getPort	kapsis/types.html#getPort,Value	proc getPort(value: Value): lent Port		46
-nim	getIdent	kapsis/types.html#getIdent,Value	proc getIdent(value: Value): lent string		205
+nim	getIdent	kapsis/types.html#getIdent,Value	proc getIdent(value: Value): lent string		209

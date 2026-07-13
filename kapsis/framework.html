@@ -68,6 +68,11 @@
   description*: string       ## A description of the argument that will be shown in the help message
   isOptional*: bool ## When an argument is optional, it means that the user
                     ## doesn't have to provide it when executing the command">CmdArg</a></li>
+<li><a class="reference" href="#ColoredSegment" title="ColoredSegment = object
+  text*: string
+  fg*: ForegroundColor
+  bright*: bool
+  bold*: bool">ColoredSegment</a></li>
 <li><a class="reference" href="#Command" title="Command = ref object
   case
   of cmdCommand:
@@ -147,6 +152,18 @@
   <dd>
     
     The CmdArg object represents an argument of a command, it contains all the information about the argument, such as its name, type and whether it's optional or not, used for parsing and validation at runtime
+    
+  </dd>
+</div>
+<div id="ColoredSegment">
+  <dt><pre><a href="#ColoredSegment"><span class="Identifier">ColoredSegment</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">text</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
+  <span class="Identifier">fg</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">ForegroundColor</span>
+  <span class="Identifier">bright</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
+  <span class="Identifier">bold</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dd>
+    
+    
     
   </dd>
 </div>
@@ -256,7 +273,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-05-30 12:59:34 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-07-13 12:12:59 UTC</small>
       </div>
     </div>
   </div>
