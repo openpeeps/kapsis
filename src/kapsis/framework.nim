@@ -139,7 +139,7 @@ proc preparePrintCommand(cmd: Command,
   var flags: seq[string]
   case cmd.kind
   of cmdCommand:
-    parts.add ColoredSegment(text: indent(cmd.name, extraIndent))
+    parts.add ColoredSegment(text: indent(cmd.name, extraIndent), fg: fgDefault)
     for x, arg in cmd.arguments:
       inc cmdlen[^1], 1
       case arg.kind
@@ -149,7 +149,7 @@ proc preparePrintCommand(cmd: Command,
         parts.add ColoredSegment(text: " <", fg: fgBlack, bright: true)
         if arg.isOptional:
           parts.add ColoredSegment(text: "?", fg: fgBlack, bright: true)
-        parts.add ColoredSegment(text: arg.name)
+        parts.add ColoredSegment(text: arg.name, fg: fgDefault)
         if showTypes:
           parts.add ColoredSegment(text: ":" & $arg.dataType, fg: fgCyan)
         parts.add ColoredSegment(text: ">", fg: fgBlack, bright: true)
@@ -162,7 +162,7 @@ proc preparePrintCommand(cmd: Command,
       else: discard
     if cmd.arguments.len > 0:
       if not showFlags:
-        parts.add ColoredSegment(text: " ⚑")
+        parts.add ColoredSegment(text: " ⚑", fg: fgDefault)
         inc cmdlen[^1], 2
       else:
         output[^1][2] = flags
@@ -170,7 +170,7 @@ proc preparePrintCommand(cmd: Command,
     output[^1][1] = cmd.description
 
   of cmdSeparator:
-    parts.add ColoredSegment(text: cmd.name, bold: true)
+    parts.add ColoredSegment(text: cmd.name, bold: true, fg: fgDefault)
     output[^1][0] = parts
   else: discard
 
