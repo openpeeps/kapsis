@@ -8,8 +8,6 @@ import std/[macros, tables, strutils, os, json, sequtils,
           parseopt, options, times, macrocache,
           algorithm, wordwrap, terminal]
 
-import pkg/floof
-
 import ./types, ./interactive/prompts
 
 export options
