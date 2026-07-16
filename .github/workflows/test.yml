@@ -4,25 +4,33 @@ on:
     paths-ignore:
       - LICENSE
       - README.*
+      - .github/workflows
   pull_request:
     paths-ignore:
       - LICENSE
       - README.*
+      - .github/workflows
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
         nim-version:
           - 'stable'
     steps:
       - uses: actions/checkout@v3
-      - uses: jiro4989/setup-nim-action@v1
+      - if: runner.os == 'Windows'
+        run: choco install openssl -y
+
+      - uses: jiro4989/setup-nim-action@v2
         with:
           nim-version: ${{ matrix.nim-version }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          sudo apt install libpcre3-dev libpcre3
+
+      - if: runner.os == 'Linux'
+        run: sudo apt install libpcre3-dev libpcre3
+
       - run: nimble install -Y
       - run: nim c -r src/${{ github.event.repository.name }}.nim
-      - run: nimble test
