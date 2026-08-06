@@ -4,7 +4,7 @@
 #       Made by Humans from OpenPeeps
 #       https://github.com/openpeeps/kapsis
 
-import std/[macros, tables, strutils, os, json, sequtils,
+import std/[macros, tables, strutils, os, sequtils,
           parseopt, options, times, macrocache,
           algorithm, wordwrap, terminal]
 
@@ -71,48 +71,102 @@ type
 
 var kapsisPreparedCommands {.compileTime.} = newOrderedTable[string, NimNode]()
 
+proc findNimbleFile(): string {.compileTime.} =
+  ## Searches for a `.nimble` file near the project being compiled
+  ## and returns its path, or an empty string if none was found
+  let proj = getProjectPath()
+  for dir in @[proj, proj / "..", proj / ".." / ".."]:
+    when defined(windows):
+      let matches = staticExec("dir /b /a-d \"" & dir & "\\*.nimble\" 2>nul").strip()
+    else:
+      let matches = staticExec("ls \"" & dir & "\"/*.nimble 2>/dev/null").strip()
+    if matches.len > 0:
+      for line in matches.splitLines:
+        let f = line.strip()
+        if f.len > 0:
+          when defined(windows):
+            return dir / f
+          else:
+            return f
+  result = ""
+
+proc parseNimbleField(content, field: string): string =
+  ## Extracts `field = "value"` from a `.nimble` file content
+  for line in content.splitLines:
+    let trimmed = line.strip()
+    if trimmed.len == 0 or trimmed[0] == '#': continue
+    let eq = trimmed.find('=')
+    if eq < 0: continue
+    if trimmed[0..<eq].strip() != field: continue
+    var val = trimmed[eq+1..^1].strip()
+    if val.len >= 2 and val[0] == '"' and val[^1] == '"':
+      val = val[1..^2]
+    return val
+  result = ""
+
 template collectPackageInfo {.dirty.} =
-  let path = os.normalizedPath(getProjectPath() / "..")
-  let info = staticExec("nimble dump " & path & " --json").strip()
   var
     appVersion: string
     appDescription: string
     appAuthor: string
     appLicense: string
-  if info.len > 0:
-    try:
-      var pkginfo = info.parseJSON()
-      appVersion = pkginfo["version"].getStr
-      appDescription = pkginfo["desc"].getStr
-      appAuthor = pkginfo["author"].getStr
-      appLicense = pkginfo["license"].getStr
-    except:
-      discard # ignore errors, we can still run without this info
+  let nimblePath = findNimbleFile()
+  if nimblePath.len > 0:
+    let content = staticRead(nimblePath)
+    appAuthor = parseNimbleField(content, "author")
+    appVersion = parseNimbleField(content, "version")
+    appDescription = parseNimbleField(content, "description")
+    appLicense = parseNimbleField(content, "license")
+
+proc metadataFieldValue(n: NimNode, field: string): NimNode =
+  ## Returns the value NimNode for a metadata field in the `initKapsis` block,
+  ## handling both `author: "x"` (nnkCall) and `author = "x"` (nnkAsgn) syntax.
+  ## Returns nil when the statement is not a match.
+  case n.kind
+  of nnkCall, nnkAsgn, nnkExprColonExpr:
+    if n.len >= 2 and n[0].eqIdent(field):
+      let val = n[1]
+      if val.kind == nnkStmtList and val.len > 0:
+        return val[0]
+      return val
+  else: discard
 
 proc collectMetadata(appNode: var NimNode, stmtNodes: NimNode) {.compileTime.} =
   # parse metadata, the `author`, `version`, `description` and `license`
-  # if not provided, will try staticExec `nimble` and get the juice out of it
-  # but in some cases the dev can be a savage and just compile the kapsis app
-  # without a nimble file, in that case we'll throw a warning that
-  # metadata is missing and the app will run with empty metadata fields
+  # from the `initKapsis` block, and fall back to reading them
+  # directly from the package's `.nimble` file
   var author, version, description, license: NimNode
   for n in stmtNodes:
-    if n.kind == nnkInfix and n[0].eqIdent"author":
-      author = n[1]
-    elif n.kind == nnkInfix and n[0].eqIdent"version":
-      version = n[1]
-    elif n.kind == nnkInfix and n[0].eqIdent"description":
-      description = n[1]
-    elif n.kind == nnkInfix and n[0].eqIdent"license":
-      license = n[1]
+    let a = metadataFieldValue(n, "author")
+    if a != nil: author = a
+    let v = metadataFieldValue(n, "version")
+    if v != nil: version = v
+    let d = metadataFieldValue(n, "description")
+    if d != nil: description = d
+    let l = metadataFieldValue(n, "license")
+    if l != nil: license = l
 
   if author == nil or version == nil or description == nil or license == nil:
-    echo "Warning: Missing metadata fields. Attempting to collect from nimble..."
     collectPackageInfo()
     if author == nil: author = newLit(appAuthor)
     if version == nil: version = newLit(appVersion)
     if description == nil: description = newLit(appDescription)
     if license == nil: license = newLit(appLicense)
+
+  var missing: seq[string]
+  for (field, node) in [("author", author), ("version", version),
+      ("description", description), ("license", license)]:
+    if node == nil or (node.kind == nnkStrLit and node.strVal.len == 0):
+      missing.add field
+  if missing.len > 0:
+    echo "Warning: kapsis could not find metadata for: " & missing.join(", ") & "."
+    echo "  Include a `.nimble` file in your package, or specify the metadata"
+    echo "  manually in the `initKapsis` block, e.g.:"
+    echo "    initKapsis do:"
+    echo "      author: \"Your Name\""
+    echo "      version: \"1.0.0\""
+    echo "      description: \"Your app description\""
+    echo "      license: \"MIT\""
 
   appNode.add(nnkExprColonExpr.newTree(ident"author", author))
   appNode.add(nnkExprColonExpr.newTree(ident"version", version))
@@ -509,6 +563,9 @@ macro initKapsis*(stmtNodes: untyped) =
           error("Invalid defaultCommand definition", stmtNode)
         appNode.add(nnkExprColonExpr.newTree(
           ident"defaultCommand", newCall(ident"some", stmtNode[1][0])))
+      elif stmtNode[0].eqIdent"author" or stmtNode[0].eqIdent"version" or
+          stmtNode[0].eqIdent"description" or stmtNode[0].eqIdent"license":
+        discard # metadata is already handled by `collectMetadata`
       else:
         error("Unknown statement in initKapsis: " & $stmtNode[0], stmtNode)
     else: discard
