@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.3.9"
+version       = "0.4.0"
 author        = "George Lemon"
 description   = "Your type of CLI framework"
 license       = "MIT"
@@ -15,3 +15,4 @@ requires "valido >= 0.1.0"
 requires "termstyle >= 0.1.0"
 requires "nancy >= 0.1.1"
 requires "noise >= 0.1.10"
+requires "pluginkit >= 0.1.0"

@@ -6,12 +6,13 @@
 
 import std/[macros, tables, strutils, os, sequtils,
           parseopt, options, times, macrocache,
-          algorithm, wordwrap, terminal]
+          algorithm, wordwrap, terminal, json]
 
-import ./types, ./interactive/prompts
+import ./types, ./interactive/prompts, ./plugins
 
 export options
 export tables, types, toSeq, CmdLineKind
+export plugins
 
 type
   ColoredSegment* = object
@@ -68,6 +69,13 @@ type
     commands: OrderedTableRef[string, Command]
       # A table of commands, where the key is the command name
       # and the value is the Command object
+    pluginsEnabled*: bool
+      # When `true`, the application scans for plugin subcommands at startup
+    pluginLocalDir*: Option[string]
+      # A local directory (relative to the executable, or absolute) where the
+      # application creator chooses to look for plugin shared libraries
+    pluginHost*: PluginHost
+      # The runtime plugin host, populated at startup when plugins are enabled
 
 var kapsisPreparedCommands {.compileTime.} = newOrderedTable[string, NimNode]()
 
@@ -188,6 +196,22 @@ proc renderColored(segments: seq[ColoredSegment]) =
 proc segmentLen(segments: seq[ColoredSegment]): int =
   for s in segments: result += s.text.len
 
+proc toCommand*(cmd: PluginCommand): Command =
+  ## Converts a plugin command into a regular `Command` so it can be rendered by the
+  ## usage/help printer. It is never executed through the built-in dispatch path.
+  result = Command(
+    kind: cmdCommand,
+    name: cmd.name,
+    description: cmd.description
+  )
+  for a in cmd.args:
+    result.arguments.add CmdArg(
+      kind: a.kind,
+      dataType: a.datatype,
+      name: a.name,
+      isOptional: a.isOptional
+    )
+
 proc preparePrintCommand(cmd: Command,
     output: var seq[(seq[ColoredSegment], string, seq[string])],
     cmdlen: var seq[int]; showTypes, showFlags = false,
@@ -254,7 +278,13 @@ proc printUsage(app: Kapsis,
   if someSomeCommand.isSome():
     discard
   else:
-    for id, cmd in app.commands:
+    var iterCommands: seq[(string, Command)]
+    for id2, cmd2 in app.commands:
+      iterCommands.add (id2, cmd2)
+    if app.pluginHost != nil:
+      for pcId, pcmd in app.pluginHost.commands:
+        iterCommands.add (pcId, pcmd.toCommand())
+    for (id, cmd) in iterCommands:
       output.add (@[], "", @[])
       add cmdlen, cmd.name.len
       if cmd.kind == cmdCommand:
@@ -528,6 +558,11 @@ proc parseCommandInput(app: Kapsis) =
       # after collecting all the values, we execute the command's
       # callback and pass the collected values to it
       cmd.callback(addr values)
+    elif app.pluginHost != nil and app.pluginHost.commands.hasKey(input.key):
+      # route to a subcommand contributed by a plugin shared library
+      let res = app.pluginHost.runPluginCommand(input.key)
+      if res.hasKey("error"):
+        displayError(res["error"].getStr, quitProcess = true)
     else:
       displayError("Unknown command: " & input.key)
   else:
@@ -560,12 +595,30 @@ macro initKapsis*(stmtNodes: untyped) =
 
   for stmtNode in stmtNodes[0..^2]:
     case stmtNode.kind
-    of nnkCall:
+    of nnkCall, nnkCommand:
       if stmtNode[0].eqIdent"defaultCommand":
         if stmtNode.len != 2 or stmtNode[1][0].kind != nnkStrLit:
           error("Invalid defaultCommand definition", stmtNode)
         appNode.add(nnkExprColonExpr.newTree(
           ident"defaultCommand", newCall(ident"some", stmtNode[1][0])))
+      elif stmtNode[0].eqIdent"plugins":
+        appNode.add(nnkExprColonExpr.newTree(
+          ident"pluginsEnabled", newLit(true)))
+        var localDir = ""
+        if stmtNode.len > 1 and stmtNode[^1].kind in {nnkStmtList, nnkStmtListExpr}:
+          for sub in stmtNode[^1]:
+            if sub.kind in {nnkExprColonExpr, nnkAsgn, nnkCall} and
+                sub.len >= 2 and sub[0].eqIdent("dir"):
+              let v = sub[1]
+              if v.kind == nnkStrLit:
+                localDir = v.strVal
+              elif v.kind in {nnkStmtList, nnkStmtListExpr, nnkExprColonExpr} and
+                  v.len > 0 and v[0].kind == nnkStrLit:
+                localDir = v[0].strVal
+        let dirNode =
+          if localDir.len > 0: newCall(ident"some", newLit(localDir))
+          else: newCall(ident"none", ident"string")
+        appNode.add(nnkExprColonExpr.newTree(ident"pluginLocalDir", dirNode))
       elif stmtNode[0].eqIdent"author" or stmtNode[0].eqIdent"version" or
           stmtNode[0].eqIdent"description" or stmtNode[0].eqIdent"license":
         discard # metadata is already handled by `collectMetadata`
@@ -621,7 +674,15 @@ macro initKapsis*(stmtNodes: untyped) =
   result.add quote do:
     block:
       var `kAppVar` = `appNode`
-      # initialize the command line parser and parse the user's input
+      # when plugin support is enabled, scan the global and local plugin
+      # directories and register any contributed subcommands
+      if `kAppVar`.pluginsEnabled:
+        `kAppVar`.pluginHost = initPluginHost(
+          getAppFilename(),
+          (if `kAppVar`.pluginLocalDir.isSome: `kAppVar`.pluginLocalDir.get else: "")
+        )
+      # initialize the command line parser and parse the user's
+      # input
       parseCommandInput(`kAppVar`)
   # echo result.repr
 

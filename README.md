@@ -1,3 +1,15 @@
+<p align="center">
+  Kapsis CLI framework – Your type of CLI ;)
+</p>
+
+<p align="center">
+  <code>nimble install nimbase</code>
+</p>
+
+<p align="center">
+  <a href="https://github.com/">API reference</a>
+</p>
+
 ## Key features
 - [x] Macro-based CLI definition
 - [x] Data validation and type checking
@@ -6,29 +18,13 @@
 - [x] Supports subcommands and nested subcommands
 - [x] Supports flags and options with or without values
 - [x] Detailed error messages for invalid input
-- [ ] Pluggable Commands via Shared libraries
+- [x] Pluggable Commands via Shared libraries
 - [ ] Translatable Commands
-
 
 ## About
 Kapsis is a framework for building extensible and user-friendly command line interfaces. It provides a validation system for user input, alignment and formatting for the **Usage** screen, and a fancy API for defining commands and their data. 
 
-### Metadata
-Kapsis can collect metadata from the provided statements, but if not provided it will try to extract it from the `.nimble` file, so you can choose to provide it in either place. The metadata includes:
-- `name`: The name of the application, used in the help message and as the default command.
-- `version`: The version of the application, shown in the help message.
-- `description`: A short description of the application, shown in the help message.
-- `license`: The license of the application, shown in the help message.
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/openpeeps/kapsis/main/.github/Screen Shot 2026-04-06 at 17.37.30.png" alt="Screenshot" width="75%">
-</p>
-
-### Extensible API
-You can build modular CLIs with Kapsis via plugins, which are just dynamic libraries that can be loaded at runtime. This allows everyone to create and share their own plugins with commands that can be loaded into other Kapsis applications.
-
-The plugin-based architecture is very flexible and allows for a wide range of use cases, from simple command extensions to complex integrations with other tools and services.
-
+### Quick Example
 ```nim
 import pkg/kapsis
 
@@ -71,11 +67,93 @@ initKapsis do:
         ## The silly old color who lives next to red
 ```
 
+### Metadata
+Kapsis can collect metadata from the provided statements, but if not provided it will try to extract it from the `.nimble` file, so you can choose to provide it in either place. The metadata includes:
+- `name`: The name of the application, used in the help message and as the default command.
+- `version`: The version of the application, shown in the help message.
+- `description`: A short description of the application, shown in the help message.
+- `license`: The license of the application, shown in the help message.
+
+### Pluggable Commands
+Kapsis apps can discover and run subcommands contributed by plugins at runtime. A plugin is a shared library built with `--app:lib` that imports a Kapsis-specific CLI DSL (`kapsis/pluginapi`) and exports a JSON command manifest. Enable plugin support in your app with a `plugins do:` block:
+
+```nim
+initKapsis do:
+  plugins do:
+    # directory (relative to the app executable) where plugins are distributed
+    dir: "plugins"
+  commands do:
+    # ... built-in commands, as usual
+```
+
+The Kapsis host scans two locations for plugins:
+
+- **Global**: `~/.kapsis/apps/<app>/plugins`
+- **Local**: the directory given to `plugins do: dir:` (resolved against the app executable's parent directory), when provided
+
+Each enabled command is merged into the app's routing and appears in the Usage/`--help` screen, so users run it just like a built-in subcommand, e.g. `myapp greet Alice`.
+
+#### Authoring a plugin
+Plugins are written against `kapsis/pluginapi` (import `pkg/pluginkit` + `pkg/kapsis/pluginapi`) and built with `--app:lib`. They reuse the same Kapsis Values/argument DSL:
+
+```nim
+import pkg/kapsis/pluginapi
+
+commands do:
+  greet name.string, ?string(greeting):
+    ## Greet someone
+    echo "hello ", v.get("name").getStr
+
+  colors:
+    blue bool(enable):
+      echo "blue = ", v.get("enable").getBool
+```
+
+The plugin framework emits the runtime manifest and command entrypoints automatically; the host loads the library, reads the manifest, and invokes the matching runner with the raw CLI arguments as JSON.
+
+### Create a Kapsis plugin
+Author a plugin as a pluginkit shared library (usually in its own package with a `kapsis_plugin.nimble`), wrapping the `commands do:` DSL in pluginkit's `plugin` macro:
+
+```nim
+import pkg/pluginkit
+import pkg/kapsis/pluginapi
+
+plugin myplugin, {
+  name: "MyPlugin",
+  author: "Your Name",
+  description: "Contributes some subcommands",
+  license: "MIT",
+  version: "1.0.0"
+}:
+  commands do:
+    greet name.string, ?string(greeting):
+      ## Greet someone
+      echo "hello ", v.get("name").getStr
+```
+
+Build it with the library backend:
+
+```bash
+nimble c --app:lib src/myplugin   # produces libmyplugin.dylib / .so / .dll
+```
+
+To load it, drop the built library into your app's plugin directory and enable plugins on the host:
+
+```nim
+initKapsis do:
+  plugins do:
+    # relative to the app executable; also pick "~/.kapsis/apps/myapp/plugins"
+    dir: "plugins"
+  commands do:
+    # built-in commands as usual
+```
+
+Running the app now exposes the plugin's commands, e.g. `myapp greet Alice`, and they're listed on the Usage/`--help` screen alongside any built-in commands.
 
 ### ❤ Contributions & Support
 - 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/kapsis/issues)
 - 👋 Wanna help? [Fork it!](https://github.com/openpeeps/kapsis/fork)
 
 ### 🎩 License
-MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
+MIT license | [Made by Humans from OpenPeeps](https://github.com/openpeeps).<br>
 Copyright OpenPeeps & Contributors &mdash; All rights reserved.

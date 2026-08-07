@@ -35,6 +35,10 @@ when isMainModule:
   # Init Kapsis with the defined commands
   #
   initKapsis do:
+    plugins do:
+      # directory (relative to the app executable) where plugins are distributed
+      dir: "examples"
+
     commands do:
       -- "Crazy stuff"
       hello name.string, int(age), ?bool(verbose):
