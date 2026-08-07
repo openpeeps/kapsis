@@ -7,7 +7,7 @@ nim	cmdSeparator	kapsis/framework.html#cmdSeparator	CommandType.cmdSeparator		38
 nim	CommandType	kapsis/framework.html#CommandType	enum CommandType		38
 nim	Command	kapsis/framework.html#Command	type Command		42
 nim	Kapsis	kapsis/framework.html#Kapsis	type Kapsis		60
-nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		550
-nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		625
-nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		630
-nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		635
+nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		553
+nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		628
+nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		633
+nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		638
