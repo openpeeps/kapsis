@@ -76,10 +76,13 @@ proc findNimbleFile(): string {.compileTime.} =
   ## and returns its path, or an empty string if none was found
   let proj = getProjectPath()
   for dir in @[proj, proj / "..", proj / ".." / ".."]:
+    let pattern = dir / "*.nimble"
     when defined(windows):
-      let matches = staticExec("dir /b /a-d \"" & dir & "\\*.nimble\" 2>nul").strip()
+      let matches = staticExec(
+        "dir /" & "b /a" & "-d \"" & pattern & "\" 2>n" & "ul").strip()
     else:
-      let matches = staticExec("ls \"" & dir & "\"/*.nimble 2>/dev/null").strip()
+      let matches = staticExec(
+        "ls \"" & dir & "\"/*.nimble 2>/dev/" & "null").strip()
     if matches.len > 0:
       for line in matches.splitLines:
         let f = line.strip()
