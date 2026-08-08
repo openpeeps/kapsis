@@ -28,7 +28,7 @@
     <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/framework.html">kapsis/framework</a>, <a href="kapsis/interactive/prompts.html">kapsis/interactive/prompts</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>, <a href="kapsis/types.html">kapsis/types</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/framework.html">kapsis/framework</a>, <a href="kapsis/interactive/prompts.html">kapsis/interactive/prompts</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/plugins.html">kapsis/plugins</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>, <a href="kapsis/types.html">kapsis/types</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="runtime: proc `$`(x: KapsisPath): string" href="kapsis/runtime.html#%24%2CKapsisPath">runtime: proc `$`(x: KapsisPath): string</a></li>
@@ -381,6 +381,10 @@
 <li><a class="reference external"
           data-doc-search-tag="framework: macro initKapsis(stmtNodes: untyped)" href="kapsis/framework.html#initKapsis.m%2Cuntyped">framework: macro initKapsis(stmtNodes: untyped)</a></li>
           </ul></dd>
+<dt><a name="initPluginHost" href="#initPluginHost"><span>initPluginHost:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: proc initPluginHost(exePath: string; localDir: string = &quot;&quot;): PluginHost" href="kapsis/plugins.html#initPluginHost%2Cstring%2Cstring">plugins: proc initPluginHost(exePath: string; localDir: string = &quot;&quot;): PluginHost</a></li>
+          </ul></dd>
 <dt><a name="invert" href="#invert"><span>invert:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc invert(s: string): string" href="kapsis/interactive/spinny/colorize.html#invert%2Cstring">colorize: proc invert(s: string): string</a></li>
@@ -497,6 +501,22 @@
 <li><a class="reference external"
           data-doc-search-tag="spinny: proc newSpinny(text: string; s: Spinner; time = false): Spinny" href="kapsis/interactive/spinny.html#newSpinny%2Cstring%2CSpinner">spinny: proc newSpinny(text: string; s: Spinner; time = false): Spinny</a></li>
           </ul></dd>
+<dt><a name="PluginCmdArg" href="#PluginCmdArg"><span>PluginCmdArg:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: object PluginCmdArg" href="kapsis/plugins.html#PluginCmdArg">plugins: object PluginCmdArg</a></li>
+          </ul></dd>
+<dt><a name="PluginCommand" href="#PluginCommand"><span>PluginCommand:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: object PluginCommand" href="kapsis/plugins.html#PluginCommand">plugins: object PluginCommand</a></li>
+          </ul></dd>
+<dt><a name="PluginHost" href="#PluginHost"><span>PluginHost:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: type PluginHost" href="kapsis/plugins.html#PluginHost">plugins: type PluginHost</a></li>
+          </ul></dd>
+<dt><a name="PluginRunFn" href="#PluginRunFn"><span>PluginRunFn:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: type PluginRunFn" href="kapsis/plugins.html#PluginRunFn">plugins: type PluginRunFn</a></li>
+          </ul></dd>
 <dt><a name="printError" href="#printError"><span>printError:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: template printError(msg: KapsisErrorMessage; arg: varargs[string])" href="kapsis/types.html#printError.t%2CKapsisErrorMessage%2Cvarargs%5Bstring%5D">types: template printError(msg: KapsisErrorMessage; arg: varargs[string])</a></li>
@@ -520,6 +540,10 @@
 <dt><a name="rows" href="#rows"><span>rows:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="prompts: iterator rows(items: seq[Row]): Row" href="kapsis/interactive/prompts.html#rows.i%2Cseq%5BRow%5D">prompts: iterator rows(items: seq[Row]): Row</a></li>
+          </ul></dd>
+<dt><a name="runPluginCommand" href="#runPluginCommand"><span>runPluginCommand:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="plugins: proc runPluginCommand(host: PluginHost; name: string): JsonNode" href="kapsis/plugins.html#runPluginCommand%2CPluginHost%2Cstring">plugins: proc runPluginCommand(host: PluginHost; name: string): JsonNode</a></li>
           </ul></dd>
 <dt><a name="setSymbol" href="#setSymbol"><span>setSymbol:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -847,6 +871,10 @@
           <li><a class="reference external"
           data-doc-search-tag="spinny: proc success(spinny: Spinny; msg: string)" href="kapsis/interactive/spinny.html#success%2CSpinny%2Cstring">spinny: proc success(spinny: Spinny; msg: string)</a></li>
           </ul></dd>
+<dt><a name="toCommand" href="#toCommand"><span>toCommand:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="framework: proc toCommand(cmd: PluginCommand): Command" href="kapsis/framework.html#toCommand%2CPluginCommand">framework: proc toCommand(cmd: PluginCommand): Command</a></li>
+          </ul></dd>
 <dt><a name="toggle" href="#toggle"><span>toggle:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="prompts: proc toggle(onOff: bool): Span" href="kapsis/interactive/prompts.html#toggle%2Cbool">prompts: proc toggle(onOff: bool): Span</a></li>
@@ -903,7 +931,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-07 08:47:49 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-08 22:52:35 UTC</small>
       </div>
     </div>
   </div>

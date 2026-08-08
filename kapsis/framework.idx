@@ -1,13 +1,14 @@
 nimTitle	framework	kapsis/framework.html	module kapsis/framework		0
-nim	ColoredSegment	kapsis/framework.html#ColoredSegment	object ColoredSegment		17
-nim	CmdArg	kapsis/framework.html#CmdArg	type CmdArg		23
-nim	cmdCommand	kapsis/framework.html#cmdCommand	CommandType.cmdCommand		38
-nim	cmdGroup	kapsis/framework.html#cmdGroup	CommandType.cmdGroup		38
-nim	cmdSeparator	kapsis/framework.html#cmdSeparator	CommandType.cmdSeparator		38
-nim	CommandType	kapsis/framework.html#CommandType	enum CommandType		38
-nim	Command	kapsis/framework.html#Command	type Command		42
-nim	Kapsis	kapsis/framework.html#Kapsis	type Kapsis		60
-nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		553
-nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		628
-nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		633
-nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		638
+nim	ColoredSegment	kapsis/framework.html#ColoredSegment	object ColoredSegment		18
+nim	CmdArg	kapsis/framework.html#CmdArg	type CmdArg		24
+nim	cmdCommand	kapsis/framework.html#cmdCommand	CommandType.cmdCommand		39
+nim	cmdGroup	kapsis/framework.html#cmdGroup	CommandType.cmdGroup		39
+nim	cmdSeparator	kapsis/framework.html#cmdSeparator	CommandType.cmdSeparator		39
+nim	CommandType	kapsis/framework.html#CommandType	enum CommandType		39
+nim	Command	kapsis/framework.html#Command	type Command		43
+nim	Kapsis	kapsis/framework.html#Kapsis	type Kapsis		61
+nim	toCommand	kapsis/framework.html#toCommand,PluginCommand	proc toCommand(cmd: PluginCommand): Command		199
+nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		588
+nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		689
+nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		694
+nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		699

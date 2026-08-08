@@ -83,7 +83,22 @@
   cmdCommand, cmdGroup, cmdSeparator">CommandType</a></li>
 <li><a class="reference" href="#Kapsis" title="Kapsis = ref object
   author*, version*, license*, description*: string
-  defaultCommand*: Option[string]">Kapsis</a></li>
+  defaultCommand*: Option[string]
+  pluginsEnabled*: bool
+  pluginLocalDir*: Option[string]
+  pluginHost*: PluginHost">Kapsis</a></li>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
+    <summary><a class="reference reference-toplevel" href="#12" id="62">Procs</a></summary>
+    <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">toCommand
+  <li><a class="reference" href="#toCommand%2CPluginCommand" title="toCommand(cmd: PluginCommand): Command">toCommand(cmd: PluginCommand): Command</a></li>
+
+</ul>
 
     </ul>
   </details>
@@ -135,7 +150,7 @@
     <div class="section" id="6">
   <h1><a class="toc-backref" href="#6">Imports</a></h1>
   <dl class="item">
-    <a class="reference external" href="types.html">types</a>, <a class="reference external" href="interactive/prompts.html">interactive/prompts</a>
+    <a class="reference external" href="types.html">types</a>, <a class="reference external" href="interactive/prompts.html">interactive/prompts</a>, <a class="reference external" href="plugins.html">plugins</a>
   </dl>
 </div>
 <div class="section" id="7">
@@ -192,12 +207,32 @@
 <div id="Kapsis">
   <dt><pre><a href="#Kapsis"><span class="Identifier">Kapsis</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
   <span class="Identifier">author</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">version</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">license</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">description</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
-  <span class="Identifier">defaultCommand</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span></pre></dt>
+  <span class="Identifier">defaultCommand</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">pluginsEnabled</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
+  <span class="Identifier">pluginLocalDir</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">pluginHost</span><span class="Operator">*</span><span class="Other">:</span> <a href="plugins.html#PluginHost"><span class="Identifier">PluginHost</span></a></pre></dt>
   <dd>
     
     
     
   </dd>
+</div>
+
+  </dl>
+</div>
+<div class="section" id="12">
+  <h1><a class="toc-backref" href="#12">Procs</a></h1>
+  <dl class="item">
+    <div id="toCommand-procs-all">
+  <div id="toCommand,PluginCommand">
+  <dt><pre><span class="Keyword">proc</span> <a href="#toCommand%2CPluginCommand"><span class="Identifier">toCommand</span></a><span class="Other">(</span><span class="Identifier">cmd</span><span class="Other">:</span> <a href="plugins.html#PluginCommand"><span class="Identifier">PluginCommand</span></a><span class="Other">)</span><span class="Other">:</span> <a href="#Command"><span class="Identifier">Command</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Converts a plugin command into a regular <tt class="docutils literal"><span class="pre"><span class="Identifier">Command</span></span></tt> so it can be rendered by the usage/help printer. It is never executed through the built-in dispatch path.
+    
+  </dd>
+</div>
+
 </div>
 
   </dl>
@@ -263,7 +298,7 @@
 <div class="section" id="19">
   <h1><a class="toc-backref" href="#19">Exports</a></h1>
   <dl class="item">
-    <a href="types.html#ktHours"><span class="Identifier">ktHours</span></a>, <a href="types.html#KapsisPath"><span class="Identifier">KapsisPath</span></a>, <a href="types.html#ktYaml"><span class="Identifier">ktYaml</span></a>, <a href="types.html#ktFile"><span class="Identifier">ktFile</span></a>, <a href="types.html#ktPath"><span class="Identifier">ktPath</span></a>, <a href="types.html#getUrl,Value"><span class="Identifier">getUrl</span></a>, <a href="types.html#Values"><span class="Identifier">Values</span></a>, <a href="types.html#ktIdent"><span class="Identifier">ktIdent</span></a>, <a href="types.html#getYears,Value"><span class="Identifier">getYears</span></a>, <a href="types.html#ktMilliseconds"><span class="Identifier">ktMilliseconds</span></a>, <a href="types.html#unknownOption"><span class="Identifier">unknownOption</span></a>, <a href="types.html#ktMonths"><span class="Identifier">ktMonths</span></a>, <a href="types.html#getSeconds,Value"><span class="Identifier">getSeconds</span></a>, <a href="types.html#unexpectedOption"><span class="Identifier">unexpectedOption</span></a>, <a href="types.html#getIdent,Value"><span class="Identifier">getIdent</span></a>, <a href="types.html#getFilename,Value"><span class="Identifier">getFilename</span></a>, <a href="types.html#KapsisErrorMessage"><span class="Identifier">KapsisErrorMessage</span></a>, <a href="types.html#getPath,Value"><span class="Identifier">getPath</span></a>, <a href="types.html#Value"><span class="Identifier">Value</span></a>, <a href="types.html#missingArgument"><span class="Identifier">missingArgument</span></a>, <a href="types.html#getMinutes,Value"><span class="Identifier">getMinutes</span></a>, <a href="types.html#ktBool"><span class="Identifier">ktBool</span></a>, <a href="types.html#getBool,Value"><span class="Identifier">getBool</span></a>, <a href="types.html#getFilepath,Value"><span class="Identifier">getFilepath</span></a>, <a href="types.html#ktDir"><span class="Identifier">ktDir</span></a>, <a href="types.html#ktFloat"><span class="Identifier">ktFloat</span></a>, <a href="types.html#getFile,Value"><span class="Identifier">getFile</span></a>, <a href="types.html#collectValues.t,ValuesTable,string,sinkstring,"><span class="Identifier">collectValues</span></a>, <a href="types.html#ktPort"><span class="Identifier">ktPort</span></a>, <a href="types.html#ktInt"><span class="Identifier">ktInt</span></a>, <a href="types.html#getInt,Value"><span class="Identifier">getInt</span></a>, <a href="types.html#typeMismatch"><span class="Identifier">typeMismatch</span></a>, <a href="types.html#CmdArgValueType"><span class="Identifier">CmdArgValueType</span></a>, <a href="types.html#ktFilename"><span class="Identifier">ktFilename</span></a>, <a href="types.html#getDays,Value"><span class="Identifier">getDays</span></a>, <a href="types.html#getHours,Value"><span class="Identifier">getHours</span></a>, <a href="types.html#ktJson"><span class="Identifier">ktJson</span></a>, <a href="types.html#ktYears"><span class="Identifier">ktYears</span></a>, <a href="types.html#getJson,Value"><span class="Identifier">getJson</span></a>, <a href="types.html#ktSeconds"><span class="Identifier">ktSeconds</span></a>, <a href="types.html#unknownCommand"><span class="Identifier">unknownCommand</span></a>, <a href="types.html#getFloat,Value"><span class="Identifier">getFloat</span></a>, <a href="types.html#getYaml,Value"><span class="Identifier">getYaml</span></a>, <a href="types.html#ktFilepath"><span class="Identifier">ktFilepath</span></a>, <a href="types.html#getPort,Value"><span class="Identifier">getPort</span></a>, <a href="types.html#getStr,Value"><span class="Identifier">getStr</span></a>, <a href="types.html#printError.t,KapsisErrorMessage,varargs[string]"><span class="Identifier">printError</span></a>, <a href="types.html#ktString"><span class="Identifier">ktString</span></a>, <a href="types.html#ktDays"><span class="Identifier">ktDays</span></a>, <a href="types.html#getDir,Value"><span class="Identifier">getDir</span></a>, <a href="types.html#ValuesTable"><span class="Identifier">ValuesTable</span></a>, <a href="types.html#getMilliseconds,Value"><span class="Identifier">getMilliseconds</span></a>, <a href="types.html#ktMinutes"><span class="Identifier">ktMinutes</span></a>, <a href="types.html#ktUrl"><span class="Identifier">ktUrl</span></a>, <a href="types.html#getMonths,Value"><span class="Identifier">getMonths</span></a>
+    <a href="types.html#ktHours"><span class="Identifier">ktHours</span></a>, <a href="types.html#KapsisPath"><span class="Identifier">KapsisPath</span></a>, <a href="types.html#ktYaml"><span class="Identifier">ktYaml</span></a>, <a href="types.html#ktFile"><span class="Identifier">ktFile</span></a>, <a href="types.html#ktPath"><span class="Identifier">ktPath</span></a>, <a href="types.html#getUrl,Value"><span class="Identifier">getUrl</span></a>, <a href="types.html#Values"><span class="Identifier">Values</span></a>, <a href="types.html#ktIdent"><span class="Identifier">ktIdent</span></a>, <a href="types.html#getYears,Value"><span class="Identifier">getYears</span></a>, <a href="types.html#ktMilliseconds"><span class="Identifier">ktMilliseconds</span></a>, <a href="types.html#unknownOption"><span class="Identifier">unknownOption</span></a>, <a href="types.html#ktMonths"><span class="Identifier">ktMonths</span></a>, <a href="types.html#getSeconds,Value"><span class="Identifier">getSeconds</span></a>, <a href="types.html#unexpectedOption"><span class="Identifier">unexpectedOption</span></a>, <a href="types.html#getIdent,Value"><span class="Identifier">getIdent</span></a>, <a href="types.html#getFilename,Value"><span class="Identifier">getFilename</span></a>, <a href="types.html#KapsisErrorMessage"><span class="Identifier">KapsisErrorMessage</span></a>, <a href="types.html#getPath,Value"><span class="Identifier">getPath</span></a>, <a href="types.html#Value"><span class="Identifier">Value</span></a>, <a href="types.html#missingArgument"><span class="Identifier">missingArgument</span></a>, <a href="types.html#getMinutes,Value"><span class="Identifier">getMinutes</span></a>, <a href="types.html#ktBool"><span class="Identifier">ktBool</span></a>, <a href="types.html#getBool,Value"><span class="Identifier">getBool</span></a>, <a href="types.html#getFilepath,Value"><span class="Identifier">getFilepath</span></a>, <a href="types.html#ktDir"><span class="Identifier">ktDir</span></a>, <a href="types.html#ktFloat"><span class="Identifier">ktFloat</span></a>, <a href="types.html#getFile,Value"><span class="Identifier">getFile</span></a>, <a href="types.html#collectValues.t,ValuesTable,string,sinkstring,"><span class="Identifier">collectValues</span></a>, <a href="types.html#ktPort"><span class="Identifier">ktPort</span></a>, <a href="types.html#ktInt"><span class="Identifier">ktInt</span></a>, <a href="types.html#getInt,Value"><span class="Identifier">getInt</span></a>, <a href="types.html#typeMismatch"><span class="Identifier">typeMismatch</span></a>, <a href="types.html#CmdArgValueType"><span class="Identifier">CmdArgValueType</span></a>, <a href="types.html#ktFilename"><span class="Identifier">ktFilename</span></a>, <a href="types.html#getDays,Value"><span class="Identifier">getDays</span></a>, <a href="types.html#getHours,Value"><span class="Identifier">getHours</span></a>, <a href="types.html#ktJson"><span class="Identifier">ktJson</span></a>, <a href="types.html#ktYears"><span class="Identifier">ktYears</span></a>, <a href="types.html#getJson,Value"><span class="Identifier">getJson</span></a>, <a href="types.html#ktSeconds"><span class="Identifier">ktSeconds</span></a>, <a href="types.html#unknownCommand"><span class="Identifier">unknownCommand</span></a>, <a href="types.html#getFloat,Value"><span class="Identifier">getFloat</span></a>, <a href="types.html#getYaml,Value"><span class="Identifier">getYaml</span></a>, <a href="types.html#ktFilepath"><span class="Identifier">ktFilepath</span></a>, <a href="types.html#getPort,Value"><span class="Identifier">getPort</span></a>, <a href="types.html#getStr,Value"><span class="Identifier">getStr</span></a>, <a href="types.html#printError.t,KapsisErrorMessage,varargs[string]"><span class="Identifier">printError</span></a>, <a href="types.html#ktString"><span class="Identifier">ktString</span></a>, <a href="types.html#ktDays"><span class="Identifier">ktDays</span></a>, <a href="types.html#getDir,Value"><span class="Identifier">getDir</span></a>, <a href="types.html#ValuesTable"><span class="Identifier">ValuesTable</span></a>, <a href="types.html#getMilliseconds,Value"><span class="Identifier">getMilliseconds</span></a>, <a href="types.html#ktMinutes"><span class="Identifier">ktMinutes</span></a>, <a href="types.html#ktUrl"><span class="Identifier">ktUrl</span></a>, <a href="types.html#getMonths,Value"><span class="Identifier">getMonths</span></a>, <a href="plugins.html#PluginCommand"><span class="Identifier">PluginCommand</span></a>, <a href="plugins.html#PluginRunFn"><span class="Identifier">PluginRunFn</span></a>, <a href="plugins.html#PluginCmdArg"><span class="Identifier">PluginCmdArg</span></a>, <a href="plugins.html#PluginHost"><span class="Identifier">PluginHost</span></a>, <a href="plugins.html#initPluginHost,string,string"><span class="Identifier">initPluginHost</span></a>, <a href="plugins.html#runPluginCommand,PluginHost,string"><span class="Identifier">runPluginCommand</span></a>
   </dl>
 </div>
 
@@ -273,7 +308,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-07 08:47:49 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-08 22:52:35 UTC</small>
       </div>
     </div>
   </div>
