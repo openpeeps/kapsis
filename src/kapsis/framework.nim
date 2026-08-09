@@ -6,7 +6,7 @@
 
 import std/[macros, tables, strutils, os, sequtils,
           parseopt, options, times, macrocache,
-          algorithm, wordwrap, terminal, json]
+          algorithm, wordwrap, terminal, json, unicode]
 
 import ./types, ./interactive/prompts, ./plugins
 
@@ -86,8 +86,9 @@ proc findNimbleFile(): string {.compileTime.} =
   for dir in @[proj, proj / "..", proj / ".." / ".."]:
     let pattern = dir / "*.nimble"
     when defined(windows):
+      # `cmd /c dir /b /a-d "<pattern>" 2>nul`
       let matches = staticExec(
-        "dir /" & "b /a" & "-d \"" & pattern & "\" 2>n" & "ul").strip()
+        "cmd /" & "c dir /" & "b /a" & "-d \"" & pattern & "\" 2>n" & "ul").strip()
     else:
       let matches = staticExec(
         "ls \"" & dir & "\"/*.nimble 2>/dev/" & "null").strip()
@@ -195,6 +196,13 @@ proc renderColored(segments: seq[ColoredSegment]) =
 
 proc segmentLen(segments: seq[ColoredSegment]): int =
   for s in segments: result += s.text.len
+
+proc visualLen(segments: seq[ColoredSegment]): int =
+  ## Byte length ignores that multibyte chars (e.g. `⚑`) render as a single
+  ## column, so this counts runes instead for accurate display-width math
+  for s in segments:
+    for r in s.text.runes:
+      inc result
 
 proc toCommand*(cmd: PluginCommand): Command =
   ## Converts a plugin command into a regular `Command` so it can be rendered by the
@@ -313,6 +321,7 @@ proc printUsage(app: Kapsis,
         pad += 2
       let wrapped = wrapWords(x[1], 60)
       let lines = wrapped.splitLines
+      let descCol = visualLen(x[0]) + pad
       for j, line in lines:
         if j == 0:
           if isHighlighted:
@@ -327,7 +336,7 @@ proc printUsage(app: Kapsis,
           stdout.resetAttributes()
           write(stdout, "\n")
         else:
-          write(stdout, repeat(" ", longestCmd + 16))
+          write(stdout, repeat(" ", descCol))
           stdout.setForegroundColor(fgBlack, bright=true)
           write(stdout, line)
           stdout.resetAttributes()
