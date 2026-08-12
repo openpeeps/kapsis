@@ -7,6 +7,8 @@
 
 # converted to Nim with
 # https://gist.github.com/Yardanico/4137a09f171bfceae0b1dc531fdcc631
+import std/[tables, algorithm]
+
 type
   Spinner* = object
     interval*: int
@@ -1127,3 +1129,60 @@ const
       "ββββββρ",
     ]
   )
+
+const
+  SpinnerEntries* = [
+    ("dots", skDots), ("dots2", skDots2), ("dots3", skDots3),
+    ("dots4", skDots4), ("dots5", skDots5), ("dots6", skDots6),
+    ("dots7", skDots7), ("dots8", skDots8), ("dots9", skDots9),
+    ("dots10", skDots10), ("dots11", skDots11), ("dots12", skDots12),
+    ("dots8Bit", skDots8Bit),
+    ("line", skLine), ("line2", skLine2), ("pipe", skPipe),
+    ("simpleDots", skSimpleDots), ("simpleDotsScrolling", skSimpleDotsScrolling),
+    ("star", skStar), ("star2", skStar2), ("flip", skFlip),
+    ("hamburger", skHamburger),
+    ("growVertical", skGrowVertical), ("growHorizontal", skGrowHorizontal),
+    ("balloon", skBalloon), ("balloon2", skBalloon2),
+    ("noise", skNoise), ("bounce", skBounce),
+    ("boxBounce", skBoxBounce), ("boxBounce2", skBoxBounce2),
+    ("triangle", skTriangle), ("arc", skArc), ("circle", skCircle),
+    ("squareCorners", skSquareCorners), ("circleQuarters", skCircleQuarters),
+    ("circleHalves", skCircleHalves), ("squish", skSquish),
+    ("toggle", skToggle), ("toggle2", skToggle2), ("toggle3", skToggle3),
+    ("toggle4", skToggle4), ("toggle5", skToggle5), ("toggle6", skToggle6),
+    ("toggle7", skToggle7), ("toggle8", skToggle8), ("toggle9", skToggle9),
+    ("toggle10", skToggle10), ("toggle11", skToggle11), ("toggle12", skToggle12),
+    ("toggle13", skToggle13),
+    ("arrow", skArrow), ("arrow2", skArrow2), ("arrow3", skArrow3),
+    ("bouncingBar", skBouncingBar), ("bouncingBall", skBouncingBall),
+    ("smiley", skSmiley), ("monkey", skMonkey), ("hearts", skHearts),
+    ("clock", skClock), ("earth", skEarth), ("moon", skMoon),
+    ("runner", skRunner), ("pong", skPong), ("shark", skShark),
+    ("dqpb", skDqpb), ("weather", skWeather), ("christmas", skChristmas),
+    ("grenade", skGrenade), ("point", skPoint), ("layer", skLayer),
+    ("betaWave", skBetaWave),
+  ]
+
+let
+  spinnerByName* = block:
+    var t: Table[string, Spinner]
+    for (name, sp) in SpinnerEntries:
+      t[name] = sp
+    t
+
+proc getSpinner*(name: string): Spinner =
+  ## Returns the spinner matching `name` (e.g. `"dots"`), or raises `ValueError`
+  result = spinnerByName.getOrDefault(name)
+  if result.frames.len == 0:
+    raise newException(ValueError, "Unknown spinner: " & name)
+
+proc spinnerNames*(): seq[string] =
+  ## Returns the list of available spinner names
+  for name in spinnerByName.keys:
+    result.add name
+  result.sort()
+
+proc allSpinners*(): seq[Spinner] =
+  ## Returns every spinner in registry order
+  for (_, sp) in SpinnerEntries:
+    result.add sp

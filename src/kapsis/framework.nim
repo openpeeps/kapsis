@@ -35,6 +35,8 @@ type
     isOptional*: bool
       ## When an argument is optional, it means that the user
       ## doesn't have to provide it when executing the command
+    choices*: seq[string]
+      ## For `any` arguments, the list of allowed values
   
   CommandType* = enum
     ## The type of the command, used for parsing and validation at runtime
@@ -217,7 +219,8 @@ proc toCommand*(cmd: PluginCommand): Command =
       kind: a.kind,
       dataType: a.datatype,
       name: a.name,
-      isOptional: a.isOptional
+      isOptional: a.isOptional,
+      choices: a.choices
     )
 
 proc preparePrintCommand(cmd: Command,
@@ -240,14 +243,23 @@ proc preparePrintCommand(cmd: Command,
           parts.add ColoredSegment(text: "?", fg: fgBlack, bright: true)
         parts.add ColoredSegment(text: arg.name, fg: fgDefault)
         if showTypes:
-          parts.add ColoredSegment(text: ":" & $arg.dataType, fg: fgCyan)
+          var typeStr = ":" & $arg.dataType
+          if arg.dataType == ktAny and arg.choices.len > 0:
+            typeStr.add "[" & arg.choices.join(",") & "]"
+          parts.add ColoredSegment(text: typeStr, fg: fgCyan)
         parts.add ColoredSegment(text: ">", fg: fgBlack, bright: true)
       of cmdLongOption:
         if showFlags:
-          flags.add arg.name & ":" & $arg.dataType
+          var flagStr = arg.name & ":" & $arg.dataType
+          if arg.dataType == ktAny and arg.choices.len > 0:
+            flagStr.add "[" & arg.choices.join(",") & "]"
+          flags.add flagStr
       of cmdShortOption:
         if showFlags:
-          flags.add arg.name & ":" & $arg.dataType
+          var flagStr = arg.name & ":" & $arg.dataType
+          if arg.dataType == ktAny and arg.choices.len > 0:
+            flagStr.add "[" & arg.choices.join(",") & "]"
+          flags.add flagStr
       else: discard
     if cmd.arguments.len > 0:
       if not showFlags:
@@ -309,16 +321,17 @@ proc printUsage(app: Kapsis,
     var isHighlighted = false
     if x[1].len > 0:
       let plainLen = segmentLen(x[0])
-      var pad = longestCmd - plainLen + 18
+      var pad = longestCmd - plainLen + 8
       let hasFlagIcon = block:
         var found = false
         for s in x[0]:
           if s.text.contains("⚑"): found = true; break
         found
       if showTypes:
-        pad -= 2
+        pad += 4
       elif hasFlagIcon:
         pad += 2
+      if pad < 1: pad = 1
       let wrapped = wrapWords(x[1], 60)
       let lines = wrapped.splitLines
       let descCol = visualLen(x[0]) + pad
@@ -406,6 +419,7 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
     # parse arguments and subcommands
     var isOptional: bool
     var argTypeNode, argNameNode: NimNode
+    var argChoices: seq[string]
     var kind: CmdLineKind
     case n.kind
     of nnkDotExpr:
@@ -415,6 +429,13 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
     of nnkCommand, nnkCall:
       argTypeNode = n[0]
       argNameNode = n[1]
+      if argTypeNode.eqIdent"any":
+        # `any(name = ["a", "b"])` — arg name + allowed choices
+        if argNameNode.kind != nnkExprEqExpr:
+          error("`any` arguments require a list of choices: any(name = [\"a\", \"b\"])", n)
+        for v in argNameNode[1]:
+          argChoices.add v.strVal
+        argNameNode = argNameNode[0]
       if argNameNode.kind == nnkStrLit and argNameNode.strVal.startsWith("--"):
         # we handle long options like `--verbose` by
         kind = cmdLongOption
@@ -438,6 +459,13 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
         elif n[1].kind == nnkCall:
           argTypeNode = n[1][0]
           argNameNode = n[1][1]
+          if argTypeNode.eqIdent"any":
+            # `?any(name = ["a", "b"])`
+            if argNameNode.kind != nnkExprEqExpr:
+              error("`any` arguments require a list of choices: any(name = [\"a\", \"b\"])", n)
+            for v in argNameNode[1]:
+              argChoices.add v.strVal
+            argNameNode = argNameNode[0]
           if argNameNode.strVal.startsWith("--"):
             kind = cmdLongOption
           elif argNameNode.strVal.startsWith("-"):
@@ -462,6 +490,7 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
         nnkExprColonExpr.newTree(ident"dataType",newLit(argType)),
         nnkExprColonExpr.newTree(ident"name", newLit(argNameNode.strVal)),
         nnkExprColonExpr.newTree(ident"isOptional", newLit(isOptional)),
+        nnkExprColonExpr.newTree(ident"choices", newLit(argChoices)),
       )
     )
 

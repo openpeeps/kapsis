@@ -6,3 +6,9 @@ htmldocs/
 nimble.develop
 nimble.paths
 nimbledeps
+
+# compiled test binaries and fixtures
+tests/test1
+tests/test2
+tests/fixtures/cliapp.bin
+tests/fixtures/cliapp.bin.exe

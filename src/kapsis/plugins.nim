@@ -26,6 +26,7 @@ type
     datatype*: CmdArgValueType
     kind*: CmdLineKind
     isOptional*: bool
+    choices*: seq[string]
 
   PluginCommand* = object
     ## A subcommand contributed by a plugin shared library.
@@ -90,7 +91,9 @@ proc collectPluginCommands(host: PluginHost, dir: string) =
                 name: a["name"].getStr,
                 datatype: typeFromString(a["type"].getStr),
                 kind: parseCmdKind(a["kind"].getStr),
-                isOptional: a["optional"].getBool
+                isOptional: a["optional"].getBool,
+                choices: (if a.hasKey("choices"):
+                  a["choices"].getElems.mapIt(it.getStr) else: @[])
               )
           host.commands[cmd.name] = cmd
     except CatchableError:

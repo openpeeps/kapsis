@@ -2,9 +2,9 @@ import std/[macros, terminal, sequtils, strutils]
 import pkg/valido
 
 import pkg/[termstyle, nancy, noise]
-import ./spinny, ./spinny/spinners
+import ./spinny, ./spinny/[spinners, preloaders]
 
-export nancy, spinny, spinners, termstyle
+export nancy, spinny, spinners, preloaders, termstyle
 
 from std/strutils import `%`, spaces, indent
 export ForegroundColor, BackgroundColor

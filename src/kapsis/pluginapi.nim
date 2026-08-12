@@ -30,6 +30,8 @@ type
       ## The kind of the argument (`cmdArgument`, `cmdLongOption` or `cmdShortOption`)
     optional*: bool
       ## Whether the argument is optional
+    choices*: seq[string]
+      ## For `any` arguments, the list of allowed values
 
 proc toValueType*(s: string): CmdArgValueType =
   ## Parses a type string (e.g. `"string"`, `"int"`) into a `CmdArgValueType`.
@@ -83,6 +85,7 @@ proc parseArgList(cmdArgs: seq[NimNode]): (seq[NimNode], seq[PluginArg]) =
     var
       isOptional = false
       argTypeNode, argNameNode: NimNode
+      argChoices: seq[string]
       kind = cmdArgument
     case n.kind
     of nnkDotExpr:
@@ -91,6 +94,12 @@ proc parseArgList(cmdArgs: seq[NimNode]): (seq[NimNode], seq[PluginArg]) =
     of nnkCommand, nnkCall:
       argTypeNode = n[0]
       argNameNode = n[1]
+      if argTypeNode.eqIdent"any":
+        if argNameNode.kind != nnkExprEqExpr:
+          error("`any` arguments require a list of choices: any(name = [\"a\", \"b\"])", n)
+        for v in argNameNode[1]:
+          argChoices.add v.strVal
+        argNameNode = argNameNode[0]
       if argNameNode.kind == nnkStrLit:
         if argNameNode.strVal.startsWith("--"):
           kind = cmdLongOption
@@ -105,6 +114,12 @@ proc parseArgList(cmdArgs: seq[NimNode]): (seq[NimNode], seq[PluginArg]) =
         elif n[1].kind in {nnkCommand, nnkCall}:
           argTypeNode = n[1][0]
           argNameNode = n[1][1]
+          if argTypeNode.eqIdent"any":
+            if argNameNode.kind != nnkExprEqExpr:
+              error("`any` arguments require a list of choices: any(name = [\"a\", \"b\"])", n)
+            for v in argNameNode[1]:
+              argChoices.add v.strVal
+            argNameNode = argNameNode[0]
           if argNameNode.kind == nnkStrLit:
             if argNameNode.strVal.startsWith("--"):
               kind = cmdLongOption
@@ -121,7 +136,8 @@ proc parseArgList(cmdArgs: seq[NimNode]): (seq[NimNode], seq[PluginArg]) =
       name: argNameNode.strVal,
       datatype: parseEnum[CmdArgValueType](argTypeNode.strVal),
       kind: kind,
-      optional: isOptional
+      optional: isOptional,
+      choices: argChoices
     )
     argNodes.add(n)
   result = (argNodes, specs)
@@ -137,7 +153,8 @@ proc buildArgLiteral(specs: seq[PluginArg]): NimNode =
         nnkExprColonExpr.newTree(ident"datatype",
           newCall(ident"toValueType", newLit($s.datatype))),
         nnkExprColonExpr.newTree(ident"kind", ident($s.kind)),
-        nnkExprColonExpr.newTree(ident"optional", newLit(s.optional))
+        nnkExprColonExpr.newTree(ident"optional", newLit(s.optional)),
+        nnkExprColonExpr.newTree(ident"choices", newLit(s.choices))
       )
     )
 
@@ -222,6 +239,8 @@ macro commands*(bodies: untyped): untyped =
         a["type"] = %(($s.datatype))
         a["kind"] = %argKind(s.kind)
         a["optional"] = %s.optional
+        if s.choices.len > 0:
+          a["choices"] = %s.choices
         argsArr.add(a)
       commandObj["args"] = argsArr
       manifest.add(commandObj)

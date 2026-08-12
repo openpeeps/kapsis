@@ -36,6 +36,7 @@ type
     ktUrl = "url"
     ktPort = "port"
     ktIdent = "ident"
+    ktAny = "any"
 
   KapsisPath* = object
     ## The KapsisPath object that will hold the parsed value of a
@@ -89,6 +90,8 @@ type
       vPort: Port
     of ktIdent:
       vIdent: string
+    of ktAny:
+      vAny: string
   
   ValuesTable* = OrderedTable[string, Value]
     ## The table that will hold the parsed values of the command line arguments
@@ -106,6 +109,7 @@ type
     unexpectedOption = "Unexpected option: $1",
     typeMismatch = "Type mismatch for `$1`. Expected $2"
     missingArgument = "Missing required argument: $1"
+    invalidChoice = "Invalid choice for `$1`. Expected one of: $2"
 
 template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
   ## Print `msg` error with `args` and quit with `QuitFailure` exit code 
@@ -199,6 +203,11 @@ template collectValues*(values: var ValuesTable,
     of ktIdent:
       if val.validIdentifier:
         values[argName] = Value(kt: ktIdent, vIdent: val)
+    of ktAny:
+      if val in arg.choices:
+        values[argName] = Value(kt: ktAny, vAny: val)
+      else:
+        printError(invalidChoice, argName, arg.choices.join(", "))
     else: discard
     if not values.hasKey(argName):
       printError(typeMismatch, argName, $arg.datatype)

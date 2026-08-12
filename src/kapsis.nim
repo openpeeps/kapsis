@@ -6,7 +6,7 @@
 
 import ./kapsis/[framework, runtime]
 import ./kapsis/interactive/prompts
-export framework, tables
+export framework, tables, runtime
 
 when isMainModule:
   #
@@ -31,6 +31,9 @@ when isMainModule:
     if v.has("--sure"):
       displaySuccess "Listen on YouTube 🔈 https://www.youtube.com/watch?v=66OkZGoI7Bk&list=PLG2Yb0-YL20c88ZRUl3YAhjLxTIbPql9u"
 
+  proc pickCommand(v: Values) =
+    echo "picked: " & v.get("flavor").getAny
+
   #
   # Init Kapsis with the defined commands
   #
@@ -47,6 +50,10 @@ when isMainModule:
       -- "Another command"
       greet name.string, ?string(greeting):
         ## Greeting someone with an optional greeting message
+
+      -- "Choice demo"
+      pick ?any(flavor = ["vanilla", "chocolate", "strawberry"]):
+        ## Pick an ice cream flavor
 
       -- "Colors by Ken Nordine"
       colors:
