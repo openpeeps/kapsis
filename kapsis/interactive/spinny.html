@@ -61,7 +61,15 @@
   <details open>
     <summary><a class="reference reference-toplevel" href="#7" id="57">Types</a></summary>
     <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#Spinny" title="Spinny = ref object">Spinny</a></li>
+      <li><a class="reference" href="#Spinny" title="Spinny = object
+  text*: string
+  frames*: seq[string]
+  interval*: int">Spinny</a></li>
+<li><a class="reference" href="#SpinnyColor" title="SpinnyColor = enum
+  cDefault, cBlack, cRed, cGreen, cYellow, cBlue, cMagenta, cCyan, cWhite, cGray">SpinnyColor</a></li>
+<li><a class="reference" href="#SpinnyManager" title="SpinnyManager = object">SpinnyManager</a></li>
+<li><a class="reference" href="#SpinnyState" title="SpinnyState = enum
+  stIdle, stSpinning, stStopped, stSucceeded, stFailed, stWarned, stInformed">SpinnyState</a></li>
 
     </ul>
   </details>
@@ -70,37 +78,93 @@
   <details open>
     <summary><a class="reference reference-toplevel" href="#12" id="62">Procs</a></summary>
     <ul class="simple simple-toc-section">
-      <ul class="simple nested-toc-section">error
-  <li><a class="reference" href="#error%2CSpinny%2Cstring" title="error(spinny: Spinny; msg: string)">error(spinny: Spinny; msg: string)</a></li>
+      <ul class="simple nested-toc-section">defaultManager
+  <li><a class="reference" href="#defaultManager" title="defaultManager(): ptr SpinnyManager">defaultManager(): ptr SpinnyManager</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">error
+  <li><a class="reference" href="#error%2CSpinny%2Cstring" title="error(spinny: var Spinny; msg = &quot;&quot;)">error(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">info
+  <li><a class="reference" href="#info%2CSpinny%2Cstring" title="info(spinny: var Spinny; msg = &quot;&quot;)">info(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">isSpinning
+  <li><a class="reference" href="#isSpinning%2CSpinny" title="isSpinning(spinny: var Spinny): bool">isSpinning(spinny: var Spinny): bool</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">log
+  <li><a class="reference" href="#log%2CSpinny%2Cstring" title="log(spinny: var Spinny; text: string)">log(spinny: var Spinny; text: string)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">newSpinny
-  <li><a class="reference" href="#newSpinny%2Cstring%2CSpinner" title="newSpinny(text: string; s: Spinner; time = false): Spinny">newSpinny(text: string; s: Spinner; time = false): Spinny</a></li>
+  <li><a class="reference" href="#newSpinny%2Cstring%2Cstring%2Cptr.SpinnyManager" title="newSpinny(text: string; name: string; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny">newSpinny(text: string; name: string; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny</a></li>
+<li><a class="reference" href="#newSpinny%2Cstring%2CSpinner%2Cptr.SpinnyManager" title="newSpinny(text: string; s: Spinner; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny">newSpinny(text: string; s: Spinner; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">newSpinnyManager
+  <li><a class="reference" href="#newSpinnyManager%2CFile" title="newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager">newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">setColor
+  <li><a class="reference" href="#setColor%2CSpinny%2CSpinnyColor" title="setColor(spinny: var Spinny; color: SpinnyColor)">setColor(spinny: var Spinny; color: SpinnyColor)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">setInterval
+  <li><a class="reference" href="#setInterval%2CSpinny%2Cint" title="setInterval(spinny: var Spinny; ms: int)">setInterval(spinny: var Spinny; ms: int)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">setPreloader
+  <li><a class="reference" href="#setPreloader%2CSpinny%2Cstring" title="setPreloader(spinny: var Spinny; name: string)">setPreloader(spinny: var Spinny; name: string)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">setSpinner
+  <li><a class="reference" href="#setSpinner%2CSpinny%2Cstring" title="setSpinner(spinny: var Spinny; name: string)">setSpinner(spinny: var Spinny; name: string)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">setSymbol
-  <li><a class="reference" href="#setSymbol%2CSpinny%2Cstring" title="setSymbol(spinny: Spinny; symbol: string)">setSymbol(spinny: Spinny; symbol: string)</a></li>
+  <li><a class="reference" href="#setSymbol%2CSpinny%2Cstring" title="setSymbol(spinny: var Spinny; symbol: string)">setSymbol(spinny: var Spinny; symbol: string)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">setSymbolColor
-  <li><a class="reference" href="#setSymbolColor%2CSpinny%2Cproc%28string%29" title="setSymbolColor(spinny: Spinny; color: proc (x: string): string)">setSymbolColor(spinny: Spinny; color: proc (x: string): string)</a></li>
+  <li><a class="reference" href="#setSymbolColor%2CSpinny%2Cproc%28string%29" title="setSymbolColor(spinny: var Spinny; color: proc (x: string): string)">setSymbolColor(spinny: var Spinny; color: proc (x: string): string)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">setText
-  <li><a class="reference" href="#setText%2CSpinny%2Cstring" title="setText(spinny: Spinny; text: string)">setText(spinny: Spinny; text: string)</a></li>
+  <li><a class="reference" href="#setText%2CSpinny%2Cstring" title="setText(spinny: var Spinny; text: string)">setText(spinny: var Spinny; text: string)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">start
-  <li><a class="reference" href="#start%2CSpinny" title="start(spinny: Spinny)">start(spinny: Spinny)</a></li>
+  <li><a class="reference" href="#start%2CSpinny" title="start(spinny: var Spinny)">start(spinny: var Spinny)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">stop
-  <li><a class="reference" href="#stop%2CSpinny" title="stop(spinny: Spinny)">stop(spinny: Spinny)</a></li>
+  <li><a class="reference" href="#stop%2CSpinny" title="stop(spinny: var Spinny)">stop(spinny: var Spinny)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">success
-  <li><a class="reference" href="#success%2CSpinny" title="success(spinny: Spinny)">success(spinny: Spinny)</a></li>
-<li><a class="reference" href="#success%2CSpinny%2Cstring" title="success(spinny: Spinny; msg: string)">success(spinny: Spinny; msg: string)</a></li>
+  <li><a class="reference" href="#success%2CSpinny%2Cstring" title="success(spinny: var Spinny; msg = &quot;&quot;)">success(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">warn
+  <li><a class="reference" href="#warn%2CSpinny%2Cstring" title="warn(spinny: var Spinny; msg = &quot;&quot;)">warn(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+
+</ul>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
+    <summary><a class="reference reference-toplevel" href="#18" id="68">Templates</a></summary>
+    <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">withSpinny
+  <li><a class="reference" href="#withSpinny.t%2CSpinny%2Cuntyped" title="withSpinny(spinny: Spinny; body: untyped): untyped">withSpinny(spinny: Spinny; body: untyped): untyped</a></li>
 
 </ul>
 
@@ -122,14 +186,43 @@
     <div class="section" id="6">
   <h1><a class="toc-backref" href="#6">Imports</a></h1>
   <dl class="item">
-    <a class="reference external" href="spinny/colorize.html">spinny/colorize</a>, <a class="reference external" href="spinny/spinners.html">spinny/spinners</a>
+    <a class="reference external" href="spinny/colorize.html">spinny/colorize</a>, <a class="reference external" href="spinny/spinners.html">spinny/spinners</a>, <a class="reference external" href="spinny/preloaders.html">spinny/preloaders</a>
   </dl>
 </div>
 <div class="section" id="7">
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="Spinny">
-  <dt><pre><a href="#Spinny"><span class="Identifier">Spinny</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span></pre></dt>
+  <dt><pre><a href="#Spinny"><span class="Identifier">Spinny</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">text</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
+  <span class="Identifier">frames</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">interval</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+<div id="SpinnyColor">
+  <dt><pre><a href="#SpinnyColor"><span class="Identifier">SpinnyColor</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">cDefault</span><span class="Other">,</span> <span class="Identifier">cBlack</span><span class="Other">,</span> <span class="Identifier">cRed</span><span class="Other">,</span> <span class="Identifier">cGreen</span><span class="Other">,</span> <span class="Identifier">cYellow</span><span class="Other">,</span> <span class="Identifier">cBlue</span><span class="Other">,</span> <span class="Identifier">cMagenta</span><span class="Other">,</span> <span class="Identifier">cCyan</span><span class="Other">,</span> <span class="Identifier">cWhite</span><span class="Other">,</span> <span class="Identifier">cGray</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+<div id="SpinnyManager">
+  <dt><pre><a href="#SpinnyManager"><span class="Identifier">SpinnyManager</span></a> <span class="Other">=</span> <span class="Keyword">object</span></pre></dt>
+  <dd>
+    
+    Owns the terminal. All active spinners share one manager so they can be rendered on separate lines, one above the other.
+    
+  </dd>
+</div>
+<div id="SpinnyState">
+  <dt><pre><a href="#SpinnyState"><span class="Identifier">SpinnyState</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
+  <span class="Identifier">stIdle</span><span class="Other">,</span> <span class="Identifier">stSpinning</span><span class="Other">,</span> <span class="Identifier">stStopped</span><span class="Other">,</span> <span class="Identifier">stSucceeded</span><span class="Other">,</span> <span class="Identifier">stFailed</span><span class="Other">,</span> <span class="Identifier">stWarned</span><span class="Other">,</span> <span class="Identifier">stInformed</span></pre></dt>
   <dd>
     
     
@@ -142,9 +235,44 @@
 <div class="section" id="12">
   <h1><a class="toc-backref" href="#12">Procs</a></h1>
   <dl class="item">
-    <div id="error-procs-all">
+    <div id="defaultManager-procs-all">
+  <div id="defaultManager">
+  <dt><pre><span class="Keyword">proc</span> <a href="#defaultManager"><span class="Identifier">defaultManager</span></a><span class="Other">(</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">ptr</span> <a href="#SpinnyManager"><span class="Identifier">SpinnyManager</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Returns the process-wide default terminal manager
+    
+  </dd>
+</div>
+
+</div>
+<div id="error-procs-all">
   <div id="error,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#error%2CSpinny%2Cstring"><span class="Identifier">error</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#error%2CSpinny%2Cstring"><span class="Identifier">error</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Stops the spinner with a red cross status line
+    
+  </dd>
+</div>
+
+</div>
+<div id="info-procs-all">
+  <div id="info,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#info%2CSpinny%2Cstring"><span class="Identifier">info</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Stops the spinner with a cyan info status line
+    
+  </dd>
+</div>
+
+</div>
+<div id="isSpinning-procs-all">
+  <div id="isSpinning,Spinny">
+  <dt><pre><span class="Keyword">proc</span> <a href="#isSpinning%2CSpinny"><span class="Identifier">isSpinning</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -153,13 +281,96 @@
 </div>
 
 </div>
-<div id="newSpinny-procs-all">
-  <div id="newSpinny,string,Spinner">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinny%2Cstring%2CSpinner"><span class="Identifier">newSpinny</span></a><span class="Other">(</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a><span class="Other">;</span> <span class="Identifier">time</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="log-procs-all">
+  <div id="log,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#log%2CSpinny%2Cstring"><span class="Identifier">log</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
+    Prints a persistent line below the active spinners
     
+  </dd>
+</div>
+
+</div>
+<div id="newSpinny-procs-all">
+  <div id="newSpinny,string,string,ptr.SpinnyManager">
+  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinny%2Cstring%2Cstring%2Cptr.SpinnyManager"><span class="Identifier">newSpinny</span></a><span class="Other">(</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">name</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">time</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">;</span>
+               <span class="Identifier">manager</span><span class="Other">:</span> <span class="Keyword">ptr</span> <a href="#SpinnyManager"><span class="Identifier">SpinnyManager</span></a> <span class="Other">=</span> <span class="Identifier">defaultManager</span><span class="Other">(</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Creates a spinner/preloader by name (e.g. <tt class="docutils literal"><span class="pre"><span class="StringLit">&quot;dots&quot;</span></span></tt> or <tt class="docutils literal"><span class="pre"><span class="StringLit">&quot;train&quot;</span></span></tt>)
+    
+  </dd>
+</div>
+<div id="newSpinny,string,Spinner,ptr.SpinnyManager">
+  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinny%2Cstring%2CSpinner%2Cptr.SpinnyManager"><span class="Identifier">newSpinny</span></a><span class="Other">(</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a><span class="Other">;</span> <span class="Identifier">time</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">;</span>
+               <span class="Identifier">manager</span><span class="Other">:</span> <span class="Keyword">ptr</span> <a href="#SpinnyManager"><span class="Identifier">SpinnyManager</span></a> <span class="Other">=</span> <span class="Identifier">defaultManager</span><span class="Other">(</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Creates a new spinner/preloader from a <tt class="docutils literal"><span class="pre"><span class="Identifier">Spinner</span></span></tt> definition
+    
+  </dd>
+</div>
+
+</div>
+<div id="newSpinnyManager-procs-all">
+  <div id="newSpinnyManager,File">
+  <dt><pre><span class="Keyword">proc</span> <a href="#newSpinnyManager%2CFile"><span class="Identifier">newSpinnyManager</span></a><span class="Other">(</span><span class="Identifier">output</span><span class="Other">:</span> <span class="Identifier">File</span> <span class="Other">=</span> <span class="Identifier">stdout</span><span class="Other">;</span> <span class="Identifier">forceTty</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#SpinnyManager"><span class="Identifier">SpinnyManager</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Creates a terminal manager. When <tt class="docutils literal"><span class="pre"><span class="Identifier">forceTty</span></span></tt> is set, animations are enabled even if <tt class="docutils literal"><span class="pre"><span class="Identifier">output</span></span></tt> is not a terminal (useful for tests).
+    
+  </dd>
+</div>
+
+</div>
+<div id="setColor-procs-all">
+  <div id="setColor,Spinny,SpinnyColor">
+  <dt><pre><span class="Keyword">proc</span> <a href="#setColor%2CSpinny%2CSpinnyColor"><span class="Identifier">setColor</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">color</span><span class="Other">:</span> <a href="#SpinnyColor"><span class="Identifier">SpinnyColor</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Colors the animated frames
+    
+  </dd>
+</div>
+
+</div>
+<div id="setInterval-procs-all">
+  <div id="setInterval,Spinny,int">
+  <dt><pre><span class="Keyword">proc</span> <a href="#setInterval%2CSpinny%2Cint"><span class="Identifier">setInterval</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">ms</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Sets the animation interval in milliseconds
+    
+  </dd>
+</div>
+
+</div>
+<div id="setPreloader-procs-all">
+  <div id="setPreloader,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#setPreloader%2CSpinny%2Cstring"><span class="Identifier">setPreloader</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">name</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Switches the animation to a preloader by name
+    
+  </dd>
+</div>
+
+</div>
+<div id="setSpinner-procs-all">
+  <div id="setSpinner,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#setSpinner%2CSpinny%2Cstring"><span class="Identifier">setSpinner</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">name</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Switches the animation to a spinner by name
     
   </dd>
 </div>
@@ -167,11 +378,11 @@
 </div>
 <div id="setSymbol-procs-all">
   <div id="setSymbol,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbol%2CSpinny%2Cstring"><span class="Identifier">setSymbol</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">symbol</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbol%2CSpinny%2Cstring"><span class="Identifier">setSymbol</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">symbol</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Replaces the animated frames with a static symbol
     
   </dd>
 </div>
@@ -179,11 +390,11 @@
 </div>
 <div id="setSymbolColor-procs-all">
   <div id="setSymbolColor,Spinny,proc(string)">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbolColor%2CSpinny%2Cproc%28string%29"><span class="Identifier">setSymbolColor</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">color</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#setSymbolColor%2CSpinny%2Cproc%28string%29"><span class="Identifier">setSymbolColor</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">color</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Colors the static symbol (applied on the next <tt class="docutils literal"><span class="pre"><span class="Identifier">setSymbol</span></span></tt> or immediately)
     
   </dd>
 </div>
@@ -191,10 +402,11 @@
 </div>
 <div id="setText-procs-all">
   <div id="setText,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#setText%2CSpinny%2Cstring"><span class="Identifier">setText</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#setText%2CSpinny%2Cstring"><span class="Identifier">setText</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Updates the message shown next to the spinner
     
   </dd>
 </div>
@@ -202,11 +414,11 @@
 </div>
 <div id="start-procs-all">
   <div id="start,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#start%2CSpinny"><span class="Identifier">start</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">ResourceExhaustedError</span><span class="Other">]</span><span class="Other">,</span>
-                             <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#start%2CSpinny"><span class="Identifier">start</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">ResourceExhaustedError</span><span class="Other">]</span><span class="Other">,</span>
+                                 <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Starts animating the spinner on its own line
     
   </dd>
 </div>
@@ -214,29 +426,52 @@
 </div>
 <div id="stop-procs-all">
   <div id="stop,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#stop%2CSpinny"><span class="Identifier">stop</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#stop%2CSpinny"><span class="Identifier">stop</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+                                <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Stops the spinner and clears its line
     
   </dd>
 </div>
 
 </div>
 <div id="success-procs-all">
-  <div id="success,Spinny">
-  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <div id="success,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny%2Cstring"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    Stops the spinner with a green checkmark status line
     
   </dd>
 </div>
-<div id="success,Spinny,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#success%2CSpinny%2Cstring"><span class="Identifier">success</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+
+</div>
+<div id="warn-procs-all">
+  <div id="warn,Spinny,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#warn%2CSpinny%2Cstring"><span class="Identifier">warn</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">msg</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
+    Stops the spinner with a yellow warning status line
     
+  </dd>
+</div>
+
+</div>
+
+  </dl>
+</div>
+<div class="section" id="18">
+  <h1><a class="toc-backref" href="#18">Templates</a></h1>
+  <dl class="item">
+    <div id="withSpinny-templates-all">
+  <div id="withSpinny.t,Spinny,untyped">
+  <dt><pre><span class="Keyword">template</span> <a href="#withSpinny.t%2CSpinny%2Cuntyped"><span class="Identifier">withSpinny</span></a><span class="Other">(</span><span class="Identifier">spinny</span><span class="Other">:</span> <a href="#Spinny"><span class="Identifier">Spinny</span></a><span class="Other">;</span> <span class="Identifier">body</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
+  <dd>
+    
+    Runs <tt class="docutils literal"><span class="pre"><span class="Identifier">body</span></span></tt> while the spinner is animating, guaranteeing cleanup
     
   </dd>
 </div>
@@ -248,7 +483,7 @@
 <div class="section" id="19">
   <h1><a class="toc-backref" href="#19">Exports</a></h1>
   <dl class="item">
-    <a href="spinny/spinners.html#skFlip"><span class="Identifier">skFlip</span></a>, <a href="spinny/spinners.html#skDots5"><span class="Identifier">skDots5</span></a>, <a href="spinny/spinners.html#skSimpleDotsScrolling"><span class="Identifier">skSimpleDotsScrolling</span></a>, <a href="spinny/spinners.html#skDots10"><span class="Identifier">skDots10</span></a>, <a href="spinny/spinners.html#skHearts"><span class="Identifier">skHearts</span></a>, <a href="spinny/spinners.html#skBoxBounce"><span class="Identifier">skBoxBounce</span></a>, <a href="spinny/spinners.html#skClock"><span class="Identifier">skClock</span></a>, <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a>, <a href="spinny/spinners.html#skArrow2"><span class="Identifier">skArrow2</span></a>, <a href="spinny/spinners.html#skGrowVertical"><span class="Identifier">skGrowVertical</span></a>, <a href="spinny/spinners.html#skPipe"><span class="Identifier">skPipe</span></a>, <a href="spinny/spinners.html#skDots2"><span class="Identifier">skDots2</span></a>, <a href="spinny/spinners.html#skGrenade"><span class="Identifier">skGrenade</span></a>, <a href="spinny/spinners.html#skToggle2"><span class="Identifier">skToggle2</span></a>, <a href="spinny/spinners.html#skBouncingBall"><span class="Identifier">skBouncingBall</span></a>, <a href="spinny/spinners.html#skToggle11"><span class="Identifier">skToggle11</span></a>, <a href="spinny/spinners.html#skSimpleDots"><span class="Identifier">skSimpleDots</span></a>, <a href="spinny/spinners.html#skToggle10"><span class="Identifier">skToggle10</span></a>, <a href="spinny/spinners.html#skToggle4"><span class="Identifier">skToggle4</span></a>, <a href="spinny/spinners.html#skMonkey"><span class="Identifier">skMonkey</span></a>, <a href="spinny/spinners.html#skToggle3"><span class="Identifier">skToggle3</span></a>, <a href="spinny/spinners.html#skMoon"><span class="Identifier">skMoon</span></a>, <a href="spinny/spinners.html#skRunner"><span class="Identifier">skRunner</span></a>, <a href="spinny/spinners.html#skPong"><span class="Identifier">skPong</span></a>, <a href="spinny/spinners.html#skChristmas"><span class="Identifier">skChristmas</span></a>, <a href="spinny/spinners.html#skStar"><span class="Identifier">skStar</span></a>, <a href="spinny/spinners.html#skBoxBounce2"><span class="Identifier">skBoxBounce2</span></a>, <a href="spinny/spinners.html#skDots12"><span class="Identifier">skDots12</span></a>, <a href="spinny/spinners.html#skWeather"><span class="Identifier">skWeather</span></a>, <a href="spinny/spinners.html#skTriangle"><span class="Identifier">skTriangle</span></a>, <a href="spinny/spinners.html#skToggle12"><span class="Identifier">skToggle12</span></a>, <a href="spinny/spinners.html#skLine"><span class="Identifier">skLine</span></a>, <a href="spinny/spinners.html#skLayer"><span class="Identifier">skLayer</span></a>, <a href="spinny/spinners.html#skToggle13"><span class="Identifier">skToggle13</span></a>, <a href="spinny/spinners.html#skDqpb"><span class="Identifier">skDqpb</span></a>, <a href="spinny/spinners.html#skShark"><span class="Identifier">skShark</span></a>, <a href="spinny/spinners.html#skBalloon2"><span class="Identifier">skBalloon2</span></a>, <a href="spinny/spinners.html#skDots8"><span class="Identifier">skDots8</span></a>, <a href="spinny/spinners.html#makeSpinner,int,openArray[string]"><span class="Identifier">makeSpinner</span></a>, <a href="spinny/spinners.html#skSmiley"><span class="Identifier">skSmiley</span></a>, <a href="spinny/spinners.html#skDots7"><span class="Identifier">skDots7</span></a>, <a href="spinny/spinners.html#skArrow3"><span class="Identifier">skArrow3</span></a>, <a href="spinny/spinners.html#skDots4"><span class="Identifier">skDots4</span></a>, <a href="spinny/spinners.html#skDots"><span class="Identifier">skDots</span></a>, <a href="spinny/spinners.html#skToggle6"><span class="Identifier">skToggle6</span></a>, <a href="spinny/spinners.html#skDots8Bit"><span class="Identifier">skDots8Bit</span></a>, <a href="spinny/spinners.html#skHamburger"><span class="Identifier">skHamburger</span></a>, <a href="spinny/spinners.html#skSquish"><span class="Identifier">skSquish</span></a>, <a href="spinny/spinners.html#skToggle7"><span class="Identifier">skToggle7</span></a>, <a href="spinny/spinners.html#skArc"><span class="Identifier">skArc</span></a>, <a href="spinny/spinners.html#skBetaWave"><span class="Identifier">skBetaWave</span></a>, <a href="spinny/spinners.html#skNoise"><span class="Identifier">skNoise</span></a>, <a href="spinny/spinners.html#skDots11"><span class="Identifier">skDots11</span></a>, <a href="spinny/spinners.html#skLine2"><span class="Identifier">skLine2</span></a>, <a href="spinny/spinners.html#skGrowHorizontal"><span class="Identifier">skGrowHorizontal</span></a>, <a href="spinny/spinners.html#skCircle"><span class="Identifier">skCircle</span></a>, <a href="spinny/spinners.html#skArrow"><span class="Identifier">skArrow</span></a>, <a href="spinny/spinners.html#skDots6"><span class="Identifier">skDots6</span></a>, <a href="spinny/spinners.html#skToggle5"><span class="Identifier">skToggle5</span></a>, <a href="spinny/spinners.html#skToggle9"><span class="Identifier">skToggle9</span></a>, <a href="spinny/spinners.html#skBalloon"><span class="Identifier">skBalloon</span></a>, <a href="spinny/spinners.html#skBounce"><span class="Identifier">skBounce</span></a>, <a href="spinny/spinners.html#skBouncingBar"><span class="Identifier">skBouncingBar</span></a>, <a href="spinny/spinners.html#skCircleQuarters"><span class="Identifier">skCircleQuarters</span></a>, <a href="spinny/spinners.html#skDots3"><span class="Identifier">skDots3</span></a>, <a href="spinny/spinners.html#skToggle8"><span class="Identifier">skToggle8</span></a>, <a href="spinny/spinners.html#skStar2"><span class="Identifier">skStar2</span></a>, <a href="spinny/spinners.html#skDots9"><span class="Identifier">skDots9</span></a>, <a href="spinny/spinners.html#skCircleHalves"><span class="Identifier">skCircleHalves</span></a>, <a href="spinny/spinners.html#skPoint"><span class="Identifier">skPoint</span></a>, <a href="spinny/spinners.html#skToggle"><span class="Identifier">skToggle</span></a>, <a href="spinny/spinners.html#skSquareCorners"><span class="Identifier">skSquareCorners</span></a>, <a href="spinny/spinners.html#skEarth"><span class="Identifier">skEarth</span></a>, <a href="spinny/colorize.html#fgWhite,string"><span class="Identifier">fgWhite</span></a>, <a href="spinny/colorize.html#bgLightBlue,string"><span class="Identifier">bgLightBlue</span></a>, <a href="spinny/colorize.html#fgCyan,string"><span class="Identifier">fgCyan</span></a>, <a href="spinny/colorize.html#fgLightMagenta,string"><span class="Identifier">fgLightMagenta</span></a>, <a href="spinny/colorize.html#bgDarkGray,string"><span class="Identifier">bgDarkGray</span></a>, <a href="spinny/colorize.html#bgYellow,string"><span class="Identifier">bgYellow</span></a>, <a href="spinny/colorize.html#underline,string"><span class="Identifier">underline</span></a>, <a href="spinny/colorize.html#fgGreen,string"><span class="Identifier">fgGreen</span></a>, <a href="spinny/colorize.html#fgLightGray,string"><span class="Identifier">fgLightGray</span></a>, <a href="spinny/colorize.html#fgLightYellow,string"><span class="Identifier">fgLightYellow</span></a>, <a href="spinny/colorize.html#invert,string"><span class="Identifier">invert</span></a>, <a href="spinny/colorize.html#bgLightRed,string"><span class="Identifier">bgLightRed</span></a>, <a href="spinny/colorize.html#fgDarkGray,string"><span class="Identifier">fgDarkGray</span></a>, <a href="spinny/colorize.html#fgLightRed,string"><span class="Identifier">fgLightRed</span></a>, <a href="spinny/colorize.html#bgLightCyan,string"><span class="Identifier">bgLightCyan</span></a>, <a href="spinny/colorize.html#bgLightGreen,string"><span class="Identifier">bgLightGreen</span></a>, <a href="spinny/colorize.html#bgBlue,string"><span class="Identifier">bgBlue</span></a>, <a href="spinny/colorize.html#fgBlue,string"><span class="Identifier">fgBlue</span></a>, <a href="spinny/colorize.html#bgWhite,string"><span class="Identifier">bgWhite</span></a>, <a href="spinny/colorize.html#fgLightGreen,string"><span class="Identifier">fgLightGreen</span></a>, <a href="spinny/colorize.html#bgCyan,string"><span class="Identifier">bgCyan</span></a>, <a href="spinny/colorize.html#bgMagenta,string"><span class="Identifier">bgMagenta</span></a>, <a href="spinny/colorize.html#fgLightBlue,string"><span class="Identifier">fgLightBlue</span></a>, <a href="spinny/colorize.html#hidden,string"><span class="Identifier">hidden</span></a>, <a href="spinny/colorize.html#fgBlack,string"><span class="Identifier">fgBlack</span></a>, <a href="spinny/colorize.html#fgMagenta,string"><span class="Identifier">fgMagenta</span></a>, <a href="spinny/colorize.html#bgLightMagenta,string"><span class="Identifier">bgLightMagenta</span></a>, <a href="spinny/colorize.html#bgLightYellow,string"><span class="Identifier">bgLightYellow</span></a>, <a href="spinny/colorize.html#bgGreen,string"><span class="Identifier">bgGreen</span></a>, <a href="spinny/colorize.html#fgRed,string"><span class="Identifier">fgRed</span></a>, <a href="spinny/colorize.html#bgBlack,string"><span class="Identifier">bgBlack</span></a>, <a href="spinny/colorize.html#bold,string"><span class="Identifier">bold</span></a>, <a href="spinny/colorize.html#bgRed,string"><span class="Identifier">bgRed</span></a>, <a href="spinny/colorize.html#bgLightGray,string"><span class="Identifier">bgLightGray</span></a>, <a href="spinny/colorize.html#fgYellow,string"><span class="Identifier">fgYellow</span></a>, <a href="spinny/colorize.html#fgLightCyan,string"><span class="Identifier">fgLightCyan</span></a>
+    <a href="spinny/colorize.html#fgWhite,string"><span class="Identifier">fgWhite</span></a>, <a href="spinny/colorize.html#bgLightBlue,string"><span class="Identifier">bgLightBlue</span></a>, <a href="spinny/colorize.html#fgCyan,string"><span class="Identifier">fgCyan</span></a>, <a href="spinny/colorize.html#fgLightMagenta,string"><span class="Identifier">fgLightMagenta</span></a>, <a href="spinny/colorize.html#bgDarkGray,string"><span class="Identifier">bgDarkGray</span></a>, <a href="spinny/colorize.html#bgYellow,string"><span class="Identifier">bgYellow</span></a>, <a href="spinny/colorize.html#underline,string"><span class="Identifier">underline</span></a>, <a href="spinny/colorize.html#fgGreen,string"><span class="Identifier">fgGreen</span></a>, <a href="spinny/colorize.html#fgLightGray,string"><span class="Identifier">fgLightGray</span></a>, <a href="spinny/colorize.html#fgLightYellow,string"><span class="Identifier">fgLightYellow</span></a>, <a href="spinny/colorize.html#invert,string"><span class="Identifier">invert</span></a>, <a href="spinny/colorize.html#bgLightRed,string"><span class="Identifier">bgLightRed</span></a>, <a href="spinny/colorize.html#fgDarkGray,string"><span class="Identifier">fgDarkGray</span></a>, <a href="spinny/colorize.html#fgLightRed,string"><span class="Identifier">fgLightRed</span></a>, <a href="spinny/colorize.html#bgLightCyan,string"><span class="Identifier">bgLightCyan</span></a>, <a href="spinny/colorize.html#bgLightGreen,string"><span class="Identifier">bgLightGreen</span></a>, <a href="spinny/colorize.html#bgBlue,string"><span class="Identifier">bgBlue</span></a>, <a href="spinny/colorize.html#fgBlue,string"><span class="Identifier">fgBlue</span></a>, <a href="spinny/colorize.html#bgWhite,string"><span class="Identifier">bgWhite</span></a>, <a href="spinny/colorize.html#fgLightGreen,string"><span class="Identifier">fgLightGreen</span></a>, <a href="spinny/colorize.html#bgCyan,string"><span class="Identifier">bgCyan</span></a>, <a href="spinny/colorize.html#bgMagenta,string"><span class="Identifier">bgMagenta</span></a>, <a href="spinny/colorize.html#fgLightBlue,string"><span class="Identifier">fgLightBlue</span></a>, <a href="spinny/colorize.html#hidden,string"><span class="Identifier">hidden</span></a>, <a href="spinny/colorize.html#fgBlack,string"><span class="Identifier">fgBlack</span></a>, <a href="spinny/colorize.html#fgMagenta,string"><span class="Identifier">fgMagenta</span></a>, <a href="spinny/colorize.html#bgLightMagenta,string"><span class="Identifier">bgLightMagenta</span></a>, <a href="spinny/colorize.html#bgLightYellow,string"><span class="Identifier">bgLightYellow</span></a>, <a href="spinny/colorize.html#bgGreen,string"><span class="Identifier">bgGreen</span></a>, <a href="spinny/colorize.html#fgRed,string"><span class="Identifier">fgRed</span></a>, <a href="spinny/colorize.html#bgBlack,string"><span class="Identifier">bgBlack</span></a>, <a href="spinny/colorize.html#bold,string"><span class="Identifier">bold</span></a>, <a href="spinny/colorize.html#bgRed,string"><span class="Identifier">bgRed</span></a>, <a href="spinny/colorize.html#bgLightGray,string"><span class="Identifier">bgLightGray</span></a>, <a href="spinny/colorize.html#fgYellow,string"><span class="Identifier">fgYellow</span></a>, <a href="spinny/colorize.html#fgLightCyan,string"><span class="Identifier">fgLightCyan</span></a>, <a href="spinny/spinners.html#skFlip"><span class="Identifier">skFlip</span></a>, <a href="spinny/spinners.html#skDots5"><span class="Identifier">skDots5</span></a>, <a href="spinny/spinners.html#SpinnerEntries"><span class="Identifier">SpinnerEntries</span></a>, <a href="spinny/spinners.html#skSimpleDotsScrolling"><span class="Identifier">skSimpleDotsScrolling</span></a>, <a href="spinny/spinners.html#getSpinner,string"><span class="Identifier">getSpinner</span></a>, <a href="spinny/spinners.html#skDots10"><span class="Identifier">skDots10</span></a>, <a href="spinny/spinners.html#skHearts"><span class="Identifier">skHearts</span></a>, <a href="spinny/spinners.html#skBoxBounce"><span class="Identifier">skBoxBounce</span></a>, <a href="spinny/spinners.html#skClock"><span class="Identifier">skClock</span></a>, <a href="spinny/spinners.html#allSpinners"><span class="Identifier">allSpinners</span></a>, <a href="spinny/spinners.html#Spinner"><span class="Identifier">Spinner</span></a>, <a href="spinny/spinners.html#skArrow2"><span class="Identifier">skArrow2</span></a>, <a href="spinny/spinners.html#skGrowVertical"><span class="Identifier">skGrowVertical</span></a>, <a href="spinny/spinners.html#skPipe"><span class="Identifier">skPipe</span></a>, <a href="spinny/spinners.html#skDots2"><span class="Identifier">skDots2</span></a>, <a href="spinny/spinners.html#skGrenade"><span class="Identifier">skGrenade</span></a>, <a href="spinny/spinners.html#skToggle2"><span class="Identifier">skToggle2</span></a>, <a href="spinny/spinners.html#skBouncingBall"><span class="Identifier">skBouncingBall</span></a>, <a href="spinny/spinners.html#skToggle11"><span class="Identifier">skToggle11</span></a>, <a href="spinny/spinners.html#skSimpleDots"><span class="Identifier">skSimpleDots</span></a>, <a href="spinny/spinners.html#skToggle10"><span class="Identifier">skToggle10</span></a>, <a href="spinny/spinners.html#skToggle4"><span class="Identifier">skToggle4</span></a>, <a href="spinny/spinners.html#skMonkey"><span class="Identifier">skMonkey</span></a>, <a href="spinny/spinners.html#skToggle3"><span class="Identifier">skToggle3</span></a>, <a href="spinny/spinners.html#skMoon"><span class="Identifier">skMoon</span></a>, <a href="spinny/spinners.html#skRunner"><span class="Identifier">skRunner</span></a>, <a href="spinny/spinners.html#skPong"><span class="Identifier">skPong</span></a>, <a href="spinny/spinners.html#skChristmas"><span class="Identifier">skChristmas</span></a>, <a href="spinny/spinners.html#skStar"><span class="Identifier">skStar</span></a>, <a href="spinny/spinners.html#skBoxBounce2"><span class="Identifier">skBoxBounce2</span></a>, <a href="spinny/spinners.html#skDots12"><span class="Identifier">skDots12</span></a>, <a href="spinny/spinners.html#skWeather"><span class="Identifier">skWeather</span></a>, <a href="spinny/spinners.html#skTriangle"><span class="Identifier">skTriangle</span></a>, <a href="spinny/spinners.html#skToggle12"><span class="Identifier">skToggle12</span></a>, <a href="spinny/spinners.html#skLine"><span class="Identifier">skLine</span></a>, <a href="spinny/spinners.html#skLayer"><span class="Identifier">skLayer</span></a>, <a href="spinny/spinners.html#skToggle13"><span class="Identifier">skToggle13</span></a>, <a href="spinny/spinners.html#skDqpb"><span class="Identifier">skDqpb</span></a>, <a href="spinny/spinners.html#skShark"><span class="Identifier">skShark</span></a>, <a href="spinny/spinners.html#skBalloon2"><span class="Identifier">skBalloon2</span></a>, <a href="spinny/spinners.html#skDots8"><span class="Identifier">skDots8</span></a>, <a href="spinny/spinners.html#makeSpinner,int,openArray[string]"><span class="Identifier">makeSpinner</span></a>, <a href="spinny/spinners.html#skSmiley"><span class="Identifier">skSmiley</span></a>, <a href="spinny/spinners.html#skDots7"><span class="Identifier">skDots7</span></a>, <a href="spinny/spinners.html#skArrow3"><span class="Identifier">skArrow3</span></a>, <a href="spinny/spinners.html#skDots4"><span class="Identifier">skDots4</span></a>, <a href="spinny/spinners.html#spinnerNames"><span class="Identifier">spinnerNames</span></a>, <a href="spinny/spinners.html#skDots"><span class="Identifier">skDots</span></a>, <a href="spinny/spinners.html#skToggle6"><span class="Identifier">skToggle6</span></a>, <a href="spinny/spinners.html#skDots8Bit"><span class="Identifier">skDots8Bit</span></a>, <a href="spinny/spinners.html#skHamburger"><span class="Identifier">skHamburger</span></a>, <a href="spinny/spinners.html#skSquish"><span class="Identifier">skSquish</span></a>, <a href="spinny/spinners.html#skToggle7"><span class="Identifier">skToggle7</span></a>, <a href="spinny/spinners.html#skArc"><span class="Identifier">skArc</span></a>, <a href="spinny/spinners.html#skBetaWave"><span class="Identifier">skBetaWave</span></a>, <a href="spinny/spinners.html#skNoise"><span class="Identifier">skNoise</span></a>, <a href="spinny/spinners.html#skDots11"><span class="Identifier">skDots11</span></a>, <a href="spinny/spinners.html#skLine2"><span class="Identifier">skLine2</span></a>, <a href="spinny/spinners.html#skGrowHorizontal"><span class="Identifier">skGrowHorizontal</span></a>, <a href="spinny/spinners.html#skCircle"><span class="Identifier">skCircle</span></a>, <a href="spinny/spinners.html#skArrow"><span class="Identifier">skArrow</span></a>, <a href="spinny/spinners.html#skDots6"><span class="Identifier">skDots6</span></a>, <a href="spinny/spinners.html#skToggle5"><span class="Identifier">skToggle5</span></a>, <a href="spinny/spinners.html#skToggle9"><span class="Identifier">skToggle9</span></a>, <a href="spinny/spinners.html#skBalloon"><span class="Identifier">skBalloon</span></a>, <a href="spinny/spinners.html#skBounce"><span class="Identifier">skBounce</span></a>, <a href="spinny/spinners.html#skBouncingBar"><span class="Identifier">skBouncingBar</span></a>, <a href="spinny/spinners.html#spinnerByName"><span class="Identifier">spinnerByName</span></a>, <a href="spinny/spinners.html#skCircleQuarters"><span class="Identifier">skCircleQuarters</span></a>, <a href="spinny/spinners.html#skDots3"><span class="Identifier">skDots3</span></a>, <a href="spinny/spinners.html#skToggle8"><span class="Identifier">skToggle8</span></a>, <a href="spinny/spinners.html#skStar2"><span class="Identifier">skStar2</span></a>, <a href="spinny/spinners.html#skDots9"><span class="Identifier">skDots9</span></a>, <a href="spinny/spinners.html#skCircleHalves"><span class="Identifier">skCircleHalves</span></a>, <a href="spinny/spinners.html#skPoint"><span class="Identifier">skPoint</span></a>, <a href="spinny/spinners.html#skToggle"><span class="Identifier">skToggle</span></a>, <a href="spinny/spinners.html#skSquareCorners"><span class="Identifier">skSquareCorners</span></a>, <a href="spinny/spinners.html#skEarth"><span class="Identifier">skEarth</span></a>, <a href="spinny/preloaders.html#pkThreeBounce"><span class="Identifier">pkThreeBounce</span></a>, <a href="spinny/preloaders.html#pkWave"><span class="Identifier">pkWave</span></a>, <a href="spinny/preloaders.html#pkDualPulse"><span class="Identifier">pkDualPulse</span></a>, <a href="spinny/preloaders.html#pkRing"><span class="Identifier">pkRing</span></a>, <a href="spinny/preloaders.html#pkFadeWave"><span class="Identifier">pkFadeWave</span></a>, <a href="spinny/preloaders.html#pkEqualizer"><span class="Identifier">pkEqualizer</span></a>, <a href="spinny/preloaders.html#PreloaderEntries"><span class="Identifier">PreloaderEntries</span></a>, <a href="spinny/preloaders.html#pkSlide"><span class="Identifier">pkSlide</span></a>, <a href="spinny/preloaders.html#allPreloaders"><span class="Identifier">allPreloaders</span></a>, <a href="spinny/preloaders.html#pkSpinSquare"><span class="Identifier">pkSpinSquare</span></a>, <a href="spinny/preloaders.html#pkSyncBounce"><span class="Identifier">pkSyncBounce</span></a>, <a href="spinny/preloaders.html#preloaderByName"><span class="Identifier">preloaderByName</span></a>, <a href="spinny/preloaders.html#getPreloader,string"><span class="Identifier">getPreloader</span></a>, <a href="spinny/preloaders.html#pkFade"><span class="Identifier">pkFade</span></a>, <a href="spinny/preloaders.html#pkGrow"><span class="Identifier">pkGrow</span></a>, <a href="spinny/preloaders.html#preloaderNames"><span class="Identifier">preloaderNames</span></a>, <a href="spinny/preloaders.html#pkDots"><span class="Identifier">pkDots</span></a>, <a href="spinny/preloaders.html#pkTrain"><span class="Identifier">pkTrain</span></a>, <a href="spinny/preloaders.html#pkBounce"><span class="Identifier">pkBounce</span></a>, <a href="spinny/preloaders.html#pkDualBounce"><span class="Identifier">pkDualBounce</span></a>, <a href="spinny/preloaders.html#pkPulse"><span class="Identifier">pkPulse</span></a>
   </dl>
 </div>
 
@@ -258,7 +493,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-09 20:42:15 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-15 22:14:16 UTC</small>
       </div>
     </div>
   </div>

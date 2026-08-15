@@ -65,7 +65,8 @@
   name*: string
   datatype*: CmdArgValueType
   kind*: CmdLineKind
-  isOptional*: bool">PluginCmdArg</a></li>
+  isOptional*: bool
+  choices*: seq[string]">PluginCmdArg</a></li>
 <li><a class="reference" href="#PluginCommand" title="PluginCommand = object
   name*, description*, symbol*: string ## The command name, its help description and the exported function symbol
                                        ## the host will invoke to run it.
@@ -118,7 +119,8 @@
   <span class="Identifier">name</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
   <span class="Identifier">datatype</span><span class="Operator">*</span><span class="Other">:</span> <a href="types.html#CmdArgValueType"><span class="Identifier">CmdArgValueType</span></a>
   <span class="Identifier">kind</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">CmdLineKind</span>
-  <span class="Identifier">isOptional</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <span class="Identifier">isOptional</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
+  <span class="Identifier">choices</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span></pre></dt>
   <dd>
     
     A command-line argument contributed by a plugin command.
@@ -197,7 +199,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-09 20:42:15 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-15 22:14:16 UTC</small>
       </div>
     </div>
   </div>

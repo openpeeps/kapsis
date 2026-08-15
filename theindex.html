@@ -28,10 +28,18 @@
     <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/framework.html">kapsis/framework</a>, <a href="kapsis/interactive/prompts.html">kapsis/interactive/prompts</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/plugins.html">kapsis/plugins</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>, <a href="kapsis/types.html">kapsis/types</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="index.html">kapsis</a>, <a href="kapsis/framework.html">kapsis/framework</a>, <a href="kapsis/interactive/prompts.html">kapsis/interactive/prompts</a>, <a href="kapsis/interactive/spinny.html">kapsis/interactive/spinny</a>, <a href="kapsis/interactive/spinny/colorize.html">kapsis/interactive/spinny/colorize</a>, <a href="kapsis/interactive/spinny/preloaders.html">kapsis/interactive/spinny/preloaders</a>, <a href="kapsis/interactive/spinny/spinners.html">kapsis/interactive/spinny/spinners</a>, <a href="kapsis/plugins.html">kapsis/plugins</a>, <a href="kapsis/runtime.html">kapsis/runtime</a>, <a href="kapsis/types.html">kapsis/types</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="runtime: proc `$`(x: KapsisPath): string" href="kapsis/runtime.html#%24%2CKapsisPath">runtime: proc `$`(x: KapsisPath): string</a></li>
+          </ul></dd>
+<dt><a name="allPreloaders" href="#allPreloaders"><span>allPreloaders:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: proc allPreloaders(): seq[Spinner]" href="kapsis/interactive/spinny/preloaders.html#allPreloaders">preloaders: proc allPreloaders(): seq[Spinner]</a></li>
+          </ul></dd>
+<dt><a name="allSpinners" href="#allSpinners"><span>allSpinners:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinners: proc allSpinners(): seq[Spinner]" href="kapsis/interactive/spinny/spinners.html#allSpinners">spinners: proc allSpinners(): seq[Spinner]</a></li>
           </ul></dd>
 <dt><a name="askEmail" href="#askEmail"><span>askEmail:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -117,6 +125,34 @@
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc bold(s: string): string" href="kapsis/interactive/spinny/colorize.html#bold%2Cstring">colorize: proc bold(s: string): string</a></li>
           </ul></dd>
+<dt><a name="cBlack" href="#cBlack"><span>cBlack:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cBlack" href="kapsis/interactive/spinny.html#cBlack">spinny: SpinnyColor.cBlack</a></li>
+          </ul></dd>
+<dt><a name="cBlue" href="#cBlue"><span>cBlue:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cBlue" href="kapsis/interactive/spinny.html#cBlue">spinny: SpinnyColor.cBlue</a></li>
+          </ul></dd>
+<dt><a name="cCyan" href="#cCyan"><span>cCyan:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cCyan" href="kapsis/interactive/spinny.html#cCyan">spinny: SpinnyColor.cCyan</a></li>
+          </ul></dd>
+<dt><a name="cDefault" href="#cDefault"><span>cDefault:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cDefault" href="kapsis/interactive/spinny.html#cDefault">spinny: SpinnyColor.cDefault</a></li>
+          </ul></dd>
+<dt><a name="cGray" href="#cGray"><span>cGray:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cGray" href="kapsis/interactive/spinny.html#cGray">spinny: SpinnyColor.cGray</a></li>
+          </ul></dd>
+<dt><a name="cGreen" href="#cGreen"><span>cGreen:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cGreen" href="kapsis/interactive/spinny.html#cGreen">spinny: SpinnyColor.cGreen</a></li>
+          </ul></dd>
+<dt><a name="cMagenta" href="#cMagenta"><span>cMagenta:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cMagenta" href="kapsis/interactive/spinny.html#cMagenta">spinny: SpinnyColor.cMagenta</a></li>
+          </ul></dd>
 <dt><a name="CmdArg" href="#CmdArg"><span>CmdArg:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="framework: type CmdArg" href="kapsis/framework.html#CmdArg">framework: type CmdArg</a></li>
@@ -153,9 +189,25 @@
 <li><a class="reference external"
           data-doc-search-tag="framework: enum CommandType" href="kapsis/framework.html#CommandType">framework: enum CommandType</a></li>
           </ul></dd>
+<dt><a name="cRed" href="#cRed"><span>cRed:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cRed" href="kapsis/interactive/spinny.html#cRed">spinny: SpinnyColor.cRed</a></li>
+          </ul></dd>
+<dt><a name="cWhite" href="#cWhite"><span>cWhite:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cWhite" href="kapsis/interactive/spinny.html#cWhite">spinny: SpinnyColor.cWhite</a></li>
+          </ul></dd>
 <dt><a name="cyanSpan" href="#cyanSpan"><span>cyanSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="prompts: proc cyanSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#cyanSpan%2Cstring%2Cint">prompts: proc cyanSpan(label: string; indentSize = 1): Span</a></li>
+          </ul></dd>
+<dt><a name="cYellow" href="#cYellow"><span>cYellow:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyColor.cYellow" href="kapsis/interactive/spinny.html#cYellow">spinny: SpinnyColor.cYellow</a></li>
+          </ul></dd>
+<dt><a name="defaultManager" href="#defaultManager"><span>defaultManager:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc defaultManager(): ptr SpinnyManager" href="kapsis/interactive/spinny.html#defaultManager">spinny: proc defaultManager(): ptr SpinnyManager</a></li>
           </ul></dd>
 <dt><a name="display" href="#display"><span>display:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -195,7 +247,7 @@
           </ul></dd>
 <dt><a name="error" href="#error"><span>error:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc error(spinny: Spinny; msg: string)" href="kapsis/interactive/spinny.html#error%2CSpinny%2Cstring">spinny: proc error(spinny: Spinny; msg: string)</a></li>
+          data-doc-search-tag="spinny: proc error(spinny: var Spinny; msg = &quot;&quot;)" href="kapsis/interactive/spinny.html#error%2CSpinny%2Cstring">spinny: proc error(spinny: var Spinny; msg = &quot;&quot;)</a></li>
           </ul></dd>
 <dt><a name="fgBlack" href="#fgBlack"><span>fgBlack:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -265,6 +317,10 @@
 <li><a class="reference external"
           data-doc-search-tag="runtime: proc get(values: Values; key: string): Value" href="kapsis/runtime.html#get%2CValues%2Cstring">runtime: proc get(values: Values; key: string): Value</a></li>
           </ul></dd>
+<dt><a name="getAny" href="#getAny"><span>getAny:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: proc getAny(value: Value): lent string" href="kapsis/types.html#getAny%2CValue">types: proc getAny(value: Value): lent string</a></li>
+          </ul></dd>
 <dt><a name="getBool" href="#getBool"><span>getBool:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: proc getBool(value: Value): lent bool" href="kapsis/types.html#getBool%2CValue">types: proc getBool(value: Value): lent bool</a></li>
@@ -329,9 +385,17 @@
 <li><a class="reference external"
           data-doc-search-tag="types: proc getPort(value: Value): lent Port" href="kapsis/types.html#getPort%2CValue">types: proc getPort(value: Value): lent Port</a></li>
           </ul></dd>
+<dt><a name="getPreloader" href="#getPreloader"><span>getPreloader:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: proc getPreloader(name: string): Spinner" href="kapsis/interactive/spinny/preloaders.html#getPreloader%2Cstring">preloaders: proc getPreloader(name: string): Spinner</a></li>
+          </ul></dd>
 <dt><a name="getSeconds" href="#getSeconds"><span>getSeconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: proc getSeconds(value: Value): lent Duration" href="kapsis/types.html#getSeconds%2CValue">types: proc getSeconds(value: Value): lent Duration</a></li>
+          </ul></dd>
+<dt><a name="getSpinner" href="#getSpinner"><span>getSpinner:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinners: proc getSpinner(name: string): Spinner" href="kapsis/interactive/spinny/spinners.html#getSpinner%2Cstring">spinners: proc getSpinner(name: string): Spinner</a></li>
           </ul></dd>
 <dt><a name="getStr" href="#getStr"><span>getStr:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -365,6 +429,10 @@
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc hidden(s: string): string" href="kapsis/interactive/spinny/colorize.html#hidden%2Cstring">colorize: proc hidden(s: string): string</a></li>
           </ul></dd>
+<dt><a name="info" href="#info"><span>info:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc info(spinny: var Spinny; msg = &quot;&quot;)" href="kapsis/interactive/spinny.html#info%2CSpinny%2Cstring">spinny: proc info(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+          </ul></dd>
 <dt><a name="initApp" href="#initApp"><span>initApp:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="framework: template initApp(stmtNodes: untyped)" href="kapsis/framework.html#initApp.t%2Cuntyped">framework: template initApp(stmtNodes: untyped)</a></li>
@@ -385,9 +453,17 @@
 <li><a class="reference external"
           data-doc-search-tag="plugins: proc initPluginHost(exePath: string; localDir: string = &quot;&quot;): PluginHost" href="kapsis/plugins.html#initPluginHost%2Cstring%2Cstring">plugins: proc initPluginHost(exePath: string; localDir: string = &quot;&quot;): PluginHost</a></li>
           </ul></dd>
+<dt><a name="invalidChoice" href="#invalidChoice"><span>invalidChoice:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: KapsisErrorMessage.invalidChoice" href="kapsis/types.html#invalidChoice">types: KapsisErrorMessage.invalidChoice</a></li>
+          </ul></dd>
 <dt><a name="invert" href="#invert"><span>invert:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="colorize: proc invert(s: string): string" href="kapsis/interactive/spinny/colorize.html#invert%2Cstring">colorize: proc invert(s: string): string</a></li>
+          </ul></dd>
+<dt><a name="isSpinning" href="#isSpinning"><span>isSpinning:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc isSpinning(spinny: var Spinny): bool" href="kapsis/interactive/spinny.html#isSpinning%2CSpinny">spinny: proc isSpinning(spinny: var Spinny): bool</a></li>
           </ul></dd>
 <dt><a name="Kapsis" href="#Kapsis"><span>Kapsis:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -404,6 +480,10 @@
 <dt><a name="KapsisPath" href="#KapsisPath"><span>KapsisPath:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: object KapsisPath" href="kapsis/types.html#KapsisPath">types: object KapsisPath</a></li>
+          </ul></dd>
+<dt><a name="ktAny" href="#ktAny"><span>ktAny:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktAny" href="kapsis/types.html#ktAny">types: CmdArgValueType.ktAny</a></li>
           </ul></dd>
 <dt><a name="ktBool" href="#ktBool"><span>ktBool:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -489,6 +569,10 @@
 <li><a class="reference external"
           data-doc-search-tag="types: CmdArgValueType.ktYears" href="kapsis/types.html#ktYears">types: CmdArgValueType.ktYears</a></li>
           </ul></dd>
+<dt><a name="log" href="#log"><span>log:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc log(spinny: var Spinny; text: string)" href="kapsis/interactive/spinny.html#log%2CSpinny%2Cstring">spinny: proc log(spinny: var Spinny; text: string)</a></li>
+          </ul></dd>
 <dt><a name="makeSpinner" href="#makeSpinner"><span>makeSpinner:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinners: proc makeSpinner(interval: int; frames: openArray[string]): Spinner" href="kapsis/interactive/spinny/spinners.html#makeSpinner%2Cint%2CopenArray%5Bstring%5D">spinners: proc makeSpinner(interval: int; frames: openArray[string]): Spinner</a></li>
@@ -499,7 +583,81 @@
           </ul></dd>
 <dt><a name="newSpinny" href="#newSpinny"><span>newSpinny:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc newSpinny(text: string; s: Spinner; time = false): Spinny" href="kapsis/interactive/spinny.html#newSpinny%2Cstring%2CSpinner">spinny: proc newSpinny(text: string; s: Spinner; time = false): Spinny</a></li>
+          data-doc-search-tag="spinny: proc newSpinny(text: string; s: Spinner; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny" href="kapsis/interactive/spinny.html#newSpinny%2Cstring%2CSpinner%2Cptr.SpinnyManager">spinny: proc newSpinny(text: string; s: Spinner; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="spinny: proc newSpinny(text: string; name: string; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny" href="kapsis/interactive/spinny.html#newSpinny%2Cstring%2Cstring%2Cptr.SpinnyManager">spinny: proc newSpinny(text: string; name: string; time = false;
+          manager: ptr SpinnyManager = defaultManager()): Spinny</a></li>
+          </ul></dd>
+<dt><a name="newSpinnyManager" href="#newSpinnyManager"><span>newSpinnyManager:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager" href="kapsis/interactive/spinny.html#newSpinnyManager%2CFile">spinny: proc newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager</a></li>
+          </ul></dd>
+<dt><a name="pkBounce" href="#pkBounce"><span>pkBounce:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkBounce" href="kapsis/interactive/spinny/preloaders.html#pkBounce">preloaders: const pkBounce</a></li>
+          </ul></dd>
+<dt><a name="pkDots" href="#pkDots"><span>pkDots:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkDots" href="kapsis/interactive/spinny/preloaders.html#pkDots">preloaders: const pkDots</a></li>
+          </ul></dd>
+<dt><a name="pkDualBounce" href="#pkDualBounce"><span>pkDualBounce:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkDualBounce" href="kapsis/interactive/spinny/preloaders.html#pkDualBounce">preloaders: const pkDualBounce</a></li>
+          </ul></dd>
+<dt><a name="pkDualPulse" href="#pkDualPulse"><span>pkDualPulse:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkDualPulse" href="kapsis/interactive/spinny/preloaders.html#pkDualPulse">preloaders: const pkDualPulse</a></li>
+          </ul></dd>
+<dt><a name="pkEqualizer" href="#pkEqualizer"><span>pkEqualizer:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkEqualizer" href="kapsis/interactive/spinny/preloaders.html#pkEqualizer">preloaders: const pkEqualizer</a></li>
+          </ul></dd>
+<dt><a name="pkFade" href="#pkFade"><span>pkFade:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkFade" href="kapsis/interactive/spinny/preloaders.html#pkFade">preloaders: const pkFade</a></li>
+          </ul></dd>
+<dt><a name="pkFadeWave" href="#pkFadeWave"><span>pkFadeWave:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkFadeWave" href="kapsis/interactive/spinny/preloaders.html#pkFadeWave">preloaders: const pkFadeWave</a></li>
+          </ul></dd>
+<dt><a name="pkGrow" href="#pkGrow"><span>pkGrow:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkGrow" href="kapsis/interactive/spinny/preloaders.html#pkGrow">preloaders: const pkGrow</a></li>
+          </ul></dd>
+<dt><a name="pkPulse" href="#pkPulse"><span>pkPulse:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkPulse" href="kapsis/interactive/spinny/preloaders.html#pkPulse">preloaders: const pkPulse</a></li>
+          </ul></dd>
+<dt><a name="pkRing" href="#pkRing"><span>pkRing:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkRing" href="kapsis/interactive/spinny/preloaders.html#pkRing">preloaders: const pkRing</a></li>
+          </ul></dd>
+<dt><a name="pkSlide" href="#pkSlide"><span>pkSlide:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkSlide" href="kapsis/interactive/spinny/preloaders.html#pkSlide">preloaders: const pkSlide</a></li>
+          </ul></dd>
+<dt><a name="pkSpinSquare" href="#pkSpinSquare"><span>pkSpinSquare:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkSpinSquare" href="kapsis/interactive/spinny/preloaders.html#pkSpinSquare">preloaders: const pkSpinSquare</a></li>
+          </ul></dd>
+<dt><a name="pkSyncBounce" href="#pkSyncBounce"><span>pkSyncBounce:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkSyncBounce" href="kapsis/interactive/spinny/preloaders.html#pkSyncBounce">preloaders: const pkSyncBounce</a></li>
+          </ul></dd>
+<dt><a name="pkThreeBounce" href="#pkThreeBounce"><span>pkThreeBounce:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkThreeBounce" href="kapsis/interactive/spinny/preloaders.html#pkThreeBounce">preloaders: const pkThreeBounce</a></li>
+          </ul></dd>
+<dt><a name="pkTrain" href="#pkTrain"><span>pkTrain:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkTrain" href="kapsis/interactive/spinny/preloaders.html#pkTrain">preloaders: const pkTrain</a></li>
+          </ul></dd>
+<dt><a name="pkWave" href="#pkWave"><span>pkWave:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const pkWave" href="kapsis/interactive/spinny/preloaders.html#pkWave">preloaders: const pkWave</a></li>
           </ul></dd>
 <dt><a name="PluginCmdArg" href="#PluginCmdArg"><span>PluginCmdArg:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -516,6 +674,18 @@
 <dt><a name="PluginRunFn" href="#PluginRunFn"><span>PluginRunFn:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="plugins: type PluginRunFn" href="kapsis/plugins.html#PluginRunFn">plugins: type PluginRunFn</a></li>
+          </ul></dd>
+<dt><a name="preloaderByName" href="#preloaderByName"><span>preloaderByName:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: let preloaderByName" href="kapsis/interactive/spinny/preloaders.html#preloaderByName">preloaders: let preloaderByName</a></li>
+          </ul></dd>
+<dt><a name="PreloaderEntries" href="#PreloaderEntries"><span>PreloaderEntries:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: const PreloaderEntries" href="kapsis/interactive/spinny/preloaders.html#PreloaderEntries">preloaders: const PreloaderEntries</a></li>
+          </ul></dd>
+<dt><a name="preloaderNames" href="#preloaderNames"><span>preloaderNames:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="preloaders: proc preloaderNames(): seq[string]" href="kapsis/interactive/spinny/preloaders.html#preloaderNames">preloaders: proc preloaderNames(): seq[string]</a></li>
           </ul></dd>
 <dt><a name="printError" href="#printError"><span>printError:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -545,17 +715,33 @@
 <li><a class="reference external"
           data-doc-search-tag="plugins: proc runPluginCommand(host: PluginHost; name: string): JsonNode" href="kapsis/plugins.html#runPluginCommand%2CPluginHost%2Cstring">plugins: proc runPluginCommand(host: PluginHost; name: string): JsonNode</a></li>
           </ul></dd>
+<dt><a name="setColor" href="#setColor"><span>setColor:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc setColor(spinny: var Spinny; color: SpinnyColor)" href="kapsis/interactive/spinny.html#setColor%2CSpinny%2CSpinnyColor">spinny: proc setColor(spinny: var Spinny; color: SpinnyColor)</a></li>
+          </ul></dd>
+<dt><a name="setInterval" href="#setInterval"><span>setInterval:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc setInterval(spinny: var Spinny; ms: int)" href="kapsis/interactive/spinny.html#setInterval%2CSpinny%2Cint">spinny: proc setInterval(spinny: var Spinny; ms: int)</a></li>
+          </ul></dd>
+<dt><a name="setPreloader" href="#setPreloader"><span>setPreloader:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc setPreloader(spinny: var Spinny; name: string)" href="kapsis/interactive/spinny.html#setPreloader%2CSpinny%2Cstring">spinny: proc setPreloader(spinny: var Spinny; name: string)</a></li>
+          </ul></dd>
+<dt><a name="setSpinner" href="#setSpinner"><span>setSpinner:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc setSpinner(spinny: var Spinny; name: string)" href="kapsis/interactive/spinny.html#setSpinner%2CSpinny%2Cstring">spinny: proc setSpinner(spinny: var Spinny; name: string)</a></li>
+          </ul></dd>
 <dt><a name="setSymbol" href="#setSymbol"><span>setSymbol:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc setSymbol(spinny: Spinny; symbol: string)" href="kapsis/interactive/spinny.html#setSymbol%2CSpinny%2Cstring">spinny: proc setSymbol(spinny: Spinny; symbol: string)</a></li>
+          data-doc-search-tag="spinny: proc setSymbol(spinny: var Spinny; symbol: string)" href="kapsis/interactive/spinny.html#setSymbol%2CSpinny%2Cstring">spinny: proc setSymbol(spinny: var Spinny; symbol: string)</a></li>
           </ul></dd>
 <dt><a name="setSymbolColor" href="#setSymbolColor"><span>setSymbolColor:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc setSymbolColor(spinny: Spinny; color: proc (x: string): string)" href="kapsis/interactive/spinny.html#setSymbolColor%2CSpinny%2Cproc%28string%29">spinny: proc setSymbolColor(spinny: Spinny; color: proc (x: string): string)</a></li>
+          data-doc-search-tag="spinny: proc setSymbolColor(spinny: var Spinny; color: proc (x: string): string)" href="kapsis/interactive/spinny.html#setSymbolColor%2CSpinny%2Cproc%28string%29">spinny: proc setSymbolColor(spinny: var Spinny; color: proc (x: string): string)</a></li>
           </ul></dd>
 <dt><a name="setText" href="#setText"><span>setText:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc setText(spinny: Spinny; text: string)" href="kapsis/interactive/spinny.html#setText%2CSpinny%2Cstring">spinny: proc setText(spinny: Spinny; text: string)</a></li>
+          data-doc-search-tag="spinny: proc setText(spinny: var Spinny; text: string)" href="kapsis/interactive/spinny.html#setText%2CSpinny%2Cstring">spinny: proc setText(spinny: var Spinny; text: string)</a></li>
           </ul></dd>
 <dt><a name="skArc" href="#skArc"><span>skArc:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -853,23 +1039,73 @@
 <li><a class="reference external"
           data-doc-search-tag="spinners: object Spinner" href="kapsis/interactive/spinny/spinners.html#Spinner">spinners: object Spinner</a></li>
           </ul></dd>
+<dt><a name="spinnerByName" href="#spinnerByName"><span>spinnerByName:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinners: let spinnerByName" href="kapsis/interactive/spinny/spinners.html#spinnerByName">spinners: let spinnerByName</a></li>
+          </ul></dd>
+<dt><a name="SpinnerEntries" href="#SpinnerEntries"><span>SpinnerEntries:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinners: const SpinnerEntries" href="kapsis/interactive/spinny/spinners.html#SpinnerEntries">spinners: const SpinnerEntries</a></li>
+          </ul></dd>
+<dt><a name="spinnerNames" href="#spinnerNames"><span>spinnerNames:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinners: proc spinnerNames(): seq[string]" href="kapsis/interactive/spinny/spinners.html#spinnerNames">spinners: proc spinnerNames(): seq[string]</a></li>
+          </ul></dd>
 <dt><a name="Spinny" href="#Spinny"><span>Spinny:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: type Spinny" href="kapsis/interactive/spinny.html#Spinny">spinny: type Spinny</a></li>
+          data-doc-search-tag="spinny: object Spinny" href="kapsis/interactive/spinny.html#Spinny">spinny: object Spinny</a></li>
+          </ul></dd>
+<dt><a name="SpinnyColor" href="#SpinnyColor"><span>SpinnyColor:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: enum SpinnyColor" href="kapsis/interactive/spinny.html#SpinnyColor">spinny: enum SpinnyColor</a></li>
+          </ul></dd>
+<dt><a name="SpinnyManager" href="#SpinnyManager"><span>SpinnyManager:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: object SpinnyManager" href="kapsis/interactive/spinny.html#SpinnyManager">spinny: object SpinnyManager</a></li>
+          </ul></dd>
+<dt><a name="SpinnyState" href="#SpinnyState"><span>SpinnyState:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: enum SpinnyState" href="kapsis/interactive/spinny.html#SpinnyState">spinny: enum SpinnyState</a></li>
           </ul></dd>
 <dt><a name="start" href="#start"><span>start:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc start(spinny: Spinny)" href="kapsis/interactive/spinny.html#start%2CSpinny">spinny: proc start(spinny: Spinny)</a></li>
+          data-doc-search-tag="spinny: proc start(spinny: var Spinny)" href="kapsis/interactive/spinny.html#start%2CSpinny">spinny: proc start(spinny: var Spinny)</a></li>
+          </ul></dd>
+<dt><a name="stFailed" href="#stFailed"><span>stFailed:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stFailed" href="kapsis/interactive/spinny.html#stFailed">spinny: SpinnyState.stFailed</a></li>
+          </ul></dd>
+<dt><a name="stIdle" href="#stIdle"><span>stIdle:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stIdle" href="kapsis/interactive/spinny.html#stIdle">spinny: SpinnyState.stIdle</a></li>
+          </ul></dd>
+<dt><a name="stInformed" href="#stInformed"><span>stInformed:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stInformed" href="kapsis/interactive/spinny.html#stInformed">spinny: SpinnyState.stInformed</a></li>
           </ul></dd>
 <dt><a name="stop" href="#stop"><span>stop:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc stop(spinny: Spinny)" href="kapsis/interactive/spinny.html#stop%2CSpinny">spinny: proc stop(spinny: Spinny)</a></li>
+          data-doc-search-tag="spinny: proc stop(spinny: var Spinny)" href="kapsis/interactive/spinny.html#stop%2CSpinny">spinny: proc stop(spinny: var Spinny)</a></li>
+          </ul></dd>
+<dt><a name="stSpinning" href="#stSpinning"><span>stSpinning:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stSpinning" href="kapsis/interactive/spinny.html#stSpinning">spinny: SpinnyState.stSpinning</a></li>
+          </ul></dd>
+<dt><a name="stStopped" href="#stStopped"><span>stStopped:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stStopped" href="kapsis/interactive/spinny.html#stStopped">spinny: SpinnyState.stStopped</a></li>
+          </ul></dd>
+<dt><a name="stSucceeded" href="#stSucceeded"><span>stSucceeded:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stSucceeded" href="kapsis/interactive/spinny.html#stSucceeded">spinny: SpinnyState.stSucceeded</a></li>
+          </ul></dd>
+<dt><a name="stWarned" href="#stWarned"><span>stWarned:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: SpinnyState.stWarned" href="kapsis/interactive/spinny.html#stWarned">spinny: SpinnyState.stWarned</a></li>
           </ul></dd>
 <dt><a name="success" href="#success"><span>success:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="spinny: proc success(spinny: Spinny)" href="kapsis/interactive/spinny.html#success%2CSpinny">spinny: proc success(spinny: Spinny)</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="spinny: proc success(spinny: Spinny; msg: string)" href="kapsis/interactive/spinny.html#success%2CSpinny%2Cstring">spinny: proc success(spinny: Spinny; msg: string)</a></li>
+          data-doc-search-tag="spinny: proc success(spinny: var Spinny; msg = &quot;&quot;)" href="kapsis/interactive/spinny.html#success%2CSpinny%2Cstring">spinny: proc success(spinny: var Spinny; msg = &quot;&quot;)</a></li>
           </ul></dd>
 <dt><a name="toCommand" href="#toCommand"><span>toCommand:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -919,6 +1155,14 @@
 <li><a class="reference external"
           data-doc-search-tag="types: type ValuesTable" href="kapsis/types.html#ValuesTable">types: type ValuesTable</a></li>
           </ul></dd>
+<dt><a name="warn" href="#warn"><span>warn:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: proc warn(spinny: var Spinny; msg = &quot;&quot;)" href="kapsis/interactive/spinny.html#warn%2CSpinny%2Cstring">spinny: proc warn(spinny: var Spinny; msg = &quot;&quot;)</a></li>
+          </ul></dd>
+<dt><a name="withSpinny" href="#withSpinny"><span>withSpinny:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="spinny: template withSpinny(spinny: Spinny; body: untyped): untyped" href="kapsis/interactive/spinny.html#withSpinny.t%2CSpinny%2Cuntyped">spinny: template withSpinny(spinny: Spinny; body: untyped): untyped</a></li>
+          </ul></dd>
 <dt><a name="yellow" href="#yellow"><span>yellow:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="prompts: proc yellow(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#yellow%2Cstring%2Cint">prompts: proc yellow(label: string; indentSize = 1): Span</a></li>
@@ -931,7 +1175,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-09 20:42:15 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-15 22:14:16 UTC</small>
       </div>
     </div>
   </div>

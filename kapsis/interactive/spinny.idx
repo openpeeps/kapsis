@@ -1,12 +1,43 @@
 nimTitle	spinny	kapsis/interactive/spinny.html	module kapsis/interactive/spinny		0
-nim	Spinny	kapsis/interactive/spinny.html#Spinny	type Spinny		7
-nim	newSpinny	kapsis/interactive/spinny.html#newSpinny,string,Spinner	proc newSpinny(text: string; s: Spinner; time = false): Spinny		28
-nim	setSymbolColor	kapsis/interactive/spinny.html#setSymbolColor,Spinny,proc(string)	proc setSymbolColor(spinny: Spinny; color: proc (x: string): string)		38
-nim	setSymbol	kapsis/interactive/spinny.html#setSymbol,Spinny,string	proc setSymbol(spinny: Spinny; symbol: string)		42
-nim	setText	kapsis/interactive/spinny.html#setText,Spinny,string	proc setText(spinny: Spinny; text: string)		45
-nim	start	kapsis/interactive/spinny.html#start,Spinny	proc start(spinny: Spinny)		108
-nim	stop	kapsis/interactive/spinny.html#stop,Spinny	proc stop(spinny: Spinny)		123
-nim	success	kapsis/interactive/spinny.html#success,Spinny,string	proc success(spinny: Spinny; msg: string)		126
-nim	success	kapsis/interactive/spinny.html#success,Spinny	proc success(spinny: Spinny)		129
-nim	error	kapsis/interactive/spinny.html#error,Spinny,string	proc error(spinny: Spinny; msg: string)		132
-nimgrp	success	kapsis/interactive/spinny.html#success-procs-all	proc		126
+nim	cDefault	kapsis/interactive/spinny.html#cDefault	SpinnyColor.cDefault		13
+nim	cBlack	kapsis/interactive/spinny.html#cBlack	SpinnyColor.cBlack		13
+nim	cRed	kapsis/interactive/spinny.html#cRed	SpinnyColor.cRed		13
+nim	cGreen	kapsis/interactive/spinny.html#cGreen	SpinnyColor.cGreen		13
+nim	cYellow	kapsis/interactive/spinny.html#cYellow	SpinnyColor.cYellow		13
+nim	cBlue	kapsis/interactive/spinny.html#cBlue	SpinnyColor.cBlue		13
+nim	cMagenta	kapsis/interactive/spinny.html#cMagenta	SpinnyColor.cMagenta		13
+nim	cCyan	kapsis/interactive/spinny.html#cCyan	SpinnyColor.cCyan		13
+nim	cWhite	kapsis/interactive/spinny.html#cWhite	SpinnyColor.cWhite		13
+nim	cGray	kapsis/interactive/spinny.html#cGray	SpinnyColor.cGray		13
+nim	SpinnyColor	kapsis/interactive/spinny.html#SpinnyColor	enum SpinnyColor		13
+nim	stIdle	kapsis/interactive/spinny.html#stIdle	SpinnyState.stIdle		27
+nim	stSpinning	kapsis/interactive/spinny.html#stSpinning	SpinnyState.stSpinning		27
+nim	stStopped	kapsis/interactive/spinny.html#stStopped	SpinnyState.stStopped		27
+nim	stSucceeded	kapsis/interactive/spinny.html#stSucceeded	SpinnyState.stSucceeded		27
+nim	stFailed	kapsis/interactive/spinny.html#stFailed	SpinnyState.stFailed		27
+nim	stWarned	kapsis/interactive/spinny.html#stWarned	SpinnyState.stWarned		27
+nim	stInformed	kapsis/interactive/spinny.html#stInformed	SpinnyState.stInformed		27
+nim	SpinnyState	kapsis/interactive/spinny.html#SpinnyState	enum SpinnyState		27
+nim	SpinnyManager	kapsis/interactive/spinny.html#SpinnyManager	object SpinnyManager		34
+nim	Spinny	kapsis/interactive/spinny.html#Spinny	object Spinny		44
+nim	newSpinnyManager	kapsis/interactive/spinny.html#newSpinnyManager,File	proc newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager		82
+nim	defaultManager	kapsis/interactive/spinny.html#defaultManager	proc defaultManager(): ptr SpinnyManager		88
+nim	newSpinny	kapsis/interactive/spinny.html#newSpinny,string,Spinner,ptr.SpinnyManager	proc newSpinny(text: string; s: Spinner; time = false;\n          manager: ptr SpinnyManager = defaultManager()): Spinny		302
+nim	newSpinny	kapsis/interactive/spinny.html#newSpinny,string,string,ptr.SpinnyManager	proc newSpinny(text: string; name: string; time = false;\n          manager: ptr SpinnyManager = defaultManager()): Spinny		319
+nim	start	kapsis/interactive/spinny.html#start,Spinny	proc start(spinny: var Spinny)		332
+nim	isSpinning	kapsis/interactive/spinny.html#isSpinning,Spinny	proc isSpinning(spinny: var Spinny): bool		353
+nim	setText	kapsis/interactive/spinny.html#setText,Spinny,string	proc setText(spinny: var Spinny; text: string)		356
+nim	setSymbol	kapsis/interactive/spinny.html#setSymbol,Spinny,string	proc setSymbol(spinny: var Spinny; symbol: string)		362
+nim	setSymbolColor	kapsis/interactive/spinny.html#setSymbolColor,Spinny,proc(string)	proc setSymbolColor(spinny: var Spinny; color: proc (x: string): string)		372
+nim	setColor	kapsis/interactive/spinny.html#setColor,Spinny,SpinnyColor	proc setColor(spinny: var Spinny; color: SpinnyColor)		378
+nim	setSpinner	kapsis/interactive/spinny.html#setSpinner,Spinny,string	proc setSpinner(spinny: var Spinny; name: string)		384
+nim	setPreloader	kapsis/interactive/spinny.html#setPreloader,Spinny,string	proc setPreloader(spinny: var Spinny; name: string)		393
+nim	setInterval	kapsis/interactive/spinny.html#setInterval,Spinny,int	proc setInterval(spinny: var Spinny; ms: int)		402
+nim	log	kapsis/interactive/spinny.html#log,Spinny,string	proc log(spinny: var Spinny; text: string)		408
+nim	stop	kapsis/interactive/spinny.html#stop,Spinny	proc stop(spinny: var Spinny)		451
+nim	success	kapsis/interactive/spinny.html#success,Spinny,string	proc success(spinny: var Spinny; msg = "")		455
+nim	error	kapsis/interactive/spinny.html#error,Spinny,string	proc error(spinny: var Spinny; msg = "")		459
+nim	warn	kapsis/interactive/spinny.html#warn,Spinny,string	proc warn(spinny: var Spinny; msg = "")		463
+nim	info	kapsis/interactive/spinny.html#info,Spinny,string	proc info(spinny: var Spinny; msg = "")		467
+nim	withSpinny	kapsis/interactive/spinny.html#withSpinny.t,Spinny,untyped	template withSpinny(spinny: Spinny; body: untyped): untyped		471
+nimgrp	newspinny	kapsis/interactive/spinny.html#newSpinny-procs-all	proc		302

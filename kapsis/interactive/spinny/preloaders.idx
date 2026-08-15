@@ -1,0 +1,22 @@
+nimTitle	preloaders	kapsis/interactive/spinny/preloaders.html	module kapsis/interactive/spinny/preloaders		0
+nim	pkBounce	kapsis/interactive/spinny/preloaders.html#pkBounce	const pkBounce		11
+nim	pkDualBounce	kapsis/interactive/spinny/preloaders.html#pkDualBounce	const pkDualBounce		27
+nim	pkPulse	kapsis/interactive/spinny/preloaders.html#pkPulse	const pkPulse		37
+nim	pkDualPulse	kapsis/interactive/spinny/preloaders.html#pkDualPulse	const pkDualPulse		54
+nim	pkFade	kapsis/interactive/spinny/preloaders.html#pkFade	const pkFade		65
+nim	pkFadeWave	kapsis/interactive/spinny/preloaders.html#pkFadeWave	const pkFadeWave		77
+nim	pkSlide	kapsis/interactive/spinny/preloaders.html#pkSlide	const pkSlide		91
+nim	pkThreeBounce	kapsis/interactive/spinny/preloaders.html#pkThreeBounce	const pkThreeBounce		101
+nim	pkWave	kapsis/interactive/spinny/preloaders.html#pkWave	const pkWave		109
+nim	pkGrow	kapsis/interactive/spinny/preloaders.html#pkGrow	const pkGrow		125
+nim	pkDots	kapsis/interactive/spinny/preloaders.html#pkDots	const pkDots		136
+nim	pkRing	kapsis/interactive/spinny/preloaders.html#pkRing	const pkRing		155
+nim	pkSpinSquare	kapsis/interactive/spinny/preloaders.html#pkSpinSquare	const pkSpinSquare		163
+nim	pkTrain	kapsis/interactive/spinny/preloaders.html#pkTrain	const pkTrain		171
+nim	pkSyncBounce	kapsis/interactive/spinny/preloaders.html#pkSyncBounce	const pkSyncBounce		182
+nim	pkEqualizer	kapsis/interactive/spinny/preloaders.html#pkEqualizer	const pkEqualizer		193
+nim	PreloaderEntries	kapsis/interactive/spinny/preloaders.html#PreloaderEntries	const PreloaderEntries		205
+nim	preloaderByName	kapsis/interactive/spinny/preloaders.html#preloaderByName	let preloaderByName		217
+nim	getPreloader	kapsis/interactive/spinny/preloaders.html#getPreloader,string	proc getPreloader(name: string): Spinner		223
+nim	preloaderNames	kapsis/interactive/spinny/preloaders.html#preloaderNames	proc preloaderNames(): seq[string]		229
+nim	allPreloaders	kapsis/interactive/spinny/preloaders.html#allPreloaders	proc allPreloaders(): seq[Spinner]		235

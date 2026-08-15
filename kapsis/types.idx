@@ -20,37 +20,40 @@ nim	ktYaml	kapsis/types.html#ktYaml	CmdArgValueType.ktYaml		15
 nim	ktUrl	kapsis/types.html#ktUrl	CmdArgValueType.ktUrl		15
 nim	ktPort	kapsis/types.html#ktPort	CmdArgValueType.ktPort		15
 nim	ktIdent	kapsis/types.html#ktIdent	CmdArgValueType.ktIdent		15
+nim	ktAny	kapsis/types.html#ktAny	CmdArgValueType.ktAny		15
 nim	CmdArgValueType	kapsis/types.html#CmdArgValueType	enum CmdArgValueType		15
-nim	KapsisPath	kapsis/types.html#KapsisPath	object KapsisPath		40
-nim	Value	kapsis/types.html#Value	object Value		46
-nim	ValuesTable	kapsis/types.html#ValuesTable	type ValuesTable		93
-nim	Values	kapsis/types.html#Values	type Values		95
-nim	unknownOption	kapsis/types.html#unknownOption	KapsisErrorMessage.unknownOption		99
-nim	unknownCommand	kapsis/types.html#unknownCommand	KapsisErrorMessage.unknownCommand		99
-nim	unexpectedOption	kapsis/types.html#unexpectedOption	KapsisErrorMessage.unexpectedOption		99
-nim	typeMismatch	kapsis/types.html#typeMismatch	KapsisErrorMessage.typeMismatch		99
-nim	missingArgument	kapsis/types.html#missingArgument	KapsisErrorMessage.missingArgument		99
-nim	KapsisErrorMessage	kapsis/types.html#KapsisErrorMessage	enum KapsisErrorMessage		99
-nim	printError	kapsis/types.html#printError.t,KapsisErrorMessage,varargs[string]	template printError(msg: KapsisErrorMessage; arg: varargs[string])		110
-nim	collectValues	kapsis/types.html#collectValues.t,ValuesTable,string,sinkstring,	template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)		122
-nim	getStr	kapsis/types.html#getStr,Value	proc getStr(value: Value): lent string		46
-nim	getBool	kapsis/types.html#getBool,Value	proc getBool(value: Value): lent bool		46
-nim	getInt	kapsis/types.html#getInt,Value	proc getInt(value: Value): lent int		46
-nim	getFloat	kapsis/types.html#getFloat,Value	proc getFloat(value: Value): lent float		46
-nim	getFile	kapsis/types.html#getFile,Value	proc getFile(value: Value): lent KapsisPath		46
-nim	getPath	kapsis/types.html#getPath,Value	proc getPath(value: Value): lent KapsisPath		46
-nim	getFilename	kapsis/types.html#getFilename,Value	proc getFilename(value: Value): lent string		46
-nim	getFilepath	kapsis/types.html#getFilepath,Value	proc getFilepath(value: Value): lent string		46
-nim	getDir	kapsis/types.html#getDir,Value	proc getDir(value: Value): lent KapsisPath		46
-nim	getMilliseconds	kapsis/types.html#getMilliseconds,Value	proc getMilliseconds(value: Value): lent Duration		46
-nim	getSeconds	kapsis/types.html#getSeconds,Value	proc getSeconds(value: Value): lent Duration		46
-nim	getMinutes	kapsis/types.html#getMinutes,Value	proc getMinutes(value: Value): lent Duration		46
-nim	getHours	kapsis/types.html#getHours,Value	proc getHours(value: Value): lent Duration		46
-nim	getDays	kapsis/types.html#getDays,Value	proc getDays(value: Value): lent Duration		46
-nim	getMonths	kapsis/types.html#getMonths,Value	proc getMonths(value: Value): lent Duration		46
-nim	getYears	kapsis/types.html#getYears,Value	proc getYears(value: Value): lent Duration		46
-nim	getJson	kapsis/types.html#getJson,Value	proc getJson(value: Value): lent JsonNode		46
-nim	getYaml	kapsis/types.html#getYaml,Value	proc getYaml(value: Value): lent string		46
-nim	getUrl	kapsis/types.html#getUrl,Value	proc getUrl(value: Value): lent Uri		46
-nim	getPort	kapsis/types.html#getPort,Value	proc getPort(value: Value): lent Port		46
-nim	getIdent	kapsis/types.html#getIdent,Value	proc getIdent(value: Value): lent string		209
+nim	KapsisPath	kapsis/types.html#KapsisPath	object KapsisPath		41
+nim	Value	kapsis/types.html#Value	object Value		47
+nim	ValuesTable	kapsis/types.html#ValuesTable	type ValuesTable		96
+nim	Values	kapsis/types.html#Values	type Values		98
+nim	unknownOption	kapsis/types.html#unknownOption	KapsisErrorMessage.unknownOption		102
+nim	unknownCommand	kapsis/types.html#unknownCommand	KapsisErrorMessage.unknownCommand		102
+nim	unexpectedOption	kapsis/types.html#unexpectedOption	KapsisErrorMessage.unexpectedOption		102
+nim	typeMismatch	kapsis/types.html#typeMismatch	KapsisErrorMessage.typeMismatch		102
+nim	missingArgument	kapsis/types.html#missingArgument	KapsisErrorMessage.missingArgument		102
+nim	invalidChoice	kapsis/types.html#invalidChoice	KapsisErrorMessage.invalidChoice		102
+nim	KapsisErrorMessage	kapsis/types.html#KapsisErrorMessage	enum KapsisErrorMessage		102
+nim	printError	kapsis/types.html#printError.t,KapsisErrorMessage,varargs[string]	template printError(msg: KapsisErrorMessage; arg: varargs[string])		114
+nim	collectValues	kapsis/types.html#collectValues.t,ValuesTable,string,sinkstring,	template collectValues(values: var ValuesTable; argName: string; val: sink string; arg)		126
+nim	getStr	kapsis/types.html#getStr,Value	proc getStr(value: Value): lent string		47
+nim	getBool	kapsis/types.html#getBool,Value	proc getBool(value: Value): lent bool		47
+nim	getInt	kapsis/types.html#getInt,Value	proc getInt(value: Value): lent int		47
+nim	getFloat	kapsis/types.html#getFloat,Value	proc getFloat(value: Value): lent float		47
+nim	getFile	kapsis/types.html#getFile,Value	proc getFile(value: Value): lent KapsisPath		47
+nim	getPath	kapsis/types.html#getPath,Value	proc getPath(value: Value): lent KapsisPath		47
+nim	getFilename	kapsis/types.html#getFilename,Value	proc getFilename(value: Value): lent string		47
+nim	getFilepath	kapsis/types.html#getFilepath,Value	proc getFilepath(value: Value): lent string		47
+nim	getDir	kapsis/types.html#getDir,Value	proc getDir(value: Value): lent KapsisPath		47
+nim	getMilliseconds	kapsis/types.html#getMilliseconds,Value	proc getMilliseconds(value: Value): lent Duration		47
+nim	getSeconds	kapsis/types.html#getSeconds,Value	proc getSeconds(value: Value): lent Duration		47
+nim	getMinutes	kapsis/types.html#getMinutes,Value	proc getMinutes(value: Value): lent Duration		47
+nim	getHours	kapsis/types.html#getHours,Value	proc getHours(value: Value): lent Duration		47
+nim	getDays	kapsis/types.html#getDays,Value	proc getDays(value: Value): lent Duration		47
+nim	getMonths	kapsis/types.html#getMonths,Value	proc getMonths(value: Value): lent Duration		47
+nim	getYears	kapsis/types.html#getYears,Value	proc getYears(value: Value): lent Duration		47
+nim	getJson	kapsis/types.html#getJson,Value	proc getJson(value: Value): lent JsonNode		47
+nim	getYaml	kapsis/types.html#getYaml,Value	proc getYaml(value: Value): lent string		47
+nim	getUrl	kapsis/types.html#getUrl,Value	proc getUrl(value: Value): lent Uri		47
+nim	getPort	kapsis/types.html#getPort,Value	proc getPort(value: Value): lent Port		47
+nim	getIdent	kapsis/types.html#getIdent,Value	proc getIdent(value: Value): lent string		47
+nim	getAny	kapsis/types.html#getAny,Value	proc getAny(value: Value): lent string		218

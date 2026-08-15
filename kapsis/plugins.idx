@@ -1,7 +1,7 @@
 nimTitle	plugins	kapsis/plugins.html	module kapsis/plugins		0
 nim	PluginCmdArg	kapsis/plugins.html#PluginCmdArg	object PluginCmdArg		23
-nim	PluginCommand	kapsis/plugins.html#PluginCommand	object PluginCommand		30
-nim	PluginHost	kapsis/plugins.html#PluginHost	type PluginHost		39
-nim	PluginRunFn	kapsis/plugins.html#PluginRunFn	type PluginRunFn		45
-nim	initPluginHost	kapsis/plugins.html#initPluginHost,string,string	proc initPluginHost(exePath: string; localDir: string = ""): PluginHost		99
-nim	runPluginCommand	kapsis/plugins.html#runPluginCommand,PluginHost,string	proc runPluginCommand(host: PluginHost; name: string): JsonNode		110
+nim	PluginCommand	kapsis/plugins.html#PluginCommand	object PluginCommand		31
+nim	PluginHost	kapsis/plugins.html#PluginHost	type PluginHost		40
+nim	PluginRunFn	kapsis/plugins.html#PluginRunFn	type PluginRunFn		46
+nim	initPluginHost	kapsis/plugins.html#initPluginHost,string,string	proc initPluginHost(exePath: string; localDir: string = ""): PluginHost		102
+nim	runPluginCommand	kapsis/plugins.html#runPluginCommand,PluginHost,string	proc runPluginCommand(host: PluginHost; name: string): JsonNode		113
