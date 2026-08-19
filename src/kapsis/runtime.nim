@@ -4,6 +4,10 @@ import ./interactive/prompts
 import ./types
 export types
 
+var extras*: seq[string]
+  ## Flags unknown to the CLI definition, collected during parsing.
+  ## Useful for forwarding unrecognized flags to an underlying tool.
+
 proc has*(values: Values, key: string): bool =
   ## Checks if `values` contains an arg by `key`
   result = values[].hasKey(key)

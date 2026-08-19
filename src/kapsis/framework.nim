@@ -8,7 +8,7 @@ import std/[macros, tables, strutils, os, sequtils,
           parseopt, options, times, macrocache,
           algorithm, wordwrap, terminal, json, unicode]
 
-import ./types, ./interactive/prompts, ./plugins
+import ./types, ./interactive/prompts, ./plugins, ./runtime
 
 export options
 export tables, types, toSeq, CmdLineKind
@@ -514,6 +514,7 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
 
 proc parseCommandInput(app: Kapsis) =
   # Parses the command line arguments and executes the corresponding command
+  extras = @[]
   var p = quoteShellCommand(commandLineParams()).initOptParser
   var userInput = p.getopt.toSeq()
   if userInput.len > 0 == false:
@@ -567,6 +568,9 @@ proc parseCommandInput(app: Kapsis) =
                 # means false, so we set the value to "true" when the
                 # flag is present
                 collectValues(values, flagName, "true", arg)
+            else:
+              # Unknown flag — store for pass-through (e.g. nim flags)
+              extras.add(flagName & (if userInput[i].val.len > 0: ":" & userInput[i].val else: ""))
           inc i
         of cmdArgument:
           # Find the next positional argument definition
