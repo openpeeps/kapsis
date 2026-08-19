@@ -8,7 +8,7 @@ nim	CommandType	kapsis/framework.html#CommandType	enum CommandType		41
 nim	Command	kapsis/framework.html#Command	type Command		45
 nim	Kapsis	kapsis/framework.html#Kapsis	type Kapsis		63
 nim	toCommand	kapsis/framework.html#toCommand,PluginCommand	proc toCommand(cmd: PluginCommand): Command		209
-nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		626
-nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		727
-nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		732
-nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		737
+nim	initKapsis	kapsis/framework.html#initKapsis.m,untyped	macro initKapsis(stmtNodes: untyped)		630
+nim	initCLI	kapsis/framework.html#initCLI.t,untyped	template initCLI(stmtNodes: untyped)		731
+nim	initCLIApplication	kapsis/framework.html#initCLIApplication.t,untyped	template initCLIApplication(stmtNodes: untyped)		736
+nim	initApp	kapsis/framework.html#initApp.t,untyped	template initApp(stmtNodes: untyped)		741
