@@ -64,7 +64,16 @@
       <li><a class="reference" href="#KapsisInputValue" title="KapsisInputValue = object of CatchableError">KapsisInputValue</a></li>
 <li><a class="reference" href="#Row" title="Row = seq[Span]">Row</a></li>
 <li><a class="reference" href="#Span" title="Span = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor,
-             indentSize: int]">Span</a></li>
+             indentSize: int, bright: bool]">Span</a></li>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
+    <summary><a class="reference reference-toplevel" href="#10" id="60">Consts</a></summary>
+    <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#DefaultTextFg" title="DefaultTextFg = fgDefault">DefaultTextFg</a></li>
 
     </ul>
   </details>
@@ -82,15 +91,15 @@
 
 </ul>
 <ul class="simple nested-toc-section">blue
-  <li><a class="reference" href="#blue%2Cstring%2Cint" title="blue(label: string; indentSize = 1): Span">blue(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#blue%2Cstring%2Cint" title="blue(label: string; indentSize = 1; bright = false): Span">blue(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">blueSpan
-  <li><a class="reference" href="#blueSpan%2Cstring%2Cint" title="blueSpan(label: string; indentSize = 1): Span">blueSpan(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#blueSpan%2Cstring%2Cint" title="blueSpan(label: string; indentSize = 1; bright = false): Span">blueSpan(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">cyanSpan
-  <li><a class="reference" href="#cyanSpan%2Cstring%2Cint" title="cyanSpan(label: string; indentSize = 1): Span">cyanSpan(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#cyanSpan%2Cstring%2Cint" title="cyanSpan(label: string; indentSize = 1; bright = false): Span">cyanSpan(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">display
@@ -122,11 +131,11 @@
 
 </ul>
 <ul class="simple nested-toc-section">green
-  <li><a class="reference" href="#green%2Cstring%2Cint" title="green(label: string; indentSize = 1): Span">green(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#green%2Cstring%2Cint" title="green(label: string; indentSize = 1; bright = false): Span">green(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">greenSpan
-  <li><a class="reference" href="#greenSpan%2Cstring%2Cint" title="greenSpan(label: string; indentSize = 1): Span">greenSpan(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#greenSpan%2Cstring%2Cint" title="greenSpan(label: string; indentSize = 1; bright = false): Span">greenSpan(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">prompt
@@ -142,7 +151,9 @@
 
 </ul>
 <ul class="simple nested-toc-section">span
-  <li><a class="reference" href="#span%2Cstring%2Cint" title="span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span">span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#span%2Cstring%2Cint" title="span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1;
+     bright = false): Span">span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1;
+     bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">toggle
@@ -158,11 +169,11 @@
 
 </ul>
 <ul class="simple nested-toc-section">yellow
-  <li><a class="reference" href="#yellow%2Cstring%2Cint" title="yellow(label: string; indentSize = 1): Span">yellow(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#yellow%2Cstring%2Cint" title="yellow(label: string; indentSize = 1; bright = false): Span">yellow(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">yellowSpan
-  <li><a class="reference" href="#yellowSpan%2Cstring%2Cint" title="yellowSpan(label: string; indentSize = 1): Span">yellowSpan(label: string; indentSize = 1): Span</a></li>
+  <li><a class="reference" href="#yellowSpan%2Cstring%2Cint" title="yellowSpan(label: string; indentSize = 1; bright = false): Span">yellowSpan(label: string; indentSize = 1; bright = false): Span</a></li>
 
 </ul>
 
@@ -220,7 +231,21 @@
 </div>
 <div id="Span">
   <dt><pre><a href="#Span"><span class="Identifier">Span</span></a> <span class="Other">=</span> <span class="Keyword">tuple</span><span class="Other">[</span><span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">fg</span><span class="Other">:</span> <span class="Identifier">ForegroundColor</span><span class="Other">,</span> <span class="Identifier">bg</span><span class="Other">:</span> <span class="Identifier">BackgroundColor</span><span class="Other">,</span>
-             <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">]</span></pre></dt>
+             <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">,</span> <span class="Identifier">bright</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">]</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+  </dl>
+</div>
+<div class="section" id="10">
+  <h1><a class="toc-backref" href="#10">Consts</a></h1>
+  <dl class="item">
+    <div id="DefaultTextFg">
+  <dt><pre><a href="#DefaultTextFg"><span class="Identifier">DefaultTextFg</span></a> <span class="Other">=</span> <span class="DecNumber">fgDefault</span></pre></dt>
   <dd>
     
     
@@ -261,8 +286,8 @@
 </div>
 <div id="blue-procs-all">
   <div id="blue,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#blue%2Cstring%2Cint"><span class="Identifier">blue</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#blue%2Cstring%2Cint"><span class="Identifier">blue</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -273,8 +298,8 @@
 </div>
 <div id="blueSpan-procs-all">
   <div id="blueSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#blueSpan%2Cstring%2Cint"><span class="Identifier">blueSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#blueSpan%2Cstring%2Cint"><span class="Identifier">blueSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -285,8 +310,8 @@
 </div>
 <div id="cyanSpan-procs-all">
   <div id="cyanSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#cyanSpan%2Cstring%2Cint"><span class="Identifier">cyanSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#cyanSpan%2Cstring%2Cint"><span class="Identifier">cyanSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -429,8 +454,8 @@
 </div>
 <div id="green-procs-all">
   <div id="green,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#green%2Cstring%2Cint"><span class="Identifier">green</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#green%2Cstring%2Cint"><span class="Identifier">green</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -441,8 +466,8 @@
 </div>
 <div id="greenSpan-procs-all">
   <div id="greenSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#greenSpan%2Cstring%2Cint"><span class="Identifier">greenSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#greenSpan%2Cstring%2Cint"><span class="Identifier">greenSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -491,8 +516,8 @@
 </div>
 <div id="span-procs-all">
   <div id="span,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#span%2Cstring%2Cint"><span class="Identifier">span</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">fg</span> <span class="Other">=</span> <span class="Identifier">fgDefault</span><span class="Other">;</span> <span class="Identifier">bg</span> <span class="Other">=</span> <span class="Identifier">bgDefault</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#span%2Cstring%2Cint"><span class="Identifier">span</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">fg</span> <span class="Other">=</span> <span class="Identifier">fgDefault</span><span class="Other">;</span> <span class="Identifier">bg</span> <span class="Other">=</span> <span class="Identifier">bgDefault</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span>
+          <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -537,8 +562,8 @@
 </div>
 <div id="yellow-procs-all">
   <div id="yellow,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#yellow%2Cstring%2Cint"><span class="Identifier">yellow</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#yellow%2Cstring%2Cint"><span class="Identifier">yellow</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -549,8 +574,8 @@
 </div>
 <div id="yellowSpan-procs-all">
   <div id="yellowSpan,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#yellowSpan%2Cstring%2Cint"><span class="Identifier">yellowSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#yellowSpan%2Cstring%2Cint"><span class="Identifier">yellowSpan</span></a><span class="Other">(</span><span class="Identifier">label</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">indentSize</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">;</span> <span class="Identifier">bright</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <a href="#Span"><span class="Identifier">Span</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -592,7 +617,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-19 20:04:27 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-21 10:30:35 UTC</small>
       </div>
     </div>
   </div>

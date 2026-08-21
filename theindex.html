@@ -115,11 +115,11 @@
           </ul></dd>
 <dt><a name="blue" href="#blue"><span>blue:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc blue(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#blue%2Cstring%2Cint">prompts: proc blue(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc blue(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#blue%2Cstring%2Cint">prompts: proc blue(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="blueSpan" href="#blueSpan"><span>blueSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc blueSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#blueSpan%2Cstring%2Cint">prompts: proc blueSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc blueSpan(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#blueSpan%2Cstring%2Cint">prompts: proc blueSpan(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="bold" href="#bold"><span>bold:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -199,7 +199,7 @@
           </ul></dd>
 <dt><a name="cyanSpan" href="#cyanSpan"><span>cyanSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc cyanSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#cyanSpan%2Cstring%2Cint">prompts: proc cyanSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc cyanSpan(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#cyanSpan%2Cstring%2Cint">prompts: proc cyanSpan(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="cYellow" href="#cYellow"><span>cYellow:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -208,6 +208,10 @@
 <dt><a name="defaultManager" href="#defaultManager"><span>defaultManager:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinny: proc defaultManager(): ptr SpinnyManager" href="kapsis/interactive/spinny.html#defaultManager">spinny: proc defaultManager(): ptr SpinnyManager</a></li>
+          </ul></dd>
+<dt><a name="DefaultTextFg" href="#DefaultTextFg"><span>DefaultTextFg:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="prompts: const DefaultTextFg" href="kapsis/interactive/prompts.html#DefaultTextFg">prompts: const DefaultTextFg</a></li>
           </ul></dd>
 <dt><a name="display" href="#display"><span>display:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -419,11 +423,11 @@
           </ul></dd>
 <dt><a name="green" href="#green"><span>green:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc green(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#green%2Cstring%2Cint">prompts: proc green(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc green(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#green%2Cstring%2Cint">prompts: proc green(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="greenSpan" href="#greenSpan"><span>greenSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc greenSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#greenSpan%2Cstring%2Cint">prompts: proc greenSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc greenSpan(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#greenSpan%2Cstring%2Cint">prompts: proc greenSpan(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="has" href="#has"><span>has:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -1037,7 +1041,9 @@
           </ul></dd>
 <dt><a name="span" href="#span"><span>span:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span" href="kapsis/interactive/prompts.html#span%2Cstring%2Cint">prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1;
+     bright = false): Span" href="kapsis/interactive/prompts.html#span%2Cstring%2Cint">prompts: proc span(label: string; fg = fgDefault; bg = bgDefault; indentSize = 1;
+     bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="Spinner" href="#Spinner"><span>Spinner:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -1169,17 +1175,17 @@
           </ul></dd>
 <dt><a name="yellow" href="#yellow"><span>yellow:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc yellow(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#yellow%2Cstring%2Cint">prompts: proc yellow(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc yellow(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#yellow%2Cstring%2Cint">prompts: proc yellow(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 <dt><a name="yellowSpan" href="#yellowSpan"><span>yellowSpan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="prompts: proc yellowSpan(label: string; indentSize = 1): Span" href="kapsis/interactive/prompts.html#yellowSpan%2Cstring%2Cint">prompts: proc yellowSpan(label: string; indentSize = 1): Span</a></li>
+          data-doc-search-tag="prompts: proc yellowSpan(label: string; indentSize = 1; bright = false): Span" href="kapsis/interactive/prompts.html#yellowSpan%2Cstring%2Cint">prompts: proc yellowSpan(label: string; indentSize = 1; bright = false): Span</a></li>
           </ul></dd>
 </dl>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-19 20:04:27 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-21 10:30:36 UTC</small>
       </div>
     </div>
   </div>
