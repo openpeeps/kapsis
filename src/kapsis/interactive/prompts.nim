@@ -13,43 +13,43 @@ export `%`
 
 const BR = ""
 type
-  Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor, indentSize: int]
+  Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor, indentSize: int, bright: bool]
   Row* = seq[Span]
   KapsisInputValue* = object of CatchableError
 
-proc span*(label: string, fg = fgDefault, bg = bgDefault, indentSize = 1): Span =
-  result = (label, fg, bg, indentSize)
+proc span*(label: string, fg = fgDefault, bg = bgDefault, indentSize = 1, bright = false): Span =
+  result = (label, fg, bg, indentSize, bright)
 
-proc blue*(label: string, indentSize = 1): Span =
-  result = (label, fgBlue, bgDefault, indentSize)
+proc blue*(label: string, indentSize = 1, bright = false): Span =
+  result = (label, fgBlue, bgDefault, indentSize, bright)
 
-proc yellow*(label: string, indentSize = 1): Span =
-  result = (label, fgYellow, bgDefault, indentSize)
+proc yellow*(label: string, indentSize = 1, bright = false): Span =
+  result = (label, fgYellow, bgDefault, indentSize, bright)
 
-proc green*(label: string, indentSize = 1): Span =
-  result = (label, fgGreen, bgDefault, indentSize)
+proc green*(label: string, indentSize = 1, bright = false): Span =
+  result = (label, fgGreen, bgDefault, indentSize, bright)
 
-proc blueSpan*(label: string, indentSize = 1): Span = blue(label, indentSize)
-proc yellowSpan*(label: string, indentSize = 1): Span = yellow(label, indentSize)
-proc greenSpan*(label: string, indentSize = 1): Span = green(label, indentSize)
-proc cyanSpan*(label: string, indentSize = 1): Span =
-  result = (label, fgCyan, bgDefault, indentSize)
+proc blueSpan*(label: string, indentSize = 1, bright = false): Span = blue(label, indentSize, bright)
+proc yellowSpan*(label: string, indentSize = 1, bright = false): Span = yellow(label, indentSize, bright)
+proc greenSpan*(label: string, indentSize = 1, bright = false): Span = green(label, indentSize, bright)
+proc cyanSpan*(label: string, indentSize = 1, bright = false): Span =
+  result = (label, fgCyan, bgDefault, indentSize, bright)
 
 proc http(ssl: bool): string =
   result = if ssl: "https://" else: "http://"
 
 proc url*(uri: string, port: int = 0, ssl = false): Span =
   if port == 0:
-    result = (http(ssl) & uri, fgDefault, bgDefault, 1)
+    result = (http(ssl) & uri, fgDefault, bgDefault, 1, false)
   else:
-    result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault, 1)
+    result = (http(ssl) & uri & ":" & $port, fgDefault, bgDefault, 1, false)
 
 proc toggle*(onOff: bool): Span =
   result =
     if onOff:
-      (" ON ", fgDefault, bgGreen, 1)
+      (" ON ", fgDefault, bgGreen, 1, false)
     else:
-      (" OFF ", fgDefault, bgRed, 1)
+      (" OFF ", fgDefault, bgRed, 1, false)
 
 proc display*(spans: varargs[Span]) = 
   var k = 0
@@ -57,7 +57,7 @@ proc display*(spans: varargs[Span]) =
     if k != 0:
       write stdout, spaces(span.indentSize)
     stdout.setBackgroundColor(span.bg)
-    stdout.setForegroundColor(span.fg)
+    stdout.setForegroundColor(span.fg, span.bright)
     write(stdout, span.text)
     stdout.resetAttributes()
     inc k
@@ -69,7 +69,7 @@ proc display*(spans: seq[Span]) =
     # if k != 0:
     write stdout, spaces(span.indentSize)
     stdout.setBackgroundColor(span.bg)
-    stdout.setForegroundColor(span.fg)
+    stdout.setForegroundColor(span.fg, span.bright)
     write(stdout, span.text)
     stdout.resetAttributes()
     inc k
@@ -96,12 +96,12 @@ proc display*(label: string, indent=0, br="") =
   else: text = label.indent(indent)
 
   if br == "before" or br == "both": echo BR  # add a new line before label
-  display span(text)
+  display span(text, fgBlack, bright = true)
   if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*(x: string) = 
   ## Display `info` label with a predefined icon and color
-  display(span("Info:", fgCyan), span(x))
+  display(span("Info:", fgCyan), span(x, fgBlack, bright = true))
 
 proc displayInfo*(x: varargs[Span], indentSize: int) = 
   ## Display `info` label with a predefined icon and color
@@ -117,11 +117,11 @@ proc displayInfo*(x: varargs[Span]) =
 
 proc displaySuccess*(x: string) = 
   ## Display `success` label with a predefined icon and color
-  display(span("Success:", fgGreen), span(x))
+  display(span("Success:", fgGreen), span(x, fgBlack, bright = true))
 
 proc displayWarning*(x: string) =
   ## Display `warning` label with a predefined icon and color
-  display(span("Warning:", fgYellow), span(x))
+  display(span("Warning:", fgYellow), span(x, fgBlack, bright = true))
 
 proc displayWarning*(x: varargs[Span], indentSize: int) = 
   ## Display `warning` label with a predefined icon and color
@@ -137,7 +137,7 @@ proc displayWarning*(x: varargs[Span]) =
 
 proc displayError*(x: string, quitProcess = false) =
   ## Display `error` label with a predefined icon and color
-  display(span("Error:", fgRed), span(x))
+  display(span("Error:", fgRed), span(x, fgBlack, bright = true))
   if quitProcess:
     quit()
 
