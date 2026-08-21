@@ -12,6 +12,11 @@ export ForegroundColor, BackgroundColor
 export `%`
 
 const BR = ""
+
+when defined(windows):
+  const DefaultTextFg* = fgWhite
+else:
+  const DefaultTextFg* = fgDefault
 type
   Span* = tuple[text: string, fg: ForegroundColor, bg: BackgroundColor, indentSize: int, bright: bool]
   Row* = seq[Span]
@@ -96,12 +101,12 @@ proc display*(label: string, indent=0, br="") =
   else: text = label.indent(indent)
 
   if br == "before" or br == "both": echo BR  # add a new line before label
-  display span(text, fgBlack, bright = true)
+  display span(text, DefaultTextFg)
   if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*(x: string) = 
   ## Display `info` label with a predefined icon and color
-  display(span("Info:", fgCyan), span(x, fgBlack, bright = true))
+  display(span("Info:", fgCyan), span(x, DefaultTextFg))
 
 proc displayInfo*(x: varargs[Span], indentSize: int) = 
   ## Display `info` label with a predefined icon and color
@@ -117,11 +122,11 @@ proc displayInfo*(x: varargs[Span]) =
 
 proc displaySuccess*(x: string) = 
   ## Display `success` label with a predefined icon and color
-  display(span("Success:", fgGreen), span(x, fgBlack, bright = true))
+  display(span("Success:", fgGreen), span(x, DefaultTextFg))
 
 proc displayWarning*(x: string) =
   ## Display `warning` label with a predefined icon and color
-  display(span("Warning:", fgYellow), span(x, fgBlack, bright = true))
+  display(span("Warning:", fgYellow), span(x, DefaultTextFg))
 
 proc displayWarning*(x: varargs[Span], indentSize: int) = 
   ## Display `warning` label with a predefined icon and color
@@ -137,7 +142,7 @@ proc displayWarning*(x: varargs[Span]) =
 
 proc displayError*(x: string, quitProcess = false) =
   ## Display `error` label with a predefined icon and color
-  display(span("Error:", fgRed), span(x, fgBlack, bright = true))
+  display(span("Error:", fgRed), span(x, DefaultTextFg))
   if quitProcess:
     quit()
 

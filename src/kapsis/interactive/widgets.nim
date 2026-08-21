@@ -23,7 +23,10 @@ proc promptInteractive*(question: string, answers: openArray[string], width: Pos
 
   # The selection loop
   while not selected:
-    setForegroundColor(fgBlack, bright = true)
+    when defined(windows):
+      setForegroundColor(fgWhite)
+    else:
+      setForegroundColor(fgDefault)
     # Loop through the options
     for i, arg in answers:
       # Check if the option is the current
