@@ -160,9 +160,11 @@ proc buildArgLiteral(specs: seq[PluginArg]): NimNode =
 
 macro commands*(bodies: untyped): untyped =
   ## Declares CLI commands contributed by a kapsis plugin. Each leaf command is
-  ## turned into an exported `plugin_command_<name>` entrypoint the host can invoke,
-  ## and a manifest is registered in the compile-time `PluginStorage` cache which
-  ## the pluginkit `plugin` macro later emits as `plugin_event_load_commands`.
+  ## turned into an exported `plugin_command_<name>` entrypoint the host can invoke.
+  ## The command manifest and runners are registered under the compile-time
+  ## `otherHandlers` key of `PluginStorage`, so the pluginkit `plugin` macro emits
+  ## them into the built shared library, including the `plugin_event_load_commands`
+  ## entrypoint the host resolves to discover the manifest.
   var manifest = newJArray()
   var runners = newStmtList()
 
@@ -260,5 +262,23 @@ macro commands*(bodies: untyped): untyped =
             result = cstring("{\"error\": \"failed\"}")
 
   parse(bodies, "")
-  PluginStorage["commands"] = newLit($manifest)
-  PluginStorage["commandRunners"] = runners
+  # register the manifest loader and the command runners under `otherHandlers`,
+  # so pluginkit exports them from the built shared library
+  var handlers = newStmtList()
+  if PluginStorage.hasKey("otherHandlers"):
+    let existing = PluginStorage["otherHandlers"]
+    if existing.kind == nnkStmtList:
+      handlers = existing
+    else:
+      handlers.add(existing)
+  handlers.add(newProc(
+    nnkPostfix.newTree(ident"*", ident"plugin_event_load_commands"),
+    params = [
+      ident("cstring"),
+    ],
+    body = newStmtList().add(
+      newCall(ident"cstring", newLit($manifest))
+    )
+  ))
+  handlers.add(runners)
+  PluginStorage["otherHandlers"] = handlers

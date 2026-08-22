@@ -45,6 +45,8 @@ type
 
   PluginRunFn* = proc(jsonArgs: cstring): cstring {.cdecl.}
 
+  PluginCommandLoadFn* = proc(): cstring {.cdecl.}
+
 proc parseCmdKind(s: string): CmdLineKind =
   ## Maps a serialized argument `kind` back to a `CmdLineKind`.
   result = case s
@@ -61,6 +63,18 @@ proc globalPluginsDir(exePath: string): string =
   getHomeDir() / ".kapsis" / "apps" / exePath.splitFile.name / "plugins"
 
 proc pluginExtensions: seq[string] = @["dylib", "so", "dll"]
+
+proc getCommands*(plugin: Plugin): Option[JsonNode] =
+  ## Resolves the `plugin_event_load_commands` entrypoint exported by a plugin
+  ## shared library and returns its CLI command manifest as a JSON array, or
+  ## `none(JsonNode)` when the plugin does not contribute any commands.
+  let fn = cast[PluginCommandLoadFn](
+    plugin.getHandle().symAddr("plugin_event_load_commands"))
+  if fn != nil:
+    let raw = cstrToString(fn())
+    if raw.len > 0:
+      return some(parseJson(raw))
+  none(JsonNode)
 
 proc collectPluginCommands(host: PluginHost, dir: string) =
   ## Loads every plugin present in `dir` and registers the commands it contributes.

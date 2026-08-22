@@ -2,9 +2,14 @@ import std/[macros, terminal, sequtils, strutils]
 import pkg/valido
 
 import pkg/[termstyle, noise]
-import ./spinny, ./spinny/[spinners, preloaders]
+# spinners/preloaders spawn threads and use channels, which cannot be
+# initialized from within a dynamic library (`--app:lib`, e.g. plugins)
+when not compileOption("app", "lib"):
+  import ./spinny, ./spinny/[spinners, preloaders]
 
-export spinny, spinners, preloaders, termstyle
+when not compileOption("app", "lib"):
+  export spinny, spinners, preloaders
+export termstyle
 
 from std/strutils import `%`, spaces, indent
 export ForegroundColor, BackgroundColor
