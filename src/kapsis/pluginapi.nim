@@ -225,6 +225,16 @@ macro commands*(bodies: untyped): untyped =
         userBody.add(cmdBody)
 
       let (_, specs) = parseArgList(cmdArgs)
+      # flags are matched case-insensitively at runtime, so definitions that
+      # differ only by case would be ambiguous: reject them at compile time
+      var declaredFlags: seq[string]
+      for s in specs:
+        if s.name.startsWith("-"):
+          let lowerFlag = s.name.toLowerAscii
+          if lowerFlag in declaredFlags:
+            error("Duplicate flag definition `" & s.name &
+              "` (flags are case-insensitive)", cmd)
+          declaredFlags.add(lowerFlag)
       let camel = toCamel(name)
       let symbolName = "plugin_command_" & camel
       let symbolIdent = ident(symbolName)

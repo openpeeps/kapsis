@@ -100,3 +100,28 @@ suite "cli errors":
   test "reports missing required arguments":
     let res = runCLI("serve")
     check "Missing required argument: port" in res
+
+suite "cli case-insensitive flags":
+  test "long flags resolve regardless of case":
+    check runCLI("cased --SKIPFLAGS").strip() == "skip:true\ny:false"
+    check runCLI("cased --skipflags").strip() == "skip:true\ny:false"
+
+  test "short flags resolve regardless of case":
+    check runCLI("cased -Y").strip() == "skip:false\ny:true"
+
+  test "values are keyed by the declared flag name":
+    # the handler reads the canonical `--skipFlags` name; if collected
+    # values were keyed by the user's spelling, this would print false
+    check runCLI("cased --SkipFlags --skipflags").strip() == "skip:true\ny:false"
+
+  test "builtin help and version flags are case-insensitive":
+    check "Test CLI" in runCLI("--HELP")
+    check "1.0.0" in runCLI("-V")
+
+suite "cli duplicate flag detection":
+  test "flags differing only by case are rejected at compile time":
+    let (outp, code) = execCmdEx("nim c --hints:off --warnings:off --path:\"" &
+      kapsisSrc & "\" -o:\"" & (fixtureDir / "dupflag.bin") & "\" \"" &
+      (fixtureDir / "dupflag.nim") & "\"")
+    check code != 0
+    check "Duplicate flag definition" in outp

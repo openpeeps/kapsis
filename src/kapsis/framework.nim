@@ -409,7 +409,8 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
         return
   var
     argNodes = nnkBracket.newTree()
-    commandNode = 
+    declaredFlags: seq[string]
+    commandNode =
       nnkObjConstr.newTree(
         ident("Command"),
         nnkExprColonExpr.newTree(ident"kind", ident("cmdCommand")),
@@ -477,6 +478,14 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
         else: error("Invalid argument definition", n)
       else: error("Invalid argument definition", n)
     else: discard
+    # flags are matched case-insensitively at runtime, so definitions that
+    # differ only by case would be ambiguous: reject them at compile time
+    if argNameNode.strVal.startsWith("-"):
+      let lowerFlag = argNameNode.strVal.toLowerAscii
+      if lowerFlag in declaredFlags:
+        error("Duplicate flag definition `" & argNameNode.strVal &
+          "` (flags are case-insensitive)", n)
+      declaredFlags.add(lowerFlag)
     var argType: CmdArgValueType
     try:
       argType = parseEnum[CmdArgValueType](argTypeNode.strVal)
@@ -543,31 +552,35 @@ proc parseCommandInput(app: Kapsis) =
         # we loop through the user's input and collect the values for each argument
         case userInput[i].kind
         of cmdLongOption, cmdShortOption:
-          # handle options like `--verbose` or `-v`
-          if userInput[i].key in @["help", "h"]:
+          # handle options like `--verbose` or `-v` (builtins are case-insensitive)
+          let optKey = userInput[i].key.toLowerAscii
+          if optKey in ["help", "h"]:
             # show everything in the help message, including argument types and flags
             printUsage(app, showExtras = true, showTypes = true,
                             showFlags = true, quitProcess = true)
-          elif userInput[i].key in @["version", "v"]:
+          elif optKey in ["version", "v"]:
             display(app.version); quit(0)
           else:
-            # flags are orderless, so we need to find the corresponding arg def
-            # we can optimize this later
+            # flags are orderless and case-insensitive (`--SkipFlags` matches
+            # `--skipflags`, `-Y` matches `-y`), so we need to find the
+            # corresponding arg definition. we can optimize this later
             var arg: CmdArg
             let flagName = (if userInput[i].kind == cmdLongOption: "--" else: "-") & userInput[i].key
             for x in cmd.arguments:
-              if x.name == flagName and (x.kind in {cmdLongOption, cmdShortOption}):
+              if x.kind in {cmdLongOption, cmdShortOption} and
+                  x.name.toLowerAscii == flagName.toLowerAscii:
                 arg = x
                 break
             if arg != nil:
               let flagValue = userInput[i].val
               if flagValue.len > 0:
-                collectValues(values, flagName, flagValue, arg)
+                collectValues(values, arg.name, flagValue, arg)
               else:
                 # for boolean flags, presence means true and absence
                 # means false, so we set the value to "true" when the
-                # flag is present
-                collectValues(values, flagName, "true", arg)
+                # flag is present. values are keyed by the declared
+                # name, regardless of how the user spelled it
+                collectValues(values, arg.name, "true", arg)
             else:
               # Unknown flag — store for pass-through (e.g. nim flags)
               extras.add(flagName & (if userInput[i].val.len > 0: ":" & userInput[i].val else: ""))
@@ -610,9 +623,10 @@ proc parseCommandInput(app: Kapsis) =
   else:
     # usually this means the user is asking for `-h or --help`, `-v or --version`
     if likely(input.kind == cmdShortOption or input.kind == cmdLongOption):
-      if input.key == "h" or input.key == "help":
+      let optKey = input.key.toLowerAscii
+      if optKey == "h" or optKey == "help":
         # show everything in the help message, including argument types and flags
-        let fuzzyInput = 
+        let fuzzyInput =
           if input.val.len > 0:
             some(input.val)
           else:
@@ -620,7 +634,7 @@ proc parseCommandInput(app: Kapsis) =
         printUsage(app, showExtras = true, showTypes = true,
                     showFlags = true, quitProcess = true,
                     searchTerm = fuzzyInput)
-      elif input.key == "v" or input.key == "version":
+      elif optKey == "v" or optKey == "version":
         display(app.version)
       else:
         # if the default command is defined, execute it with the user's 

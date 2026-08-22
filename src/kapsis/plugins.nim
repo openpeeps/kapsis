@@ -152,17 +152,20 @@ proc runPluginCommand*(host: PluginHost, name: string): JsonNode =
       let spell = (if tokens[i].kind == cmdLongOption: "--" else: "-") & tokens[i].key
       var arg: PluginCmdArg
       for x in cmd.args:
-        if x.kind in {cmdLongOption, cmdShortOption} and x.name == spell:
+        # flags are matched case-insensitively (`--Greeting` resolves to
+        # a declared `--greeting`, `-Y` to `-y`)
+        if x.kind in {cmdLongOption, cmdShortOption} and
+            x.name.toLowerAscii == spell.toLowerAscii:
           arg = x
           break
       if arg.name.len == 0:
         displayError("Unexpected option: " & spell)
       if tokens[i].val.len > 0:
-        collectValues(values, spell, tokens[i].val, arg)
-        rawArgs[spell] = %tokens[i].val
+        collectValues(values, arg.name, tokens[i].val, arg)
+        rawArgs[arg.name] = %tokens[i].val
       else:
-        collectValues(values, spell, "true", arg)
-        rawArgs[spell] = %"true"
+        collectValues(values, arg.name, "true", arg)
+        rawArgs[arg.name] = %"true"
     of cmdArgument:
       while posIdx < cmd.args.len and cmd.args[posIdx].kind != cmdArgument:
         inc posIdx
