@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.4.6"
+version       = "0.4.7"
 author        = "George Lemon"
 description   = "Your type of CLI framework"
 license       = "MIT"
