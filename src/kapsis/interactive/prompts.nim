@@ -149,7 +149,7 @@ proc displayError*(x: string, quitProcess = false) =
   ## Display `error` label with a predefined icon and color
   display(span("Error:", fgRed), span(x, DefaultTextFg))
   if quitProcess:
-    quit()
+    quit(1)
 
 proc displayError*(x: varargs[Span]) = 
   ## Display `error` label with a predefined icon and color
