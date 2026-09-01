@@ -110,17 +110,14 @@ proc display*(label: string, indent=0, br="") =
   if br == "after" or br == "both": echo BR   # add a new line after label
 
 proc displayInfo*(x: string) = 
-  ## Display `info` label with a predefined icon and color
   display(span("Info:", fgCyan), span(x, DefaultTextFg))
 
 proc displayInfo*(x: varargs[Span], indentSize: int) = 
-  ## Display `info` label with a predefined icon and color
   var x = x.toSeq()
   x.insert(span("Info:", fgCyan, indentSize = indentSize), 0)
   display(x)
 
 proc displayInfo*(x: varargs[Span]) = 
-  ## Display `info` label with a predefined icon and color
   var x = x.toSeq()
   x.insert(span("Info:", fgCyan, indentSize = 0), 0)
   display(x)
@@ -129,30 +126,35 @@ proc displaySuccess*(x: string) =
   ## Display `success` label with a predefined icon and color
   display(span("Success:", fgGreen), span(x, DefaultTextFg))
 
+proc displaySuccess*(x: varargs[Span], indentSize: int) =
+  var x = x.toSeq()
+  x.insert(span("Success:", fgGreen, indentSize = indentSize), 0)
+  display(x)
+
+proc displaySuccess*(x: varargs[Span]) =
+  var x = x.toSeq()
+  x.insert(span("Success:", fgGreen, indentSize = 0), 0)
+  display(x)
+
 proc displayWarning*(x: string) =
-  ## Display `warning` label with a predefined icon and color
   display(span("Warning:", fgYellow), span(x, DefaultTextFg))
 
 proc displayWarning*(x: varargs[Span], indentSize: int) = 
-  ## Display `warning` label with a predefined icon and color
   var x = x.toSeq()
   x.insert(span("Warning:", fgYellow, indentSize = indentSize), 0)
   display(x)
 
 proc displayWarning*(x: varargs[Span]) = 
-  ## Display `warning` label with a predefined icon and color
   var x = x.toSeq()
   x.insert(span("Warning:", fgYellow, indentSize = 0), 0)
   display(x)
 
 proc displayError*(x: string, quitProcess = false) =
-  ## Display `error` label with a predefined icon and color
   display(span("Error:", fgRed), span(x, DefaultTextFg))
   if quitProcess:
     quit(1)
 
 proc displayError*(x: varargs[Span]) = 
-  ## Display `error` label with a predefined icon and color
   var x = x.toSeq()
   x.insert(span("Error:", fgRed, indentSize = 0), 0)
   display(x)
