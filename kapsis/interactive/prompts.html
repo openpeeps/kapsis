@@ -122,6 +122,8 @@
 </ul>
 <ul class="simple nested-toc-section">displaySuccess
   <li><a class="reference" href="#displaySuccess%2Cstring" title="displaySuccess(x: string)">displaySuccess(x: string)</a></li>
+<li><a class="reference" href="#displaySuccess%2Cvarargs%5BSpan%5D" title="displaySuccess(x: varargs[Span])">displaySuccess(x: varargs[Span])</a></li>
+<li><a class="reference" href="#displaySuccess%2Cvarargs%5BSpan%5D%2Cint" title="displaySuccess(x: varargs[Span]; indentSize: int)">displaySuccess(x: varargs[Span]; indentSize: int)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">displayWarning
@@ -365,7 +367,7 @@
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">error</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -374,7 +376,7 @@
                                       <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">error</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -386,7 +388,7 @@
                               <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">info</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -395,7 +397,7 @@
                                      <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">info</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -404,7 +406,7 @@
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">info</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -420,6 +422,24 @@
     
   </dd>
 </div>
+<div id="displaySuccess,varargs[Span]">
+  <dt><pre><span class="Keyword">proc</span> <a href="#displaySuccess%2Cvarargs%5BSpan%5D"><span class="Identifier">displaySuccess</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+                                        <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+<div id="displaySuccess,varargs[Span],int">
+  <dt><pre><span class="Keyword">proc</span> <a href="#displaySuccess%2Cvarargs%5BSpan%5D%2Cint"><span class="Identifier">displaySuccess</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><a href="#Span"><span class="Identifier">Span</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">indentSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
 
 </div>
 <div id="displayWarning-procs-all">
@@ -428,7 +448,7 @@
                                  <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">warning</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -437,7 +457,7 @@
                                         <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">warning</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -446,7 +466,7 @@
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    Display <tt class="docutils literal"><span class="pre"><span class="Identifier">warning</span></span></tt> label with a predefined icon and color
+    
     
   </dd>
 </div>
@@ -617,7 +637,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-22 14:41:51 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-09-01 09:40:05 UTC</small>
       </div>
     </div>
   </div>
