@@ -61,25 +61,33 @@ proc toggle*(onOff: bool): Span =
     else:
       (" OFF ", fgDefault, bgRed, 1, false)
 
-proc display*(spans: varargs[Span]) = 
+proc display*(spans: varargs[Span]) =
+  ## `fgDefault`/`bgDefault` spans inherit the console theme: setting them
+  ## explicitly resolves to black on Windows consoles instead of the theme
+  ## foreground, so they are skipped (the trailing reset restores defaults).
   var k = 0
   for span in spans:
     if k != 0:
       write stdout, spaces(span.indentSize)
-    stdout.setBackgroundColor(span.bg)
-    stdout.setForegroundColor(span.fg, span.bright)
+    if span.bg != bgDefault:
+      stdout.setBackgroundColor(span.bg)
+    if span.fg != fgDefault:
+      stdout.setForegroundColor(span.fg, span.bright)
     write(stdout, span.text)
     stdout.resetAttributes()
     inc k
   write(stdout, "\n")
 
-proc display*(spans: seq[Span]) = 
+proc display*(spans: seq[Span]) =
+  ## Same theme-inheritance rule as the varargs overload above.
   var k = 0
   for span in spans:
     # if k != 0:
     write stdout, spaces(span.indentSize)
-    stdout.setBackgroundColor(span.bg)
-    stdout.setForegroundColor(span.fg, span.bright)
+    if span.bg != bgDefault:
+      stdout.setBackgroundColor(span.bg)
+    if span.fg != fgDefault:
+      stdout.setForegroundColor(span.fg, span.bright)
     write(stdout, span.text)
     stdout.resetAttributes()
     inc k

@@ -266,7 +266,7 @@ proc spinnyLoop(args: SpinnyArgs) {.thread.} =
     let now = getMonoTime()
     let remaining = (next - now).inMilliseconds
     if remaining > 0:
-      sleep(remaining)
+      sleep(remaining.int)
 
     rs.frameIdx = (rs.frameIdx + 1) mod max(1, rs.frames.len)
     acquire(manager.lock)
