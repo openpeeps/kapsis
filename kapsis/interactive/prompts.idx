@@ -14,29 +14,29 @@ nim	cyanSpan	kapsis/interactive/prompts.html#cyanSpan,string,int	proc cyanSpan(l
 nim	url	kapsis/interactive/prompts.html#url,string,int	proc url(uri: string; port: int = 0; ssl = false): Span		51
 nim	toggle	kapsis/interactive/prompts.html#toggle,bool	proc toggle(onOff: bool): Span		57
 nim	display	kapsis/interactive/prompts.html#display,varargs[Span]	proc display(spans: varargs[Span])		64
-nim	display	kapsis/interactive/prompts.html#display,seq[Span]	proc display(spans: seq[Span])		76
-nim	toString	kapsis/interactive/prompts.html#toString,seq[Span]	proc toString(spans: seq[Span]): string		88
-nim	rows	kapsis/interactive/prompts.html#rows.i,seq[Row]	iterator rows(items: seq[Row]): Row		94
-nim	display	kapsis/interactive/prompts.html#display,int,varargs[Span]	proc display(i: int; spans: varargs[Span])		98
-nim	display	kapsis/interactive/prompts.html#display,string,int,string	proc display(label: string; indent = 0; br = "")		102
-nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,string	proc displayInfo(x: string)		112
-nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,varargs[Span],int	proc displayInfo(x: varargs[Span]; indentSize: int)		115
-nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,varargs[Span]	proc displayInfo(x: varargs[Span])		120
-nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,string	proc displaySuccess(x: string)		125
-nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,varargs[Span],int	proc displaySuccess(x: varargs[Span]; indentSize: int)		129
-nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,varargs[Span]	proc displaySuccess(x: varargs[Span])		134
-nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,string	proc displayWarning(x: string)		139
-nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,varargs[Span],int	proc displayWarning(x: varargs[Span]; indentSize: int)		142
-nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,varargs[Span]	proc displayWarning(x: varargs[Span])		147
-nim	displayError	kapsis/interactive/prompts.html#displayError,string	proc displayError(x: string; quitProcess = false)		152
-nim	displayError	kapsis/interactive/prompts.html#displayError,varargs[Span]	proc displayError(x: varargs[Span])		157
-nim	prompt	kapsis/interactive/prompts.html#prompt,string,string,string	proc prompt(label: string; color: string = "white"; default = ""): string		162
-nim	promptSecret	kapsis/interactive/prompts.html#promptSecret,string,string	proc promptSecret(label: string; color: string = "white"; required = true): string		177
-nim	promptConfirm	kapsis/interactive/prompts.html#promptConfirm,string,string	proc promptConfirm(label: string; icon: string = "👉"): bool		184
-nim	askEmail	kapsis/interactive/prompts.html#askEmail,string,string	proc askEmail(label: string; default = ""; skippable = false): string		197
-nim	askIP4	kapsis/interactive/prompts.html#askIP4,string,string	proc askIP4(label: string; default = ""; skippable = false): string		210
-nimgrp	displaywarning	kapsis/interactive/prompts.html#displayWarning-procs-all	proc		139
-nimgrp	displayinfo	kapsis/interactive/prompts.html#displayInfo-procs-all	proc		112
-nimgrp	displaysuccess	kapsis/interactive/prompts.html#displaySuccess-procs-all	proc		125
-nimgrp	displayerror	kapsis/interactive/prompts.html#displayError-procs-all	proc		152
+nim	display	kapsis/interactive/prompts.html#display,seq[Span]	proc display(spans: seq[Span])		81
+nim	toString	kapsis/interactive/prompts.html#toString,seq[Span]	proc toString(spans: seq[Span]): string		96
+nim	rows	kapsis/interactive/prompts.html#rows.i,seq[Row]	iterator rows(items: seq[Row]): Row		102
+nim	display	kapsis/interactive/prompts.html#display,int,varargs[Span]	proc display(i: int; spans: varargs[Span])		106
+nim	display	kapsis/interactive/prompts.html#display,string,int,string	proc display(label: string; indent = 0; br = "")		110
+nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,string	proc displayInfo(x: string)		120
+nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,varargs[Span],int	proc displayInfo(x: varargs[Span]; indentSize: int)		123
+nim	displayInfo	kapsis/interactive/prompts.html#displayInfo,varargs[Span]	proc displayInfo(x: varargs[Span])		128
+nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,string	proc displaySuccess(x: string)		133
+nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,varargs[Span],int	proc displaySuccess(x: varargs[Span]; indentSize: int)		137
+nim	displaySuccess	kapsis/interactive/prompts.html#displaySuccess,varargs[Span]	proc displaySuccess(x: varargs[Span])		142
+nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,string	proc displayWarning(x: string)		147
+nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,varargs[Span],int	proc displayWarning(x: varargs[Span]; indentSize: int)		150
+nim	displayWarning	kapsis/interactive/prompts.html#displayWarning,varargs[Span]	proc displayWarning(x: varargs[Span])		155
+nim	displayError	kapsis/interactive/prompts.html#displayError,string	proc displayError(x: string; quitProcess = false)		160
+nim	displayError	kapsis/interactive/prompts.html#displayError,varargs[Span]	proc displayError(x: varargs[Span])		165
+nim	prompt	kapsis/interactive/prompts.html#prompt,string,string,string	proc prompt(label: string; color: string = "white"; default = ""): string		170
+nim	promptSecret	kapsis/interactive/prompts.html#promptSecret,string,string	proc promptSecret(label: string; color: string = "white"; required = true): string		185
+nim	promptConfirm	kapsis/interactive/prompts.html#promptConfirm,string,string	proc promptConfirm(label: string; icon: string = "👉"): bool		192
+nim	askEmail	kapsis/interactive/prompts.html#askEmail,string,string	proc askEmail(label: string; default = ""; skippable = false): string		205
+nim	askIP4	kapsis/interactive/prompts.html#askIP4,string,string	proc askIP4(label: string; default = ""; skippable = false): string		218
+nimgrp	displaywarning	kapsis/interactive/prompts.html#displayWarning-procs-all	proc		147
+nimgrp	displayinfo	kapsis/interactive/prompts.html#displayInfo-procs-all	proc		120
+nimgrp	displaysuccess	kapsis/interactive/prompts.html#displaySuccess-procs-all	proc		133
+nimgrp	displayerror	kapsis/interactive/prompts.html#displayError-procs-all	proc		160
 nimgrp	display	kapsis/interactive/prompts.html#display-procs-all	proc		64
