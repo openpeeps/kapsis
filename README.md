@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <code>nimble install nimbase</code>
+  <code>clue install kapsis</code>
 </p>
 
 <p align="center">
@@ -17,6 +17,7 @@
 - [x] Shows Extras, version and license in the help message
 - [x] Supports subcommands and nested subcommands
 - [x] Supports flags and options with or without values
+- [x] Repeatable flags via `list` arguments
 - [x] Detailed error messages for invalid input
 - [x] Pluggable Commands via Shared libraries
 - [ ] Translatable Commands
@@ -65,7 +66,40 @@ initKapsis do:
         ## Blue was the bluest blue can be blue
       orange bool(enable):
         ## The silly old color who lives next to red
+
+    -- "Shipping"
+    pack ?list("--file"), ?bool("--no-apps-link"):
+      ## Package the build output into a distributable volume
 ```
+
+### Flags and Options
+A `?`-prefixed argument is optional. Argument types are `string`, `int`, `float`, `bool`, `file`, `dir`, `path`, `url`, `json`, `ident`, `any`, `list` and a few duration types. Flags may be declared long (`"--file"`), short (`"-f"`) or both as separate arguments, and a value can be attached either with a space or a separator:
+
+```sh
+myapp pack --file README.md --file LICENSE
+myapp pack --file:README.md --file:LICENSE
+myapp pack -fREADME.md -fLICENSE
+```
+
+Boolean flags are switches: they are `true` when present and take no value, so the following two are equivalent.
+
+```sh
+myapp pack --no-apps-link
+myapp pack --no-apps-link:false
+```
+
+### Repeatable Flags
+A `list` argument collects every occurrence of the flag instead of keeping only the last one. Inside the command handler its values are read with `getItems`:
+
+```nim
+proc packCommand(v: Values) =
+  for path in v.get("--file").getItems:
+    echo path
+```
+
+`list` arguments must be flags, not positional arguments. They are currently unsupported in plugin commands.
+
+Exposing one flag under two spellings means declaring it twice (`?list("--file"), ?list("-f")`), which produces two separate lists; read both and concatenate. Values therefore group by declared spelling rather than by the order they were typed, which matters only when order is significant.
 
 ### Metadata
 Kapsis can collect metadata from the provided statements, but if not provided it will try to extract it from the `.nimble` file, so you can choose to provide it in either place. The metadata includes:

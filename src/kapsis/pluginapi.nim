@@ -69,6 +69,10 @@ proc jsonArgsToValues*(json: string, specs: openArray[PluginArg]): ValuesTable =
     node = newJObject()
   result = initOrderedTable[string, Value]()
   for spec in specs:
+    if spec.datatype == ktList:
+      # the host marshals each plugin flag as a single JSON string, so a
+      # repeatable arg would silently degrade to one item
+      printError(unsupportedInPlugin, spec.name)
     if node.hasKey(spec.name):
       collectValues(result, spec.name, node[spec.name].getStr, spec)
     elif spec.datatype == ktBool and not spec.optional:

@@ -251,12 +251,16 @@ proc preparePrintCommand(cmd: Command,
       of cmdLongOption:
         if showFlags:
           var flagStr = arg.name & ":" & $arg.dataType
+          if arg.dataType == ktList:
+            flagStr = arg.name & ":string[]"
           if arg.dataType == ktAny and arg.choices.len > 0:
             flagStr.add "[" & arg.choices.join(",") & "]"
           flags.add flagStr
       of cmdShortOption:
         if showFlags:
           var flagStr = arg.name & ":" & $arg.dataType
+          if arg.dataType == ktList:
+            flagStr = arg.name & ":string[]"
           if arg.dataType == ktAny and arg.choices.len > 0:
             flagStr.add "[" & arg.choices.join(",") & "]"
           flags.add flagStr
@@ -491,6 +495,9 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
       argType = parseEnum[CmdArgValueType](argTypeNode.strVal)
     except ValueError:
       error("Unknown argument type: " & argTypeNode.strVal, argTypeNode)
+    if argType == ktList and kind == cmdArgument:
+      error("`list` arguments must be declared as flags, e.g. " &
+        "`?list(\"--file\")`, not as a positional argument", n)
     
     argNodes.add(
       nnkObjConstr.newTree(
@@ -521,10 +528,45 @@ proc parseCommand(cmdName: NimNode, cmdArgs: seq[NimNode] = @[],
   # register the command in the app's commands table
   kapsisPreparedCommands[cmdName.strVal] = commandNode
 
+proc noValFlags(app: Kapsis): NoValFlags =
+  ## Collects the declared boolean flags, which `std/parseopt` needs in order
+  ## to tell a switch from an option that expects a value.
+  ##
+  ## A name declared as boolean by one command and as a value by another is
+  ## left out entirely, so the value form always wins.
+  result = withShortFlagSentinel(result)
+  var boolFlags, valueFlags: OrderedTable[string, char]
+  for _, cmd in app.commands:
+    if cmd.kind != cmdCommand: continue
+    for arg in cmd.arguments:
+      if arg.kind notin {cmdLongOption, cmdShortOption}: continue
+      let
+        isLong = arg.kind == cmdLongOption
+        bare = if isLong: arg.name[2..^1] else: arg.name[1..^1]
+      if bare.len == 0: continue
+      if arg.dataType == ktBool:
+        boolFlags[bare] = (if isLong: '\0' else: bare[0])
+      else:
+        valueFlags[bare] = '\0'
+  for bare, shortChar in boolFlags:
+    if bare in valueFlags: continue
+    # normalized to lowercase: option names are lowercased before parsing
+    if shortChar == '\0':
+      result.longFlags.add bare.toLowerAscii
+    else:
+      result.shortFlags.incl shortChar.toLowerAscii
+
 proc parseCommandInput(app: Kapsis) =
   # Parses the command line arguments and executes the corresponding command
   extras = @[]
-  var p = quoteShellCommand(commandLineParams()).initOptParser
+  let noVal = noValFlags(app)
+  # LaxMode rather than NimMode: it is a strict superset (every NimMode
+  # separator still works) that additionally lets a short option take the
+  # following token as its value, which `NimMode` never does.
+  var p = quoteShellCommand(normalizeFlagCase(commandLineParams())).
+    initOptParser(
+      shortNoVal = noVal.shortFlags, longNoVal = noVal.longFlags,
+      mode = LaxMode)
   var userInput = p.getopt.toSeq()
   if userInput.len > 0 == false:
     printUsage(app, showTypes = false, quitProcess = true)
@@ -573,7 +615,11 @@ proc parseCommandInput(app: Kapsis) =
                 break
             if arg != nil:
               let flagValue = userInput[i].val
-              if flagValue.len > 0:
+              if arg.dataType == ktList and flagValue.len == 0:
+                # a repeatable flag collects values, so appearing without one
+                # is a mistake rather than an implicit "true"
+                printError(missingArgument, arg.name)
+              elif flagValue.len > 0:
                 collectValues(values, arg.name, flagValue, arg)
               else:
                 # for boolean flags, presence means true and absence

@@ -5,6 +5,7 @@
 import unittest
 
 import pkg/kapsis/runtime
+import pkg/kapsis/framework
 import pkg/kapsis/pluginapi
 
 suite "values":
@@ -121,3 +122,44 @@ suite "types":
   test "any type name round-trips":
     check ($ktAny) == "any"
     check toValueType("any") == ktAny
+
+  test "list type name round-trips":
+    check ($ktList) == "list"
+    check toValueType("list") == ktList
+
+suite "repeatable args":
+  let fileArg = CmdArg(
+    name: "--file",
+    dataType: ktList,
+    kind: cmdLongOption,
+    isOptional: true)
+
+  test "the first occurrence creates the list":
+    var table: ValuesTable
+    collectValues(table, "--file", "a", fileArg)
+    check (addr table).get("--file").getItems == @["a"]
+
+  test "later occurrences append instead of overwriting":
+    var table: ValuesTable
+    for item in ["a", "b", "c"]:
+      collectValues(table, "--file", item, fileArg)
+    check (addr table).get("--file").getItems == @["a", "b", "c"]
+
+  test "each repeatable flag keeps its own list":
+    var table: ValuesTable
+    collectValues(table, "--file", "a", fileArg)
+    collectValues(table, "--dir", "x", CmdArg(
+      name: "--dir", dataType: ktList, kind: cmdLongOption, isOptional: true))
+    collectValues(table, "--file", "b", fileArg)
+    check (addr table).get("--file").getItems == @["a", "b"]
+    check (addr table).get("--dir").getItems == @["x"]
+
+  test "an absent repeatable flag has no entry":
+    var table: ValuesTable
+    check not (addr table).has("--file")
+
+  test "values that look like other types are kept verbatim":
+    var table: ValuesTable
+    collectValues(table, "--file", "12", fileArg)
+    collectValues(table, "--file", "true", fileArg)
+    check (addr table).get("--file").getItems == @["12", "true"]

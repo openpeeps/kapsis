@@ -42,6 +42,9 @@ type
     manager*: PluginManager
     commands*: OrderedTable[string, PluginCommand]
       ## Maps a plugin command name to its definition
+    noVal*: NoValFlags
+      ## The boolean flags the plugin commands declare, handed to
+      ## `std/parseopt` so `--flag value` is distinguishable from a switch
 
   PluginRunFn* = proc(jsonArgs: cstring): cstring {.cdecl.}
 
@@ -123,6 +126,20 @@ proc initPluginHost*(exePath: string, localDir: string = ""): PluginHost =
       if isAbsolute(localDir): localDir
       else: exePath.parentDir / localDir
     result.collectPluginCommands(dir)
+  # boolean flags must be declared to std/parseopt as valueless, otherwise
+  # `--flag value` cannot tell a switch from an option expecting an argument
+  result.noVal = withShortFlagSentinel(result.noVal)
+  for _, cmd in result.commands:
+    for arg in cmd.args:
+      if arg.datatype != ktBool: continue
+      case arg.kind
+      of cmdLongOption:
+        if arg.name.startsWith("--"):
+          result.noVal.longFlags.add arg.name[2..^1]
+      of cmdShortOption:
+        if arg.name.len == 2:
+          result.noVal.shortFlags.incl arg.name[1]
+      else: discard
 
 proc runPluginCommand*(host: PluginHost, name: string): JsonNode =
   ## Parses the command-line arguments for the plugin command `name` and invokes the
@@ -137,7 +154,10 @@ proc runPluginCommand*(host: PluginHost, name: string): JsonNode =
     return
 
   # tokenize the user's input (skipping the command name itself)
-  var p = quoteShellCommand(commandLineParams()).initOptParser
+  var p = quoteShellCommand(normalizeFlagCase(commandLineParams())).
+    initOptParser(
+      shortNoVal = host.noVal.shortFlags, longNoVal = host.noVal.longFlags,
+      mode = LaxMode)
   var tokens = p.getopt.toSeq()
 
   var

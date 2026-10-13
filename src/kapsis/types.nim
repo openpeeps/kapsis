@@ -37,6 +37,7 @@ type
     ktPort = "port"
     ktIdent = "ident"
     ktAny = "any"
+    ktList = "list"
 
   KapsisPath* = object
     ## The KapsisPath object that will hold the parsed value of a
@@ -92,6 +93,8 @@ type
       vIdent: string
     of ktAny:
       vAny: string
+    of ktList:
+      vItems: seq[string]
   
   ValuesTable* = OrderedTable[string, Value]
     ## The table that will hold the parsed values of the command line arguments
@@ -99,6 +102,53 @@ type
     ## A pointer to a table that will hold the parsed values
     ## of the command line arguments
 
+  NoValFlags* = object
+    ## The boolean flags a CLI declares. `std/parseopt` only attaches a
+    ## following token to a flag once it has been told which flags are
+    ## valueless, so these have to be handed over explicitly; otherwise
+    ## `--name value` yields an empty flag plus a stray positional and only
+    ## the `--name:value` form works.
+    shortFlags*: set[char]
+      ## Single-character short flags, without the leading dash
+    longFlags*: seq[string]
+      ## Long flags, without the leading dashes
+
+const
+  NotAShortFlag* = '\0'
+    ## Sentinel kept inside `NoValFlags.shortFlags`. `std/parseopt` gates
+    ## `canTakeVal` on `card(shortNoVal) > 0`, so a CLI that declares no
+    ## boolean short flag at all would find that `-f value` never picks up
+    ## its value. A NUL character cannot collide with a real flag name, so
+    ## it satisfies the check without changing any behaviour.
+
+proc withShortFlagSentinel*(flags: NoValFlags): NoValFlags =
+  ## Returns `flags` with `NotAShortFlag` added to its short-flag set
+  result = flags
+  result.shortFlags.incl NotAShortFlag
+
+proc normalizeFlagCase*(args: seq[string]): seq[string] =
+  ## Returns `args` with the *name* of every option token lowercased, which
+  ## is what `std/parseopt` has to be fed for its case-sensitive
+  ## `longNoVal`/`shortNoVal` lookups to agree with kapsis' case-insensitive
+  ## flag matching.
+  ##
+  ## Only the name is touched: the `:`/`=` separator and everything after it,
+  ## and every positional argument, are left exactly as the user typed them.
+  ## The result still has to be quoted before being parsed as a command line,
+  ## so values containing spaces survive.
+  for arg in args:
+    if arg.len < 2 or arg[0] != '-':
+      result.add arg
+      continue
+    let isLong = arg.len > 2 and arg[1] == '-'
+    var nameEnd = (if isLong: arg.len else: 2)
+    for c in 2 ..< arg.len:
+      if arg[c] in {':', '='}:
+        nameEnd = c
+        break
+    result.add arg[0..<nameEnd].toLowerAscii & arg[nameEnd..^1]
+
+type
   KapsisErrorMessage* = enum
     ## A list of possible error messages that can be thrown by Kapsis
     ## at runtime when parsing user's input or when executing commands
@@ -110,6 +160,8 @@ type
     typeMismatch = "Type mismatch for `$1`. Expected $2"
     missingArgument = "Missing required argument: $1"
     invalidChoice = "Invalid choice for `$1`. Expected one of: $2"
+    unsupportedInPlugin =
+      "Repeatable `$1` arguments are not supported in plugins yet"
 
 template printError*(msg: KapsisErrorMessage, arg: varargs[string]) =
   ## Print `msg` error with `args` and quit with `QuitFailure` exit code 
@@ -208,6 +260,13 @@ template collectValues*(values: var ValuesTable,
         values[argName] = Value(kt: ktAny, vAny: val)
       else:
         printError(invalidChoice, argName, arg.choices.join(", "))
+    of ktList:
+      # repeatable args accumulate one item per occurrence rather than
+      # overwriting, so `-f a -f b` yields a two-item list
+      if not values.hasKey(argName):
+        values[argName] = Value(kt: ktList, vItems: @[val])
+      else:
+        values[argName].vItems.add val
     else: discard
     if not values.hasKey(argName):
       printError(typeMismatch, argName, $arg.datatype)

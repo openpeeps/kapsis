@@ -8,7 +8,6 @@ import std/[os, osproc, strutils, unittest]
 
 const fixtureDir = currentSourcePath().parentDir() / "fixtures"
 const cliSrc = fixtureDir / "cliapp.nim"
-const kapsisSrc = currentSourcePath().parentDir() / ".." / "src"
 const cliBin =
   when defined(windows):
     fixtureDir / "cliapp.bin.exe"
@@ -16,9 +15,10 @@ const cliBin =
     fixtureDir / "cliapp.bin"
 
 static:
-  # Build the fixture app once so the tests can run it as a subprocess
-  discard staticExec("nim c --hints:off --warnings:off --path:\"" &
-    kapsisSrc & "\" -o:\"" & cliBin & "\" \"" & cliSrc & "\"")
+  # Build the fixture app once so the tests can run it as a subprocess.
+  # `clue` rather than a bare `nim c`: only clue resolves this package's
+  # dependency paths, which a nested `nim c` cannot see.
+  discard staticExec("clue build \"" & cliSrc & "\" --out:\"" & cliBin & "\"")
 
 proc stripAnsi(s: string): string =
   var i = 0
@@ -120,8 +120,50 @@ suite "cli case-insensitive flags":
 
 suite "cli duplicate flag detection":
   test "flags differing only by case are rejected at compile time":
-    let (outp, code) = execCmdEx("nim c --hints:off --warnings:off --path:\"" &
-      kapsisSrc & "\" -o:\"" & (fixtureDir / "dupflag.bin") & "\" \"" &
-      (fixtureDir / "dupflag.nim") & "\"")
+    let (outp, code) = execCmdEx("clue build \"" &
+      (fixtureDir / "dupflag.nim") & "\" --out:\"" &
+      (fixtureDir / "dupflag.bin") & "\"")
     check code != 0
     check "Duplicate flag definition" in outp
+
+suite "cli repeatable flags":
+  test "a repeated flag collects every value in order":
+    check runCLI("pack --file a --file b --file c").strip() ==
+      "files:a,b,c\ndirs:"
+
+  test "an absent repeatable flag is an empty list":
+    check runCLI("pack --file a").strip() == "files:a\ndirs:"
+
+  test "accepts the space and colon forms":
+    check runCLI("pack --file a --file:b").strip() == "files:a,b\ndirs:"
+
+  test "each repeatable flag keeps its own list":
+    check runCLI("pack --file a --dir x --file b --dir y").strip() ==
+      "files:a,b\ndirs:x,y"
+
+  test "spelling of a repeatable flag does not affect its case":
+    check runCLI("pack --FILE a").strip() == "files:a\ndirs:"
+
+  test "a repeatable flag without a value is an error":
+    let res = runCLI("pack --file")
+    check "Missing required argument: --file" in res
+
+  test "repeatable flags are advertised in the help screen":
+    check "--file:string[]" in runCLI("-h")
+
+  test "a short repeatable flag takes a value separated by a space":
+    # std/parseopt omits prShortValAllowNextArg in NimMode, so a CLI that
+    # never needed it silently stopped handing `-f value` its value
+    check runCLI("pack -f a -f b").strip() == "files:a,b\ndirs:"
+
+  test "both spellings feed one list, grouped by declared spelling":
+    # kapsis has no alias support, so `--file` and `-f` are two independent
+    # lists; an app exposing one flag under two spellings concatenates them
+    check runCLI("pack -f a --file b").strip() == "files:b,a\ndirs:"
+    check runCLI("pack -d x -d y --dir z").strip() == "files:\ndirs:z,x,y"
+
+  test "a flag value may contain spaces":
+    # the token stream is shell-quoted before being parsed, so a quoted
+    # value survives whole instead of leaking into positionals
+    check runCLI("pack --file \"My Notes.txt\" --dir \"some dir\"").strip() ==
+      "files:My Notes.txt\ndirs:some dir"
