@@ -377,6 +377,10 @@
 <li><a class="reference external"
           data-doc-search-tag="types: proc getInt(value: Value): lent int" href="kapsis/types.html#getInt%2CValue">types: proc getInt(value: Value): lent int</a></li>
           </ul></dd>
+<dt><a name="getItems" href="#getItems"><span>getItems:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: proc getItems(value: Value): lent seq[string]" href="kapsis/types.html#getItems%2CValue">types: proc getItems(value: Value): lent seq[string]</a></li>
+          </ul></dd>
 <dt><a name="getJson" href="#getJson"><span>getJson:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: proc getJson(value: Value): lent JsonNode" href="kapsis/types.html#getJson%2CValue">types: proc getJson(value: Value): lent JsonNode</a></li>
@@ -545,6 +549,10 @@
 <li><a class="reference external"
           data-doc-search-tag="types: CmdArgValueType.ktJson" href="kapsis/types.html#ktJson">types: CmdArgValueType.ktJson</a></li>
           </ul></dd>
+<dt><a name="ktList" href="#ktList"><span>ktList:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: CmdArgValueType.ktList" href="kapsis/types.html#ktList">types: CmdArgValueType.ktList</a></li>
+          </ul></dd>
 <dt><a name="ktMilliseconds" href="#ktMilliseconds"><span>ktMilliseconds:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="types: CmdArgValueType.ktMilliseconds" href="kapsis/types.html#ktMilliseconds">types: CmdArgValueType.ktMilliseconds</a></li>
@@ -610,6 +618,18 @@
 <dt><a name="newSpinnyManager" href="#newSpinnyManager"><span>newSpinnyManager:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinny: proc newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager" href="kapsis/interactive/spinny.html#newSpinnyManager%2CFile">spinny: proc newSpinnyManager(output: File = stdout; forceTty = false): SpinnyManager</a></li>
+          </ul></dd>
+<dt><a name="normalizeFlagCase" href="#normalizeFlagCase"><span>normalizeFlagCase:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: proc normalizeFlagCase(args: seq[string]): seq[string]" href="kapsis/types.html#normalizeFlagCase%2Cseq%5Bstring%5D">types: proc normalizeFlagCase(args: seq[string]): seq[string]</a></li>
+          </ul></dd>
+<dt><a name="NotAShortFlag" href="#NotAShortFlag"><span>NotAShortFlag:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: const NotAShortFlag" href="kapsis/types.html#NotAShortFlag">types: const NotAShortFlag</a></li>
+          </ul></dd>
+<dt><a name="NoValFlags" href="#NoValFlags"><span>NoValFlags:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: object NoValFlags" href="kapsis/types.html#NoValFlags">types: object NoValFlags</a></li>
           </ul></dd>
 <dt><a name="pkBounce" href="#pkBounce"><span>pkBounce:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -1161,6 +1181,10 @@
 <li><a class="reference external"
           data-doc-search-tag="types: KapsisErrorMessage.unknownOption" href="kapsis/types.html#unknownOption">types: KapsisErrorMessage.unknownOption</a></li>
           </ul></dd>
+<dt><a name="unsupportedInPlugin" href="#unsupportedInPlugin"><span>unsupportedInPlugin:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: KapsisErrorMessage.unsupportedInPlugin" href="kapsis/types.html#unsupportedInPlugin">types: KapsisErrorMessage.unsupportedInPlugin</a></li>
+          </ul></dd>
 <dt><a name="url" href="#url"><span>url:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="prompts: proc url(uri: string; port: int = 0; ssl = false): Span" href="kapsis/interactive/prompts.html#url%2Cstring%2Cint">prompts: proc url(uri: string; port: int = 0; ssl = false): Span</a></li>
@@ -1181,6 +1205,10 @@
 <li><a class="reference external"
           data-doc-search-tag="spinny: proc warn(spinny: var Spinny; msg = &quot;&quot;)" href="kapsis/interactive/spinny.html#warn%2CSpinny%2Cstring">spinny: proc warn(spinny: var Spinny; msg = &quot;&quot;)</a></li>
           </ul></dd>
+<dt><a name="withShortFlagSentinel" href="#withShortFlagSentinel"><span>withShortFlagSentinel:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="types: proc withShortFlagSentinel(flags: NoValFlags): NoValFlags" href="kapsis/types.html#withShortFlagSentinel%2CNoValFlags">types: proc withShortFlagSentinel(flags: NoValFlags): NoValFlags</a></li>
+          </ul></dd>
 <dt><a name="withSpinny" href="#withSpinny"><span>withSpinny:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="spinny: template withSpinny(spinny: Spinny; body: untyped): untyped" href="kapsis/interactive/spinny.html#withSpinny.t%2CSpinny%2Cuntyped">spinny: template withSpinny(spinny: Spinny; body: untyped): untyped</a></li>
@@ -1197,7 +1225,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-09-24 15:00:41 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-10-13 18:17:21 UTC</small>
       </div>
     </div>
   </div>

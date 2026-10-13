@@ -75,7 +75,9 @@
 <li><a class="reference" href="#PluginCommandLoadFn" title="PluginCommandLoadFn = proc (): cstring {.cdecl.}">PluginCommandLoadFn</a></li>
 <li><a class="reference" href="#PluginHost" title="PluginHost = ref object
   manager*: PluginManager
-  commands*: OrderedTable[string, PluginCommand] ## Maps a plugin command name to its definition">PluginHost</a></li>
+  commands*: OrderedTable[string, PluginCommand] ## Maps a plugin command name to its definition
+  noVal*: NoValFlags ## The boolean flags the plugin commands declare, handed to
+                     ## `std/parseopt` so `--flag value` is distinguishable from a switch">PluginHost</a></li>
 <li><a class="reference" href="#PluginRunFn" title="PluginRunFn = proc (jsonArgs: cstring): cstring {.cdecl.}">PluginRunFn</a></li>
 
     </ul>
@@ -155,7 +157,9 @@
 <div id="PluginHost">
   <dt><pre><a href="#PluginHost"><span class="Identifier">PluginHost</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
   <span class="Identifier">manager</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">PluginManager</span>
-  <span class="Identifier">commands</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">OrderedTable</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <a href="#PluginCommand"><span class="Identifier">PluginCommand</span></a><span class="Other">]</span> <span class="Comment">## Maps a plugin command name to its definition</span></pre></dt>
+  <span class="Identifier">commands</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">OrderedTable</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <a href="#PluginCommand"><span class="Identifier">PluginCommand</span></a><span class="Other">]</span> <span class="Comment">## Maps a plugin command name to its definition</span>
+  <span class="Identifier">noVal</span><span class="Operator">*</span><span class="Other">:</span> <a href="types.html#NoValFlags"><span class="Identifier">NoValFlags</span></a> <span class="Comment">## The boolean flags the plugin commands declare, handed to</span>
+                     <span class="Comment">## `std/parseopt` so `--flag value` is distinguishable from a switch</span></pre></dt>
   <dd>
     
     Holds an active plugin manager and the commands discovered from plugins.
@@ -225,7 +229,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-09-24 15:00:41 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-10-13 18:17:21 UTC</small>
       </div>
     </div>
   </div>
