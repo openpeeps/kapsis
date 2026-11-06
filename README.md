@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <code>clue install kapsis</code>
+  <code>nimble install kapsis</code> / <code>clue install kapsis</code>
 </p>
 
 <p align="center">
@@ -81,12 +81,14 @@ myapp pack --file:README.md --file:LICENSE
 myapp pack -fREADME.md -fLICENSE
 ```
 
-Boolean flags are switches: they are `true` when present and take no value, so the following two are equivalent.
+Boolean flags are switches: they are `true` when present, so the following two are equivalent.
 
 ```sh
 myapp pack --no-apps-link
-myapp pack --no-apps-link:false
+myapp pack --no-apps-link:true
 ```
+
+Pass an explicit value to override this, for example `--no-apps-link:false` sets the flag to `false`.
 
 ### Repeatable Flags
 A `list` argument collects every occurrence of the flag instead of keeping only the last one. Inside the command handler its values are read with `getItems`:
